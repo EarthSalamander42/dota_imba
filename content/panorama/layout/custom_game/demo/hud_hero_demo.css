@@ -171,10 +171,11 @@
  .HeroPickerArrow{
 
 	height: 100%;
-	width: 24px;
+	width: 20px;
 
-	background-image: url( "file://{resources}/images/control_icons/arrow_solid_right_png.png");
-	background-size: 14px 20px;
+	/* background-image: url( "file://{resources}/images/control_icons/arrow_solid_right_png.png"); */
+	background-image: url("s2r://panorama/images/control_icons/double_arrow_left_png.vtex");
+	transform: rotateZ(180deg);
 	background-repeat: no-repeat;
 	background-position: center;
  }
@@ -220,21 +221,22 @@
  }
 
 
- #HeroDemoHeroName{
-
+#HeroDemoHeroName {
+	margin-left: 10px;
 	font-size: 22px;
 	height: 22px;
 	color: white;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	text-overflow: shrink;
- }
+	vertical-align: center;
+}
 
- #HeroPickerImage{
-
+#HeroSelfImage,
+#HeroPickerImage {
 	height: 30px;
 	width: height-percentage( 177.77% );
- }
+}
 
 
  #SpawnHeroButton{
@@ -416,6 +418,22 @@
  .RightButton{
 
 	margin-left: 3px;
+ }
+
+ #SpawnSelfButton{
+
+	background-color: #424d70;
+	border: 1px solid  #4e6a9e;
+
+	transition-property: background-color, border;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-in-out;
+ }
+
+ #SpawnSelfButton:hover{
+
+	background-color: gradient( linear, 0% 0%, 70% 0%, from( #3c77c4 ), to( #254b9c ) );
+	border: 1px solid #3f84eb;
  }
 
  #SpawnAllyButton{

@@ -177,11 +177,11 @@ function GameMode:SetupShrines()
 
 	-- jungle shrines
 	local good_shrine_position = {
-		Vector(-3700, 400, 240),
+		Vector(-1138, -3583, 256),
 	}
 
 	local bad_shrine_position = {
-		Vector(3200, -840, 240),
+		Vector(-1497, 4303, 256),
 	}
 
 	for _, pos in pairs(good_shrine_position) do

@@ -1,9 +1,13 @@
 if modifier_imba_roshan_ai == nil then modifier_imba_roshan_ai = class({}) end
 
 function modifier_imba_roshan_ai:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+
 function modifier_imba_roshan_ai:IsPurgeException() return false end
+
 function modifier_imba_roshan_ai:IsPurgable() return false end
+
 function modifier_imba_roshan_ai:IsDebuff() return false end
+
 function modifier_imba_roshan_ai:IsHidden() return true end
 
 function modifier_imba_roshan_ai:DeclareFunctions()
@@ -27,7 +31,7 @@ function modifier_imba_roshan_ai:OnIntervalThink()
 	if self.returningToLeash == true and self:GetParent():IsIdle() then
 		self.returningToLeash = false
 		self:GetParent():Purge(false, true, true, true, false)
---		self:SetForwardVector(self.ForwardVector)
+		--		self:SetForwardVector(self.ForwardVector)
 	end
 
 	-- if Roshan is too far from pit, return him
@@ -38,16 +42,16 @@ function modifier_imba_roshan_ai:OnIntervalThink()
 end
 
 -- function modifier_imba_roshan_ai:OnAttackLanded(keys)
-	-- if IsServer() then
-		-- if self:GetParent() == keys.target then
-			-- if keys.attacker:IsIllusion() then
-				-- keys.attacker:ForceKill(true)
-			-- end
-		-- end
-	-- end
+-- if IsServer() then
+-- if self:GetParent() == keys.target then
+-- if keys.attacker:IsIllusion() then
+-- keys.attacker:ForceKill(true)
+-- end
+-- end
+-- end
 -- end
 
-function modifier_imba_roshan_ai:OnDeath( keys )
+function modifier_imba_roshan_ai:OnDeath(keys)
 	if keys.unit ~= self:GetParent() then return end
 
 	GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
@@ -58,15 +62,15 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 
 	local item = CreateItem("item_aegis", nil, nil)
 	local pos = self:GetParent():GetAbsOrigin()
-	local drop = CreateItemOnPositionSync(pos, item)
+	CreateItemOnPositionSync(pos, item)
 	item:LaunchLoot(false, 300, 0.5, pos, nil)
 
 	if GAME_ROSHAN_KILLS >= 2 then
-		for i = 1, GAME_ROSHAN_KILLS -1 do
+		for i = 1, GAME_ROSHAN_KILLS - 1 do
 			local item = CreateItem("item_imba_cheese", nil, nil)
-			local drop = CreateItemOnPositionSync(pos, item)
+			CreateItemOnPositionSync(pos, item)
 			local new_pos = pos + RandomVector(RandomInt(100, 150))
-			
+
 			if GridNav:IsTraversable(new_pos) then
 				item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 			else
@@ -79,9 +83,9 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 		if GAME_ROSHAN_KILLS == 3 then
 			if RollPercentage(50) then
 				local item = CreateItem("item_refresher_shard", nil, nil)
-				local drop = CreateItemOnPositionSync(pos, item)
+				CreateItemOnPositionSync(pos, item)
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
-				
+
 				if GridNav:IsTraversable(new_pos) then
 					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
@@ -89,9 +93,9 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 				end
 			else
 				local item = CreateItem("item_ultimate_scepter_2", nil, nil)
-				local drop = CreateItemOnPositionSync(pos, item)
+				CreateItemOnPositionSync(pos, item)
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
-				
+
 				if GridNav:IsTraversable(new_pos) then
 					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
@@ -99,22 +103,22 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 				end
 			end
 		else
-			for i = 1, GAME_ROSHAN_KILLS -2 do
+			for i = 1, GAME_ROSHAN_KILLS - 2 do
 				local item = CreateItem("item_refresher_shard", nil, nil)
-				local drop = CreateItemOnPositionSync(pos, item)
+				CreateItemOnPositionSync(pos, item)
 				local new_pos = pos + RandomVector(RandomInt(100, 150))
-				
+
 				if GridNav:IsTraversable(new_pos) then
 					item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 				else
 					self:GetParent():DropItemAtPositionImmediate(item, new_pos)
 				end
 			end
-			
+
 			local item = CreateItem("item_ultimate_scepter_2", nil, nil)
-			local drop = CreateItemOnPositionSync(pos, item)
+			CreateItemOnPositionSync(pos, item)
 			local new_pos = pos + RandomVector(RandomInt(100, 150))
-			
+
 			if GridNav:IsTraversable(new_pos) then
 				item:LaunchLoot(false, 300, 0.5, new_pos, nil)
 			else

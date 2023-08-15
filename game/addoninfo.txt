@@ -13,7 +13,7 @@
 	"HeroGuidesSupported"			"1"
 	"PenaltiesEnabled"				"0"
 	"CheckAFKPlayers"				"1"
-	"EnablePickRules"				"1"
+	// "EnablePickRules"				"1"
 
 	"maps"							"imba_5v5 imba_1v1 imba_demo"
 	// "maps"							"imba_5v5 imba_10v10 imbathrow_ffa imba_1v1 imba_demo"

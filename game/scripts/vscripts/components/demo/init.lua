@@ -35,7 +35,7 @@ function HeroDemo:Init()
 
 	GameRules:SetUseUniversalShopMode(true)
 
-	-- CustomGameEventManager:RegisterListener("RequestInitialSpawnHeroID", function(...) return self:OnRequestInitialSpawnHeroID(...) end)
+	CustomGameEventManager:RegisterListener("RequestInitialSpawnHeroID", function(...) return self:OnRequestInitialSpawnHeroID(...) end)
 
 	CustomGameEventManager:RegisterListener("WelcomePanelDismissed", function(...) return self:OnWelcomePanelDismissed(...) end)
 	CustomGameEventManager:RegisterListener("RefreshButtonPressed", function(...) return self:OnRefreshButtonPressed(...) end)
@@ -77,6 +77,16 @@ function HeroDemo:Init()
 	CustomGameEventManager:RegisterListener("SpawnRuneInvisibilityPressed", function(...) return self:OnSpawnRuneInvisibilityPressed(...) end)
 	CustomGameEventManager:RegisterListener("SpawnRuneRegenerationPressed", function(...) return self:OnSpawnRuneRegenerationPressed(...) end)
 	CustomGameEventManager:RegisterListener("SpawnRuneArcanePressed", function(...) return self:OnSpawnRuneArcanePressed(...) end)
+
+	local sHeroToSpawn = Convars:GetStr("dota_hero_demo_default_enemy")
+
+	if sHeroToSpawn then
+		GameRules:GetGameModeEntity():SetCustomGameForceHero(sHeroToSpawn)
+		GameRules:SetHeroSelectionTime(0.0)
+		GameRules:SetPreGameTime(0.0)
+		GameRules:SetStrategyTime(0.0)
+		GameRules:SetShowcaseTime(0.0)
+	end
 
 	if Convars:GetInt("dota_hero_demo_spawn_creeps_enabled") == 1 then
 		-- print("Starting demo mode with creeps spawning")
@@ -320,14 +330,26 @@ end
 --------------------------------------------------------------------------------
 function HeroDemo:OnSelectMainHeroButtonPressed(eventSourceIndex, data)
 	print('OnSelectMainHeroButtonPressed! - data.str = ' .. data.str)
-	local sHero = DOTAGameManager:GetHeroUnitNameByID(tonumber(data.str))
+	local sHero = data.str
 	--EmitGlobalSound( "UI.Button.Pressed" )
 
-	print('MAIN HERO PICK!')
+	-- print('MAIN HERO PICK!')
 
-	local event_data =
-	{
-		hero_id = tonumber(data.str),
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
+	if hPlayerHero == nil then
+		return
+	end
+
+	PlayerResource:ReplaceHeroWith(hPlayerHero:GetPlayerOwnerID(), sHero, 0, 0)
+	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+		if hPlayerHero then
+			UTIL_Remove(hPlayerHero)
+		end
+
+		return nil
+	end, FrameTime())
+
+	local event_data = {
 		hero_name = sHero
 	}
 	CustomGameEventManager:Send_ServerToAllClients("set_main_hero_id", event_data)

@@ -370,6 +370,7 @@ CDOTABaseAbility.GetSpecialValueFor = function(self, sName)
 		return imba_value or 0
 	else
 		print("No value found in imba files for unit " .. self:GetCaster():GetUnitName() .. " ability " .. self:GetAbilityName() .. " for value named: '" .. sName .. "'")
+		return 0
 	end
 end
 

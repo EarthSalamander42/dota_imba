@@ -353,6 +353,10 @@ function GameMode:ItemAddedFilter(keys)
 			-- return true
 
 			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis", {})
+
+			UTIL_Remove(item:GetContainer())
+			UTIL_Remove(item)
+
 			return false
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
@@ -500,6 +504,11 @@ function GameMode:OrderFilter(keys)
 	local disableHelpResult = DisableHelp.ExecuteOrderFilter(keys.order_type, ability, target, unit)
 	if disableHelpResult == false then
 		return false
+	end
+
+	if IsInToolsMode() and keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+		print("Position: ", unit:GetAbsOrigin())
+		return true
 	end
 
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then

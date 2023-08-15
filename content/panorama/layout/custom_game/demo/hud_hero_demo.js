@@ -1,7 +1,9 @@
 function Init() {
-	if (!Game.IsInToolsMode()) {
+	// show the hero demo ui if we're in tools mode or if there is demo in the map name
+	if (!Game.IsInToolsMode() && Game.GetMapInfo().map_display_name.indexOf("demo") == -1) {
 		return;
 	}
+	let CurrentHero = "npc_dota_hero_axe";
     var contextPanel = $.GetContextPanel();
     var parent = contextPanel.GetParent();
     var customRoot = parent.GetParent();
@@ -22,6 +24,8 @@ function Init() {
     }
 
 	$.DispatchEvent( 'FireCustomGameEvent_Str', 'RequestInitialSpawnHeroID', null );
+
+	OnSetPlayerHeroID( { hero_name: Players.GetPlayerSelectedHero( 0 ) } );
 }
 Init();
 
@@ -94,16 +98,32 @@ function SwitchToNewHero( nHeroID )
 	SetHeroPickerVisible( false );
 }
 
+// function SwitchToNewHero()
+// {
+// 	Game.EmitSound( "UI.Button.Pressed" );
+
+// 	$.Msg( 'Hero = ' + CurrentHero );
+
+// 	$.DispatchEvent( 'FireCustomGameEvent_Str', 'SelectMainHeroButtonPressed', String( CurrentHero ) );
+
+// 	SetHeroPickerVisible( false );
+// }
+
 function OnSetPlayerHeroID( event_data )
 {
 	$.Msg( "OnSetPlayerHeroID: ", event_data );
 
+	var HeroPickerImage = $( '#HeroSelfImage' );
+	if ( HeroPickerImage != null )
+	{
+		HeroPickerImage.heroname = event_data.hero_name;
+	}
+
 	var HeroDemoButton = $( '#HeroDemoHeroName' );
 	if ( HeroDemoButton != null )
 	{
-		var heroName = Players.GetPlayerSelectedHero( 0 );
-		$.Msg( 'HERO NAME = ' + heroName );
-		HeroDemoButton.SetDialogVariable( "hero_name", $.Localize( '#'+heroName ) );
+		$.Msg( 'HERO NAME = ' + event_data.hero_name );
+		HeroDemoButton.SetDialogVariable( "hero_name", $.Localize( '#'+event_data.hero_name ) );
 	}
 }
 GameEvents.Subscribe( "set_player_hero_id", OnSetPlayerHeroID );
@@ -118,6 +138,7 @@ GameEvents.Subscribe( "set_main_hero_id", OnSetMainHeroID );
 
 function OnSetSpawnHeroID( event_data )
 {
+	CurrentHero = event_data.hero_name;
 	$.Msg( "OnSetSpawnHeroID: ", event_data );
 	var HeroPickerImage = $( '#HeroPickerImage' );
 	if ( HeroPickerImage != null )

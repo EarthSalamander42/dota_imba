@@ -505,10 +505,7 @@ IMBA_DISARM_IMMUNITY = {
 	--	"modifier_bashed",
 }
 
-IMBA_PUNISHED = {
-	[925061111] = false,
-}
-
+IMBA_PUNISHED = {}
 IMBA_FIRST_BLOOD = false
 
 -- IMBA override vanilla systems

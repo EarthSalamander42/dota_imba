@@ -163,6 +163,7 @@
 	"SelectHero_Button"                                    "Choose Enemy Hero"
 	"LevelUpEnemy_Button"                                  "Level Up Enemy"
 	"MaxLevelEnemy_Button"                                 "Level Enemy To Max"
+	"Self_Button"                                          "+ Self"
 	"Ally_Button"                                          "+ Ally"
 	"SelectAllyHero_Button"                                "Choose Allied Hero"
 	"LevelUpAlly_Button"                                   "Level Up Allies"

@@ -17,7 +17,10 @@
 			<Panel class="ControlPanelContainer">
 				<Panel id="Header">
 					<Panel class="HeroDemoTextContainer">
-						<Label id="HeroDemoHeroName" text="{s:hero_name}" />
+						<Panel class="Row">
+							<DOTAHeroImage id="HeroSelfImage" class="HeroImage" heroimagestyle="landscape" />
+							<Label id="HeroDemoHeroName" text="{s:hero_name}" />
+						</Panel>
 					</Panel>
 				</Panel>
 				<Panel id="SpawnUnitsCategory" class="Category">
@@ -29,6 +32,9 @@
 							<Panel class="HeroPickerArrow" />
 						</Panel>
 						<Panel class="Row">
+							<!-- <Button id="SpawnSelfButton" class="DemoButton LeftButton" acceptsjoyfocus="true" onactivate="SwitchToNewHero()">
+								<Label text="#Self_Button" />
+							</Button> -->
 							<Button id="SpawnAllyButton" class="DemoButton LeftButton" acceptsjoyfocus="true" onactivate="FireCustomGameEvent_Str( SpawnAllyButtonPressed )">
 								<Label text="#Ally_Button" />
 							</Button>

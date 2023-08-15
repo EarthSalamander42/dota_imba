@@ -5,11 +5,15 @@ function Tormentors:OnGameRulesStateChange()
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("Tormentors:spawn"), function()
 			-- iterate from team 2 to team 3
 			for iTeam = DOTA_TEAM_GOODGUYS, DOTA_TEAM_BADGUYS do
-				local tormentor = CreateUnitByName("npc_dota_miniboss_custom", Tormentors.spawnLocation[iTeam], true, nil, nil, DOTA_TEAM_NEUTRALS)
-				tormentor.tormentorTeam = iTeam
+				if Tormentors.spawnLocation[iTeam] then
+					local tormentor = CreateUnitByName("npc_dota_miniboss_custom", Tormentors.spawnLocation[iTeam], true, nil, nil, DOTA_TEAM_NEUTRALS)
+					tormentor.tormentorTeam = iTeam
 
-				if iTeam == DOTA_TEAM_BADGUYS then
-					tormentor:SetMaterialGroup("1")
+					if iTeam == DOTA_TEAM_BADGUYS then
+						tormentor:SetMaterialGroup("1")
+					end
+				else
+					print("Tormentors:OnGameRulesStateChange: No spawn location for team " .. iTeam)
 				end
 			end
 		end, Tormentors.spawnTime)

@@ -111,7 +111,7 @@ function base_modifier_dual_breath_caster:OnCreated(kv)
 
 		-- #1 Talent: Dual Breath Range Increase
 		local range = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) +
-		caster:FindTalentValue("special_bonus_imba_jakiro_1")
+			caster:FindTalentValue("special_bonus_imba_jakiro_1")
 		local particle_breath = self.particle_breath
 
 		self.caster = caster
@@ -132,7 +132,7 @@ function base_modifier_dual_breath_caster:OnCreated(kv)
 
 		-- #6 Talent: Dual Breath Speed Increase
 		local breath_speed = ability:GetLevelSpecialValueFor("speed", ability_level) +
-		caster:FindTalentValue("special_bonus_imba_jakiro_6")
+			caster:FindTalentValue("special_bonus_imba_jakiro_6")
 
 		-- Ability variables
 		self.breath_direction = breath_direction
@@ -360,13 +360,18 @@ function base_modifier_dot_debuff:OnIntervalThink()
 				local ability_level = ability_ice_path:GetLevel() - 1
 				-- #7 Talent: Ice Path Antipode Effect Increase
 				local dmg_amp = ability_ice_path:GetLevelSpecialValueFor("dmg_amp", ability_level) +
-				caster:FindTalentValue("special_bonus_imba_jakiro_7")
+					caster:FindTalentValue("special_bonus_imba_jakiro_7")
 				final_tick_damage = final_tick_damage * (1 + dmg_amp / 100)
 			end
 		end
 
-		ApplyDamage({ attacker = caster, victim = victim, ability = self.ability, damage = final_tick_damage,
-			damage_type = self.ability_dmg_type })
+		ApplyDamage({
+			attacker = caster,
+			victim = victim,
+			ability = self.ability,
+			damage = final_tick_damage,
+			damage_type = self.ability_dmg_type
+		})
 	end
 end
 
@@ -396,7 +401,7 @@ function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
 
 		-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
 		local damage = ability:GetSpecialValueFor("damage") +
-		caster:FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
+			caster:FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
 		self.tick_damage = damage * self.damage_interval
 	end
 end
@@ -405,7 +410,7 @@ function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
 	self.move_slow = -(self.ability:GetSpecialValueFor("move_slow"))
 
 	local particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+		"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -496,12 +501,10 @@ imba_jakiro_dual_breath                               = imba_jakiro_dual_breath 
 modifier_imba_jakiro_dual_breath_slow                 = modifier_imba_jakiro_dual_breath_slow or class({})
 modifier_imba_jakiro_dual_breath_burn                 = modifier_imba_jakiro_dual_breath_burn or class({})
 modifier_imba_jakiro_dual_breath_self_root            = modifier_imba_jakiro_dual_breath_self_root or class({})
-modifier_imba_jakiro_dual_breath_self_disable_turning = modifier_imba_jakiro_dual_breath_self_disable_turning or
-class({})
+modifier_imba_jakiro_dual_breath_self_disable_turning = modifier_imba_jakiro_dual_breath_self_disable_turning or class({})
 
 function imba_jakiro_dual_breath:GetCastRange(location, target)
-	return self.BaseClass.GetCastRange(self, location, target) +
-	self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_1")
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_1")
 end
 
 function imba_jakiro_dual_breath:OnUpgrade()
@@ -535,7 +538,7 @@ function imba_jakiro_dual_breath:OnSpellStart()
 		Source            = self:GetCaster(),
 		vSpawnOrigin      = self:GetCaster():GetAbsOrigin(),
 		vVelocity         = ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() *
-		self:GetTalentSpecialValueFor("speed"),
+			self:GetTalentSpecialValueFor("speed"),
 		vAcceleration     = nil, --hmm...
 		fMaxSpeed         = nil, -- What's the default on this thing?
 		fDistance         = self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
@@ -563,7 +566,7 @@ function imba_jakiro_dual_breath:OnSpellStart()
 		self:GetCaster():EmitSound("Hero_Jakiro.DualBreath.Cast")
 
 		local fire_breath_particle = ParticleManager:CreateParticle(
-		"particles/units/heroes/hero_jakiro/jakiro_taunt_icemelt_fire.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+			"particles/units/heroes/hero_jakiro/jakiro_taunt_icemelt_fire.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControlEnt(fire_breath_particle, 0, self:GetCaster(), PATTACH_POINT, "attach_attack2",
 			self:GetCaster():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlForward(fire_breath_particle, 0,
@@ -576,7 +579,7 @@ function imba_jakiro_dual_breath:OnSpellStart()
 			Source            = self:GetCaster(),
 			vSpawnOrigin      = caster_position,
 			vVelocity         = ((cursor_position - caster_position) * Vector(1, 1, 0)):Normalized() *
-			self:GetTalentSpecialValueFor("speed_fire"),
+				self:GetTalentSpecialValueFor("speed_fire"),
 			vAcceleration     = nil, --hmm...
 			fMaxSpeed         = nil, -- What's the default on this thing?
 			fDistance         = self:GetTalentSpecialValueFor("range") + self:GetCaster():GetCastRangeBonus(),
@@ -642,9 +645,9 @@ function modifier_imba_jakiro_dual_breath_slow:OnCreated()
 
 	self.frost_damage            = self:GetAbility():GetSpecialValueFor("frost_damage")
 	self.slow_movement_speed_pct = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct") -
-	self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
+		self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
 	self.slow_attack_speed_pct   = self:GetAbility():GetSpecialValueFor("slow_attack_speed_pct") -
-	self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
+		self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
 
 	self.interval                = 0.5
 	self.damage_per_interval     = self.frost_damage * self.interval
@@ -710,7 +713,7 @@ function modifier_imba_jakiro_dual_breath_burn:OnCreated()
 	if not IsServer() then return end
 
 	self.burn_damage                  = self:GetAbility():GetSpecialValueFor("burn_damage") +
-	self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
+		self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
 	self.slow_movement_speed_pct_fire = self:GetAbility():GetSpecialValueFor("slow_movement_speed_pct_fire")
 
 	self.interval                     = 0.5
@@ -827,17 +830,17 @@ function modifier_imba_ice_path_thinker:OnCreated(kv)
 		local ability             = self:GetAbility()
 		local ability_level       = ability:GetLevel() - 1
 		local path_length         = ability:GetLevelSpecialValueFor("range", ability_level) +
-		GetCastRangeIncrease(caster)
+			GetCastRangeIncrease(caster)
 
 		local path_delay          = ability:GetSpecialValueFor("path_delay")
 		local path_radius         = ability:GetSpecialValueFor("path_radius")
 
 		-- #3 Talent: Ice Path Duration Increase
 		local path_duration       = ability:GetLevelSpecialValueFor("path_duration", ability_level) +
-		caster:FindTalentValue("special_bonus_imba_jakiro_3")
+			caster:FindTalentValue("special_bonus_imba_jakiro_3")
 		-- #5 Talent: Ice Path Stun Duration Increase
 		local stun_duration       = ability:GetLevelSpecialValueFor("stun_duration", ability_level) +
-		caster:FindTalentValue("special_bonus_imba_jakiro_5")
+			caster:FindTalentValue("special_bonus_imba_jakiro_5")
 
 		local start_pos           = caster:GetAbsOrigin()
 		local direction           = (caster:GetCursorPosition() - start_pos):Normalized()
@@ -893,7 +896,7 @@ function modifier_imba_ice_path_thinker:OnCreated(kv)
 		-- Create ice path flash and apply affect after delay
 		Timers:CreateTimer(path_delay, function()
 			local pfx_ice_path_explode = ParticleManager:CreateParticle(
-			"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf", PATTACH_WORLDORIGIN, caster)
+				"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf", PATTACH_WORLDORIGIN, caster)
 			ParticleManager:SetParticleControl(pfx_ice_path_explode, 0, start_pos)
 			ParticleManager:SetParticleControl(pfx_ice_path_explode, 1, end_pos)
 			ParticleManager:ReleaseParticleIndex(pfx_ice_path_explode)
@@ -938,7 +941,7 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 	-- end
 
 	local enemies           = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self
-	.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
+		.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
 
 	for _, enemy in pairs(enemies) do
 		if not frozen_enemy_set[enemy] then
@@ -968,8 +971,13 @@ function modifier_imba_ice_path_freeze_debuff:OnCreated()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
 
-		ApplyDamage({ attacker = self:GetCaster(), victim = parent, ability = ability,
-			damage = ability:GetSpecialValueFor("damage"), damage_type = ability:GetAbilityDamageType() })
+		ApplyDamage({
+			attacker = self:GetCaster(),
+			victim = parent,
+			ability = ability,
+			damage = ability:GetSpecialValueFor("damage"),
+			damage_type = ability:GetAbilityDamageType()
+		})
 
 		local parent_origin = parent:GetAbsOrigin()
 
@@ -1055,7 +1063,7 @@ function imba_jakiro_liquid_fire:GetCastRange(Location, Target)
 	local caster = self:GetCaster()
 	-- #4 Talent: Liquid Fire Cast Range Increase
 	return caster:Script_GetAttackRange() + self:GetSpecialValueFor("extra_cast_range") +
-	caster:FindTalentValue("special_bonus_imba_jakiro_4")
+		caster:FindTalentValue("special_bonus_imba_jakiro_4")
 end
 
 function imba_jakiro_liquid_fire:OnAbilityPhaseStart()
@@ -1287,8 +1295,10 @@ function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant()
 
 function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow * (-1) end
 
-function modifier_imba_liquid_fire_debuff:GetEffectName() return
-	"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf" end
+function modifier_imba_liquid_fire_debuff:GetEffectName()
+	return
+	"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+end
 
 function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
