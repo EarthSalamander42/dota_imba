@@ -4,7 +4,7 @@
 
 LinkLuaModifier("modifier_imba_death_prophet_silence", "components/abilities/heroes/hero_death_prophet", LUA_MODIFIER_MOTION_NONE)
 
-imba_death_prophet_silence = class({})
+imba_death_prophet_silence = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_death_prophet_silence:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
@@ -37,7 +37,7 @@ function imba_death_prophet_silence:OnSpellStart()
 		ParticleManager:SetParticleControl(pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(pfx)
 
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", {duration = self:GetDuration() * (1 - enemy:GetStatusResistance())})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_death_prophet_silence", { duration = self:GetDuration() * (1 - enemy:GetStatusResistance()) })
 	end
 end
 
@@ -45,18 +45,20 @@ end
 -- MODIFIER_IMBA_DEATH_PROPHET_SILENCE --
 -----------------------------------------
 
-modifier_imba_death_prophet_silence = class({})
+modifier_imba_death_prophet_silence = class(VANILLA_ABILITIES_BASECLASS)
 
-function modifier_imba_death_prophet_silence:CheckState() return {
-	[MODIFIER_STATE_SILENCED] = true,
-} end
+function modifier_imba_death_prophet_silence:CheckState()
+	return {
+		[MODIFIER_STATE_SILENCED] = true,
+	}
+end
 
 function modifier_imba_death_prophet_silence:OnCreated()
 	if IsClient() then return end
 
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence_custom.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControl(self.pfx, 0, self:GetParent():GetAbsOrigin())
---	ParticleManager:SetParticleControl(self.pfx, 1, self:GetParent():GetAbsOrigin())
+	--	ParticleManager:SetParticleControl(self.pfx, 1, self:GetParent():GetAbsOrigin())
 
 	self.pfx2 = ParticleManager:CreateParticle("particles/generic_gameplay/generic_silenced.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent(), self:GetCaster())
 	ParticleManager:SetParticleControl(self.pfx2, 0, self:GetParent():GetAbsOrigin())

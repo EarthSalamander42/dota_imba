@@ -28,38 +28,38 @@ LinkLuaModifier("modifier_imba_undying_flesh_golem", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_undying_flesh_golem_plague_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem_slow", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_decay                                              = imba_undying_decay or class({})
-modifier_imba_undying_decay_buff                                = modifier_imba_undying_decay_buff or class({})
-modifier_imba_undying_decay_buff_counter                        = modifier_imba_undying_decay_buff_counter or class({})
-modifier_imba_undying_decay_debuff                              = modifier_imba_undying_decay_debuff or class({})
-modifier_imba_undying_decay_debuff_counter                      = modifier_imba_undying_decay_debuff_counter or class({})
+imba_undying_decay                                              = imba_undying_decay or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_decay_buff                                = modifier_imba_undying_decay_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_decay_buff_counter                        = modifier_imba_undying_decay_buff_counter or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_decay_debuff                              = modifier_imba_undying_decay_debuff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_decay_debuff_counter                      = modifier_imba_undying_decay_debuff_counter or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_soul_rip                                           = imba_undying_soul_rip or class({})
-modifier_imba_undying_soul_rip_soul_injection                   = modifier_imba_undying_soul_rip_soul_injection or class({})
-modifier_imba_undying_soul_rip_soul_injection_debuff            = modifier_imba_undying_soul_rip_soul_injection_debuff or class({})
+imba_undying_soul_rip                                           = imba_undying_soul_rip or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_soul_rip_soul_injection                   = modifier_imba_undying_soul_rip_soul_injection or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_soul_rip_soul_injection_debuff            = modifier_imba_undying_soul_rip_soul_injection_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_tombstone                                          = imba_undying_tombstone or class({})
-modifier_imba_undying_tombstone_zombie_aura                     = modifier_imba_undying_tombstone_zombie_aura or class({})
-modifier_imba_undying_tombstone_zombie_modifier                 = modifier_imba_undying_tombstone_zombie_modifier or class({})
-modifier_imba_undying_tombstone_zombie_modifier_no_home         = modifier_imba_undying_tombstone_zombie_modifier_no_home or class({})
-modifier_imba_undying_tombstone_zombie_deathlust                = modifier_imba_undying_tombstone_zombie_deathlust or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike              = modifier_imba_undying_tombstone_zombie_deathstrike or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter = modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class({})
-modifier_imba_undying_tombstone_zombie_deathstrike_slow         = modifier_imba_undying_tombstone_zombie_deathstrike_slow or class({})
+imba_undying_tombstone                                          = imba_undying_tombstone or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_aura                     = modifier_imba_undying_tombstone_zombie_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_modifier                 = modifier_imba_undying_tombstone_zombie_modifier or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_modifier_no_home         = modifier_imba_undying_tombstone_zombie_modifier_no_home or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_deathlust                = modifier_imba_undying_tombstone_zombie_deathlust or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_deathstrike              = modifier_imba_undying_tombstone_zombie_deathstrike or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter = modifier_imba_undying_tombstone_zombie_deathstrike_slow_counter or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_tombstone_zombie_deathstrike_slow         = modifier_imba_undying_tombstone_zombie_deathstrike_slow or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_tombstone_zombie_deathstrike                       = imba_undying_tombstone_zombie_deathstrike or class({})
+imba_undying_tombstone_zombie_deathstrike                       = imba_undying_tombstone_zombie_deathstrike or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_flesh_golem_grab                                   = imba_undying_flesh_golem_grab or class({})
-modifier_imba_undying_flesh_golem_grab                          = modifier_imba_undying_flesh_golem_grab or class({})
-modifier_imba_undying_flesh_golem_grab_debuff                   = modifier_imba_undying_flesh_golem_grab_debuff or class({})
+imba_undying_flesh_golem_grab                                   = imba_undying_flesh_golem_grab or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem_grab                          = modifier_imba_undying_flesh_golem_grab or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem_grab_debuff                   = modifier_imba_undying_flesh_golem_grab_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_flesh_golem_throw                                  = imba_undying_flesh_golem_throw or class({})
+imba_undying_flesh_golem_throw                                  = imba_undying_flesh_golem_throw or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_undying_flesh_golem                                        = imba_undying_flesh_golem or class({})
-modifier_imba_undying_flesh_golem_illusion_check                = modifier_imba_undying_flesh_golem_illusion_check or class({})
-modifier_imba_undying_flesh_golem                               = modifier_imba_undying_flesh_golem or class({})
-modifier_imba_undying_flesh_golem_plague_aura                   = modifier_imba_undying_flesh_golem_plague_aura or class({})
-modifier_imba_undying_flesh_golem_slow                          = modifier_imba_undying_flesh_golem_slow or class({})
+imba_undying_flesh_golem                                        = imba_undying_flesh_golem or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem_illusion_check                = modifier_imba_undying_flesh_golem_illusion_check or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem                               = modifier_imba_undying_flesh_golem or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem_plague_aura                   = modifier_imba_undying_flesh_golem_plague_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_undying_flesh_golem_slow                          = modifier_imba_undying_flesh_golem_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------
 -- IMBA_UNDYING_DECAY --
@@ -70,7 +70,7 @@ function imba_undying_decay:GetAOERadius()
 end
 
 function imba_undying_decay:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_undying_decay_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_undying_decay_cooldown")
 end
 
 -- "Upon acquiring/losing Aghanim's Scepter, all stacks of stolen strength adapts immediately. "
@@ -1578,11 +1578,11 @@ LinkLuaModifier("modifier_special_bonus_imba_undying_tombstone_on_death", "compo
 LinkLuaModifier("modifier_special_bonus_imba_undying_flesh_golem_grab_allies", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_undying_decay_cooldown", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_undying_decay_duration          = modifier_special_bonus_imba_undying_decay_duration or class({})
-modifier_special_bonus_imba_undying_tombstone_zombie_damage = modifier_special_bonus_imba_undying_tombstone_zombie_damage or class({})
-modifier_special_bonus_imba_undying_tombstone_on_death      = modifier_special_bonus_imba_undying_tombstone_on_death or class({})
-modifier_special_bonus_imba_undying_flesh_golem_grab_allies = modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class({})
-modifier_special_bonus_imba_undying_decay_cooldown          = modifier_special_bonus_imba_undying_decay_cooldown or class({})
+modifier_special_bonus_imba_undying_decay_duration          = modifier_special_bonus_imba_undying_decay_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_tombstone_zombie_damage = modifier_special_bonus_imba_undying_tombstone_zombie_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_tombstone_on_death      = modifier_special_bonus_imba_undying_tombstone_on_death or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_flesh_golem_grab_allies = modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_decay_cooldown          = modifier_special_bonus_imba_undying_decay_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_undying_decay_duration:IsHidden() return true end
 

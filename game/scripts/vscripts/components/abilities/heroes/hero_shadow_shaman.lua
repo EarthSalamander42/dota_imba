@@ -21,24 +21,24 @@ LinkLuaModifier("modifier_imba_shadow_shaman_shackles_chariot", "components/abil
 
 LinkLuaModifier("modifier_imba_shadow_shaman_parlor_tricks_handler", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
-imba_shadow_shaman_ether_shock                      = class({})
-modifier_imba_shadow_shaman_ether_shock_handler     = class({})
-modifier_imba_shadow_shaman_ether_shock_joy_buzzer  = class({})
-modifier_imba_shadow_shaman_ether_shock_mute        = class({})
+imba_shadow_shaman_ether_shock                      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_ether_shock_handler     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_ether_shock_joy_buzzer  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_ether_shock_mute        = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_shadow_shaman_voodoo                           = class({})
-modifier_imba_shadow_shaman_voodoo_handler          = class({})
-modifier_imba_shadow_shaman_voodoo                  = class({})
-modifier_imba_shadow_shaman_voodoo_deprecation      = class({})
+imba_shadow_shaman_voodoo                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_voodoo_handler          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_voodoo                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_voodoo_deprecation      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_shadow_shaman_shackles                         = class({})
-modifier_imba_shadow_shaman_shackles_handler        = class({})
-modifier_imba_shadow_shaman_shackles_target_handler = class({})
-modifier_imba_shadow_shaman_shackles                = class({})
-modifier_imba_shadow_shaman_shackles_chariot        = class({})
+imba_shadow_shaman_shackles                         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_shackles_handler        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_shackles_target_handler = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_shackles                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_shackles_chariot        = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_shadow_shaman_parlor_tricks                    = class({})
-modifier_imba_shadow_shaman_parlor_tricks_handler   = class({})
+imba_shadow_shaman_parlor_tricks                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_shadow_shaman_parlor_tricks_handler   = class(VANILLA_ABILITIES_BASECLASS)
 
 -----------------
 -- ETHER SHOCK --
@@ -233,7 +233,7 @@ function imba_shadow_shaman_voodoo:GetBehavior()
 end
 
 function imba_shadow_shaman_voodoo:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_shaman_hex_cooldown")
 end
 
 function imba_shadow_shaman_voodoo:CastFilterResultTarget(target)
@@ -810,7 +810,7 @@ end
 --------------------------------
 ------ MASS SERPENT WARD -------
 --------------------------------
-imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or class({})
+imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_mass_serpent_ward", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
@@ -956,7 +956,7 @@ function imba_shadow_shaman_mass_serpent_ward:SummonWard(position, bChild, elaps
 end
 
 --- SERPENT WARD MODIFIER
-modifier_imba_mass_serpent_ward = modifier_imba_mass_serpent_ward or class({})
+modifier_imba_mass_serpent_ward = modifier_imba_mass_serpent_ward or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mass_serpent_ward:IsDebuff() return false end
 
@@ -1144,10 +1144,10 @@ LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks", "
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_ether_shock_damage", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_3", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_shadow_shaman_shackles_duration = modifier_special_bonus_imba_shadow_shaman_shackles_duration or class({})
-modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks = modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks or class({})
-modifier_special_bonus_imba_shadow_shaman_ether_shock_damage = modifier_special_bonus_imba_shadow_shaman_ether_shock_damage or class({})
-modifier_special_bonus_imba_shadow_shaman_3 = modifier_special_bonus_imba_shadow_shaman_3 or class({})
+modifier_special_bonus_imba_shadow_shaman_shackles_duration = modifier_special_bonus_imba_shadow_shaman_shackles_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks = modifier_special_bonus_imba_shadow_shaman_hex_parlor_tricks or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_shaman_ether_shock_damage = modifier_special_bonus_imba_shadow_shaman_ether_shock_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_shaman_3 = modifier_special_bonus_imba_shadow_shaman_3 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_shadow_shaman_shackles_duration:IsHidden() return true end
 
@@ -1176,8 +1176,8 @@ function modifier_special_bonus_imba_shadow_shaman_3:RemoveOnDeath() return fals
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_hex_cooldown", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_shadow_shaman_wards_movement", "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_shadow_shaman_hex_cooldown   = class({})
-modifier_special_bonus_imba_shadow_shaman_wards_movement = class({})
+modifier_special_bonus_imba_shadow_shaman_hex_cooldown   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_shaman_wards_movement = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_shadow_shaman_hex_cooldown:IsHidden() return true end
 

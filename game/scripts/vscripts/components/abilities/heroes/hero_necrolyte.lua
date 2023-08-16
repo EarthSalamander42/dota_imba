@@ -11,7 +11,7 @@
 LinkLuaModifier("modifier_imba_sadist", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sadist_stack", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
+imba_necrolyte_sadist = imba_necrolyte_sadist or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_necrolyte_sadist:GetAbilityTextureName()
 	return "necrolyte_sadist"
@@ -25,7 +25,7 @@ function imba_necrolyte_sadist:IsInnateAbility()
 	return true
 end
 
-modifier_imba_sadist = class({})
+modifier_imba_sadist = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_sadist:DeclareFunctions()
 	return {
 		MODIFIER_EVENT_ON_DEATH,
@@ -118,7 +118,7 @@ function modifier_imba_sadist:OnDeath(params)
 	end
 end
 
-modifier_imba_sadist_stack = modifier_imba_sadist_stack or class({})
+modifier_imba_sadist_stack = modifier_imba_sadist_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sadist_stack:OnCreated()
 	if IsServer() then
@@ -211,7 +211,7 @@ end
 -------------------------------------------
 --			DEATH PULSE
 -------------------------------------------
-imba_necrolyte_death_pulse = imba_necrolyte_death_pulse or class({})
+imba_necrolyte_death_pulse = imba_necrolyte_death_pulse or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_necrolyte_death_pulse:GetAbilityTextureName()
 	return "necrolyte_death_pulse"
@@ -336,14 +336,14 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 end
 
 function imba_necrolyte_death_pulse:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_necrolyte_3")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_necrolyte_3")
 end
 
 -------------------------------------------
 --			GHOST SHROUD
 -------------------------------------------
 
-imba_necrolyte_ghost_shroud = imba_necrolyte_ghost_shroud or class({})
+imba_necrolyte_ghost_shroud = imba_necrolyte_ghost_shroud or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_ghost_shroud_active", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
@@ -356,7 +356,7 @@ end
 
 function imba_necrolyte_ghost_shroud:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return self:GetSpecialValueFor("cooldown_scepter")
 	end
@@ -393,7 +393,7 @@ end
 -- Ghost Shroud Active Modifier (Purgable) --
 ---------------------------------------------
 
-modifier_imba_ghost_shroud_active = class({})
+modifier_imba_ghost_shroud_active = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghost_shroud_active:IsHidden() return false end
 
@@ -461,7 +461,7 @@ end
 -- Ghost Shroud Positive Aura Handler (Unpurgable) --
 -----------------------------------------------------
 
-modifier_imba_ghost_shroud_aura = class({})
+modifier_imba_ghost_shroud_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghost_shroud_aura:IsHidden() return false end
 
@@ -519,7 +519,7 @@ end
 -- Ghost Shroud Positive Aura Buff (Heal Amp) --
 ------------------------------------------------
 
-modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
+modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghost_shroud_buff:IsHidden()
 	if self:GetParent() == self:GetCaster() then return true end
@@ -559,7 +559,7 @@ end
 -- Ghost Shroud Negative Aura Handler --
 ----------------------------------------
 
-modifier_imba_ghost_shroud_aura_debuff = modifier_imba_ghost_shroud_aura_debuff or class({})
+modifier_imba_ghost_shroud_aura_debuff = modifier_imba_ghost_shroud_aura_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghost_shroud_aura_debuff:IsHidden() return true end
 
@@ -597,7 +597,7 @@ end
 -- Ghost Shroud Negative Aura Debuff (Movement Slow) --
 -------------------------------------------------------
 
-modifier_imba_ghost_shroud_debuff = modifier_imba_ghost_shroud_debuff or class({})
+modifier_imba_ghost_shroud_debuff = modifier_imba_ghost_shroud_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghost_shroud_debuff:IsHidden() return false end
 
@@ -626,7 +626,7 @@ end
 LinkLuaModifier("modifier_imba_heartstopper_aura", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-imba_necrolyte_heartstopper_aura = imba_necrolyte_heartstopper_aura or class({})
+imba_necrolyte_heartstopper_aura = imba_necrolyte_heartstopper_aura or class(VANILLA_ABILITIES_BASECLASS)
 function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
 	return "modifier_imba_heartstopper_aura"
 end
@@ -639,7 +639,7 @@ function imba_necrolyte_heartstopper_aura:GetCastRange(location, target)
 	return self:GetSpecialValueFor("radius")
 end
 
-modifier_imba_heartstopper_aura = class({})
+modifier_imba_heartstopper_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_heartstopper_aura:OnCreated()
 	self.radius = self:GetAbility():GetSpecialValueFor("radius")
@@ -698,7 +698,7 @@ function modifier_imba_heartstopper_aura:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
 
-modifier_imba_heartstopper_aura_damage = modifier_imba_heartstopper_aura_damage or class({})
+modifier_imba_heartstopper_aura_damage = modifier_imba_heartstopper_aura_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 
 function modifier_imba_heartstopper_aura_damage:IsHidden()
@@ -778,7 +778,7 @@ end
 -------------------------------------------
 --			REAPER'S SCYTHE
 -------------------------------------------
-imba_necrolyte_reapers_scythe = imba_necrolyte_reapers_scythe or class({})
+imba_necrolyte_reapers_scythe = imba_necrolyte_reapers_scythe or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_reapers_scythe", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
@@ -813,14 +813,14 @@ end
 
 function imba_necrolyte_reapers_scythe:GetCooldown(nLevel)
 	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("scepter_cooldown") end
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_necrolyte_reapers_scythe:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class({})
+modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_reapers_scythe:IgnoreTenacity() return true end
 
 function modifier_imba_reapers_scythe:OnCreated()
@@ -930,7 +930,7 @@ function modifier_imba_reapers_scythe:OnRemoved()
 end
 
 -------------------------------------------
-modifier_imba_reapers_scythe_respawn = modifier_imba_reapers_scythe_respawn or class({})
+modifier_imba_reapers_scythe_respawn = modifier_imba_reapers_scythe_respawn or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_reapers_scythe_respawn:OnCreated()
 	if IsServer() then
 		self.ability = self:GetAbility()
@@ -980,7 +980,7 @@ function modifier_imba_reapers_scythe_respawn:OnRespawn(params)
 	end
 end
 
-modifier_imba_reapers_scythe_debuff = modifier_imba_reapers_scythe_debuff or class({})
+modifier_imba_reapers_scythe_debuff = modifier_imba_reapers_scythe_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reapers_scythe_debuff:IsDebuff()
 	return true
@@ -1028,10 +1028,10 @@ LinkLuaModifier("modifier_special_bonus_imba_necrolyte_3", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_6", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_8", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_necrolyte_2 = modifier_special_bonus_imba_necrolyte_2 or class({})
-modifier_special_bonus_imba_necrolyte_3 = modifier_special_bonus_imba_necrolyte_3 or class({})
-modifier_special_bonus_imba_necrolyte_6 = modifier_special_bonus_imba_necrolyte_6 or class({})
-modifier_special_bonus_imba_necrolyte_8 = modifier_special_bonus_imba_necrolyte_8 or class({})
+modifier_special_bonus_imba_necrolyte_2 = modifier_special_bonus_imba_necrolyte_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_3 = modifier_special_bonus_imba_necrolyte_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_6 = modifier_special_bonus_imba_necrolyte_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_8 = modifier_special_bonus_imba_necrolyte_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_necrolyte_2:IsHidden() return true end
 
@@ -1062,10 +1062,10 @@ LinkLuaModifier("modifier_special_bonus_imba_necrolyte_4", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_5", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_necrolyte_7", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_necrolyte_1 = modifier_special_bonus_imba_necrolyte_1 or class({})
-modifier_special_bonus_imba_necrolyte_4 = modifier_special_bonus_imba_necrolyte_4 or class({})
-modifier_special_bonus_imba_necrolyte_5 = modifier_special_bonus_imba_necrolyte_5 or class({})
-modifier_special_bonus_imba_necrolyte_7 = modifier_special_bonus_imba_necrolyte_7 or class({})
+modifier_special_bonus_imba_necrolyte_1 = modifier_special_bonus_imba_necrolyte_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_4 = modifier_special_bonus_imba_necrolyte_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_5 = modifier_special_bonus_imba_necrolyte_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_necrolyte_7 = modifier_special_bonus_imba_necrolyte_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_necrolyte_1:IsHidden() return true end
 

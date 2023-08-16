@@ -10,20 +10,20 @@ LinkLuaModifier("modifier_imba_luna_lunar_blessing_723", "components/abilities/h
 
 LinkLuaModifier("modifier_imba_luna_eclipse", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
 
-imba_luna_lucent_beam                      = class({})
+imba_luna_lucent_beam                      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_luna_moon_glaive                      = class({})
-modifier_imba_luna_moon_glaive             = class({})
+imba_luna_moon_glaive                      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_luna_moon_glaive             = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_luna_lunar_blessing                   = class({})
-modifier_imba_luna_lunar_blessing_aura     = class({})
+imba_luna_lunar_blessing                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_luna_lunar_blessing_aura     = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_luna_lunar_blessing_723               = class({})
-modifier_imba_luna_lunar_blessing_aura_723 = class({})
-modifier_imba_luna_lunar_blessing_723      = modifier_imba_luna_lunar_blessing_723 or class({})
+imba_luna_lunar_blessing_723               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_luna_lunar_blessing_aura_723 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_luna_lunar_blessing_723      = modifier_imba_luna_lunar_blessing_723 or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_luna_eclipse                          = class({})
-modifier_imba_luna_eclipse                 = class({})
+imba_luna_eclipse                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_luna_eclipse                 = class(VANILLA_ABILITIES_BASECLASS)
 
 -----------------
 -- LUCENT BEAM --
@@ -34,7 +34,7 @@ function imba_luna_lucent_beam:GetBehavior()
 end
 
 function imba_luna_lucent_beam:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_luna_lucent_beam_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_luna_lucent_beam_cooldown")
 end
 
 function imba_luna_lucent_beam:OnAbilityPhaseStart()
@@ -861,7 +861,7 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_luna_lucent_beam_cooldown", "components/abilities/heroes/hero_luna", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_luna_lucent_beam_cooldown = class({})
+modifier_special_bonus_imba_luna_lucent_beam_cooldown = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_luna_lucent_beam_cooldown:IsHidden() return true end
 

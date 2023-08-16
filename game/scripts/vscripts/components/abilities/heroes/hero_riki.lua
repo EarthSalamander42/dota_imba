@@ -19,7 +19,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_smoke_screen_invi"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_smoke_screen_invi_indicator"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_riki_smoke_screen = imba_riki_smoke_screen or class({})
+imba_riki_smoke_screen = imba_riki_smoke_screen or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_riki_smoke_screen:GetAbilityTextureName()
 	return "riki_smoke_screen"
@@ -30,7 +30,7 @@ function imba_riki_smoke_screen:GetBehavior()
 end
 
 function imba_riki_smoke_screen:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_riki_smoke_screen:GetAOERadius()
@@ -66,7 +66,7 @@ end
 ---------------------------------
 -----	Smoke Screen Aura	-----
 ---------------------------------
-modifier_imba_smoke_screen_handler = modifier_imba_smoke_screen_handler or class({})
+modifier_imba_smoke_screen_handler = modifier_imba_smoke_screen_handler or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_smoke_screen_handler:IsPurgable() return false end
 
 function modifier_imba_smoke_screen_handler:IsHidden() return true end
@@ -204,7 +204,7 @@ end
 -----	Smoke Screen Invi Talent	-----
 -----------------------------------------
 
-modifier_imba_smoke_screen_invi_indicator = modifier_imba_smoke_screen_invi_indicator or class({})
+modifier_imba_smoke_screen_invi_indicator = modifier_imba_smoke_screen_invi_indicator or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_smoke_screen_invi_indicator:IsPurgable() return false end
 
@@ -253,7 +253,7 @@ function modifier_imba_smoke_screen_invi_indicator:OnIntervalThink()
 	end
 end
 
-modifier_imba_smoke_screen_invi = modifier_imba_smoke_screen_invi or class({})
+modifier_imba_smoke_screen_invi = modifier_imba_smoke_screen_invi or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_smoke_screen_invi:IsPurgable() return false end
 
@@ -264,7 +264,7 @@ function modifier_imba_smoke_screen_invi:IsHidden() return true end
 -----------------------------------
 -----	Smoke Screen Debuff	  -----
 -----------------------------------
-modifier_imba_smoke_screen_debuff_miss = modifier_imba_smoke_screen_debuff_miss or class({})
+modifier_imba_smoke_screen_debuff_miss = modifier_imba_smoke_screen_debuff_miss or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_smoke_screen_debuff_miss:IsPurgable() return false end
 
 function modifier_imba_smoke_screen_debuff_miss:IsHidden() return false end
@@ -312,7 +312,7 @@ end
 -------------------------------------------
 -----	Smoke Screen Vision Debuff	  -----
 -------------------------------------------
-modifier_imba_smoke_screen_vision = modifier_imba_smoke_screen_vision or class({})
+modifier_imba_smoke_screen_vision = modifier_imba_smoke_screen_vision or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_smoke_screen_vision:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_smoke_screen_vision:IsPurgable() return false end
@@ -340,12 +340,12 @@ LinkLuaModifier("modifier_imba_riki_smoke_screen_723", "components/abilities/her
 LinkLuaModifier("modifier_imba_riki_smoke_screen_723_aura_buff", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_riki_smoke_screen_723_buff", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 
-imba_riki_smoke_screen_723                    = imba_riki_smoke_screen_723 or class({})
-modifier_imba_riki_smoke_screen_723_aura      = modifier_imba_riki_smoke_screen_723_aura or class({})
-modifier_imba_riki_smoke_screen_723           = modifier_imba_riki_smoke_screen_723 or class({})
+imba_riki_smoke_screen_723                    = imba_riki_smoke_screen_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_riki_smoke_screen_723_aura      = modifier_imba_riki_smoke_screen_723_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_riki_smoke_screen_723           = modifier_imba_riki_smoke_screen_723 or class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_riki_smoke_screen_723_aura_buff = modifier_imba_riki_smoke_screen_723_aura_buff or class({})
-modifier_imba_riki_smoke_screen_723_buff      = modifier_imba_riki_smoke_screen_723_buff or class({})
+modifier_imba_riki_smoke_screen_723_aura_buff = modifier_imba_riki_smoke_screen_723_aura_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_riki_smoke_screen_723_buff      = modifier_imba_riki_smoke_screen_723_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_riki_smoke_screen_723:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
@@ -361,9 +361,9 @@ end
 
 function imba_riki_smoke_screen_723:GetCooldown(level)
 	if self:GetName() == "imba_riki_smoke_screen_723" then
-		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_riki_smokescreen_cooldown")
+		return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_riki_smokescreen_cooldown")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -536,7 +536,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_blink_strike_cmd"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_riki_blink_strike = imba_riki_blink_strike or class({})
+imba_riki_blink_strike = imba_riki_blink_strike or class(VANILLA_ABILITIES_BASECLASS)
 function imba_riki_blink_strike:IsHiddenWhenStolen() return false end
 
 function imba_riki_blink_strike:IsRefreshable() return true end
@@ -830,7 +830,7 @@ function imba_riki_blink_strike:DoJumpAttack(hTarget, hNextTarget)
 end
 
 -------------------------------------------
-modifier_imba_blink_strike_thinker = modifier_imba_blink_strike_thinker or class({})
+modifier_imba_blink_strike_thinker = modifier_imba_blink_strike_thinker or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_blink_strike_thinker:IsDebuff() return false end
 
 function modifier_imba_blink_strike_thinker:IsHidden() return true end
@@ -969,7 +969,7 @@ end
 -----------------------------------
 -----	Blink Strike Debuff	  -----
 -----------------------------------
-modifier_imba_blink_strike_debuff_turn = modifier_imba_blink_strike_debuff_turn or class({})
+modifier_imba_blink_strike_debuff_turn = modifier_imba_blink_strike_debuff_turn or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_blink_strike_debuff_turn:IsPurgable() return true end
 
 function modifier_imba_blink_strike_debuff_turn:IsHidden() return false end
@@ -996,7 +996,7 @@ end
 ---------------------------------------------------------------
 -----	Blink Strike out of world modifier for jumping	  -----
 ---------------------------------------------------------------
-modifier_imba_blink_strike_cmd = modifier_imba_blink_strike_cmd or class({})
+modifier_imba_blink_strike_cmd = modifier_imba_blink_strike_cmd or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_blink_strike_cmd:IsPurgable() return false end
 
 function modifier_imba_blink_strike_cmd:IsHidden() return true end
@@ -1053,7 +1053,7 @@ end
 ---------------------------------------------------------------------
 --------------------	  Cloak and Dagger		 --------------------
 ---------------------------------------------------------------------
-imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class({})
+imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_riki_cloak_and_dagger", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)     -- Backstab and invisibility handler
 LinkLuaModifier("modifier_imba_riki_invisibility", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)         -- Invisibility modifier
 LinkLuaModifier("modifier_imba_riki_backstab_translation", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE) -- Attack translate
@@ -1064,7 +1064,7 @@ LinkLuaModifier("modifier_imba_riki_backbroken", "components/abilities/heroes/he
 -- Adding "modifier_special_bonus_imba_riki_3" as separate modifier to force GetBehavior call from passive to active skill
 LinkLuaModifier("modifier_special_bonus_imba_riki_3", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_riki_3 = class({})
+modifier_special_bonus_imba_riki_3 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_riki_3:IsHidden() return true end
 
@@ -1107,7 +1107,7 @@ function imba_riki_cloak_and_dagger:OnOwnerSpawned()
 end
 
 function imba_riki_cloak_and_dagger:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 -- #3 Talent: Riki can now activate Cloak and Dagger to gain bonus Agi Multiplier
@@ -1134,7 +1134,7 @@ end
 ----------------------------------------------------------
 -----	Cloak and Dagger backstab + invis handler	  ----
 ----------------------------------------------------------
-modifier_imba_riki_cloak_and_dagger = modifier_imba_riki_cloak_and_dagger or class({})
+modifier_imba_riki_cloak_and_dagger = modifier_imba_riki_cloak_and_dagger or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_riki_cloak_and_dagger:IsPurgable() return false end
 
 function modifier_imba_riki_cloak_and_dagger:IsDebuff() return false end
@@ -1440,7 +1440,7 @@ end
 ----------------------------------------------
 -----	Cloak and Dagger invisibility	  ----
 ----------------------------------------------
-modifier_imba_riki_invisibility = modifier_imba_riki_invisibility or class({})
+modifier_imba_riki_invisibility = modifier_imba_riki_invisibility or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_riki_invisibility:IsPurgable() return false end
 
@@ -1473,7 +1473,7 @@ end
 ----------------------------------------------
 -----	Cloak and Dagger attack-translate ----
 ----------------------------------------------
-modifier_imba_riki_backstab_translation = modifier_imba_riki_backstab_translation or class({})
+modifier_imba_riki_backstab_translation = modifier_imba_riki_backstab_translation or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_riki_backstab_translation:IsPurgable() return false end
 
 function modifier_imba_riki_backstab_translation:IsDebuff() return false end
@@ -1496,7 +1496,7 @@ end
 --------------------	Cloak and Dagger Peek A Boo talent		---------------------
 -------------------------------------------------------------------------------------
 
-modifier_imba_riki_peek_a_boo = modifier_imba_riki_peek_a_boo or class({})
+modifier_imba_riki_peek_a_boo = modifier_imba_riki_peek_a_boo or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_riki_peek_a_boo:IsPurgable() return false end
 
 function modifier_imba_riki_peek_a_boo:IsDebuff() return false end
@@ -1507,7 +1507,7 @@ function modifier_imba_riki_peek_a_boo:IsHidden() return false end
 --------------------	Cloak and Dagger Peek Backbreaker	  -----------------------
 -------------------------------------------------------------------------------------
 
-modifier_imba_riki_backbreaker = modifier_imba_riki_backbreaker or class({})
+modifier_imba_riki_backbreaker = modifier_imba_riki_backbreaker or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_riki_backbreaker:IsPurgable() return false end
 
 function modifier_imba_riki_backbreaker:IsDebuff() return true end
@@ -1538,7 +1538,7 @@ function modifier_imba_riki_backbreaker:OnRefresh()
 	end
 end
 
-modifier_imba_riki_backbroken = modifier_imba_riki_backbroken or class({})
+modifier_imba_riki_backbroken = modifier_imba_riki_backbroken or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_riki_backbroken:IsPurgable() return true end
 
 function modifier_imba_riki_backbroken:IsDebuff() return true end
@@ -1552,9 +1552,9 @@ end
 ---------------------------------------------------------------------
 --------------------	Tricks of the Trade		---------------------
 ---------------------------------------------------------------------
-imba_riki_tricks_of_the_trade = imba_riki_tricks_of_the_trade or class({})
-LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_primary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)     -- Hides the caster and damages all enemies in the AoE
-LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_secondary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)   -- Attacks a single enemy based on attack speed
+imba_riki_tricks_of_the_trade = imba_riki_tricks_of_the_trade or class(VANILLA_ABILITIES_BASECLASS)
+LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_primary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)   -- Hides the caster and damages all enemies in the AoE
+LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_secondary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE) -- Attacks a single enemy based on attack speed
 LinkLuaModifier("modifier_imba_martyrs_mark", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_riki_tricks_of_the_trade:GetAbilityTextureName()
@@ -1727,7 +1727,7 @@ end
 ----------------------------------------------
 -----	Tricks of the Trade modifier	  ----
 ----------------------------------------------
-if modifier_imba_riki_tricks_of_the_trade_primary == nil then modifier_imba_riki_tricks_of_the_trade_primary = class({}) end
+if modifier_imba_riki_tricks_of_the_trade_primary == nil then modifier_imba_riki_tricks_of_the_trade_primary = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_riki_tricks_of_the_trade_primary:IsPurgable() return false end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:IsDebuff() return false end
@@ -1854,7 +1854,7 @@ end
 ------------------------------------------------------
 -----	Tricks of the Trade secondary attacks	  ----
 ------------------------------------------------------
-if modifier_imba_riki_tricks_of_the_trade_secondary == nil then modifier_imba_riki_tricks_of_the_trade_secondary = class({}) end
+if modifier_imba_riki_tricks_of_the_trade_secondary == nil then modifier_imba_riki_tricks_of_the_trade_secondary = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_riki_tricks_of_the_trade_secondary:IsPurgable() return false end
 
 function modifier_imba_riki_tricks_of_the_trade_secondary:IsDebuff() return false end
@@ -2019,7 +2019,7 @@ end
 ---------	Martyr's Mark	---------
 -------------------------------------
 
-if modifier_imba_martyrs_mark == nil then modifier_imba_martyrs_mark = class({}) end
+if modifier_imba_martyrs_mark == nil then modifier_imba_martyrs_mark = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_martyrs_mark:IsPurgable() return false end
 
 function modifier_imba_martyrs_mark:IsDebuff() return true end
@@ -2072,13 +2072,13 @@ end
 LinkLuaModifier("modifier_imba_riki_tricks_of_the_trade_723_damage_reduction", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 
 imba_riki_tricks_of_the_trade_723                           = imba_riki_tricks_of_the_trade
-modifier_imba_riki_tricks_of_the_trade_723_damage_reduction = modifier_imba_riki_tricks_of_the_trade_723_damage_reduction or class({})
+modifier_imba_riki_tricks_of_the_trade_723_damage_reduction = modifier_imba_riki_tricks_of_the_trade_723_damage_reduction or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_riki_tricks_of_the_trade_723:GetCooldown(level)
 	if self:GetName() == "imba_riki_tricks_of_the_trade_723" then
-		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_riki_tricks_of_the_trade_cooldown")
+		return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_riki_tricks_of_the_trade_cooldown")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -2108,8 +2108,8 @@ end
 
 LinkLuaModifier("modifier_imba_riki_cloak_and_dagger_723", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 
-imba_riki_cloak_and_dagger_723          = imba_riki_cloak_and_dagger_723 or class({})
-modifier_imba_riki_cloak_and_dagger_723 = modifier_imba_riki_cloak_and_dagger_723 or class({})
+imba_riki_cloak_and_dagger_723          = imba_riki_cloak_and_dagger_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_riki_cloak_and_dagger_723 = modifier_imba_riki_cloak_and_dagger_723 or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_riki_cloak_and_dagger_723:GetIntrinsicModifierName()
 	return "modifier_imba_riki_cloak_and_dagger_723"
@@ -2245,14 +2245,14 @@ LinkLuaModifier("modifier_special_bonus_imba_riki_7", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_riki_8", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_cloak_and_dagger_damage", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_riki_1 = modifier_special_bonus_imba_riki_1 or class({})
-modifier_special_bonus_imba_riki_2 = modifier_special_bonus_imba_riki_2 or class({})
-modifier_special_bonus_imba_riki_4 = modifier_special_bonus_imba_riki_4 or class({})
-modifier_special_bonus_imba_riki_5 = modifier_special_bonus_imba_riki_5 or class({})
-modifier_special_bonus_imba_riki_6 = modifier_special_bonus_imba_riki_6 or class({})
-modifier_special_bonus_imba_riki_7 = modifier_special_bonus_imba_riki_7 or class({})
-modifier_special_bonus_imba_riki_8 = modifier_special_bonus_imba_riki_8 or class({})
-modifier_special_bonus_imba_riki_cloak_and_dagger_damage = modifier_special_bonus_imba_riki_cloak_and_dagger_damage or class({})
+modifier_special_bonus_imba_riki_1 = modifier_special_bonus_imba_riki_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_2 = modifier_special_bonus_imba_riki_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_4 = modifier_special_bonus_imba_riki_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_5 = modifier_special_bonus_imba_riki_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_6 = modifier_special_bonus_imba_riki_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_7 = modifier_special_bonus_imba_riki_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_8 = modifier_special_bonus_imba_riki_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_cloak_and_dagger_damage = modifier_special_bonus_imba_riki_cloak_and_dagger_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_riki_1:IsHidden() return true end
 
@@ -2315,10 +2315,10 @@ LinkLuaModifier("modifier_special_bonus_imba_riki_blink_strike_cast_range", "com
 LinkLuaModifier("modifier_special_bonus_imba_riki_tricks_of_the_trade_cooldown", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_riki_cloak_and_dagger_invis", "components/abilities/heroes/hero_riki", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_riki_smokescreen_cooldown         = class({})
-modifier_special_bonus_imba_riki_blink_strike_cast_range      = class({})
-modifier_special_bonus_imba_riki_tricks_of_the_trade_cooldown = class({})
-modifier_special_bonus_imba_riki_cloak_and_dagger_invis       = class({})
+modifier_special_bonus_imba_riki_smokescreen_cooldown         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_blink_strike_cast_range      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_tricks_of_the_trade_cooldown = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_riki_cloak_and_dagger_invis       = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_riki_smokescreen_cooldown:IsHidden() return true end
 

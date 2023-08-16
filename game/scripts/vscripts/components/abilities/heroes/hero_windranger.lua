@@ -20,35 +20,35 @@ LinkLuaModifier("modifier_imba_windranger_focusfire", "components/abilities/hero
 
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-imba_windranger_shackleshot                         = class({})
-modifier_imba_windranger_shackle_shot               = class({})
+imba_windranger_shackleshot                         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_shackle_shot               = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_windranger_powershot                           = class({})
-modifier_imba_windranger_powershot                  = class({})
-modifier_imba_windranger_powershot_scattershot      = class({})
-modifier_imba_windranger_powershot_overstretch      = class({})
+imba_windranger_powershot                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_powershot                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_powershot_scattershot      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_powershot_overstretch      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_windranger_windrun                             = class({})
-modifier_imba_windranger_windrun_handler            = class({})
-modifier_imba_windranger_windrun                    = class({})
-modifier_imba_windranger_windrun_slow               = class({})
-modifier_imba_windranger_windrun_invis              = class({})
+imba_windranger_windrun                             = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_windrun_handler            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_windrun                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_windrun_slow               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_windrun_invis              = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_windranger_advancement                         = class({})
-modifier_imba_windranger_advancement                = class({})
+imba_windranger_advancement                         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_advancement                = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_windranger_focusfire_vanilla_enhancer          = class({})
-modifier_imba_windranger_focusfire_vanilla_enhancer = class({})
+imba_windranger_focusfire_vanilla_enhancer          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_focusfire_vanilla_enhancer = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_windranger_focusfire                           = class({})
-modifier_imba_windranger_focusfire                  = class({})
+imba_windranger_focusfire                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_windranger_focusfire                  = class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------
 -- IMBA_WINDRANGER_SHACKLESHOT --
 ---------------------------------
 
 function imba_windranger_shackleshot:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_windranger_shackle_shot_cooldown")
 end
 
 -- Splinter Sister IMBAfication will be an "opt-out" add-on
@@ -527,7 +527,7 @@ end
 
 function imba_windranger_windrun:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -898,9 +898,9 @@ LinkLuaModifier("modifier_special_bonus_imba_windranger_powershot_damage", "comp
 LinkLuaModifier("modifier_special_bonus_imba_windranger_shackle_shot_duration", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_windranger_windrun_invisibility", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_windranger_powershot_damage      = modifier_special_bonus_imba_windranger_powershot_damage or class({})
-modifier_special_bonus_imba_windranger_shackle_shot_duration = modifier_special_bonus_imba_windranger_shackle_shot_duration or class({})
-modifier_special_bonus_imba_windranger_windrun_invisibility  = modifier_special_bonus_imba_windranger_windrun_invisibility or class({})
+modifier_special_bonus_imba_windranger_powershot_damage      = modifier_special_bonus_imba_windranger_powershot_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_windranger_shackle_shot_duration = modifier_special_bonus_imba_windranger_shackle_shot_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_windranger_windrun_invisibility  = modifier_special_bonus_imba_windranger_windrun_invisibility or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_windranger_powershot_damage:IsHidden() return true end
 
@@ -923,8 +923,8 @@ function modifier_special_bonus_imba_windranger_windrun_invisibility:RemoveOnDea
 LinkLuaModifier("modifier_special_bonus_imba_windranger_shackle_shot_cooldown", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_windranger_focusfire_damage_reduction", "components/abilities/heroes/hero_windranger", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_windranger_shackle_shot_cooldown      = class({})
-modifier_special_bonus_imba_windranger_focusfire_damage_reduction = class({})
+modifier_special_bonus_imba_windranger_shackle_shot_cooldown      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_windranger_focusfire_damage_reduction = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_windranger_shackle_shot_cooldown:IsHidden() return true end
 

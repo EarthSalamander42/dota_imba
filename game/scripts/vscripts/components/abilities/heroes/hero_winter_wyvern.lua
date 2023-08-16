@@ -24,10 +24,10 @@ LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn", "components/abilities
 LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_slow", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_damage", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_flight", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-imba_winter_wyvern_arctic_burn = class({})
+imba_winter_wyvern_arctic_burn = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_winter_wyvern_arctic_burn:GetCooldown(nLevel)
-	local cooldown = self.BaseClass.GetCooldown(self, nLevel)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	if self:GetCaster():HasScepter() then
 		return 0
@@ -111,7 +111,7 @@ end
 --------------------------------------------------------------
 --  			Arctic Burn (handle modifier) 				--
 --------------------------------------------------------------
-modifier_imba_winter_wyvern_arctic_burn = class({})
+modifier_imba_winter_wyvern_arctic_burn = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_arctic_burn:IsHidden() return true end
 
 function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions()
@@ -173,7 +173,7 @@ end
 --------------------------------------------------------------
 --  			Arctic Burn (Slow modifier) 				--
 --------------------------------------------------------------
-modifier_imba_winter_wyvern_arctic_burn_slow = class({})
+modifier_imba_winter_wyvern_arctic_burn_slow = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_arctic_burn_slow:IsHidden() return true end
 
 function modifier_imba_winter_wyvern_arctic_burn_slow:DeclareFunctions()
@@ -189,7 +189,7 @@ end
 --------------------------------------------------------------
 --  			Arctic Burn (Damage modifier) 				--
 --------------------------------------------------------------
-modifier_imba_winter_wyvern_arctic_burn_damage = class({})
+modifier_imba_winter_wyvern_arctic_burn_damage = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_arctic_burn_damage:IsHidden() return false end
 
 function modifier_imba_winter_wyvern_arctic_burn_damage:OnCreated()
@@ -243,7 +243,7 @@ end
 ------------------------------------------------------------------
 LinkLuaModifier("modifier_imba_winter_wyvern_splinter_blast_slow", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_splinter_blast_splinter_charge", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-imba_winter_wyvern_splinter_blast = class({});
+imba_winter_wyvern_splinter_blast = class(VANILLA_ABILITIES_BASECLASS);
 function imba_winter_wyvern_splinter_blast:OnSpellStart()
 	if IsServer() then
 		local caster                     = self:GetCaster();
@@ -468,7 +468,7 @@ end
 --------------------------------------------------------------
 --  			Splinter Blast (Slow modifier) 				--
 --------------------------------------------------------------
-modifier_imba_winter_wyvern_splinter_blast_slow = class({})
+modifier_imba_winter_wyvern_splinter_blast_slow = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsHidden() return false end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:IsDebuff() return true end
@@ -512,10 +512,10 @@ end
 LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace_freeze", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace_resistance", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-imba_winter_wyvern_cold_embrace = class({})
+imba_winter_wyvern_cold_embrace = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_winter_wyvern_cold_embrace:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction")
 end
 
 function imba_winter_wyvern_cold_embrace:OnSpellStart()
@@ -562,7 +562,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Embrace -- Assult handler
 ---------------------------------------------------------------------------------------------------------------------
-modifier_imba_winter_wyvern_cold_embrace = class({})
+modifier_imba_winter_wyvern_cold_embrace = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_cold_embrace:IsHidden() return true end
 
 function modifier_imba_winter_wyvern_cold_embrace:IsPurgable() return false end
@@ -708,7 +708,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Embrace -- Resistance
 ---------------------------------------------------------------------------------------------------------------------
-modifier_imba_winter_wyvern_cold_embrace_resistance = class({})
+modifier_imba_winter_wyvern_cold_embrace_resistance = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_cold_embrace_resistance:IsHidden() return true end
 
 function modifier_imba_winter_wyvern_cold_embrace_resistance:DeclareFunctions()
@@ -724,7 +724,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Embrace -- Freeze
 ---------------------------------------------------------------------------------------------------------------------
-modifier_imba_winter_wyvern_cold_embrace_freeze = class({})
+modifier_imba_winter_wyvern_cold_embrace_freeze = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_cold_embrace_freeze:IsDebuff() return true end
 
 function modifier_imba_winter_wyvern_cold_embrace_freeze:IsPurgable() return true end
@@ -754,7 +754,7 @@ end
 --						Winters Curse 							--
 ------------------------------------------------------------------
 LinkLuaModifier("modifier_imba_winter_wyvern_winters_curse", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-imba_winter_wyvern_winters_curse = class({})
+imba_winter_wyvern_winters_curse = class(VANILLA_ABILITIES_BASECLASS)
 function imba_winter_wyvern_winters_curse:OnSpellStart()
 	if IsServer() then
 		local caster   = self:GetCaster();
@@ -795,7 +795,7 @@ end
 ------------------------------------------------------------------
 --			Winters Curse (dissable passives modifier) 			--
 ------------------------------------------------------------------
-modifier_imba_winter_wyvern_winters_curse = class({})
+modifier_imba_winter_wyvern_winters_curse = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_winter_wyvern_winters_curse:IsHidden() return true end
 
 function modifier_imba_winter_wyvern_winters_curse:IsDebuff() return false end
@@ -811,7 +811,7 @@ end
 --		Winter Wyvern Talent 4 (Magic Resistance during cold Embrace) 		--
 ------------------------------------------------------------------------------
 LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_4", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_4 = class({})
+modifier_special_bonus_imba_winter_wyvern_4 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_winter_wyvern_4:IsHidden() return true end
 
 function modifier_special_bonus_imba_winter_wyvern_4:RemoveOnDeath() return false end
@@ -822,7 +822,7 @@ function modifier_special_bonus_imba_winter_wyvern_4:IsPurgable() return false e
 --				Winter Wyvern Talent 5 (Pure Arctic damage) 				--
 ------------------------------------------------------------------------------
 LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_5", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_5 = class({})
+modifier_special_bonus_imba_winter_wyvern_5 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_winter_wyvern_5:IsHidden() return true end
 
 function modifier_special_bonus_imba_winter_wyvern_5:RemoveOnDeath() return false end
@@ -833,7 +833,7 @@ function modifier_special_bonus_imba_winter_wyvern_5:IsPurgable() return false e
 --			Winter Wyvern Talent 6 (Cold Embrace Cooldown Reduction) 		--
 ------------------------------------------------------------------------------
 LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_6", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_6 = class({})
+modifier_special_bonus_imba_winter_wyvern_6 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_winter_wyvern_6:IsHidden() return true end
 
 function modifier_special_bonus_imba_winter_wyvern_6:RemoveOnDeath() return false end
@@ -850,7 +850,7 @@ end
 --			Winter Wyvern Talent 8 (IMBA Winter's Curse) 			--
 ----------------------------------------------------------------------
 LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_7", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_7 = class({})
+modifier_special_bonus_imba_winter_wyvern_7 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_winter_wyvern_7:IsHidden() return true end
 
 function modifier_special_bonus_imba_winter_wyvern_7:RemoveOnDeath() return false end

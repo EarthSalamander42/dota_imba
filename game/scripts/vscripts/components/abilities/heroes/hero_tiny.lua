@@ -12,7 +12,7 @@ LinkLuaModifier("modifier_imba_tiny_tree_damage", "components/abilities/heroes/h
 LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tiny_tree_animation", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_tiny_death_handler = modifier_imba_tiny_death_handler or class({})
+modifier_imba_tiny_death_handler = modifier_imba_tiny_death_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_death_handler:IsHidden() return true end
 
@@ -50,7 +50,7 @@ end
 --     Tree Model and Animation modifier	--
 ----------------------------------------------
 
-modifier_imba_tiny_tree_animation = modifier_imba_tiny_tree_animation or class({})
+modifier_imba_tiny_tree_animation = modifier_imba_tiny_tree_animation or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_tree_animation:IsHidden() return true end
 
@@ -120,7 +120,7 @@ function modifier_imba_tiny_tree_animation:OnRemoved()
 	end
 end
 
-imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
+imba_tiny_tree_grab = imba_tiny_tree_grab or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_tree_grab:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -158,7 +158,7 @@ end
 --        Tree Grabb modifier        --
 ---------------------------------------
 
-modifier_imba_tiny_tree = modifier_imba_tiny_tree or class({})
+modifier_imba_tiny_tree = modifier_imba_tiny_tree or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_tree:IsHidden() return false end
 
@@ -310,7 +310,7 @@ end
 --       Tree Damage modifier        --
 ---------------------------------------
 
-modifier_imba_tiny_tree_damage = modifier_imba_tiny_tree_damage or class({})
+modifier_imba_tiny_tree_damage = modifier_imba_tiny_tree_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_tree_damage:IsHidden() return true end
 
@@ -333,7 +333,7 @@ end
 -- Tree Damage vs budilding modifier --
 ---------------------------------------
 
-imba_tiny_tree_building_modifier = imba_tiny_tree_building_modifier or class({})
+imba_tiny_tree_building_modifier = imba_tiny_tree_building_modifier or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_tree_building_modifier:IsHidden() return true end
 
@@ -356,7 +356,7 @@ end
 --          Tree Throw               --
 ---------------------------------------
 
-imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
+imba_tiny_tree_throw = imba_tiny_tree_throw or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_tree_throw:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -530,7 +530,7 @@ function imba_tiny_tree_throw:KnockBack(caster, target, knockback_center)
 	end
 end
 
-modifier_imba_tiny_tree_throw_knockback = class({})
+modifier_imba_tiny_tree_throw_knockback = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_tree_throw_knockback:IsHidden() return false end
 
@@ -549,7 +549,7 @@ function modifier_imba_tiny_tree_throw_knockback:GetOverrideAnimation()
 	return ACT_DOTA_DISABLED
 end
 
-modifier_imba_tree_throw = modifier_imba_tree_throw or class({})
+modifier_imba_tree_throw = modifier_imba_tree_throw or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tree_throw:IsHidden() return true end
 
@@ -573,7 +573,7 @@ end
 --          ROLLING STONE            --
 ---------------------------------------
 
-imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
+imba_tiny_rolling_stone = imba_tiny_rolling_stone or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_rolling_stone:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -591,7 +591,7 @@ end
 
 LinkLuaModifier("modifier_imba_tiny_rolling_stone", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_tiny_rolling_stone = class({})
+modifier_imba_tiny_rolling_stone = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_rolling_stone:OnCreated()
 	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
@@ -693,7 +693,7 @@ end
 --             AVALANCH              --
 ---------------------------------------
 
-imba_tiny_avalanche = imba_tiny_avalanche or class({})
+imba_tiny_avalanche = imba_tiny_avalanche or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_avalanche:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -706,7 +706,7 @@ function imba_tiny_avalanche:GetAOERadius()
 end
 
 function imba_tiny_avalanche:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_tiny_avalanche_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_tiny_avalanche_cooldown")
 end
 
 if IsServer() then
@@ -828,7 +828,7 @@ end
 
 LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_tiny_avalanche_passive = class({})
+modifier_imba_tiny_avalanche_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_avalanche_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("passive_chance")
@@ -897,7 +897,7 @@ end
 --               TOSS                --
 ---------------------------------------
 
-imba_tiny_toss = imba_tiny_toss or class({})
+imba_tiny_toss = imba_tiny_toss or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_toss:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -1011,7 +1011,7 @@ end
 
 LinkLuaModifier("modifier_tiny_toss_movement", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_tiny_toss_movement = modifier_tiny_toss_movement or class({})
+modifier_tiny_toss_movement = modifier_tiny_toss_movement or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_tiny_toss_movement:IsDebuff() return true end
 
@@ -1240,7 +1240,7 @@ end
 
 LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
 
-modifier_tiny_toss_scepter_bounce = modifier_tiny_toss_scepter_bounce or class({})
+modifier_tiny_toss_scepter_bounce = modifier_tiny_toss_scepter_bounce or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_tiny_toss_scepter_bounce:IsDebuff() return true end
 
@@ -1376,7 +1376,7 @@ end
 --          CRAGGY EXTERIOR          --
 ---------------------------------------
 
-imba_tiny_craggy_exterior = imba_tiny_craggy_exterior or class({})
+imba_tiny_craggy_exterior = imba_tiny_craggy_exterior or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_craggy_exterior:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_craggy_exterior_passive"
@@ -1384,7 +1384,7 @@ end
 
 LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_tiny_craggy_exterior_passive = class({})
+modifier_imba_tiny_craggy_exterior_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_craggy_exterior_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("stun_chance")
@@ -1474,7 +1474,7 @@ end
 
 LinkLuaModifier("modifier_craggy_exterior_blunt", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_craggy_exterior_blunt = class({})
+modifier_craggy_exterior_blunt = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_craggy_exterior_blunt:OnCreated()
 	self.caster = self:GetCaster()
@@ -1500,7 +1500,7 @@ end
 --          	  GROW 		         --
 ---------------------------------------
 
-imba_tiny_grow = imba_tiny_grow or class({})
+imba_tiny_grow = imba_tiny_grow or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tiny_grow:GetAbilityTextureName()
 	if not IsClient() then return end
@@ -1581,7 +1581,7 @@ end
 
 LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_tiny_grow_passive = class({})
+modifier_imba_tiny_grow_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tiny_grow_passive:IsHidden() return true end
 
@@ -1616,10 +1616,10 @@ LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tiny_1 = modifier_special_bonus_imba_tiny_1 or class({})
-modifier_special_bonus_imba_tiny_2 = modifier_special_bonus_imba_tiny_2 or class({})
-modifier_special_bonus_imba_tiny_6 = modifier_special_bonus_imba_tiny_6 or class({})
-modifier_special_bonus_imba_tiny_7 = modifier_special_bonus_imba_tiny_7 or class({})
+modifier_special_bonus_imba_tiny_1 = modifier_special_bonus_imba_tiny_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tiny_2 = modifier_special_bonus_imba_tiny_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tiny_6 = modifier_special_bonus_imba_tiny_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tiny_7 = modifier_special_bonus_imba_tiny_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_tiny_1:IsHidden() return true end
 
@@ -1650,8 +1650,8 @@ function modifier_special_bonus_imba_tiny_7:RemoveOnDeath() return false end
 LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_tiny_avalanche_cooldown", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tiny_8                  = class({})
-modifier_special_bonus_imba_tiny_avalanche_cooldown = class({})
+modifier_special_bonus_imba_tiny_8                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tiny_avalanche_cooldown = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_tiny_8:IsHidden() return true end
 

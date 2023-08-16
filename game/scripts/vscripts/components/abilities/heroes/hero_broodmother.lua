@@ -26,7 +26,7 @@ LinkLuaModifier("modifier_imba_broodmother_spawn_spiderlings", "components/abili
 LinkLuaModifier("modifier_imba_broodmother_spawn_spiderlings_avenger", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_spawn_spiderlings_avenger_buff", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spawn_spiderlings = imba_broodmother_spawn_spiderlings or class({})
+imba_broodmother_spawn_spiderlings = imba_broodmother_spawn_spiderlings or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spawn_spiderlings:GetAssociatedPrimaryAbilities()
 	return "imba_broodmother_spawn_spiderking"
@@ -98,7 +98,7 @@ end
 -- SPAWN SPIDERLINGS DEBUFF --
 ------------------------------
 
-modifier_imba_broodmother_spawn_spiderlings = modifier_imba_broodmother_spawn_spiderlings or class({})
+modifier_imba_broodmother_spawn_spiderlings = modifier_imba_broodmother_spawn_spiderlings or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spawn_spiderlings:OnCreated()
 	if IsServer() then
@@ -156,7 +156,7 @@ end
 -- SPAWN SPIDERLING AVENGER THINKER --
 --------------------------------------
 
-modifier_imba_broodmother_spawn_spiderlings_avenger = modifier_imba_broodmother_spawn_spiderlings_avenger or class({})
+modifier_imba_broodmother_spawn_spiderlings_avenger = modifier_imba_broodmother_spawn_spiderlings_avenger or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spawn_spiderlings_avenger:IsDebuff() return false end
 
@@ -215,7 +215,7 @@ end
 -- SPAWN SPIDERLING AVENGER BUFF --
 -----------------------------------
 
-modifier_imba_broodmother_spawn_spiderlings_avenger_buff = modifier_imba_broodmother_spawn_spiderlings_avenger_buff or class({})
+modifier_imba_broodmother_spawn_spiderlings_avenger_buff = modifier_imba_broodmother_spawn_spiderlings_avenger_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spawn_spiderlings_avenger_buff:IsDebuff() return false end
 
@@ -257,7 +257,7 @@ LinkLuaModifier("modifier_imba_broodmother_spin_web_enemy", "components/abilitie
 LinkLuaModifier("modifier_imba_broodmother_spin_web_sense", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spin_web = imba_broodmother_spin_web or class({})
+imba_broodmother_spin_web = imba_broodmother_spin_web or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spin_web:GetCastRange(location, target)
 	if IsServer() then
@@ -354,7 +354,7 @@ end
 -- SPIN WEB FRIENDLY AURA MODIFIER --
 -------------------------------------
 
-modifier_imba_broodmother_spin_web_aura = modifier_imba_broodmother_spin_web_aura or class({})
+modifier_imba_broodmother_spin_web_aura = modifier_imba_broodmother_spin_web_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spin_web_aura:OnCreated()
 	if IsServer() then
@@ -438,7 +438,7 @@ end
 -- SPIN WEB FRIENDLY MODIFIER --
 --------------------------------
 
-modifier_imba_broodmother_spin_web = modifier_imba_broodmother_spin_web or class({})
+modifier_imba_broodmother_spin_web = modifier_imba_broodmother_spin_web or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spin_web:OnCreated()
 	if IsServer() then
@@ -506,7 +506,7 @@ function modifier_imba_broodmother_spin_web:GetModifierIgnoreMovespeedLimit()
 	return 0
 end
 
-modifier_imba_broodmother_spin_web_aura_enemy = modifier_imba_broodmother_spin_web_aura_enemy or class({})
+modifier_imba_broodmother_spin_web_aura_enemy = modifier_imba_broodmother_spin_web_aura_enemy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spin_web_aura_enemy:OnCreated()
 	if IsServer() then
@@ -547,7 +547,7 @@ function modifier_imba_broodmother_spin_web_aura_enemy:RemoveOnDeath() return tr
 -- SPIN WEB ENEMY MODIFIER --
 -----------------------------
 
-modifier_imba_broodmother_spin_web_enemy = modifier_imba_broodmother_spin_web_enemy or class({})
+modifier_imba_broodmother_spin_web_enemy = modifier_imba_broodmother_spin_web_enemy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spin_web_enemy:IsHidden() return true end
 
@@ -589,7 +589,7 @@ end
 -- SPIN WEB ENEMY WEB SENSE --
 ------------------------------
 
-modifier_imba_broodmother_spin_web_sense = modifier_imba_broodmother_spin_web_sense or class({})
+modifier_imba_broodmother_spin_web_sense = modifier_imba_broodmother_spin_web_sense or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spin_web_sense:IsHidden() return true end
 
@@ -628,7 +628,7 @@ LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite_orb", "components
 LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite_webbed_up_counter", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_incapacitating_bite = imba_broodmother_incapacitating_bite or class({})
+imba_broodmother_incapacitating_bite = imba_broodmother_incapacitating_bite or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_incapacitating_bite:GetIntrinsicModifierName()
 	return "modifier_imba_broodmother_incapacitating_bite"
@@ -638,7 +638,7 @@ end
 -- INCAPACITATING BITE ATTACK MODIFIER --
 -----------------------------------------
 
-modifier_imba_broodmother_incapacitating_bite = modifier_imba_broodmother_incapacitating_bite or class({})
+modifier_imba_broodmother_incapacitating_bite = modifier_imba_broodmother_incapacitating_bite or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_incapacitating_bite:IsHidden() return true end
 
@@ -717,7 +717,7 @@ end
 -- INCAPACITATING BITE DEBUFF MODIFIER --
 -----------------------------------------
 
-modifier_imba_broodmother_incapacitating_bite_orb = modifier_imba_broodmother_incapacitating_bite_orb or class({})
+modifier_imba_broodmother_incapacitating_bite_orb = modifier_imba_broodmother_incapacitating_bite_orb or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_incapacitating_bite_orb:IsDebuff() return true end
 
@@ -765,7 +765,7 @@ end
 -- INCAPACITATING BITE WEBBED UP COUNTER MODIFIER --
 ----------------------------------------------------
 
-modifier_imba_broodmother_incapacitating_bite_webbed_up_counter = modifier_imba_broodmother_incapacitating_bite_webbed_up_counter or class({})
+modifier_imba_broodmother_incapacitating_bite_webbed_up_counter = modifier_imba_broodmother_incapacitating_bite_webbed_up_counter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_incapacitating_bite_webbed_up_counter:IsHidden() return false end
 
@@ -808,7 +808,7 @@ end
 -- INCAPACITATING BITE WEBBED UP DEBUFF MODIFIER --
 ---------------------------------------------------
 
-modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff = modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff or class({})
+modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff = modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_incapacitating_bite_webbed_up_debuff:IsHidden() return false end
 
@@ -854,7 +854,7 @@ LinkLuaModifier("modifier_imba_broodmother_insatiable_hunger", "components/abili
 LinkLuaModifier("modifier_imba_broodmother_insatiable_hunger_satisfied", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_insatiable_hunger_spider", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_insatiable_hunger = imba_broodmother_insatiable_hunger or class({})
+imba_broodmother_insatiable_hunger = imba_broodmother_insatiable_hunger or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_insatiable_hunger:OnSpellStart()
 	-- Ability properties
@@ -875,7 +875,7 @@ end
 -- INSATIABLE HUNGER BUFF MODIFIER --
 -------------------------------------
 
-modifier_imba_broodmother_insatiable_hunger = modifier_imba_broodmother_insatiable_hunger or class({})
+modifier_imba_broodmother_insatiable_hunger = modifier_imba_broodmother_insatiable_hunger or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_insatiable_hunger:IsHidden() return false end
 
@@ -978,7 +978,7 @@ end
 -- INSATIABLE HUNGER SPIDERLINGS BUFF --
 ----------------------------------------
 
-modifier_imba_broodmother_insatiable_hunger_spider = modifier_imba_broodmother_insatiable_hunger_spider or class({})
+modifier_imba_broodmother_insatiable_hunger_spider = modifier_imba_broodmother_insatiable_hunger_spider or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_insatiable_hunger_spider:OnCreated()
 	if IsServer() then
@@ -1014,7 +1014,7 @@ end
 -- INSATIABLE HUNGER NOT YET SATISFIED BUFF MODIFIER --
 -------------------------------------------------------
 
-modifier_imba_broodmother_insatiable_hunger_satisfied = modifier_imba_broodmother_insatiable_hunger_satisfied or class({})
+modifier_imba_broodmother_insatiable_hunger_satisfied = modifier_imba_broodmother_insatiable_hunger_satisfied or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_insatiable_hunger_satisfied:IsHidden() return false end
 
@@ -1062,7 +1062,7 @@ end
 ------------------------------------
 
 LinkLuaModifier("modifier_imba_broodmother_spawn_spiderking_hatch", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
-imba_broodmother_spawn_spiderking = imba_broodmother_spawn_spiderking or class({})
+imba_broodmother_spawn_spiderking = imba_broodmother_spawn_spiderking or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spawn_spiderking:GetAssociatedSecondaryAbilities()
 	return "imba_broodmother_spawn_spiderlings"
@@ -1090,7 +1090,7 @@ end
 -- SPAWN SPIDERKING HATCH MODIFIER --
 -------------------------------------
 
-modifier_imba_broodmother_spawn_spiderking_hatch = modifier_imba_broodmother_spawn_spiderking_hatch or class({})
+modifier_imba_broodmother_spawn_spiderking_hatch = modifier_imba_broodmother_spawn_spiderking_hatch or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spawn_spiderking_hatch:IsHidden() return false end
 
@@ -1173,9 +1173,9 @@ end
 LinkLuaModifier("modifier_imba_broodmother_poison_sting", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_poison_sting_debuff", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_poison_sting                 = imba_broodmother_poison_sting or class({})
-modifier_imba_broodmother_poison_sting        = modifier_imba_broodmother_poison_sting or class({})
-modifier_imba_broodmother_poison_sting_debuff = modifier_imba_broodmother_poison_sting_debuff or class({})
+imba_broodmother_poison_sting                 = imba_broodmother_poison_sting or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_broodmother_poison_sting        = modifier_imba_broodmother_poison_sting or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_broodmother_poison_sting_debuff = modifier_imba_broodmother_poison_sting_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 
 
@@ -1314,7 +1314,7 @@ end
 LinkLuaModifier("modifier_imba_broodmother_spiderling_volatile", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_spiderling_volatile_debuff", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spiderling_volatile = imba_broodmother_spiderling_volatile or class({})
+imba_broodmother_spiderling_volatile = imba_broodmother_spiderling_volatile or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spiderling_volatile:GetIntrinsicModifierName()
 	return "modifier_imba_broodmother_spiderling_volatile"
@@ -1324,7 +1324,7 @@ end
 -- SPIDERLING VOLATILE MODIFIER --
 ----------------------------------
 
-modifier_imba_broodmother_spiderling_volatile = modifier_imba_broodmother_spiderling_volatile or class({})
+modifier_imba_broodmother_spiderling_volatile = modifier_imba_broodmother_spiderling_volatile or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderling_volatile:IsDebuff() return false end
 
@@ -1420,7 +1420,7 @@ end
 -- SPIDERLING VOLATILE DEBUFF MODIFIER --
 -----------------------------------------
 
-modifier_imba_broodmother_spiderling_volatile_debuff = modifier_imba_broodmother_spiderling_volatile_debuff or class({})
+modifier_imba_broodmother_spiderling_volatile_debuff = modifier_imba_broodmother_spiderling_volatile_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderling_volatile_debuff:IsHidden() return false end
 
@@ -1491,9 +1491,9 @@ end
 LinkLuaModifier("modifier_imba_broodmother_spiderking_poison_sting", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_spiderking_poison_sting_debuff", "components/abilities/heroes/hero_broodmother", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spiderking_poison_sting                 = imba_broodmother_spiderking_poison_sting or class({})
-modifier_imba_broodmother_spiderking_poison_sting        = modifier_imba_broodmother_spiderking_poison_sting or class({})
-modifier_imba_broodmother_spiderking_poison_sting_debuff = modifier_imba_broodmother_spiderking_poison_sting_debuff or class({})
+imba_broodmother_spiderking_poison_sting                 = imba_broodmother_spiderking_poison_sting or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_broodmother_spiderking_poison_sting        = modifier_imba_broodmother_spiderking_poison_sting or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_broodmother_spiderking_poison_sting_debuff = modifier_imba_broodmother_spiderking_poison_sting_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 
 
@@ -1631,7 +1631,7 @@ end
 LinkLuaModifier("modifier_imba_broodmother_spiderking_volatile", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_spiderking_volatile_debuff", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spiderking_volatile = imba_broodmother_spiderking_volatile or class({})
+imba_broodmother_spiderking_volatile = imba_broodmother_spiderking_volatile or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spiderking_volatile:GetIntrinsicModifierName()
 	return "modifier_imba_broodmother_spiderking_volatile"
@@ -1641,7 +1641,7 @@ end
 -- SPIDERKING VOLATILE MODIFIER --
 ----------------------------------
 
-modifier_imba_broodmother_spiderking_volatile = modifier_imba_broodmother_spiderking_volatile or class({})
+modifier_imba_broodmother_spiderking_volatile = modifier_imba_broodmother_spiderking_volatile or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderking_volatile:IsDebuff() return false end
 
@@ -1737,7 +1737,7 @@ end
 -- SPIDERKING VOLATILE DEBUFF MODIFIER --
 -----------------------------------------
 
-modifier_imba_broodmother_spiderking_volatile_debuff = modifier_imba_broodmother_spiderking_volatile_debuff or class({})
+modifier_imba_broodmother_spiderking_volatile_debuff = modifier_imba_broodmother_spiderking_volatile_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderking_volatile_debuff:IsHidden() return false end
 
@@ -1808,7 +1808,7 @@ end
 LinkLuaModifier("modifier_imba_broodmother_spiderking_hardened_brood_aura", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_broodmother_spiderking_hardened_brood_buff", "components/abilities/heroes/hero_broodmother.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_broodmother_spiderking_hardened_brood_aura = imba_broodmother_spiderking_hardened_brood_aura or class({})
+imba_broodmother_spiderking_hardened_brood_aura = imba_broodmother_spiderking_hardened_brood_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_broodmother_spiderking_hardened_brood_aura:GetIntrinsicModifierName()
 	return "modifier_imba_broodmother_spiderking_hardened_brood_aura"
@@ -1818,7 +1818,7 @@ end
 -- HARDEDNED BROOD AURA MODIFIER --
 -----------------------------------
 
-modifier_imba_broodmother_spiderking_hardened_brood_aura = modifier_imba_broodmother_spiderking_hardened_brood_aura or class({})
+modifier_imba_broodmother_spiderking_hardened_brood_aura = modifier_imba_broodmother_spiderking_hardened_brood_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderking_hardened_brood_aura:OnCreated()
 	if IsServer() then
@@ -1872,7 +1872,7 @@ end
 -- HARDEDNED BROOD BUFF MODIFIER --
 -----------------------------------
 
-modifier_imba_broodmother_spiderking_hardened_brood_buff = modifier_imba_broodmother_spiderking_hardened_brood_buff or class({})
+modifier_imba_broodmother_spiderking_hardened_brood_buff = modifier_imba_broodmother_spiderking_hardened_brood_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_broodmother_spiderking_hardened_brood_buff:IsHidden() return false end
 

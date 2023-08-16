@@ -75,7 +75,7 @@ end
 
 --------------------------------------------------------------------------------
 
-modifier_imba_abyssal_underlord_firestorm_thinker = modifier_imba_abyssal_underlord_firestorm_thinker or class({})
+modifier_imba_abyssal_underlord_firestorm_thinker = modifier_imba_abyssal_underlord_firestorm_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -216,7 +216,7 @@ end
 
 --------------------------------------------------------------------------------
 
-modifier_imba_abyssal_underlord_firestorm = modifier_imba_abyssal_underlord_firestorm or class({})
+modifier_imba_abyssal_underlord_firestorm = modifier_imba_abyssal_underlord_firestorm or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -299,7 +299,7 @@ end
 
 --------------------------------------------------------------------------------
 
-modifier_imba_abyssal_underlord_blizzard = modifier_imba_abyssal_underlord_blizzard or class({})
+modifier_imba_abyssal_underlord_blizzard = modifier_imba_abyssal_underlord_blizzard or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -481,7 +481,7 @@ function imba_abyssal_underlord_pit_of_malice:PlayEffects(point, bPlaySound)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_pit_of_malice_thinker = modifier_imba_abyssal_underlord_pit_of_malice_thinker or class({})
+modifier_imba_abyssal_underlord_pit_of_malice_thinker = modifier_imba_abyssal_underlord_pit_of_malice_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -648,10 +648,10 @@ function modifier_imba_abyssal_underlord_pit_of_malice_thinker:PlayEffects()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_pit_of_malice_cooldown = modifier_imba_abyssal_underlord_pit_of_malice_cooldown or class({})
+modifier_imba_abyssal_underlord_pit_of_malice_cooldown = modifier_imba_abyssal_underlord_pit_of_malice_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls = modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls or class({})
+modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls = modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_abyssal_underlord_pit_of_malice_abyss_souls:DeclareFunctions()
 	return {
@@ -698,7 +698,7 @@ function modifier_imba_abyssal_underlord_pit_of_malice_cooldown:OnDestroy()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_pit_of_malice = modifier_imba_abyssal_underlord_pit_of_malice or class({})
+modifier_imba_abyssal_underlord_pit_of_malice = modifier_imba_abyssal_underlord_pit_of_malice or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -782,7 +782,7 @@ function modifier_imba_abyssal_underlord_pit_of_malice:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-modifier_imba_abyssal_underlord_pit_of_malice_stack = modifier_imba_abyssal_underlord_pit_of_malice_stack or class({})
+modifier_imba_abyssal_underlord_pit_of_malice_stack = modifier_imba_abyssal_underlord_pit_of_malice_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_abyssal_underlord_pit_of_malice_stack:OnStackCountChanged(iStackCount)
 	self:SetDuration(self:GetAbility():GetSpecialValueFor("pit_increase_duration"), true)
@@ -821,7 +821,7 @@ function imba_abyssal_underlord_atrophy_aura:OnSpellStart()
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_abyssal_underlord_atrophy_aura_active", { duration = self:GetSpecialValueFor("active_duration") })
 end
 
-modifier_imba_abyssal_underlord_atrophy_aura_active = modifier_imba_abyssal_underlord_atrophy_aura_active or class({})
+modifier_imba_abyssal_underlord_atrophy_aura_active = modifier_imba_abyssal_underlord_atrophy_aura_active or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_abyssal_underlord_atrophy_aura_active:DeclareFunctions()
 	return {
@@ -902,7 +902,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_active:OnRemoved()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_atrophy_aura = modifier_imba_abyssal_underlord_atrophy_aura or class({})
+modifier_imba_abyssal_underlord_atrophy_aura = modifier_imba_abyssal_underlord_atrophy_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1098,7 +1098,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura:GetAuraEntityReject(hEntit
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_atrophy_aura_debuff = modifier_imba_abyssal_underlord_atrophy_aura_debuff or class({})
+modifier_imba_abyssal_underlord_atrophy_aura_debuff = modifier_imba_abyssal_underlord_atrophy_aura_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1157,7 +1157,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_debuff:GetModifierBaseDama
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack = modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack or class({})
+modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack = modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1214,7 +1214,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_permanent_stack:GetModifie
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_atrophy_aura_scepter = modifier_imba_abyssal_underlord_atrophy_aura_scepter or class({})
+modifier_imba_abyssal_underlord_atrophy_aura_scepter = modifier_imba_abyssal_underlord_atrophy_aura_scepter or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1336,7 +1336,7 @@ function modifier_imba_abyssal_underlord_atrophy_aura_scepter:GetAuraEntityRejec
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_atrophy_aura_stack = modifier_imba_abyssal_underlord_atrophy_aura_stack or class({})
+modifier_imba_abyssal_underlord_atrophy_aura_stack = modifier_imba_abyssal_underlord_atrophy_aura_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1461,7 +1461,7 @@ function imba_abyssal_underlord_cancel_dark_rift:OnSpellStart()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_abyssal_underlord_dark_rift = modifier_imba_abyssal_underlord_dark_rift or class({})
+modifier_imba_abyssal_underlord_dark_rift = modifier_imba_abyssal_underlord_dark_rift or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications

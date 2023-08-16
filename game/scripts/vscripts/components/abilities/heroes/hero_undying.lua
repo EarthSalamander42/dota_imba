@@ -42,14 +42,14 @@ end
 LinkLuaModifier("modifier_imba_undying_decay_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_decay_buff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_decay = imba_undying_decay or class({})
+imba_undying_decay = imba_undying_decay or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_decay:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
 function imba_undying_decay:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_undying_decay_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_undying_decay_cooldown")
 end
 
 function imba_undying_decay:OnSpellStart()
@@ -209,7 +209,7 @@ end
 -- DECAY BUFF MODIFIER --
 -------------------------
 
-modifier_imba_undying_decay_buff = modifier_imba_undying_decay_buff or class({})
+modifier_imba_undying_decay_buff = modifier_imba_undying_decay_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_decay_buff:IsHidden() return false end
 
@@ -327,7 +327,7 @@ end
 -- DECAY DEBUFF MODIFIER --
 ---------------------------
 
-modifier_imba_undying_decay_debuff = modifier_imba_undying_decay_debuff or class({})
+modifier_imba_undying_decay_debuff = modifier_imba_undying_decay_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_decay_debuff:IsHidden() return false end
 
@@ -463,7 +463,7 @@ end
 LinkLuaModifier("modifier_imba_undying_soul_rip_soul_injection_buff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_soul_rip_soul_injection_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_soul_rip = imba_undying_soul_rip or class({})
+imba_undying_soul_rip = imba_undying_soul_rip or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_soul_rip:CastFilterResultTarget(target)
 	-- Can target tombstone
@@ -629,7 +629,7 @@ end
 -- SOUL INJECTION BUFF MODIFIER --
 ----------------------------------
 
-modifier_imba_undying_soul_rip_soul_injection_buff = modifier_imba_undying_soul_rip_soul_injection_buff or class({})
+modifier_imba_undying_soul_rip_soul_injection_buff = modifier_imba_undying_soul_rip_soul_injection_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_soul_rip_soul_injection_buff:IsHidden() return false end
 
@@ -732,7 +732,7 @@ end
 -- SOUL INJECTION DEBUFF MODIFIER --
 ------------------------------------
 
-modifier_imba_undying_soul_rip_soul_injection_debuff = modifier_imba_undying_soul_rip_soul_injection_debuff or class({})
+modifier_imba_undying_soul_rip_soul_injection_debuff = modifier_imba_undying_soul_rip_soul_injection_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_soul_rip_soul_injection_debuff:IsHidden() return false end
 
@@ -836,7 +836,7 @@ end
 ---------------
 
 
-imba_undying_tombstone = imba_undying_tombstone or class({})
+imba_undying_tombstone = imba_undying_tombstone or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_tombstone:OnSpellStart()
 	-- Ability properties
@@ -904,7 +904,7 @@ end
 ---------------------------------------
 LinkLuaModifier("modifier_imba_undying_tombstone_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_tombstone_aura = imba_undying_tombstone_aura or class({})
+imba_undying_tombstone_aura = imba_undying_tombstone_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_tombstone_aura:GetIntrinsicModifierName()
 	return "modifier_imba_undying_tombstone_aura"
@@ -914,7 +914,7 @@ end
 -- TOMBSTONE AURA --
 --------------------
 
-modifier_imba_undying_tombstone_aura = modifier_imba_undying_tombstone_aura or class({})
+modifier_imba_undying_tombstone_aura = modifier_imba_undying_tombstone_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_tombstone_aura:IsHidden() return true end
 
@@ -1083,7 +1083,7 @@ end
 -- UNDYING ZOMBIE'S NO HOME MODIFIER --
 ---------------------------------------
 LinkLuaModifier("modifier_imba_undying_tombstone_zombie_modifier_no_home", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_undying_tombstone_zombie_modifier_no_home = modifier_imba_undying_tombstone_zombie_modifier_no_home or class({})
+modifier_imba_undying_tombstone_zombie_modifier_no_home = modifier_imba_undying_tombstone_zombie_modifier_no_home or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_tombstone_zombie_modifier_no_home:IsPurgable() return false end
 
@@ -1106,7 +1106,7 @@ LinkLuaModifier("modifier_imba_undying_zombie_deathlust", "components/abilities/
 LinkLuaModifier("modifier_imba_undying_zombie_deathlust_buff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_zombie_deathlust_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_tombstone_zombie_deathlust = imba_undying_tombstone_zombie_deathlust or class({})
+imba_undying_tombstone_zombie_deathlust = imba_undying_tombstone_zombie_deathlust or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_tombstone_zombie_deathlust:GetIntrinsicModifierName()
 	return "modifier_imba_undying_zombie_deathlust"
@@ -1116,7 +1116,7 @@ end
 -- UNDYING ZOMBIE'S DEATHLUST MODIFIER --
 -----------------------------------------
 
-modifier_imba_undying_zombie_deathlust = modifier_imba_undying_zombie_deathlust or class({})
+modifier_imba_undying_zombie_deathlust = modifier_imba_undying_zombie_deathlust or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_zombie_deathlust:IsHidden() return true end
 
@@ -1305,7 +1305,7 @@ end
 -- UNDYING ZOMBIE'S DEATHLUST BUFF MODIFIER --
 ----------------------------------------------
 
-modifier_imba_undying_zombie_deathlust_buff = modifier_imba_undying_zombie_deathlust_buff or class({})
+modifier_imba_undying_zombie_deathlust_buff = modifier_imba_undying_zombie_deathlust_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_zombie_deathlust_buff:IsHidden() return false end
 
@@ -1346,7 +1346,7 @@ end
 -- UNDYING ZOMBIE'S DEATHLUST DEBUFF MODIFIER --
 ------------------------------------------------
 
-modifier_imba_undying_zombie_deathlust_debuff = modifier_imba_undying_zombie_deathlust_debuff or class({})
+modifier_imba_undying_zombie_deathlust_debuff = modifier_imba_undying_zombie_deathlust_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_zombie_deathlust_debuff:IsHidden() return false end
 
@@ -1441,7 +1441,7 @@ end
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem_grab_debuff", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-imba_undying_flesh_golem_grab = imba_undying_flesh_golem_grab or class({})
+imba_undying_flesh_golem_grab = imba_undying_flesh_golem_grab or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_flesh_golem_grab:IsStealable() return false end
 
@@ -1498,7 +1498,7 @@ end
 -- UNDYING FLESH GOLEM GRAB MODIFIER --
 ---------------------------------------
 
-modifier_imba_undying_flesh_golem_grab = modifier_imba_undying_flesh_golem_grab or class({})
+modifier_imba_undying_flesh_golem_grab = modifier_imba_undying_flesh_golem_grab or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_flesh_golem_grab:IsHidden() return true end
 
@@ -1517,7 +1517,7 @@ end
 -- UNDYING FLESH GOLEM GRAB DEBUFF MODIFIER --
 ----------------------------------------------
 
-modifier_imba_undying_flesh_golem_grab_debuff = modifier_imba_undying_flesh_golem_grab_debuff or class({})
+modifier_imba_undying_flesh_golem_grab_debuff = modifier_imba_undying_flesh_golem_grab_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_flesh_golem_grab_debuff:IsPurgable() return false end
 
@@ -1579,7 +1579,7 @@ end
 
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
-imba_undying_flesh_golem_throw = imba_undying_flesh_golem_throw or class({})
+imba_undying_flesh_golem_throw = imba_undying_flesh_golem_throw or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_flesh_golem_throw:IsStealable() return false end
 
@@ -1617,7 +1617,7 @@ end
 -- UNDYING FLESH GOLEM --
 -------------------------
 
-imba_undying_flesh_golem = imba_undying_flesh_golem or class({})
+imba_undying_flesh_golem = imba_undying_flesh_golem or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_undying_flesh_golem:GetIntrinsicModifierName()
 	return "modifier_imba_undying_flesh_golem_illusion_check"
@@ -1658,7 +1658,7 @@ LinkLuaModifier("modifier_imba_undying_flesh_golem", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_undying_flesh_golem_plague_aura", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_undying_flesh_golem_slow", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_undying_flesh_golem_illusion_check = modifier_imba_undying_flesh_golem_illusion_check or class({})
+modifier_imba_undying_flesh_golem_illusion_check = modifier_imba_undying_flesh_golem_illusion_check or class(VANILLA_ABILITIES_BASECLASS)
 
 -- "Illusions get a new Flesh Golem buff, lasting for the full duration, regardless of how much is left on Undying himself."
 -- This intrinsic modifier is only meant for illusions to check if their owner has the Flesh Golem modifier, and to apply it if so
@@ -1698,7 +1698,7 @@ end
 -- UNDYING FLESH GOLEM BUFF MODIFIER --
 ---------------------------------------
 
-modifier_imba_undying_flesh_golem = modifier_imba_undying_flesh_golem or class({})
+modifier_imba_undying_flesh_golem = modifier_imba_undying_flesh_golem or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_flesh_golem:GetEffectName()
 	return "particles/units/heroes/hero_undying/undying_fg_aura.vpcf"
@@ -1815,7 +1815,7 @@ function modifier_imba_undying_flesh_golem:GetModifierAura() return "modifier_im
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_PLAGUE_AURA --
 ---------------------------------------------------
 
-modifier_imba_undying_flesh_golem_plague_aura = modifier_imba_undying_flesh_golem_plague_aura or class({})
+modifier_imba_undying_flesh_golem_plague_aura = modifier_imba_undying_flesh_golem_plague_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_flesh_golem_plague_aura:IsHidden() return self:GetCaster() and self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() end
 
@@ -1888,7 +1888,7 @@ end
 -- MODIFIER_IMBA_UNDYING_FLESH_GOLEM_SLOW --
 --------------------------------------------
 
-modifier_imba_undying_flesh_golem_slow = modifier_imba_undying_flesh_golem_slow or class({})
+modifier_imba_undying_flesh_golem_slow = modifier_imba_undying_flesh_golem_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_undying_flesh_golem_slow:OnCreated(keys)
 	if self:GetAbility() then
@@ -1958,11 +1958,11 @@ LinkLuaModifier("modifier_special_bonus_imba_undying_tombstone_on_death", "compo
 LinkLuaModifier("modifier_special_bonus_imba_undying_flesh_golem_grab_allies", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_undying_decay_cooldown", "components/abilities/heroes/hero_undying", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_undying_decay_duration          = modifier_special_bonus_imba_undying_decay_duration or class({})
-modifier_special_bonus_imba_undying_tombstone_zombie_damage = modifier_special_bonus_imba_undying_tombstone_zombie_damage or class({})
-modifier_special_bonus_imba_undying_tombstone_on_death      = modifier_special_bonus_imba_undying_tombstone_on_death or class({})
-modifier_special_bonus_imba_undying_flesh_golem_grab_allies = modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class({})
-modifier_special_bonus_imba_undying_decay_cooldown          = modifier_special_bonus_imba_undying_decay_cooldown or class({})
+modifier_special_bonus_imba_undying_decay_duration          = modifier_special_bonus_imba_undying_decay_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_tombstone_zombie_damage = modifier_special_bonus_imba_undying_tombstone_zombie_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_tombstone_on_death      = modifier_special_bonus_imba_undying_tombstone_on_death or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_flesh_golem_grab_allies = modifier_special_bonus_imba_undying_flesh_golem_grab_allies or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_undying_decay_cooldown          = modifier_special_bonus_imba_undying_decay_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_undying_decay_duration:IsHidden() return true end
 

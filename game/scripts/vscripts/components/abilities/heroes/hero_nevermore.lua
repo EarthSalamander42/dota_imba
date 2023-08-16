@@ -23,23 +23,23 @@ end
 ------------------------------------
 --     SHADOW RAZE (CLOSE)        --
 ------------------------------------
-imba_nevermore_shadowraze_close = imba_nevermore_shadowraze_close or class({})
+imba_nevermore_shadowraze1 = imba_nevermore_shadowraze1 or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_shadow_raze_combo", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_shadow_raze_prevention", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_raze_pool", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadowraze_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_nevermore_shadowraze_close:GetAbilityTextureName()
+function imba_nevermore_shadowraze1:GetAbilityTextureName()
 	return "nevermore_shadowraze1"
 end
 
-function imba_nevermore_shadowraze_close:IsHiddenWhenStolen()
+function imba_nevermore_shadowraze1:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_nevermore_shadowraze_close:GetManaCost(level)
-	local caster = self:GetCaster()
-	local manacost = self.BaseClass.GetManaCost(self, level)
+function imba_nevermore_shadowraze1:GetManaCost(level)
+	-- local caster = self:GetCaster()
+	local manacost = self:GetRightfulKV("AbilityManaCost", true)
 
 	-- Talent: Shadowraze mana cost reduction (REMOVED)
 	--manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
@@ -47,7 +47,7 @@ function imba_nevermore_shadowraze_close:GetManaCost(level)
 	return manacost
 end
 
-function imba_nevermore_shadowraze_close:GetCooldown(level)
+function imba_nevermore_shadowraze1:GetCooldown(level)
 	local caster = self:GetCaster()
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
@@ -57,7 +57,7 @@ function imba_nevermore_shadowraze_close:GetCooldown(level)
 	end
 
 	-- Otherwise, return normal cooldown
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	-- Talent: Shadowraze cooldown reduction (REMOVED)
 	--cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
@@ -65,13 +65,13 @@ function imba_nevermore_shadowraze_close:GetCooldown(level)
 	return cooldown
 end
 
-function imba_nevermore_shadowraze_close:OnUpgrade()
+function imba_nevermore_shadowraze1:OnUpgrade()
 	local caster = self:GetCaster()
 	UpgradeShadowRazes(caster, self)
 end
 
-function imba_nevermore_shadowraze_close:GetCastPoint()
-	local cast_point = self.BaseClass.GetCastPoint(self)
+function imba_nevermore_shadowraze1:GetCastPoint()
+	local cast_point = self:GetRightfulKV("AbilityCastPoint")
 	local caster = self:GetCaster()
 	--Talent #8: Cast point is halved when in soul frenzy
 	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") and caster:IsAlive() then
@@ -80,7 +80,7 @@ function imba_nevermore_shadowraze_close:GetCastPoint()
 	return cast_point
 end
 
-function imba_nevermore_shadowraze_close:OnSpellStart()
+function imba_nevermore_shadowraze1:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -112,19 +112,19 @@ end
 ------------------------------------
 --     SHADOW RAZE (MEDIUM)       --
 ------------------------------------
-imba_nevermore_shadowraze_medium = imba_nevermore_shadowraze_medium or class({})
+imba_nevermore_shadowraze2 = imba_nevermore_shadowraze2 or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_nevermore_shadowraze_medium:GetAbilityTextureName()
+function imba_nevermore_shadowraze2:GetAbilityTextureName()
 	return "nevermore_shadowraze2"
 end
 
-function imba_nevermore_shadowraze_medium:IsHiddenWhenStolen()
+function imba_nevermore_shadowraze2:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_nevermore_shadowraze_medium:GetManaCost(level)
-	local caster = self:GetCaster()
-	local manacost = self.BaseClass.GetManaCost(self, level)
+function imba_nevermore_shadowraze2:GetManaCost(level)
+	-- local caster = self:GetCaster()
+	local manacost = self:GetRightfulKV("AbilityManaCost", true)
 
 	-- Talent: Shadowraze mana cost reduction (REMOVED)
 	-- manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
@@ -132,7 +132,7 @@ function imba_nevermore_shadowraze_medium:GetManaCost(level)
 	return manacost
 end
 
-function imba_nevermore_shadowraze_medium:GetCooldown(level)
+function imba_nevermore_shadowraze2:GetCooldown(level)
 	local caster = self:GetCaster()
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
@@ -142,7 +142,7 @@ function imba_nevermore_shadowraze_medium:GetCooldown(level)
 	end
 
 	-- Otherwise, return normal cooldown
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	-- Talent: Shadowraze cooldown reduction (REMOVED)
 	--  cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
@@ -150,14 +150,14 @@ function imba_nevermore_shadowraze_medium:GetCooldown(level)
 	return cooldown
 end
 
-function imba_nevermore_shadowraze_medium:OnUpgrade()
+function imba_nevermore_shadowraze2:OnUpgrade()
 	local caster = self:GetCaster()
 	UpgradeShadowRazes(caster, self)
 end
 
-function imba_nevermore_shadowraze_medium:GetCastPoint()
+function imba_nevermore_shadowraze2:GetCastPoint()
 	local caster = self:GetCaster()
-	local cast_point = self.BaseClass.GetCastPoint(self)
+	local cast_point = self:GetRightfulKV("AbilityCastPoint")
 	--Talent #8: Cast point is halved when in soul frenzy
 	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
 		cast_point = cast_point / 2
@@ -165,7 +165,7 @@ function imba_nevermore_shadowraze_medium:GetCastPoint()
 	return cast_point
 end
 
-function imba_nevermore_shadowraze_medium:OnSpellStart()
+function imba_nevermore_shadowraze2:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -226,19 +226,19 @@ end
 ------------------------------------
 --       SHADOW RAZE (FAR)        --
 ------------------------------------
-imba_nevermore_shadowraze_far = imba_nevermore_shadowraze_far or class({})
+imba_nevermore_shadowraze3 = imba_nevermore_shadowraze3 or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_nevermore_shadowraze_far:GetAbilityTextureName()
+function imba_nevermore_shadowraze3:GetAbilityTextureName()
 	return "nevermore_shadowraze3"
 end
 
-function imba_nevermore_shadowraze_far:IsHiddenWhenStolen()
+function imba_nevermore_shadowraze3:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_nevermore_shadowraze_far:GetManaCost(level)
+function imba_nevermore_shadowraze3:GetManaCost(level)
 	local caster = self:GetCaster()
-	local manacost = self.BaseClass.GetManaCost(self, level)
+	local manacost = self:GetRightfulKV("AbilityManaCost", true)
 
 	--Talent: Shadowraze mana cost reduction (REMOVED)
 	--manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
@@ -246,7 +246,7 @@ function imba_nevermore_shadowraze_far:GetManaCost(level)
 	return manacost
 end
 
-function imba_nevermore_shadowraze_far:GetCooldown(level)
+function imba_nevermore_shadowraze3:GetCooldown(level)
 	local caster = self:GetCaster()
 	local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
@@ -256,7 +256,7 @@ function imba_nevermore_shadowraze_far:GetCooldown(level)
 	end
 
 	-- Otherwise, return normal cooldown
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	--Talent: Shadowraze cooldown reduction (REMOVED)
 	-- cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
@@ -264,9 +264,9 @@ function imba_nevermore_shadowraze_far:GetCooldown(level)
 	return cooldown
 end
 
-function imba_nevermore_shadowraze_far:GetCastPoint()
+function imba_nevermore_shadowraze3:GetCastPoint()
 	local caster = self:GetCaster()
-	local cast_point = self.BaseClass.GetCastPoint(self)
+	local cast_point = self:GetRightfulKV("AbilityCastPoint")
 	--Talent #8: Cast point is halved when in soul frenzy
 	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
 		cast_point = cast_point / 2
@@ -274,12 +274,12 @@ function imba_nevermore_shadowraze_far:GetCastPoint()
 	return cast_point
 end
 
-function imba_nevermore_shadowraze_far:OnUpgrade()
+function imba_nevermore_shadowraze3:OnUpgrade()
 	local caster = self:GetCaster()
 	UpgradeShadowRazes(caster, self)
 end
 
-function imba_nevermore_shadowraze_far:OnSpellStart()
+function imba_nevermore_shadowraze3:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -562,9 +562,9 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
 end
 
 function UpgradeShadowRazes(caster, ability)
-	local raze_close = "imba_nevermore_shadowraze_close"
-	local raze_medium = "imba_nevermore_shadowraze_medium"
-	local raze_far = "imba_nevermore_shadowraze_far"
+	local raze_close = "imba_nevermore_shadowraze1"
+	local raze_medium = "imba_nevermore_shadowraze2"
+	local raze_far = "imba_nevermore_shadowraze3"
 
 	-- Get handles
 	local raze_close_handler
@@ -600,7 +600,7 @@ function UpgradeShadowRazes(caster, ability)
 end
 
 -- Shadow Combo modifier
-modifier_shadow_raze_combo = modifier_shadow_raze_combo or class({})
+modifier_shadow_raze_combo = modifier_shadow_raze_combo or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_shadow_raze_combo:OnCreated()
 	if IsServer() then
@@ -608,9 +608,9 @@ function modifier_shadow_raze_combo:OnCreated()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.razes = {}
-		self.razes[1] = "imba_nevermore_shadowraze_close"
-		self.razes[2] = "imba_nevermore_shadowraze_medium"
-		self.razes[3] = "imba_nevermore_shadowraze_far"
+		self.razes[1] = "imba_nevermore_shadowraze1"
+		self.razes[2] = "imba_nevermore_shadowraze2"
+		self.razes[3] = "imba_nevermore_shadowraze3"
 		self.modifier_prevention = "modifier_shadow_raze_prevention"
 
 		-- Ability specials
@@ -658,7 +658,7 @@ function modifier_shadow_raze_combo:OnStackCountChanged()
 end
 
 -- Shadow Combo prevention modifier
-modifier_shadow_raze_prevention = modifier_shadow_raze_prevention or class({})
+modifier_shadow_raze_prevention = modifier_shadow_raze_prevention or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_shadow_raze_prevention:IsHidden() return false end
 
@@ -667,7 +667,7 @@ function modifier_shadow_raze_prevention:IsPurgable() return false end
 function modifier_shadow_raze_prevention:IsDebuff() return true end
 
 -- Shadow pool modifier (copied from Lina, please feel free to improve it as needed)
-modifier_imba_shadow_raze_pool = modifier_imba_shadow_raze_pool or class({})
+modifier_imba_shadow_raze_pool = modifier_imba_shadow_raze_pool or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shadow_raze_pool:OnCreated(kv)
 	if IsServer() then
@@ -732,20 +732,20 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 end
 
 -- Modifier to track increasing raze damage
-modifier_imba_shadowraze_debuff = class({})
+modifier_imba_shadowraze_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shadowraze_debuff:IsDebuff() return true end
 
 ------------------------------------
 --           NECROMASTERY         --
 ------------------------------------
-imba_nevermore_necromastery = imba_nevermore_necromastery or class({})
+imba_nevermore_necromastery = imba_nevermore_necromastery or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_necromastery_souls", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_necromastery_talent_extra_cap", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_2", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Required to change behaviour on client-side
-modifier_special_bonus_imba_nevermore_2 = class({})
+modifier_special_bonus_imba_nevermore_2 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nevermore_2:IsHidden() return true end
 
@@ -876,7 +876,7 @@ function imba_nevermore_necromastery:OnSpellStart()
 end
 
 -- Necromastery souls modifier
-modifier_imba_necromastery_souls = modifier_imba_necromastery_souls or class({})
+modifier_imba_necromastery_souls = modifier_imba_necromastery_souls or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_necromastery_souls:OnCreated()
 	-- Ability properties
@@ -1292,7 +1292,7 @@ end
 ------------------------------------
 --   PRESENCE OF THE DARK LORD    --
 ------------------------------------
-imba_nevermore_dark_lord = imba_nevermore_dark_lord or class({})
+imba_nevermore_dark_lord = imba_nevermore_dark_lord or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_dark_lord_aura", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dark_lord_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1312,7 +1312,7 @@ function imba_nevermore_dark_lord:OnUpgrade()
 end
 
 -- Presence of the Dark Lord aura
-modifier_imba_dark_lord_aura = modifier_imba_dark_lord_aura or class({})
+modifier_imba_dark_lord_aura = modifier_imba_dark_lord_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dark_lord_aura:OnCreated()
 	-- Ability properties
@@ -1435,7 +1435,7 @@ function modifier_imba_dark_lord_aura:IsAura()
 end
 
 -- Presence of the Dark Lord armor reduction debuff modifier
-modifier_imba_dark_lord_debuff = modifier_imba_dark_lord_debuff or class({})
+modifier_imba_dark_lord_debuff = modifier_imba_dark_lord_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dark_lord_debuff:OnCreated()
 	-- Ability properties
@@ -1513,7 +1513,7 @@ end
 ------------------------------------
 --       REQUIEM OF SOULS         --
 ------------------------------------
-imba_nevermore_requiem = imba_nevermore_requiem or class({})
+imba_nevermore_requiem = imba_nevermore_requiem or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_reqiuem_phase_buff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reqiuem_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reqiuem_harvest", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1833,7 +1833,7 @@ function CreateRequiemSoulLine(caster, ability, line_end_position, death_cast)
 end
 
 -- Requiem of Souls caster phased modifier
-modifier_imba_reqiuem_phase_buff = modifier_imba_reqiuem_phase_buff or class({})
+modifier_imba_reqiuem_phase_buff = modifier_imba_reqiuem_phase_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reqiuem_phase_buff:CheckState()
 	local state = { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
@@ -1847,7 +1847,7 @@ function modifier_imba_reqiuem_phase_buff:IsPurgable() return false end
 function modifier_imba_reqiuem_phase_buff:IsDebuff() return false end
 
 -- Requiem of Souls slow debuff
-modifier_imba_reqiuem_debuff = modifier_imba_reqiuem_debuff or class({})
+modifier_imba_reqiuem_debuff = modifier_imba_reqiuem_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reqiuem_debuff:OnCreated()
 	-- Ability properties
@@ -1894,7 +1894,7 @@ function modifier_imba_reqiuem_debuff:GetModifierMoveSpeedBonus_Percentage()
 end
 
 -- Requiem of Souls Soul Harvest modifier
-modifier_imba_reqiuem_harvest = modifier_imba_reqiuem_harvest or class({})
+modifier_imba_reqiuem_harvest = modifier_imba_reqiuem_harvest or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reqiuem_harvest:OnCreated()
 	if IsServer() then
@@ -1902,9 +1902,9 @@ function modifier_imba_reqiuem_harvest:OnCreated()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.razes = {}
-		self.razes[1] = "imba_nevermore_shadowraze_close"
-		self.razes[2] = "imba_nevermore_shadowraze_medium"
-		self.razes[3] = "imba_nevermore_shadowraze_far"
+		self.razes[1] = "imba_nevermore_shadowraze1"
+		self.razes[2] = "imba_nevermore_shadowraze2"
+		self.razes[3] = "imba_nevermore_shadowraze3"
 
 		-- Find all raze skills
 		for i = 1, #self.razes do
@@ -1937,13 +1937,13 @@ LinkLuaModifier("modifier_special_bonus_imba_nevermore_6", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_7", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nevermore_8", "components/abilities/heroes/hero_nevermore", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nevermore_1 = modifier_special_bonus_imba_nevermore_1 or class({})
-modifier_special_bonus_imba_nevermore_3 = modifier_special_bonus_imba_nevermore_3 or class({})
-modifier_special_bonus_imba_nevermore_4 = modifier_special_bonus_imba_nevermore_4 or class({})
-modifier_special_bonus_imba_nevermore_5 = modifier_special_bonus_imba_nevermore_5 or class({})
-modifier_special_bonus_imba_nevermore_6 = modifier_special_bonus_imba_nevermore_6 or class({})
-modifier_special_bonus_imba_nevermore_7 = modifier_special_bonus_imba_nevermore_7 or class({})
-modifier_special_bonus_imba_nevermore_8 = modifier_special_bonus_imba_nevermore_8 or class({})
+modifier_special_bonus_imba_nevermore_1 = modifier_special_bonus_imba_nevermore_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_3 = modifier_special_bonus_imba_nevermore_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_4 = modifier_special_bonus_imba_nevermore_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_5 = modifier_special_bonus_imba_nevermore_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_6 = modifier_special_bonus_imba_nevermore_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_7 = modifier_special_bonus_imba_nevermore_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nevermore_8 = modifier_special_bonus_imba_nevermore_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nevermore_1:IsHidden() return true end
 

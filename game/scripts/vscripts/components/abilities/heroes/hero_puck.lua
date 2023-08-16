@@ -12,22 +12,22 @@ LinkLuaModifier("modifier_imba_puck_dream_coil", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_puck_dream_coil_thinker", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_puck_dream_coil_visionary", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-imba_puck_illusory_orb                  = class({})
-modifier_imba_puck_illusory_orb         = class({})
+imba_puck_illusory_orb                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_illusory_orb         = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_puck_waning_rift                   = class({})
-modifier_imba_puck_waning_rift          = class({})
+imba_puck_waning_rift                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_waning_rift          = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_puck_phase_shift                   = class({})
-modifier_imba_puck_phase_shift          = class({})
-modifier_imba_puck_phase_shift_handler  = class({})
+imba_puck_phase_shift                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_phase_shift          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_phase_shift_handler  = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_puck_ethereal_jaunt                = class({})
+imba_puck_ethereal_jaunt                = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_puck_dream_coil                    = class({})
-modifier_imba_puck_dream_coil           = class({})
-modifier_imba_puck_dream_coil_thinker   = class({})
-modifier_imba_puck_dream_coil_visionary = class({})
+imba_puck_dream_coil                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_dream_coil           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_dream_coil_thinker   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_puck_dream_coil_visionary = class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------
 -- ILLUSORY ORB --
@@ -210,7 +210,7 @@ function imba_puck_waning_rift:GetCastRange(location, target)
 end
 
 function imba_puck_waning_rift:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_puck_waning_rift_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_puck_waning_rift_cooldown")
 end
 
 function imba_puck_waning_rift:OnSpellStart()
@@ -809,9 +809,9 @@ LinkLuaModifier("modifier_special_bonus_imba_puck_phase_shift_attacks", "compone
 LinkLuaModifier("modifier_special_bonus_imba_puck_illusory_orb_speed", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_dream_coil_targets", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_puck_phase_shift_attacks = modifier_special_bonus_imba_puck_phase_shift_attacks or class({})
-modifier_special_bonus_imba_puck_illusory_orb_speed  = modifier_special_bonus_imba_puck_illusory_orb_speed or class({})
-modifier_special_bonus_imba_puck_dream_coil_targets  = modifier_special_bonus_imba_puck_dream_coil_targets or class({})
+modifier_special_bonus_imba_puck_phase_shift_attacks = modifier_special_bonus_imba_puck_phase_shift_attacks or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_puck_illusory_orb_speed  = modifier_special_bonus_imba_puck_illusory_orb_speed or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_puck_dream_coil_targets  = modifier_special_bonus_imba_puck_dream_coil_targets or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_puck_phase_shift_attacks:IsHidden() return true end
 
@@ -834,8 +834,8 @@ function modifier_special_bonus_imba_puck_dream_coil_targets:RemoveOnDeath() ret
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_cooldown", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_puck_waning_rift_range", "components/abilities/heroes/hero_puck", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_puck_waning_rift_cooldown = class({})
-modifier_special_bonus_imba_puck_waning_rift_range    = modifier_special_bonus_imba_puck_waning_rift_range or class({})
+modifier_special_bonus_imba_puck_waning_rift_cooldown = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_puck_waning_rift_range    = modifier_special_bonus_imba_puck_waning_rift_range or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_puck_waning_rift_cooldown:IsHidden() return true end
 

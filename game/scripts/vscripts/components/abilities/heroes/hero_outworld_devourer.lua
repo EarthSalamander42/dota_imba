@@ -14,21 +14,21 @@ LinkLuaModifier("modifier_imba_outworld_devourer_astral_imprisonment_movement", 
 
 LinkLuaModifier("modifier_imba_outworld_devourer_sanity_eclipse_charge", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 
-imba_outworld_devourer_arcane_orb                            = imba_outworld_devourer_arcane_orb or class({})
+imba_outworld_devourer_arcane_orb                            = imba_outworld_devourer_arcane_orb or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_outworld_devourer_astral_imprisonment                   = imba_outworld_devourer_astral_imprisonment or class({})
-modifier_imba_outworld_devourer_astral_imprisonment_prison   = modifier_imba_outworld_devourer_astral_imprisonment_prison or class({})
+imba_outworld_devourer_astral_imprisonment                   = imba_outworld_devourer_astral_imprisonment or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_astral_imprisonment_prison   = modifier_imba_outworld_devourer_astral_imprisonment_prison or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_outworld_devourer_essence_flux                          = imba_outworld_devourer_essence_flux or class({})
-modifier_imba_outworld_devourer_essence_flux                 = modifier_imba_outworld_devourer_essence_flux or class({})
-modifier_imba_outworld_devourer_essence_flux_active          = modifier_imba_outworld_devourer_essence_flux_active or class({})
-modifier_imba_outworld_devourer_essence_flux_debuff          = modifier_imba_outworld_devourer_essence_flux_debuff or class({})
+imba_outworld_devourer_essence_flux                          = imba_outworld_devourer_essence_flux or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_essence_flux                 = modifier_imba_outworld_devourer_essence_flux or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_essence_flux_active          = modifier_imba_outworld_devourer_essence_flux_active or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_essence_flux_debuff          = modifier_imba_outworld_devourer_essence_flux_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_outworld_devourer_astral_imprisonment_movement          = imba_outworld_devourer_astral_imprisonment_movement or class({})
-modifier_imba_outworld_devourer_astral_imprisonment_movement = modifier_imba_outworld_devourer_astral_imprisonment_movement or class({})
+imba_outworld_devourer_astral_imprisonment_movement          = imba_outworld_devourer_astral_imprisonment_movement or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_astral_imprisonment_movement = modifier_imba_outworld_devourer_astral_imprisonment_movement or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_outworld_devourer_sanity_eclipse                        = imba_outworld_devourer_sanity_eclipse or class({})
-modifier_imba_outworld_devourer_sanity_eclipse_charge        = modifier_imba_outworld_devourer_sanity_eclipse_charge or class({})
+imba_outworld_devourer_sanity_eclipse                        = imba_outworld_devourer_sanity_eclipse or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_outworld_devourer_sanity_eclipse_charge        = modifier_imba_outworld_devourer_sanity_eclipse_charge or class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------------
 -- IMBA_OUTWORLD_DEVOURER_ARCANE_ORB --
@@ -123,7 +123,7 @@ end
 
 function imba_outworld_devourer_astral_imprisonment:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -527,8 +527,8 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage", "components/abilities/heroes/hero_outworld_devourer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier = modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier or class({})
-modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage         = modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage or class({})
+modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier = modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage         = modifier_special_bonus_imba_outworld_devourer_arcane_orb_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_outworld_devourer_sanity_eclipse_multiplier:IsHidden() return true end
 

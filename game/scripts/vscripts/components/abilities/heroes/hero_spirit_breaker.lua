@@ -20,29 +20,29 @@ LinkLuaModifier("modifier_imba_spirit_breaker_nether_strike_vision", "components
 LinkLuaModifier("modifier_imba_spirit_breaker_nether_strike_planeswalker", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
-imba_spirit_breaker_charge_of_darkness                       = class({})
-modifier_imba_spirit_breaker_charge_of_darkness              = class({})
-modifier_imba_spirit_breaker_charge_of_darkness_vision       = class({})
-modifier_imba_spirit_breaker_charge_of_darkness_clothesline  = class({})
-modifier_imba_spirit_breaker_charge_of_darkness_taxi         = class({})
-modifier_imba_spirit_breaker_charge_of_darkness_taxi_counter = class({})
-modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker = class({})
+imba_spirit_breaker_charge_of_darkness                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness_vision       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness_clothesline  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness_taxi         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness_taxi_counter = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_charge_of_darkness_taxi_tracker = class(VANILLA_ABILITIES_BASECLASS)
 
 
-imba_spirit_breaker_bulldoze                                  = class({})
-modifier_imba_spirit_breaker_bulldoze                         = class({})
-modifier_imba_spirit_breaker_bulldoze_empowering_haste_aura   = class({})
-modifier_imba_spirit_breaker_bulldoze_empowering_haste        = class({})
+imba_spirit_breaker_bulldoze                                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_bulldoze                         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_bulldoze_empowering_haste_aura   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_bulldoze_empowering_haste        = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_spirit_breaker_greater_bash                              = class({})
-modifier_imba_spirit_breaker_greater_bash                     = class({})
-modifier_imba_spirit_breaker_greater_bash_speed               = class({})
+imba_spirit_breaker_greater_bash                              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_greater_bash                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_greater_bash_speed               = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_spirit_breaker_nether_strike                             = class({})
-modifier_imba_spirit_breaker_nether_strike                    = class({})
-modifier_imba_spirit_breaker_nether_strike_vision             = class({})
-modifier_imba_spirit_breaker_nether_strike_planeswalker       = class({})
-modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy = class({})
+imba_spirit_breaker_nether_strike                             = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_nether_strike                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_nether_strike_vision             = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_nether_strike_planeswalker       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_spirit_breaker_nether_strike_planeswalker_enemy = class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------
 -- CHARGE OF DARKNESS --
@@ -64,7 +64,7 @@ function imba_spirit_breaker_charge_of_darkness:GetCooldown(level)
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cooldown")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -682,7 +682,7 @@ function imba_spirit_breaker_bulldoze:GetIntrinsicModifierName()
 end
 
 function imba_spirit_breaker_bulldoze:GetCooldown(nLevel)
-	return self.BaseClass.GetCooldown(self, nLevel) - self:GetCaster():FindTalentValue("special_bonus_imba_spirit_breaker_bulldoze_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_spirit_breaker_bulldoze_cooldown")
 end
 
 function imba_spirit_breaker_bulldoze:OnSpellStart()
@@ -778,7 +778,7 @@ end
 -- GREATER BASH --
 ------------------
 
-imba_spirit_breaker_greater_bash = class({})
+imba_spirit_breaker_greater_bash = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_spirit_breaker_greater_bash:GetIntrinsicModifierName()
 	return "modifier_imba_spirit_breaker_greater_bash"
@@ -926,7 +926,7 @@ function imba_spirit_breaker_nether_strike:GetCooldown(nLevel)
 	-- if self:GetCaster():HasScepter() then
 	-- return self:GetSpecialValueFor("cooldown_scepter")
 	-- else
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 	-- end
 end
 
@@ -940,9 +940,9 @@ end
 
 function imba_spirit_breaker_nether_strike:GetCastPoint()
 	if self:GetCaster():HasModifier("modifier_imba_spirit_breaker_nether_strike_planeswalker") then
-		return self.BaseClass.GetCastPoint(self) * (100 - self:GetTalentSpecialValueFor("planeswalker_reduction")) / 100
+		return self:GetRightfulKV("AbilityCastPoint") * (100 - self:GetTalentSpecialValueFor("planeswalker_reduction")) / 100
 	else
-		return self.BaseClass.GetCastPoint(self)
+		return self:GetRightfulKV("AbilityCastPoint")
 	end
 end
 
@@ -1259,10 +1259,10 @@ LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown", 
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bonus_health", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_spirit_breaker_bash_chance", "components/abilities/heroes/hero_spirit_breaker", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_spirit_breaker_charge_speed      = class({})
-modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown = class({})
-modifier_special_bonus_imba_spirit_breaker_bonus_health      = class({})
-modifier_special_bonus_imba_spirit_breaker_bash_chance       = modifier_special_bonus_imba_spirit_breaker_bash_chance or class({})
+modifier_special_bonus_imba_spirit_breaker_charge_speed      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_spirit_breaker_bulldoze_cooldown = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_spirit_breaker_bonus_health      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_spirit_breaker_bash_chance       = modifier_special_bonus_imba_spirit_breaker_bash_chance or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_spirit_breaker_charge_speed:IsHidden() return true end
 

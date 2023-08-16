@@ -3,7 +3,7 @@
 
 LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 
-imba_chaos_knight_reality_rift = class({})
+imba_chaos_knight_reality_rift = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_chaos_knight_reality_rift:CastFilterResultTarget(target)
 	local caster = self:GetCaster()
@@ -45,23 +45,23 @@ function imba_chaos_knight_reality_rift:OnAbilityPhaseStart()
 		ability.random_point = target_point_vector
 		ability.fw = direction
 
-		StartAnimation(caster, {duration=0.4, activity=ACT_DOTA_OVERRIDE_ABILITY_2, rate=1.0})
+		StartAnimation(caster, { duration = 0.4, activity = ACT_DOTA_OVERRIDE_ABILITY_2, rate = 1.0 })
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_CUSTOMORIGIN, target)
 		ParticleManager:SetParticleControlEnt(particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster_location, true)
 		ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
 		ParticleManager:SetParticleControl(particle, 2, target_point_vector)
-		ParticleManager:SetParticleControlOrientation(particle, 2, direction, Vector(0,1,0), Vector(1,0,0))
+		ParticleManager:SetParticleControlOrientation(particle, 2, direction, Vector(0, 1, 0), Vector(1, 0, 0))
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
-		for _,unit in pairs(units) do
+		for _, unit in pairs(units) do
 			if unit:GetPlayerOwnerID() == caster:GetPlayerID() then
-				StartAnimation(unit, {duration=0.4, activity=ACT_DOTA_OVERRIDE_ABILITY_2, rate=1.0})
+				StartAnimation(unit, { duration = 0.4, activity = ACT_DOTA_OVERRIDE_ABILITY_2, rate = 1.0 })
 				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_CUSTOMORIGIN, target)
 				ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
 				ParticleManager:SetParticleControl(particle, 2, target_point_vector)
-				ParticleManager:SetParticleControlOrientation(particle, 2, direction, Vector(0,1,0), Vector(1,0,0))
+				ParticleManager:SetParticleControlOrientation(particle, 2, direction, Vector(0, 1, 0), Vector(1, 0, 0))
 				ParticleManager:ReleaseParticleIndex(particle)
 			end
 		end
@@ -83,25 +83,24 @@ function imba_chaos_knight_reality_rift:OnSpellStart()
 			FindClearSpaceForUnit(caster, ability.random_point, true)
 			FindClearSpaceForUnit(hTarget, ability.random_point, true)
 			EmitSoundOn("Hero_ChaosKnight.RealityRift.Target", caster)
-			hTarget:AddNewModifier(caster, self, "modifier_reality_rift_armor_reduction_debuff", {duration = duration * (1 - hTarget:GetStatusResistance())})
+			hTarget:AddNewModifier(caster, self, "modifier_reality_rift_armor_reduction_debuff", { duration = duration * (1 - hTarget:GetStatusResistance()) })
 			hTarget:SetForwardVector(ability.fw)
 			caster:Stop()
 			caster:SetForwardVector(ability.fw * -1)
 
-			local order = {UnitIndex = caster:entindex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = hTarget:entindex(), Queue = true}
+			local order = { UnitIndex = caster:entindex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = hTarget:entindex(), Queue = true }
 			ExecuteOrderFromTable(order)
 
 			local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_CLOSEST, false)
-			for _,unit in pairs(units) do
+			for _, unit in pairs(units) do
 				if unit:GetPlayerOwnerID() == caster:GetPlayerID() then
 					FindClearSpaceForUnit(unit, ability.random_point, true)
 					unit:Stop()
 					unit:SetForwardVector(ability.fw * -1)
-					local order = {UnitIndex = unit:entindex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = hTarget:entindex(), Queue = true}
+					local order = { UnitIndex = unit:entindex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = hTarget:entindex(), Queue = true }
 					ExecuteOrderFromTable(order)
 				end
 			end
-
 		end
 	end
 end
@@ -117,7 +116,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Armor reduction debuff
-modifier_reality_rift_armor_reduction_debuff = class({})
+modifier_reality_rift_armor_reduction_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_reality_rift_armor_reduction_debuff:DeclareFunctions()
 	local decFuncs = {
@@ -159,9 +158,9 @@ end
 LinkLuaModifier("modifier_imba_chaos_knight_phantasm_cast", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chaos_knight_phantasm_illusion", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 
-imba_chaos_knight_phantasm						= imba_chaos_knight_phantasm or class({})
-modifier_imba_chaos_knight_phantasm_cast		= modifier_imba_chaos_knight_phantasm_cast or class({})
-modifier_imba_chaos_knight_phantasm_illusion	= modifier_imba_chaos_knight_phantasm_illusion or class({})
+imba_chaos_knight_phantasm                   = imba_chaos_knight_phantasm or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_chaos_knight_phantasm_cast     = modifier_imba_chaos_knight_phantasm_cast or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_chaos_knight_phantasm_illusion = modifier_imba_chaos_knight_phantasm_illusion or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------
 -- IMBA_CHAOS_KNIGHT_PHANTASM --
@@ -180,38 +179,39 @@ function imba_chaos_knight_phantasm:OnSpellStart()
 	local extra_illusion_sound = "Hero_ChaosKnight.Phantasm.Plus"
 
 	local unit = self:GetCursorTarget() or self:GetCaster()
-	
+
 	unit:EmitSound("Hero_ChaosKnight.Phantasm")
 	unit:Purge(false, true, false, false, false)
 	ProjectileManager:ProjectileDodge(unit)
-	
-	unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_chaos_knight_phantasm_cast", {duration = self:GetSpecialValueFor("invuln_duration")})
+
+	unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_chaos_knight_phantasm_cast", { duration = self:GetSpecialValueFor("invuln_duration") })
 end
 
 ----------------------------------------------
 -- MODIFIER_IMBA_CHAOS_KNIGHT_PHANTASM_CAST --
 ----------------------------------------------
 
-function modifier_imba_chaos_knight_phantasm_cast:IsHidden()		return true end
-function modifier_imba_chaos_knight_phantasm_cast:IsPurgable()	return false end
+function modifier_imba_chaos_knight_phantasm_cast:IsHidden() return true end
+
+function modifier_imba_chaos_knight_phantasm_cast:IsPurgable() return false end
 
 function modifier_imba_chaos_knight_phantasm_cast:GetEffectName()
 	return "particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf"
 end
 
 function modifier_imba_chaos_knight_phantasm_cast:OnCreated()
-	self.images_count				= self:GetAbility():GetSpecialValueFor("images_count")
-	self.illusion_duration			= self:GetAbility():GetSpecialValueFor("illusion_duration")
-	self.outgoing_damage			= self:GetAbility():GetSpecialValueFor("outgoing_damage")
-	self.outgoing_damage_tooltip	= self:GetAbility():GetSpecialValueFor("outgoing_damage_tooltip")
-	self.incoming_damage			= self:GetAbility():GetSpecialValueFor("incoming_damage")
-	self.incoming_damage_tooltip	= self:GetAbility():GetSpecialValueFor("incoming_damage_tooltip")
-	self.invuln_duration			= self:GetAbility():GetSpecialValueFor("invuln_duration")
-	self.vision_radius				= self:GetAbility():GetSpecialValueFor("vision_radius")
-	self.magic_resistance			= self:GetAbility():GetSpecialValueFor("magic_resistance")
-	self.images_count				= self:GetAbility():GetSpecialValueFor("images_count")
-	self.scepter_images_count_extra	= self:GetAbility():GetSpecialValueFor("scepter_images_count_extra")
-	
+	self.images_count               = self:GetAbility():GetSpecialValueFor("images_count")
+	self.illusion_duration          = self:GetAbility():GetSpecialValueFor("illusion_duration")
+	self.outgoing_damage            = self:GetAbility():GetSpecialValueFor("outgoing_damage")
+	self.outgoing_damage_tooltip    = self:GetAbility():GetSpecialValueFor("outgoing_damage_tooltip")
+	self.incoming_damage            = self:GetAbility():GetSpecialValueFor("incoming_damage")
+	self.incoming_damage_tooltip    = self:GetAbility():GetSpecialValueFor("incoming_damage_tooltip")
+	self.invuln_duration            = self:GetAbility():GetSpecialValueFor("invuln_duration")
+	self.vision_radius              = self:GetAbility():GetSpecialValueFor("vision_radius")
+	self.magic_resistance           = self:GetAbility():GetSpecialValueFor("magic_resistance")
+	self.images_count               = self:GetAbility():GetSpecialValueFor("images_count")
+	self.scepter_images_count_extra = self:GetAbility():GetSpecialValueFor("scepter_images_count_extra")
+
 	if self:GetCaster():HasScepter() then
 		self.images_count = self.images_count + self.scepter_images_count_extra
 	end
@@ -224,7 +224,7 @@ function modifier_imba_chaos_knight_phantasm_cast:OnDestroy()
 	if self:GetParent() == self:GetCaster() then
 		self:GetParent():Stop()
 	end
-	
+
 	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_radius, 1, false)
 
 	if self:GetAbility().phantasm_illusions then
@@ -234,21 +234,21 @@ function modifier_imba_chaos_knight_phantasm_cast:OnDestroy()
 			end
 		end
 	end
-	
+
 	self:GetAbility().phantasm_illusions = {}
-	
+
 	-- "The distance in between each is 135 range."
-	self.phantasm_illusions = CreateIllusions(self:GetCaster(), self:GetParent(), 
-	{
-		outgoing_damage 			= self.outgoing_damage,
-		incoming_damage				= self.incoming_damage,
-		bounty_base					= self:GetParent():GetLevel() * 2,
-		bounty_growth				= nil,
-		outgoing_damage_structure	= nil,
-		outgoing_damage_roshan		= nil,
-		duration					= self.illusion_duration
-	}
-	, self.images_count, 135, true, true)
+	self.phantasm_illusions = CreateIllusions(self:GetCaster(), self:GetParent(),
+		{
+			outgoing_damage           = self.outgoing_damage,
+			incoming_damage           = self.incoming_damage,
+			bounty_base               = self:GetParent():GetLevel() * 2,
+			bounty_growth             = nil,
+			outgoing_damage_structure = nil,
+			outgoing_damage_roshan    = nil,
+			duration                  = self.illusion_duration
+		}
+		, self.images_count, 135, true, true)
 
 	for _, illusion in pairs(self.phantasm_illusions) do
 		illusion:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_chaos_knight_phantasm_illusion", {})
@@ -260,12 +260,12 @@ end
 -- "Chaos Knight is invulnerable, hidden and spell immune during the split time."
 function modifier_imba_chaos_knight_phantasm_cast:CheckState()
 	return {
-		[MODIFIER_STATE_INVULNERABLE]	= true,
-		[MODIFIER_STATE_OUT_OF_GAME]	= true,
-		
-		[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
-		[MODIFIER_STATE_NO_HEALTH_BAR]	= true,
-		[MODIFIER_STATE_STUNNED]		= true,
+		[MODIFIER_STATE_INVULNERABLE]  = true,
+		[MODIFIER_STATE_OUT_OF_GAME]   = true,
+
+		[MODIFIER_STATE_MAGIC_IMMUNE]  = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_STUNNED]       = true,
 	}
 end
 
@@ -274,20 +274,20 @@ end
 --------------------------------------------------
 
 -- function modifier_imba_chaos_knight_phantasm_illusion:IsHidden()		return true end
-function modifier_imba_chaos_knight_phantasm_illusion:IsPurgable()	return false end
+function modifier_imba_chaos_knight_phantasm_illusion:IsPurgable() return false end
 
 function modifier_imba_chaos_knight_phantasm_illusion:OnCreated(keys)
 	if self:GetAbility() then
-		self.magic_resistance	= self:GetAbility():GetSpecialValueFor("magic_resistance")
+		self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
 	elseif keys then
-		self.magic_resistance	= keys.magic_resistance
+		self.magic_resistance = keys.magic_resistance
 	else
-		self.magic_resistance	= 0
+		self.magic_resistance = 0
 	end
 end
 
 function modifier_imba_chaos_knight_phantasm_illusion:DeclareFunctions()
-	return {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+	return { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
 end
 
 function modifier_imba_chaos_knight_phantasm_illusion:GetModifierMagicalResistanceBonus()

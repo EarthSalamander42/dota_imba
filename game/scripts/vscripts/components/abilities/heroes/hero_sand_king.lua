@@ -4,7 +4,7 @@
 -------------------------------
 --       BURROWSTRIKE        --
 -------------------------------
-imba_sandking_burrowstrike = class({})
+imba_sandking_burrowstrike = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_burrowstrike_stun", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_burrowstrike_burrow", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -209,7 +209,7 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
 end
 
 -- Burrowstrike stun modifier
-modifier_imba_burrowstrike_stun = class({})
+modifier_imba_burrowstrike_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_burrowstrike_stun:CheckState()
 	local state = { [MODIFIER_STATE_STUNNED] = true }
@@ -231,7 +231,7 @@ function modifier_imba_burrowstrike_stun:IsPurgeException() return true end
 function modifier_imba_burrowstrike_stun:IsStunDebuff() return true end
 
 -- Burrowstrike burrow modifier
-modifier_imba_burrowstrike_burrow = class({})
+modifier_imba_burrowstrike_burrow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_burrowstrike_burrow:OnCreated()
 	if IsServer() then
@@ -268,7 +268,7 @@ function modifier_imba_burrowstrike_burrow:IsDebuff() return false end
 -------------------------------
 --        SAND STORM         --
 -------------------------------
-imba_sandking_sand_storm = class({})
+imba_sandking_sand_storm = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_sandstorm", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandstorm_invis", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandstorm_aura", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -383,7 +383,7 @@ function imba_sandking_sand_storm:OnChannelFinish()
 end
 
 -- Sandstorm thinker modifier
-modifier_imba_sandstorm = class({})
+modifier_imba_sandstorm = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sandstorm:OnCreated()
 	if IsServer() then
@@ -491,7 +491,7 @@ function modifier_imba_sandstorm:GetOverrideAnimation()
 end
 
 -- Sandstorm invisibility modifier
-modifier_imba_sandstorm_invis = class({})
+modifier_imba_sandstorm_invis = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sandstorm_invis:IsHidden() return false end
 
@@ -522,7 +522,7 @@ function modifier_imba_sandstorm_invis:GetPriority()
 end
 
 -- Sandstorm aura modifier
-modifier_imba_sandstorm_aura = class({})
+modifier_imba_sandstorm_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sandstorm_aura:OnCreated()
 	if IsServer() then
@@ -691,7 +691,7 @@ end
 --       CAUSTIC FINALE      --
 -------------------------------
 
-imba_sandking_caustic_finale = class({})
+imba_sandking_caustic_finale = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_caustic_finale_trigger", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_caustic_finale_poison", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_caustic_finale_debuff", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -705,7 +705,7 @@ function imba_sandking_caustic_finale:GetIntrinsicModifierName()
 end
 
 -- Caustic Finale caster's trigger
-modifier_imba_caustic_finale_trigger = class({})
+modifier_imba_caustic_finale_trigger = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_caustic_finale_trigger:OnCreated()
 	-- Ability properties
@@ -794,7 +794,7 @@ function ApplyCausticFinale(modifier, attacker, target)
 end
 
 -- Caustic Finale damage debuff
-modifier_imba_caustic_finale_poison = class({})
+modifier_imba_caustic_finale_poison = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_caustic_finale_poison:OnCreated()
 	-- Ability properties
@@ -881,7 +881,7 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
 end
 
 -- Caustic Finale debuff
-modifier_imba_caustic_finale_debuff = class({})
+modifier_imba_caustic_finale_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_caustic_finale_debuff:OnCreated()
 	if not self:GetAbility() then
@@ -925,7 +925,7 @@ end
 -------------------------------
 --         EPICENTER         --
 -------------------------------
-imba_sandking_epicenter = class({})
+imba_sandking_epicenter = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_epicenter_pulse", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_epicenter_slow", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1026,7 +1026,7 @@ function imba_sandking_epicenter:OnChannelFinish(interrupted)
 end
 
 -- Epicenter modifier
-modifier_imba_epicenter_pulse = class({})
+modifier_imba_epicenter_pulse = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_epicenter_pulse:OnCreated()
 	if IsServer() then
@@ -1175,7 +1175,7 @@ function modifier_imba_epicenter_pulse:IsPurgable() return false end
 function modifier_imba_epicenter_pulse:IsDebuff() return false end
 
 -- Epicenter Slow modifier
-modifier_imba_epicenter_slow = class({})
+modifier_imba_epicenter_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_epicenter_slow:OnCreated()
 	-- Ability properties
@@ -1216,10 +1216,10 @@ LinkLuaModifier("modifier_imba_sandking_sand_storm_720_thinker", "components/abi
 LinkLuaModifier("modifier_imba_sandking_sand_storm_720_invisible", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandking_sand_storm_720_thinker_aura", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_sandking_sand_storm_720                       = class({})
-modifier_imba_sandking_sand_storm_720_thinker      = class({})
-modifier_imba_sandking_sand_storm_720_invisible    = class({})
-modifier_imba_sandking_sand_storm_720_thinker_aura = class({})
+imba_sandking_sand_storm_720                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_sandking_sand_storm_720_thinker      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_sandking_sand_storm_720_invisible    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_sandking_sand_storm_720_thinker_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_sandking_sand_storm_720:OnSpellStart()
 	self.caster            = self:GetCaster()
@@ -1452,12 +1452,12 @@ LinkLuaModifier("modifier_special_bonus_imba_sand_king_4", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_sand_king_6", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sand_king_8", "components/abilities/heroes/hero_sand_king", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_sand_king_1 = modifier_special_bonus_imba_sand_king_1 or class({})
-modifier_special_bonus_imba_sand_king_2 = modifier_special_bonus_imba_sand_king_2 or class({})
-modifier_special_bonus_imba_sand_king_9 = modifier_special_bonus_imba_sand_king_9 or class({})
-modifier_special_bonus_imba_sand_king_4 = modifier_special_bonus_imba_sand_king_4 or class({})
-modifier_special_bonus_imba_sand_king_6 = modifier_special_bonus_imba_sand_king_6 or class({})
-modifier_special_bonus_imba_sand_king_8 = modifier_special_bonus_imba_sand_king_8 or class({})
+modifier_special_bonus_imba_sand_king_1 = modifier_special_bonus_imba_sand_king_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sand_king_2 = modifier_special_bonus_imba_sand_king_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sand_king_9 = modifier_special_bonus_imba_sand_king_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sand_king_4 = modifier_special_bonus_imba_sand_king_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sand_king_6 = modifier_special_bonus_imba_sand_king_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sand_king_8 = modifier_special_bonus_imba_sand_king_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_sand_king_1:IsHidden() return true end
 

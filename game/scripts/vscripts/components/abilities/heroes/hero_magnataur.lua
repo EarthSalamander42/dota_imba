@@ -20,7 +20,7 @@ end
 -------------------------------------------
 
 LinkLuaModifier("modifier_imba_polarize_debuff", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff = modifier_imba_polarize_debuff or class({})
+modifier_imba_polarize_debuff = modifier_imba_polarize_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_polarize_debuff:IsDebuff()
 	return true
@@ -85,7 +85,7 @@ function modifier_imba_polarize_debuff:GetEffectAttachType()
 end
 
 LinkLuaModifier("modifier_imba_polarize_debuff_stack", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or class({})
+modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_polarize_debuff_stack:IsDebuff()
 	return true
@@ -134,7 +134,7 @@ end
 
 LinkLuaModifier("modifier_imba_polarize_debuff_pull", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_polarize_debuff_pull = class({})
+modifier_imba_polarize_debuff_pull = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_polarize_debuff_pull:IsDebuff()
 	return true
@@ -161,7 +161,7 @@ end
 -------------------------------------------
 
 LinkLuaModifier("modifier_imba_magnetize_debuff", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_magnetize_debuff = modifier_imba_magnetize_debuff or class({})
+modifier_imba_magnetize_debuff = modifier_imba_magnetize_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_magnetize_debuff:IsDebuff()
 	return true
@@ -188,7 +188,7 @@ function modifier_imba_magnetize_debuff:GetEffectAttachType()
 end
 
 LinkLuaModifier("modifier_imba_magnetize_debuff_stack", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_magnetize_debuff_stack = modifier_imba_magnetize_debuff_stack or class({})
+modifier_imba_magnetize_debuff_stack = modifier_imba_magnetize_debuff_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_magnetize_debuff_stack:IsDebuff()
 	return true
@@ -313,7 +313,7 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 end
 
 LinkLuaModifier("modifier_imba_magnetize_debuff_immune", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_magnetize_debuff_immune = modifier_imba_magnetize_debuff_immune or class({})
+modifier_imba_magnetize_debuff_immune = modifier_imba_magnetize_debuff_immune or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_magnetize_debuff_immune:IsDebuff()
 	return false
@@ -335,7 +335,7 @@ LinkLuaModifier("modifier_imba_shockwave_root", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_shockwave_pull", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_shockwave_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
+imba_magnataur_shockwave = imba_magnataur_shockwave or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_magnataur_shockwave:GetCastRange(location, target)
 	if not self:GetCaster():HasScepter() then
@@ -674,7 +674,7 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 	end
 end
 
-modifier_imba_shockwave_root = class({})
+modifier_imba_shockwave_root = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shockwave_root:IsHidden() return false end
 
@@ -699,7 +699,7 @@ end
 -- SHOCKWAVE PULL MODIFIER --
 -----------------------------
 
-modifier_imba_shockwave_pull = class({})
+modifier_imba_shockwave_pull = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shockwave_pull:OnCreated(params)
 	if not IsServer() then return end
@@ -748,7 +748,7 @@ end
 -- SHOCKWAVE SLOW MODIFIER --
 -----------------------------
 
-modifier_imba_shockwave_slow = class({})
+modifier_imba_shockwave_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shockwave_slow:GetEffectName()
 	return "particles/units/heroes/hero_magnataur/magnataur_shockwave_hit.vpcf"
@@ -775,7 +775,7 @@ end
 --				EMPOWER
 -------------------------------------------
 
-imba_magnataur_empower = imba_magnataur_empower or class({})
+imba_magnataur_empower = imba_magnataur_empower or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_empower_aura", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower_particle", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
@@ -841,7 +841,7 @@ function imba_magnataur_empower:IsStealable()
 end
 
 -- Scepter Aura & self-sustain
-modifier_imba_empower_aura = modifier_imba_empower_aura or class({})
+modifier_imba_empower_aura = modifier_imba_empower_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_empower_aura:GetAuraEntityReject(target)
 	if IsServer() then
@@ -917,7 +917,7 @@ function modifier_imba_empower_aura:IsHidden()
 	return true
 end
 
-modifier_imba_empower = modifier_imba_empower or class({})
+modifier_imba_empower = modifier_imba_empower or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_empower:DeclareFunctions()
 	return {
@@ -1165,7 +1165,7 @@ function modifier_imba_empower:OnIntervalThink()
 	end
 end
 
-modifier_imba_empower_particle = modifier_imba_empower_particle or class({})
+modifier_imba_empower_particle = modifier_imba_empower_particle or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_empower_particle:IsHidden()
 	return true
@@ -1196,7 +1196,7 @@ function modifier_imba_empower_particle:IsPurgable()
 	return true
 end
 
-modifier_imba_empower_linger = modifier_imba_empower_linger or class({})
+modifier_imba_empower_linger = modifier_imba_empower_linger or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_empower_linger:IsDebuff()
 	return false
@@ -1210,7 +1210,7 @@ function modifier_imba_empower_linger:IsPurgable()
 	return true
 end
 
-modifier_imba_empower_polarizer = modifier_imba_empower_polarizer or class({})
+modifier_imba_empower_polarizer = modifier_imba_empower_polarizer or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_empower_polarizer:IsDebuff()
 	return false
@@ -1266,7 +1266,7 @@ function modifier_imba_empower_polarizer:OnIntervalThink()
 	end
 end
 
-modifier_imba_supercharged = modifier_imba_supercharged or class({})
+modifier_imba_supercharged = modifier_imba_supercharged or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_supercharged:OnCreated(params)
 	if IsServer() then
@@ -1331,7 +1331,7 @@ function modifier_imba_supercharged:GetModifierBaseAttack_BonusDamage()
 	end
 end
 
-modifier_imba_ubercharged = modifier_imba_ubercharged or class({})
+modifier_imba_ubercharged = modifier_imba_ubercharged or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ubercharged:DeclareFunctions()
 	return { MODIFIER_EVENT_ON_ATTACK_LANDED }
@@ -1434,7 +1434,7 @@ function modifier_imba_ubercharged:GetTexture()
 	return "magnus_ubercharge"
 end
 
-modifier_imba_ubercharged_indicator = modifier_imba_ubercharged_indicator or class({})
+modifier_imba_ubercharged_indicator = modifier_imba_ubercharged_indicator or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ubercharged_indicator:IsDebuff()
 	return false
@@ -1486,7 +1486,7 @@ end
 --				SKEWER
 -------------------------------------------
 
-imba_magnataur_skewer = imba_magnataur_skewer or class({})
+imba_magnataur_skewer = imba_magnataur_skewer or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_skewer_motion_controller", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
@@ -1514,10 +1514,10 @@ end
 
 function imba_magnataur_skewer:GetCastPoint()
 	if self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCastPoint(self) * self:GetSpecialValueFor("cast_point_reduction") / 100
+		return self:GetRightfulKV("AbilityCastPoint") * self:GetSpecialValueFor("cast_point_reduction") / 100
 	end
 
-	return self.BaseClass.GetCastPoint(self)
+	return self:GetRightfulKV("AbilityCastPoint")
 end
 
 function imba_magnataur_skewer:GetCastRange(location, target)
@@ -1614,7 +1614,7 @@ function imba_magnataur_skewer:GetAbilityTextureName()
 	end
 end
 
-modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class({})
+modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skewer_motion_controller:OnCreated(params)
 	if IsServer() then
@@ -1862,7 +1862,7 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 	end
 end
 
-modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class({})
+modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skewer_motion_controller_target:OnCreated(params)
 	if IsServer() then
@@ -1944,7 +1944,7 @@ function modifier_imba_skewer_motion_controller_target:DeclareFunctions()
 	return decFuncs
 end
 
-modifier_imba_skewer_slow = modifier_imba_skewer_slow or class({})
+modifier_imba_skewer_slow = modifier_imba_skewer_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skewer_slow:DeclareFunctions()
 	local decFuncs =
@@ -1977,7 +1977,7 @@ function modifier_imba_skewer_slow:OnCreated(params)
 	self.pardoned = params.pardoned
 end
 
-modifier_imba_skewer_entangle = modifier_imba_skewer_entangle or class({})
+modifier_imba_skewer_entangle = modifier_imba_skewer_entangle or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skewer_entangle:DeclareFunctions()
 	local decFuncs =
@@ -2026,7 +2026,7 @@ end
 --			REVERSE POLARITY
 -------------------------------------------
 
-imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class({})
+imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_reverse_polarity_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_reverse_polarity:GetAbilityTextureName()
@@ -2185,7 +2185,7 @@ function imba_magnataur_reverse_polarity:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target)
 end
 
-modifier_imba_reverse_polarity_slow = modifier_imba_reverse_polarity_slow or class({})
+modifier_imba_reverse_polarity_slow = modifier_imba_reverse_polarity_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reverse_polarity_slow:DeclareFunctions()
 	local decFuncs =
@@ -2223,13 +2223,13 @@ LinkLuaModifier("modifier_special_bonus_imba_magnataur_6", "components/abilities
 LinkLuaModifier("modifier_special_bonus_imba_magnataur_8", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_magnataur_9", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_magnataur_1 = modifier_special_bonus_imba_magnataur_1 or class({})
-modifier_special_bonus_imba_magnataur_2 = modifier_special_bonus_imba_magnataur_2 or class({})
-modifier_special_bonus_imba_magnataur_3 = modifier_special_bonus_imba_magnataur_3 or class({})
-modifier_special_bonus_imba_magnataur_4 = modifier_special_bonus_imba_magnataur_4 or class({})
-modifier_special_bonus_imba_magnataur_6 = modifier_special_bonus_imba_magnataur_6 or class({})
-modifier_special_bonus_imba_magnataur_8 = modifier_special_bonus_imba_magnataur_8 or class({})
-modifier_special_bonus_imba_magnataur_9 = modifier_special_bonus_imba_magnataur_9 or class({})
+modifier_special_bonus_imba_magnataur_1 = modifier_special_bonus_imba_magnataur_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_2 = modifier_special_bonus_imba_magnataur_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_3 = modifier_special_bonus_imba_magnataur_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_4 = modifier_special_bonus_imba_magnataur_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_6 = modifier_special_bonus_imba_magnataur_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_8 = modifier_special_bonus_imba_magnataur_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_magnataur_9 = modifier_special_bonus_imba_magnataur_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_magnataur_1:IsHidden() return true end
 

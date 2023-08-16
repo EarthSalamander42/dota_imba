@@ -16,24 +16,24 @@ LinkLuaModifier("modifier_imba_rattletrap_rocket_flare_critical", "components/ab
 
 LinkLuaModifier("modifier_imba_rattletrap_hookshot", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_HORIZONTAL)
 
-imba_rattletrap_battery_assault                                = class({})
-modifier_imba_rattletrap_battery_assault                       = class({})
-modifier_imba_rattletrap_battery_assault_fragmentation_rend    = class({})
-modifier_imba_rattletrap_battery_assault_percussive_maint_aura = class({})
-modifier_imba_rattletrap_battery_assault_percussive_maint      = class({})
+imba_rattletrap_battery_assault                                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_battery_assault                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_battery_assault_fragmentation_rend    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_battery_assault_percussive_maint_aura = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_battery_assault_percussive_maint      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_rattletrap_power_cogs                                     = class({})
-modifier_imba_rattletrap_power_cogs                            = class({})
-modifier_imba_rattletrap_cog_push                              = class({})
-modifier_imba_rattletrap_power_cogs_charge_coil_counter        = class({})
-modifier_imba_rattletrap_power_cogs_charge_coil_instance       = class({})
-modifier_imba_rattletrap_power_cogs_rotational                 = class({})
+imba_rattletrap_power_cogs                                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_power_cogs                            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_cog_push                              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_power_cogs_charge_coil_counter        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_power_cogs_charge_coil_instance       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_power_cogs_rotational                 = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_rattletrap_rocket_flare                                   = class({})
-modifier_imba_rattletrap_rocket_flare_critical                 = class({})
+imba_rattletrap_rocket_flare                                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_rocket_flare_critical                 = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_rattletrap_hookshot                                       = class({})
-modifier_imba_rattletrap_hookshot                              = class({})
+imba_rattletrap_hookshot                                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rattletrap_hookshot                              = class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------
 -- BATTERY ASSAULT --
@@ -1472,10 +1472,10 @@ LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_truesight",
 LinkLuaModifier("modifier_special_bonus_imba_rattletrap_rocket_flare_speed", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_rattletrap_battery_assault_interval", "components/abilities/heroes/hero_rattletrap", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_rattletrap_battery_assault_aura     = modifier_special_bonus_imba_rattletrap_battery_assault_aura or class({})
-modifier_special_bonus_imba_rattletrap_rocket_flare_truesight   = modifier_special_bonus_imba_rattletrap_rocket_flare_truesight or class({})
-modifier_special_bonus_imba_rattletrap_rocket_flare_speed       = modifier_special_bonus_imba_rattletrap_rocket_flare_speed or class({})
-modifier_special_bonus_imba_rattletrap_battery_assault_interval = modifier_special_bonus_imba_rattletrap_battery_assault_interval or class({})
+modifier_special_bonus_imba_rattletrap_battery_assault_aura     = modifier_special_bonus_imba_rattletrap_battery_assault_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rattletrap_rocket_flare_truesight   = modifier_special_bonus_imba_rattletrap_rocket_flare_truesight or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rattletrap_rocket_flare_speed       = modifier_special_bonus_imba_rattletrap_rocket_flare_speed or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rattletrap_battery_assault_interval = modifier_special_bonus_imba_rattletrap_battery_assault_interval or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_rattletrap_battery_assault_aura:IsHidden() return true end
 

@@ -5,7 +5,7 @@
 --                  IMPALE                     --
 -------------------------------------------------
 
-imba_nyx_assassin_impale = class({})
+imba_nyx_assassin_impale = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_impale_suffering_aura", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_suffering", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_suffering_damage_counter", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
@@ -52,7 +52,7 @@ function imba_nyx_assassin_impale:GetCooldown(level)
 	local caster = self:GetCaster()
 	local ability = self
 	local modifier_burrowed = "modifier_nyx_assassin_burrow"
-	local base_cooldown = self.BaseClass.GetCooldown(self, level)
+	local base_cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	-- Ability specials
 	local burrow_cd_reduction = ability:GetSpecialValueFor("burrow_cd_reduction")
@@ -266,7 +266,7 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 end
 
 -- Relive Suffering aura modifier
-modifier_imba_impale_suffering_aura = class({})
+modifier_imba_impale_suffering_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_suffering_aura:GetAuraRadius()
 	return 25000 --global
@@ -305,7 +305,7 @@ function modifier_imba_impale_suffering_aura:RemoveOnDeath() return false end
 function modifier_imba_impale_suffering_aura:IsPurgable() return false end
 
 -- Relive Suffering damage counter
-modifier_imba_impale_suffering = class({})
+modifier_imba_impale_suffering = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_suffering:OnCreated()
 	if IsServer() then
@@ -348,7 +348,7 @@ function modifier_imba_impale_suffering:IsDebuff() return true end
 
 function modifier_imba_impale_suffering:RemoveOnDeath() return true end
 
-modifier_imba_impale_suffering_damage_counter = modifier_imba_impale_suffering_damage_counter or class({})
+modifier_imba_impale_suffering_damage_counter = modifier_imba_impale_suffering_damage_counter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_suffering_damage_counter:IsHidden() return true end
 
@@ -361,7 +361,7 @@ function modifier_imba_impale_suffering_damage_counter:RemoveOnDeath() return tr
 function modifier_imba_impale_suffering_damage_counter:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Impale stun modifier
-modifier_imba_impale_stun = class({})
+modifier_imba_impale_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_stun:OnCreated(kv)
 	self.parent = self:GetParent()
@@ -414,7 +414,7 @@ function modifier_imba_impale_stun:IsPurgeException() return true end
 function modifier_imba_impale_stun:IsStunDebuff() return true end
 
 -- Impale afterstun slow modifier (talent)
-modifier_imba_impale_talent_slow = modifier_imba_impale_talent_slow or class({})
+modifier_imba_impale_talent_slow = modifier_imba_impale_talent_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_talent_slow:OnCreated()
 	self.max_distance = 200 -- to detect blink movement so as to not apply the slow
@@ -464,7 +464,7 @@ function modifier_imba_impale_talent_slow:IsDebuff() return true end
 function modifier_imba_impale_talent_slow:IsPurgable() return true end
 
 -- Impale thinker modifier (talent)
-modifier_imba_impale_talent_thinker = modifier_imba_impale_talent_thinker or class({})
+modifier_imba_impale_talent_thinker = modifier_imba_impale_talent_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_impale_talent_thinker:OnCreated(kv)
 	-- Properties
@@ -541,7 +541,7 @@ end
 --                MANA BURN                    --
 -------------------------------------------------
 
-imba_nyx_assassin_mana_burn = class({})
+imba_nyx_assassin_mana_burn = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mana_burn_parasite", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mana_burn_talent_parasite", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
@@ -641,7 +641,7 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 end
 
 -- Mind Bug parasite leech modifier
-modifier_imba_mana_burn_parasite = class({})
+modifier_imba_mana_burn_parasite = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mana_burn_parasite:DeclareFunctions()
 	return {
@@ -775,7 +775,7 @@ function modifier_imba_mana_burn_parasite:IsPurgable() return true end
 function modifier_imba_mana_burn_parasite:IsDebuff() return true end
 
 -- Mind Bug parasite charge (active) modifier
-modifier_imba_mana_burn_parasite_charged = class({})
+modifier_imba_mana_burn_parasite_charged = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mana_burn_parasite_charged:DeclareFunctions()
 	local decFuncs = { MODIFIER_EVENT_ON_HERO_KILLED }
@@ -878,7 +878,7 @@ function modifier_imba_mana_burn_parasite_charged:IsPurgable() return true end
 function modifier_imba_mana_burn_parasite_charged:IsDebuff() return true end
 
 -- Talent : Scarab modifier that jumps into enemies and Mana Burns them
-modifier_imba_mana_burn_talent_parasite = modifier_imba_mana_burn_talent_parasite or class({})
+modifier_imba_mana_burn_talent_parasite = modifier_imba_mana_burn_talent_parasite or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mana_burn_talent_parasite:OnCreated(kv)
 	if not IsServer() then
@@ -938,7 +938,7 @@ function modifier_imba_mana_burn_talent_parasite:IsDebuff() return false end
 --              SPIKED CARAPACE                --
 -------------------------------------------------
 
-imba_nyx_assassin_spiked_carapace = class({})
+imba_nyx_assassin_spiked_carapace = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_spiked_carapace", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_spiked_carapace_stun", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
@@ -971,7 +971,7 @@ function imba_nyx_assassin_spiked_carapace:OnSpellStart()
 end
 
 -- Spiked carapace modifier (owner)
-modifier_imba_spiked_carapace = class({})
+modifier_imba_spiked_carapace = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_spiked_carapace:GetStatusEffectName()
 	if self:GetStackCount() == 1 then
@@ -1251,7 +1251,7 @@ function modifier_imba_spiked_carapace:GetAbsoluteNoDamagePure(keys)
 end
 
 -- Spiked carapace stun modifier
-modifier_imba_spiked_carapace_stun = class({})
+modifier_imba_spiked_carapace_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_spiked_carapace_stun:OnCreated()
 	if IsServer() then
@@ -1292,7 +1292,7 @@ end
 -------------------------------------------------
 
 
-imba_nyx_assassin_vendetta = class({})
+imba_nyx_assassin_vendetta = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_vendetta", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_break", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
@@ -1332,7 +1332,7 @@ function imba_nyx_assassin_vendetta:OnSpellStart()
 end
 
 -- Vendetta modifier
-modifier_imba_vendetta = class({})
+modifier_imba_vendetta = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_vendetta:OnCreated()
 	-- Ability properties
@@ -1505,7 +1505,7 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 end
 
 -- Vendetta charges modifier_charge
-modifier_imba_vendetta_charge = class({})
+modifier_imba_vendetta_charge = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_vendetta_charge:OnCreated()
 	if IsServer() then
@@ -1547,7 +1547,7 @@ end
 -- VENDETTA BREAK MODIFIER --
 -----------------------------
 
-modifier_imba_vendetta_break = class({})
+modifier_imba_vendetta_break = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_vendetta_break:CheckState()
 	return { [MODIFIER_STATE_PASSIVES_DISABLED] = true }
@@ -1560,7 +1560,7 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_5", "components/abilities/heroes/hero_nyx_assassin.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nyx_assassin_5 = class({})
+modifier_special_bonus_imba_nyx_assassin_5 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nyx_assassin_5:IsHidden() return true end
 
@@ -1627,13 +1627,13 @@ LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_4", "components/abilit
 LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_12", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_11", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nyx_assassin_6 = modifier_special_bonus_imba_nyx_assassin_6 or class({})
-modifier_special_bonus_imba_nyx_assassin_2 = modifier_special_bonus_imba_nyx_assassin_2 or class({})
-modifier_special_bonus_imba_nyx_assassin_3 = modifier_special_bonus_imba_nyx_assassin_3 or class({})
-modifier_special_bonus_imba_nyx_assassin_13 = modifier_special_bonus_imba_nyx_assassin_13 or class({})
-modifier_special_bonus_imba_nyx_assassin_4 = modifier_special_bonus_imba_nyx_assassin_4 or class({})
-modifier_special_bonus_imba_nyx_assassin_12 = modifier_special_bonus_imba_nyx_assassin_12 or class({})
-modifier_special_bonus_imba_nyx_assassin_11 = modifier_special_bonus_imba_nyx_assassin_11 or class({})
+modifier_special_bonus_imba_nyx_assassin_6 = modifier_special_bonus_imba_nyx_assassin_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_2 = modifier_special_bonus_imba_nyx_assassin_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_3 = modifier_special_bonus_imba_nyx_assassin_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_13 = modifier_special_bonus_imba_nyx_assassin_13 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_4 = modifier_special_bonus_imba_nyx_assassin_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_12 = modifier_special_bonus_imba_nyx_assassin_12 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nyx_assassin_11 = modifier_special_bonus_imba_nyx_assassin_11 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nyx_assassin_6:IsHidden() return true end
 

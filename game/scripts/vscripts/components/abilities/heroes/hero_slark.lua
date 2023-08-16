@@ -21,39 +21,39 @@ LinkLuaModifier("modifier_imba_slark_shadow_dance_dark_reef_handler", "component
 
 LinkLuaModifier("modifier_imba_slark_visual", "components/abilities/heroes/hero_slark", LUA_MODIFIER_MOTION_NONE)
 
-imba_slark_dark_pact                               = imba_slark_dark_pact or class({})
-modifier_imba_slark_dark_pact                      = modifier_imba_slark_dark_pact or class({})
-modifier_imba_slark_dark_pact_pulses               = modifier_imba_slark_dark_pact_pulses or class({})
-modifier_imba_slark_dark_pact_thinker              = modifier_imba_slark_dark_pact_thinker or class({})
+imba_slark_dark_pact                               = imba_slark_dark_pact or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_dark_pact                      = modifier_imba_slark_dark_pact or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_dark_pact_pulses               = modifier_imba_slark_dark_pact_pulses or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_dark_pact_thinker              = modifier_imba_slark_dark_pact_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_slark_pounce                                  = imba_slark_pounce or class({})
-modifier_imba_slark_pounce                         = modifier_imba_slark_pounce or class({})
-modifier_imba_slark_pounce_leash                   = modifier_imba_slark_pounce_leash or class({})
-modifier_imba_slark_pounce_charge_counter          = modifier_imba_slark_pounce_charge_counter or class({})
+imba_slark_pounce                                  = imba_slark_pounce or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_pounce                         = modifier_imba_slark_pounce or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_pounce_leash                   = modifier_imba_slark_pounce_leash or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_pounce_charge_counter          = modifier_imba_slark_pounce_charge_counter or class(VANILLA_ABILITIES_BASECLASS)
 
--- imba_slark_essence_shift							= imba_slark_essence_shift or class({})
--- modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class({})
--- modifier_imba_slark_essence_shift_debuff_counter			= modifier_imba_slark_essence_shift_debuff_counter or class({})
--- modifier_imba_slark_essence_shift_permanent_buff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
--- modifier_imba_slark_essence_shift_permanent_debuff	= modifier_imba_slark_essence_shift_permanent_buff or class({})
+-- imba_slark_essence_shift							= imba_slark_essence_shift or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_essence_shift					= modifier_imba_slark_essence_shift or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_essence_shift_debuff_counter			= modifier_imba_slark_essence_shift_debuff_counter or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_essence_shift_permanent_buff	= modifier_imba_slark_essence_shift_permanent_buff or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_essence_shift_permanent_debuff	= modifier_imba_slark_essence_shift_permanent_buff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_slark_essence_shift                           = class({})
-modifier_imba_slark_essence_shift                  = class({})
-modifier_imba_slark_essence_shift_debuff_counter   = class({})
-modifier_imba_slark_essence_shift_permanent_buff   = class({})
-modifier_imba_slark_essence_shift_permanent_debuff = class({})
+imba_slark_essence_shift                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_essence_shift                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_essence_shift_debuff_counter   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_essence_shift_permanent_buff   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_essence_shift_permanent_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
--- imba_slark_shadow_dance								= imba_slark_shadow_dance or class({})
--- modifier_imba_slark_shadow_dance_passive_regen		= modifier_imba_slark_shadow_dance_passive_regen or class({})
--- modifier_imba_slark_shadow_dance					= modifier_imba_slark_shadow_dance or class({})
+-- imba_slark_shadow_dance								= imba_slark_shadow_dance or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_shadow_dance_passive_regen		= modifier_imba_slark_shadow_dance_passive_regen or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_slark_shadow_dance					= modifier_imba_slark_shadow_dance or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_slark_shadow_dance                            = class({})
-modifier_imba_slark_shadow_dance_passive_regen     = class({})
-modifier_imba_slark_shadow_dance_aura              = class({})
-modifier_imba_slark_shadow_dance                   = class({})
-modifier_imba_slark_shadow_dance_dark_reef_handler = class({})
+imba_slark_shadow_dance                            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_shadow_dance_passive_regen     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_shadow_dance_aura              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_shadow_dance                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slark_shadow_dance_dark_reef_handler = class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_slark_visual                         = class({})
+modifier_imba_slark_visual                         = class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------
 -- IMBA_SLARK_DARK_PACT --
@@ -348,9 +348,9 @@ end
 function imba_slark_pounce:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
 		if not self:GetCaster():HasModifier("modifier_imba_slark_pounce") or IsClient() then
-			return self.BaseClass.GetCooldown(self, level)
+			return self:GetRightfulKV("AbilityCooldown")
 		elseif IsServer() then
-			return (self.BaseClass.GetCooldown(self, level) * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
+			return (self:GetRightfulKV("AbilityCooldown") * (self:GetCaster():GetCooldownReduction())) - self:GetCaster():FindModifierByName("modifier_imba_slark_pounce"):GetElapsedTime()
 		end
 	else
 		return 0
@@ -985,7 +985,7 @@ end
 
 -- function imba_slark_shadow_dance:GetCooldown(level)
 -- if not self:GetCaster():HasScepter() then
--- return self.BaseClass.GetCooldown(self, level)
+-- return self:GetRightfulKV("AbilityCooldown")
 -- else
 -- return self:GetSpecialValueFor("cooldown_scepter")
 -- end

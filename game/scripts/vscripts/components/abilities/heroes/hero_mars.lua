@@ -114,7 +114,7 @@ function imba_mars_spear:OnSpellStart()
 	EmitSoundOn("Hero_Mars.Spear", self:GetCaster())
 end
 
-modifier_imba_mars_spear_heaven_spear = modifier_imba_mars_spear_heaven_spear or class({})
+modifier_imba_mars_spear_heaven_spear = modifier_imba_mars_spear_heaven_spear or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_spear_heaven_spear:RemoveOnDeath() return false end
 
@@ -220,7 +220,7 @@ end
 -- MODIFIER_IMBA_mars_spear_trailblazer_THINKER --
 --------------------------------------------
 
-modifier_imba_mars_spear_trailblazer_thinker = modifier_imba_mars_spear_trailblazer_thinker or class({})
+modifier_imba_mars_spear_trailblazer_thinker = modifier_imba_mars_spear_trailblazer_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_spear_trailblazer_thinker:IsPurgable() return false end
 
@@ -569,7 +569,7 @@ function imba_mars_spear:PlayEffects(projID, duration)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_spear = modifier_imba_mars_spear or class({})
+modifier_imba_mars_spear = modifier_imba_mars_spear or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -673,7 +673,7 @@ function modifier_imba_mars_spear:OnHorizontalMotionInterrupted()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_spear_debuff = modifier_imba_mars_spear_debuff or class({})
+modifier_imba_mars_spear_debuff = modifier_imba_mars_spear_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -767,7 +767,7 @@ Ability checklist (erase if done/checked):
 - Stolen behavior
 ]]
 --------------------------------------------------------------------------------
-imba_mars_gods_rebuke = imba_mars_gods_rebuke or class({})
+imba_mars_gods_rebuke = imba_mars_gods_rebuke or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mars_gods_rebuke", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_gods_rebuke_strong_argument", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
@@ -943,7 +943,7 @@ function imba_mars_gods_rebuke:PlayEffects2(target, origin, direction)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_gods_rebuke = modifier_imba_mars_gods_rebuke or class({})
+modifier_imba_mars_gods_rebuke = modifier_imba_mars_gods_rebuke or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1001,7 +1001,7 @@ function modifier_imba_mars_gods_rebuke:GetModifierPreAttack_CriticalStrike(para
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_gods_rebuke_strong_argument = modifier_imba_mars_gods_rebuke_strong_argument or class({})
+modifier_imba_mars_gods_rebuke_strong_argument = modifier_imba_mars_gods_rebuke_strong_argument or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_gods_rebuke_strong_argument:DeclareFunctions()
 	return {
@@ -1019,7 +1019,7 @@ LinkLuaModifier("modifier_imba_mars_bulwark", "components/abilities/heroes/hero_
 LinkLuaModifier("modifier_imba_mars_bulwark_active", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_bulwark_jupiters_strength", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
-imba_mars_bulwark = imba_mars_bulwark or class({})
+imba_mars_bulwark = imba_mars_bulwark or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 
@@ -1043,7 +1043,7 @@ end
 
 --------------------------------------------------------------------------------
 
-modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class({})
+modifier_imba_mars_bulwark = modifier_imba_mars_bulwark or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 
@@ -1163,7 +1163,7 @@ function modifier_imba_mars_bulwark:PlayEffects(front)
 	self:GetParent():EmitSound(sound_cast)
 end
 
-modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class({})
+modifier_imba_mars_bulwark_active = modifier_imba_mars_bulwark_active or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_bulwark_active:IsHidden() return true end
 
@@ -1246,7 +1246,7 @@ function modifier_imba_mars_bulwark_active:OnTakeDamage(keys)
 	end
 end
 
-modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupiters_strength or class({})
+modifier_imba_mars_bulwark_jupiters_strength = modifier_imba_mars_bulwark_jupiters_strength or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_bulwark_jupiters_strength:RemoveOnDeath() return false end
 
@@ -1308,7 +1308,7 @@ Shoud be revised:
 - soldier still use "models/heroes/attachto_ghost/pa_gravestone_ghost.vmdl" as base class (also affects Spear of Mars)
 ]]
 --------------------------------------------------------------------------------
-imba_mars_arena_of_blood = imba_mars_arena_of_blood or class({})
+imba_mars_arena_of_blood = imba_mars_arena_of_blood or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_blocker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_wall_aura", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
@@ -1371,7 +1371,7 @@ function imba_mars_arena_of_blood:OnProjectileHitHandle(target, location, id)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_blocker = modifier_imba_mars_arena_of_blood_blocker or class({})
+modifier_imba_mars_arena_of_blood_blocker = modifier_imba_mars_arena_of_blood_blocker or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1470,7 +1470,7 @@ function modifier_imba_mars_arena_of_blood_blocker:Interpolate(value, min, max)
 	return value * (max - min) + min
 end
 
-modifier_imba_mars_arena_of_blood_coliseum_aura = modifier_imba_mars_arena_of_blood_coliseum_aura or class({})
+modifier_imba_mars_arena_of_blood_coliseum_aura = modifier_imba_mars_arena_of_blood_coliseum_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_arena_of_blood_coliseum_aura:IsHidden() return true end
 
@@ -1515,7 +1515,7 @@ function modifier_imba_mars_arena_of_blood_coliseum_aura:OnRefresh()
 	self:OnCreated()
 end
 
-modifier_imba_mars_arena_of_blood_coliseum = modifier_imba_mars_arena_of_blood_coliseum or class({})
+modifier_imba_mars_arena_of_blood_coliseum = modifier_imba_mars_arena_of_blood_coliseum or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_arena_of_blood_coliseum:IsHidden() return true end
 
@@ -1587,7 +1587,7 @@ function modifier_imba_mars_arena_of_blood_coliseum:GetModifierConstantHealthReg
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_projectile_aura = class({})
+modifier_imba_mars_arena_of_blood_projectile_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1748,7 +1748,7 @@ function modifier_imba_mars_arena_of_blood_projectile_aura:PlayEffects(loc)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_spear_aura = class({})
+modifier_imba_mars_arena_of_blood_spear_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -1910,7 +1910,7 @@ function modifier_imba_mars_arena_of_blood_spear_aura:PlayEffects(direction)
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_thinker or class({})
+modifier_imba_mars_arena_of_blood_thinker = modifier_imba_mars_arena_of_blood_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -2097,7 +2097,7 @@ function modifier_imba_mars_arena_of_blood_thinker:PlayEffects()
 end
 
 --------------------------------------------------------------------------------
-modifier_imba_mars_arena_of_blood_wall_aura = class({})
+modifier_imba_mars_arena_of_blood_wall_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------------------------------------------------
 -- Classifications
@@ -2265,7 +2265,7 @@ function modifier_imba_mars_arena_of_blood_wall_aura:GetAuraEntityReject(unit)
 	return false
 end
 
-modifier_imba_mars_arena_of_blood_scepter = modifier_imba_mars_arena_of_blood_scepter or class({})
+modifier_imba_mars_arena_of_blood_scepter = modifier_imba_mars_arena_of_blood_scepter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mars_arena_of_blood_scepter:IsHidden() return true end
 
@@ -2383,10 +2383,10 @@ end
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_enhance", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
-imba_mars_arena_of_blood_enhance					= imba_mars_arena_of_blood_enhance or class({})
-modifier_imba_mars_arena_of_blood_enhance			= modifier_imba_mars_arena_of_blood_enhance or class({})
+imba_mars_arena_of_blood_enhance					= imba_mars_arena_of_blood_enhance or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_mars_arena_of_blood_enhance			= modifier_imba_mars_arena_of_blood_enhance or class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_mars_arena_of_blood_thinker			= modifier_imba_mars_arena_of_blood_thinker or class({})
+modifier_imba_mars_arena_of_blood_thinker			= modifier_imba_mars_arena_of_blood_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------------------
 -- Arena of Blood ENHANCE --
@@ -2473,7 +2473,7 @@ function modifier_imba_mars_arena_of_blood_thinker:GetAuraEntityReject(target)	r
 
 LinkLuaModifier("modifier_imba_mars_arena_of_blood_thinker_debuff", "components/abilities/heroes/hero_mars", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class({})
+modifier_imba_mars_arena_of_blood_thinker_debuff	= modifier_imba_mars_arena_of_blood_thinker_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------------------------------------
 -- MODIFIER_IMBA_MARS_ARENA_OF_BLOOD_THINKER_DEBUFF --

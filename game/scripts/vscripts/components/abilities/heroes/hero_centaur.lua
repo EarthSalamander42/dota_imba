@@ -6,7 +6,7 @@
 -- 		   Thick Hide          --
 ---------------------------------
 
-imba_centaur_thick_hide = class({})
+imba_centaur_thick_hide = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_thick_hide", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_centaur_thick_hide:GetIntrinsicModifierName()
@@ -18,7 +18,7 @@ function imba_centaur_thick_hide:IsInnateAbility()
 end
 
 -- Thick hide modifier
-modifier_imba_thick_hide = class({})
+modifier_imba_thick_hide = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_thick_hide:IsHidden() return true end
 
@@ -45,7 +45,7 @@ end
 -- 		   Hoof Stomp          --
 ---------------------------------
 
-imba_centaur_hoof_stomp = class({})
+imba_centaur_hoof_stomp = class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_buff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_thinker_debuff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
@@ -53,8 +53,8 @@ LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/h
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "components/abilities/heroes/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_hoof_stomp_arena_thinker_buff   = modifier_imba_hoof_stomp_arena_thinker_buff or class({})
-modifier_imba_hoof_stomp_arena_thinker_debuff = modifier_imba_hoof_stomp_arena_thinker_debuff or class({})
+modifier_imba_hoof_stomp_arena_thinker_buff   = modifier_imba_hoof_stomp_arena_thinker_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_hoof_stomp_arena_thinker_debuff = modifier_imba_hoof_stomp_arena_thinker_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
@@ -181,7 +181,7 @@ function modifier_imba_hoof_stomp_arena_thinker_debuff:GetModifierAura() return 
 function modifier_imba_hoof_stomp_arena_thinker_debuff:GetAuraEntityReject(target) return self.enemy_entindex_table and not self.enemy_entindex_table[target:entindex()] and target:IsMagicImmune() end
 
 -- Arena buff
-modifier_imba_hoof_stomp_arena_buff = class({})
+modifier_imba_hoof_stomp_arena_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hoof_stomp_arena_buff:OnCreated()
 	if self:GetAbility() then
@@ -211,7 +211,7 @@ function modifier_imba_hoof_stomp_arena_buff:CheckState()
 end
 
 -- Arena debuff (enemies)
-modifier_imba_hoof_stomp_arena_debuff = class({})
+modifier_imba_hoof_stomp_arena_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hoof_stomp_arena_debuff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -248,7 +248,7 @@ end
 ---------------------------------
 
 
-imba_centaur_double_edge = class({})
+imba_centaur_double_edge = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_centaur_double_edge:IsHiddenWhenStolen()
 	return false
@@ -392,7 +392,7 @@ end
 -- 		   Return 		       --
 ---------------------------------
 
-imba_centaur_return = imba_centaur_return or class({})
+imba_centaur_return = imba_centaur_return or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_return_aura", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_passive", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
@@ -420,7 +420,7 @@ function imba_centaur_return:OnSpellStart()
 end
 
 -- Return Aura
-modifier_imba_return_aura = class({})
+modifier_imba_return_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_return_aura:OnCreated()
 	-- Ability properties
@@ -478,7 +478,7 @@ function modifier_imba_return_aura:IsPurgable()
 end
 
 -- Return modifier
-modifier_imba_return_passive = class({})
+modifier_imba_return_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_return_passive:DeclareFunctions()
 	return {
@@ -575,8 +575,8 @@ function modifier_imba_return_passive:IsPurgable()
 end
 
 -- Damage block modifier
-modifier_imba_return_damage_block      = modifier_imba_return_damage_block or class({})
-modifier_imba_return_damage_block_buff = modifier_imba_return_damage_block_buff or class({})
+modifier_imba_return_damage_block      = modifier_imba_return_damage_block or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_return_damage_block_buff = modifier_imba_return_damage_block_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_return_damage_block:OnCreated()
 	if not self:GetAbility() then
@@ -621,7 +621,7 @@ function modifier_imba_return_damage_block_buff:OnDestroy()
 	end
 end
 
-modifier_imba_return_bonus_damage = class({})
+modifier_imba_return_bonus_damage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_return_bonus_damage:GetEffectName()
 	return "particles/units/heroes/hero_centaur/centaur_return_buff.vpcf"
@@ -649,7 +649,7 @@ end
 -- 		   Stampede            --
 ---------------------------------
 
-imba_centaur_stampede = class({})
+imba_centaur_stampede = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_stampede_haste", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_centaur_stampede_scepter", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_slow", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
@@ -720,7 +720,7 @@ function imba_centaur_stampede:OnSpellStart()
 end
 
 -- Haste modifier
-modifier_imba_stampede_haste = class({})
+modifier_imba_stampede_haste = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_stampede_haste:OnCreated()
 	-- Ability properties
@@ -875,7 +875,7 @@ end
 -- MODIFIER_IMBA_CENTAUR_STAMPEDE_SCEPTER --
 --------------------------------------------
 
-modifier_imba_centaur_stampede_scepter = modifier_imba_centaur_stampede_scepter or class({})
+modifier_imba_centaur_stampede_scepter = modifier_imba_centaur_stampede_scepter or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Just because Shush wants some sort of visible indicator for when it's an Aghanim's Scepter Stampede...
 function modifier_imba_centaur_stampede_scepter:IsPurgable() return false end
@@ -906,7 +906,7 @@ function modifier_imba_centaur_stampede_scepter:CheckState()
 end
 
 -- After-trample slow modifier
-modifier_imba_stampede_trample_slow = class({})
+modifier_imba_stampede_trample_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_stampede_trample_slow:OnCreated()
 	-- Ability properties
@@ -939,15 +939,15 @@ LinkLuaModifier("modifier_special_bonus_imba_centaur_7", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_centaur_8", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_centaur_9", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_centaur_1 = modifier_special_bonus_imba_centaur_1 or class({})
-modifier_special_bonus_imba_centaur_2 = modifier_special_bonus_imba_centaur_2 or class({})
-modifier_special_bonus_imba_centaur_3 = modifier_special_bonus_imba_centaur_3 or class({})
-modifier_special_bonus_imba_centaur_4 = modifier_special_bonus_imba_centaur_4 or class({})
-modifier_special_bonus_imba_centaur_5 = modifier_special_bonus_imba_centaur_5 or class({})
-modifier_special_bonus_imba_centaur_6 = modifier_special_bonus_imba_centaur_6 or class({})
-modifier_special_bonus_imba_centaur_7 = modifier_special_bonus_imba_centaur_7 or class({})
-modifier_special_bonus_imba_centaur_8 = modifier_special_bonus_imba_centaur_8 or class({})
-modifier_special_bonus_imba_centaur_9 = modifier_special_bonus_imba_centaur_9 or class({})
+modifier_special_bonus_imba_centaur_1 = modifier_special_bonus_imba_centaur_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_2 = modifier_special_bonus_imba_centaur_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_3 = modifier_special_bonus_imba_centaur_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_4 = modifier_special_bonus_imba_centaur_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_5 = modifier_special_bonus_imba_centaur_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_6 = modifier_special_bonus_imba_centaur_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_7 = modifier_special_bonus_imba_centaur_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_8 = modifier_special_bonus_imba_centaur_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_centaur_9 = modifier_special_bonus_imba_centaur_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_centaur_1:IsHidden() return true end
 

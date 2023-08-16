@@ -5,7 +5,7 @@
 --         STRAFE          --
 -----------------------------
 
-imba_clinkz_strafe = class({})
+imba_clinkz_strafe = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_strafe_aspd", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_strafe_mount", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_strafe_self_root", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
@@ -29,11 +29,11 @@ function imba_clinkz_strafe:GetCooldown(level)
 			local time_remaining = self.time_remaining
 			self.time_remaining = nil
 
-			return self.BaseClass.GetCooldown(self, level) - (duration - math.max(time_remaining, 0))
+			return self:GetRightfulKV("AbilityCooldown") - (duration - math.max(time_remaining, 0))
 		end
 	end
 
-	return self.BaseClass.GetCooldown(self, level)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_clinkz_strafe:GetBehavior()
@@ -135,7 +135,7 @@ function imba_clinkz_strafe:OnSpellStart()
 end
 
 -- Attack speed modifier
-modifier_imba_strafe_aspd = class({})
+modifier_imba_strafe_aspd = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_strafe_aspd:OnCreated()
 	self.modifier_mount = "modifier_imba_strafe_mount"
@@ -197,7 +197,7 @@ function modifier_imba_strafe_aspd:GetModifierAttackRangeBonus()
 end
 
 -- Mount modifier
-modifier_imba_strafe_mount = class({})
+modifier_imba_strafe_mount = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_strafe_mount:OnCreated()
 	if IsServer() then
@@ -212,7 +212,7 @@ function modifier_imba_strafe_mount:OnCreated()
 			-- Get mount location
 			local direction = self.target:GetForwardVector()
 			local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() +
-			80
+				80
 			local mount_point = self.target:GetAbsOrigin() + direction * (-1) * collision_radius
 
 			-- Set Clinkz' location to it
@@ -244,7 +244,7 @@ function modifier_imba_strafe_mount:OnIntervalThink()
 
 		local direction = self.target:GetForwardVector()
 		local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() +
-		80
+			80
 		local mount_point = self.target:GetAbsOrigin() + direction * (-1) * collision_radius
 
 		local distance = (mount_point - current_loc):Length2D()
@@ -292,7 +292,7 @@ function modifier_imba_strafe_mount:OnRemoved()
 	end
 end
 
-modifier_imba_strafe_self_root = class({})
+modifier_imba_strafe_self_root = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_strafe_self_root:IsHidden() return false end
 
@@ -331,10 +331,10 @@ LinkLuaModifier("modifier_imba_clinkz_death_pact_723_enemy", "components/abiliti
 LinkLuaModifier("modifier_imba_clinkz_death_pact_723_permanent_buff", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_clinkz_death_pact_723                         = imba_clinkz_death_pact_723 or class({})
-modifier_imba_clinkz_death_pact_723                = modifier_imba_clinkz_death_pact_723 or class({})
-modifier_imba_clinkz_death_pact_723_enemy          = modifier_imba_clinkz_death_pact_723_enemy or class({})
-modifier_imba_clinkz_death_pact_723_permanent_buff = modifier_imba_clinkz_death_pact_723_permanent_buff or class({})
+imba_clinkz_death_pact_723                         = imba_clinkz_death_pact_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_clinkz_death_pact_723                = modifier_imba_clinkz_death_pact_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_clinkz_death_pact_723_enemy          = modifier_imba_clinkz_death_pact_723_enemy or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_clinkz_death_pact_723_permanent_buff = modifier_imba_clinkz_death_pact_723_permanent_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_clinkz_death_pact_723:GetIntrinsicModifierName()
 	return "modifier_imba_clinkz_death_pact_723_permanent_buff"
@@ -391,15 +391,17 @@ function imba_clinkz_death_pact_723:OnSpellStart()
 		end
 
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_clinkz_death_pact_723",
-			{ duration = self:GetSpecialValueFor("soul_high_duration"),
-				bonus_attack = health_to_convert * self:GetSpecialValueFor("soul_high_hp_to_attack") / 100 })
+			{
+				duration = self:GetSpecialValueFor("soul_high_duration"),
+				bonus_attack = health_to_convert * self:GetSpecialValueFor("soul_high_hp_to_attack") / 100
+			})
 
 		ApplyDamage({
 			victim       = target,
 			damage       = health_to_convert,
 			damage_type  = DAMAGE_TYPE_PURE,
 			damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION +
-			DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
+				DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
 			attacker     = self:GetCaster(),
 			ability      = self
 		})
@@ -526,7 +528,7 @@ end
 --     SEARING ARROWS      --
 -----------------------------
 
-imba_clinkz_searing_arrows = class({})
+imba_clinkz_searing_arrows = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_searing_arrows_passive", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_searing_arrows_active", "components/abilities/heroes/hero_clinkz",
@@ -666,7 +668,7 @@ function imba_clinkz_searing_arrows:OnUpgrade()
 end
 
 -- Passive Clinkz Searing Arrows modifier
-modifier_imba_searing_arrows_passive = class({})
+modifier_imba_searing_arrows_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_searing_arrows_passive:OnCreated()
 	-- Ability properties
@@ -908,7 +910,7 @@ function SetArrowAttackProjectile(caster, searing_arrows)
 end
 
 -- Active burning Searing Arrow modifier
-modifier_imba_searing_arrows_active = class({})
+modifier_imba_searing_arrows_active = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_searing_arrows_active:IsHidden() return false end
 
@@ -968,7 +970,7 @@ end
 --     SKELETON WALK       --
 -----------------------------
 
-imba_clinkz_skeleton_walk = class({})
+imba_clinkz_skeleton_walk = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_skeleton_walk_invis", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_clinkz_burning_army_skeleton_custom", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
@@ -1023,7 +1025,7 @@ function imba_clinkz_skeleton_walk:OnSpellStart()
 end
 
 -- Invisibility modifier
-modifier_imba_skeleton_walk_invis = class({})
+modifier_imba_skeleton_walk_invis = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skeleton_walk_invis:IsHidden() return false end
 
@@ -1104,8 +1106,10 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 				-- Stop at the first valid enemy that isn't magic immune
 				if not enemy:IsMagicImmune() then
 					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skeleton_walk_talent_root",
-						{ duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3") *
-						(1 - enemy:GetStatusResistance()) })
+						{
+							duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3") *
+								(1 - enemy:GetStatusResistance())
+						})
 
 					-- If an enemy was rooted successfully, remove Clinkz's invisibility
 					if enemy:HasModifier("modifier_imba_skeleton_walk_talent_root") then
@@ -1280,7 +1284,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 
 				-- Calculate spook duration
 				local spook_duration = self.base_spook_duration +
-				(((self.spook_radius - distance) / self.spook_distance_inc) * self.spook_added_duration)
+					(((self.spook_radius - distance) / self.spook_distance_inc) * self.spook_added_duration)
 
 				-- Apply spook for the duration
 				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_spook,
@@ -1311,7 +1315,7 @@ end
 -- MODIFIER_IMBA_CLINKZ_BURNING_ARMY_SKELETON_CUSTOM --
 -------------------------------------------------------
 
-modifier_imba_clinkz_burning_army_skeleton_custom = modifier_imba_clinkz_burning_army_skeleton_custom or class({})
+modifier_imba_clinkz_burning_army_skeleton_custom = modifier_imba_clinkz_burning_army_skeleton_custom or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_clinkz_burning_army_skeleton_custom:IsHidden() return true end
 
@@ -1321,14 +1325,14 @@ function modifier_imba_clinkz_burning_army_skeleton_custom:OnCreated()
 	if not IsServer() then return end
 
 	self:SetStackCount((self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) - (self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) *
-	self:GetAbility():GetSpecialValueFor("damage_percent") / 100)
+		self:GetAbility():GetSpecialValueFor("damage_percent") / 100)
 	self:StartIntervalThink(0.1)
 end
 
 function modifier_imba_clinkz_burning_army_skeleton_custom:OnIntervalThink()
 	if self:GetAbility() then
 		self:SetStackCount((self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) - (self:GetCaster():GetBaseDamageMax() + self:GetCaster():GetBaseDamageMin()) / 2) *
-		self:GetAbility():GetSpecialValueFor("damage_percent") / 100)
+			self:GetAbility():GetSpecialValueFor("damage_percent") / 100)
 	end
 end
 
@@ -1343,7 +1347,7 @@ function modifier_imba_clinkz_burning_army_skeleton_custom:GetModifierPreAttack_
 end
 
 -- Spook modifier
-modifier_imba_skeleton_walk_spook = class({})
+modifier_imba_skeleton_walk_spook = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skeleton_walk_spook:IsHidden() return false end
 
@@ -1419,7 +1423,7 @@ function modifier_imba_skeleton_walk_spook:CheckState()
 	return {}
 end
 
-modifier_imba_skeleton_walk_talent_root = class({})
+modifier_imba_skeleton_walk_talent_root = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skeleton_walk_talent_root:IsHidden() return false end
 
@@ -1434,7 +1438,7 @@ function modifier_imba_skeleton_walk_talent_root:CheckState()
 end
 
 -- Move speed modifier for #6 Talent
-modifier_imba_skeleton_walk_talent_ms = class({})
+modifier_imba_skeleton_walk_talent_ms = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_skeleton_walk_talent_ms:IsHidden() return false end
 
@@ -1467,7 +1471,7 @@ function modifier_imba_skeleton_walk_talent_ms:OnIntervalThink()
 				false)
 			if #enemies > 0 then
 				self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct") +
-				self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_2")
+					self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_2")
 			else
 				self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
 			end
@@ -1489,7 +1493,7 @@ LinkLuaModifier("modifier_imba_clinkz_skeleton_walk_723_strafe", "components/abi
 	LUA_MODIFIER_MOTION_NONE)
 
 imba_clinkz_skeleton_walk_723 = imba_clinkz_skeleton_walk
-modifier_imba_clinkz_skeleton_walk_723_strafe = modifier_imba_clinkz_skeleton_walk_723_strafe or class({})
+modifier_imba_clinkz_skeleton_walk_723_strafe = modifier_imba_clinkz_skeleton_walk_723_strafe or class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------------------------
 -- MODIFIER_IMBA_CLINKZ_SKELETON_WALK_723_STRAFE --
@@ -1513,7 +1517,7 @@ end
 --       DEATH PACT        --
 -----------------------------
 
-imba_clinkz_death_pact = class({})
+imba_clinkz_death_pact = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_death_pact_buff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_death_pact_stack_creep", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
@@ -1746,7 +1750,7 @@ function imba_clinkz_death_pact:OnSpellStart()
 end
 
 -- Dummy Death Pact buff (shows in the UI, but actually does nothing)
-modifier_imba_death_pact_buff = class({})
+modifier_imba_death_pact_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_buff:IsHidden() return false end
 
@@ -1755,7 +1759,7 @@ function modifier_imba_death_pact_buff:IsPurgable() return false end
 function modifier_imba_death_pact_buff:IsDebuff() return false end
 
 -- Hidden buff for counting stacks (gives bonus damage and HP depending on stacks)
-modifier_imba_death_pact_stack_creep = class({})
+modifier_imba_death_pact_stack_creep = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_stack_creep:IsHidden() return true end
 
@@ -1814,7 +1818,7 @@ end
 
 -- Creeps killed are turned into spirits
 
-modifier_imba_death_pact_spirit_aura = class({})
+modifier_imba_death_pact_spirit_aura = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_death_pact_spirit_aura_invis", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
 
@@ -1842,7 +1846,7 @@ function modifier_imba_death_pact_spirit_aura:OnCreated()
 
 			local direction = self:GetCaster():GetForwardVector()
 			local collision_radius = self:GetCaster():GetPaddedCollisionRadius() +
-			self:GetParent():GetPaddedCollisionRadius() + 80
+				self:GetParent():GetPaddedCollisionRadius() + 80
 			local mount_point = self:GetCaster():GetAbsOrigin() + direction * (-1) * collision_radius
 
 			-- Set the Sp0000000ky spirit behind Clinkz!
@@ -1884,7 +1888,7 @@ function modifier_imba_death_pact_spirit_aura:OnIntervalThink(keys)
 
 		local direction = self:GetCaster():GetForwardVector()
 		local collision_radius = self:GetCaster():GetPaddedCollisionRadius() +
-		self:GetParent():GetPaddedCollisionRadius() + 80
+			self:GetParent():GetPaddedCollisionRadius() + 80
 		local mount_point = self:GetCaster():GetAbsOrigin() + direction * (-1) * collision_radius
 
 		local distance = (mount_point - current_loc):Length2D()
@@ -1984,7 +1988,7 @@ end
 
 -- If Clinkz is invisible, the spirit must also be invisible, or else IT'S A DISASTAH!
 
-modifier_imba_death_pact_spirit_aura_invis = class({})
+modifier_imba_death_pact_spirit_aura_invis = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_spirit_aura_invis:IsHidden() return false end
 
@@ -2010,7 +2014,7 @@ end
 
 -- Adding Clinkz Attack Range and damage to the Spirit..... SP00KY!
 
-modifier_imba_death_pact_spirit_attack_range = class({})
+modifier_imba_death_pact_spirit_attack_range = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_spirit_attack_range:IsHidden() return false end
 
@@ -2051,7 +2055,7 @@ end
 
 -- Buff from "spirits"...
 
-modifier_imba_death_pact_bonus_spirited = class({})
+modifier_imba_death_pact_bonus_spirited = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_bonus_spirited:IsHidden() return false end
 
@@ -2119,7 +2123,7 @@ end
 
 -- Hidden buff for counting stacks. Calculates for hero
 
-modifier_imba_death_pact_stack_hero = class({})
+modifier_imba_death_pact_stack_hero = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_stack_hero:IsHidden() return true end
 
@@ -2179,7 +2183,7 @@ function modifier_imba_death_pact_stack_hero:GetModifierExtraHealthBonus()
 end
 
 -- #8 Talent Debuff talent target marker
-modifier_imba_death_pact_talent_debuff = modifier_imba_death_pact_talent_debuff or class({})
+modifier_imba_death_pact_talent_debuff = modifier_imba_death_pact_talent_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_talent_debuff:IsHidden() return false end
 
@@ -2211,7 +2215,7 @@ function modifier_imba_death_pact_talent_debuff:OnHeroKilled(keys)
 
 			-- Calculate stack amount to keep
 			local stacks = buff_stacks *
-			(self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") / 100)
+				(self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") / 100)
 
 			-- Add perma buff if not exists yet
 			if not self:GetCaster():HasModifier(self.modifier_perma_buff) then
@@ -2226,7 +2230,7 @@ function modifier_imba_death_pact_talent_debuff:OnHeroKilled(keys)
 end
 
 -- Spirit-to-be debuff marker
-modifier_imba_death_pact_hero_debuff = class({})
+modifier_imba_death_pact_hero_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_hero_debuff:IsHidden() return true end
 
@@ -2310,7 +2314,7 @@ function modifier_imba_death_pact_hero_debuff:OnHeroKilled(keys)
 end
 
 -- #8 Talent Perma bonus buff
-modifier_imba_death_pact_talent_buff = class({})
+modifier_imba_death_pact_talent_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_death_pact_talent_buff:IsHidden() return false end
 
@@ -2362,13 +2366,13 @@ LinkLuaModifier("modifier_special_bonus_imba_clinkz_9", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_clinkz_10", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_clinkz_8                                 = modifier_special_bonus_imba_clinkz_8 or class({})
+modifier_special_bonus_imba_clinkz_8                                 = modifier_special_bonus_imba_clinkz_8 or class(VANILLA_ABILITIES_BASECLASS)
 modifier_special_bonus_imba_clinkz_death_pact_723_health             = modifier_special_bonus_imba_clinkz_death_pact_723_health or
-class({})
+	class(VANILLA_ABILITIES_BASECLASS)
 modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration =
-modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration or class({})
-modifier_special_bonus_imba_clinkz_9                                 = modifier_special_bonus_imba_clinkz_9 or class({})
-modifier_special_bonus_imba_clinkz_10                                = modifier_special_bonus_imba_clinkz_10 or class({})
+	modifier_special_bonus_imba_clinkz_skeleton_walk_723_strafe_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_clinkz_9                                 = modifier_special_bonus_imba_clinkz_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_clinkz_10                                = modifier_special_bonus_imba_clinkz_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_clinkz_8:IsHidden() return true end
 
@@ -2405,7 +2409,7 @@ function modifier_special_bonus_imba_clinkz_10:RemoveOnDeath() return false end
 LinkLuaModifier("modifier_special_bonus_imba_clinkz_5", "components/abilities/heroes/hero_clinkz",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_clinkz_5 = class({})
+modifier_special_bonus_imba_clinkz_5 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_clinkz_5:IsHidden() return true end
 
 function modifier_special_bonus_imba_clinkz_5:IsPurgable() return false end
@@ -2422,7 +2426,7 @@ end
 -- #5 Talent: Burning Army Skeletons attacks burn mana
 LinkLuaModifier("modifier_imba_burning_army", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_burning_army = class({})
+modifier_imba_burning_army = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_burning_army:IsHidden() return true end
 
 function modifier_imba_burning_army:IsPurgable() return false end

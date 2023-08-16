@@ -255,7 +255,7 @@ function imba_abaddon_death_coil:OnOwnerDied()
 	end
 end
 
-modifier_imba_mist_coil_passive = modifier_imba_mist_coil_passive or class({})
+modifier_imba_mist_coil_passive = modifier_imba_mist_coil_passive or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_mist_coil_passive:IsDebuff() return false end
 
 function modifier_imba_mist_coil_passive:IsHidden() return true end
@@ -303,7 +303,7 @@ function modifier_imba_mist_coil_passive:OnTakeDamage(keys)
 	end
 end
 
-modifier_imba_mist_coil_mist_ally = modifier_imba_mist_coil_mist_ally or class({})
+modifier_imba_mist_coil_mist_ally = modifier_imba_mist_coil_mist_ally or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_mist_coil_mist_ally:IsDebuff() return false end
 
 function modifier_imba_mist_coil_mist_ally:IsHidden() return false end
@@ -804,7 +804,7 @@ function modifier_imba_curse_of_avernus_passive:GetModifierProcAttack_BonusDamag
 	return 0
 end
 
-modifier_imba_curse_of_avernus_debuff_counter = modifier_imba_curse_of_avernus_debuff_counter or class({})
+modifier_imba_curse_of_avernus_debuff_counter = modifier_imba_curse_of_avernus_debuff_counter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_curse_of_avernus_debuff_counter:DeclareFunctions()
 	local funcs = {
@@ -1547,14 +1547,14 @@ LinkLuaModifier("modifier_special_bonus_imba_abaddon_7", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_abaddon_8", "components/abilities/heroes/hero_abaddon.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_abaddon_1 = modifier_special_bonus_imba_abaddon_1 or class({})
-modifier_special_bonus_imba_abaddon_2 = modifier_special_bonus_imba_abaddon_2 or class({})
-modifier_special_bonus_imba_abaddon_3 = modifier_special_bonus_imba_abaddon_3 or class({})
-modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class({})
--- modifier_special_bonus_imba_abaddon_5 = modifier_special_bonus_imba_abaddon_5 or class({})
-modifier_special_bonus_imba_abaddon_6 = modifier_special_bonus_imba_abaddon_6 or class({})
-modifier_special_bonus_imba_abaddon_7 = modifier_special_bonus_imba_abaddon_7 or class({})
-modifier_special_bonus_imba_abaddon_8 = modifier_special_bonus_imba_abaddon_8 or class({})
+modifier_special_bonus_imba_abaddon_1 = modifier_special_bonus_imba_abaddon_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_2 = modifier_special_bonus_imba_abaddon_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_3 = modifier_special_bonus_imba_abaddon_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_special_bonus_imba_abaddon_5 = modifier_special_bonus_imba_abaddon_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_6 = modifier_special_bonus_imba_abaddon_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_7 = modifier_special_bonus_imba_abaddon_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_abaddon_8 = modifier_special_bonus_imba_abaddon_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_abaddon_1:IsHidden() return true end
 

@@ -201,7 +201,7 @@ async function FindValueByName(sFileName, ability_name, value_name) {
 
 				if (line.startsWith('"')) {
 					const key = line.substring(1, line.indexOf('"', 1));
-					const value = line.substring(line.indexOf('"', 1) + 1).trim();
+					// const value = line.substring(line.indexOf('"', 1) + 1).trim();
 
 					if (currentAbility && key == value_name) {
 						let openBracketFound = false;
@@ -297,6 +297,7 @@ async function FindDuplicates() {
 		let imba_abilities = await GetParsedData(inputFilePath2);
 		let counter = 0;
 		let duplicates = {};
+		let ability_values_duplicates = {};
 
 		console.log('Find duplicates...');
 
@@ -306,15 +307,17 @@ async function FindDuplicates() {
 				for (let value in dota_abilities[ability]) {
 					if (value != "AbilitySpecial" && value != "AbilityValues" && value != "ability_name" && imba_abilities[ability][value]) {
 						console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability][value] + ' / ' + imba_abilities[ability][value]);
+						if (!duplicates[ability]) { duplicates[ability] = {}; }
+						duplicates[ability][value] = true;
 						counter++;
 					}
 				}
 				
 				for (let value in dota_abilities[ability].AbilityValues) {
 					if (imba_abilities[ability].AbilityValues[value]) {
-						console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability].AbilityValues[value] + ' / ' + imba_abilities[ability].AbilityValues[value]);
-						if (!duplicates[ability]) { duplicates[ability] = {}; }
-						duplicates[ability][value] = true;
+						console.log('Found duplicate AbilityValues value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability].AbilityValues[value] + ' / ' + imba_abilities[ability].AbilityValues[value]);
+						if (!ability_values_duplicates[ability]) { ability_values_duplicates[ability] = {}; }
+						ability_values_duplicates[ability][value] = true;
 						counter++;
 					}
 				}
@@ -329,16 +332,18 @@ async function FindDuplicates() {
 				if (separate_abilities[ability]) {
 					for (let value in dota_abilities[ability]) {
 						if (value != "AbilitySpecial" && value != "AbilityValues" && value != "ability_name" && separate_abilities[ability][value]) {
-							console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability][value] + ' / ' + separate_abilities[ability][value]);
+							console.log('Found separate duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability][value] + ' / ' + separate_abilities[ability][value]);
+							if (!duplicates[ability]) { duplicates[ability] = {}; }
+							duplicates[ability][value] = true;
 							counter++;
 						}
 					}
 
 					for (let value in dota_abilities[ability].AbilityValues) {
 						if (separate_abilities[ability].AbilityValues[value]) {
-							// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability].AbilityValues[value] + ' / ' + separate_abilities[ability].AbilityValues[value]);
-							if (!duplicates[ability]) { duplicates[ability] = {}; }
-							duplicates[ability][value] = true;
+							console.log('Found separate AbilityValues duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability].AbilityValues[value] + ' / ' + separate_abilities[ability].AbilityValues[value]);
+							if (!ability_values_duplicates[ability]) { ability_values_duplicates[ability] = {}; }
+							ability_values_duplicates[ability][value] = true;
 							counter++;
 						}
 					}
@@ -347,7 +352,7 @@ async function FindDuplicates() {
 		}
 
 		console.log('Found ' + counter + ' duplicates.');
-		return duplicates;
+		return {duplicates, ability_values_duplicates};
 	} catch (err) {
 		console.error('Error:', err);
 	}
@@ -357,11 +362,12 @@ async function RemoveDuplicates(sFileName) {
 	try {
 		await DeleteTabsAndSpaces(inputFilePath2);
 
-		let duplicates = await FindDuplicates();
+		let find_duplicates = await FindDuplicates();
+		let duplicates = find_duplicates.duplicates;
+		let ability_values_duplicates = find_duplicates.ability_values_duplicates;
 		let counter = 0;
 
-		// Remove duplicates from imba_abilities AbilityValues
-		// console.log('Checking file: ' + sFileName);
+		// Remove duplicates from imba_abilities
 		for (let ability in duplicates) {
 			for (let value in duplicates[ability]) {
 				// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
@@ -369,7 +375,22 @@ async function RemoveDuplicates(sFileName) {
 
 				if (ability_value) {
 					console.log("Ability value: " + JSON.stringify(ability_value));
-					await RemoveDuplicateByName(sFileName, ability_value);
+					// await RemoveDuplicateByName(sFileName, ability_value);
+					counter++;
+				}
+			}
+		}
+
+		// Remove duplicates from imba_abilities AbilityValues
+		// console.log('Checking file: ' + sFileName);
+		for (let ability in ability_values_duplicates) {
+			for (let value in ability_values_duplicates[ability]) {
+				// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
+				let ability_value = await FindValueByName(sFileName, ability.replace(/"/g, ''), value);
+
+				if (ability_value) {
+					console.log("Ability value: " + JSON.stringify(ability_value));
+					// await RemoveDuplicateByName(sFileName, ability_value);
 					counter++;
 				}
 			}
@@ -379,20 +400,19 @@ async function RemoveDuplicates(sFileName) {
 		// Remove duplicates from separate files AbilityValues
 		for (let file of separateFiles) {
 			// console.log('Checking file: ' + file);
-			for (let ability in duplicates) {
-				for (let value in duplicates[ability]) {
+			for (let ability in ability_values_duplicates) {
+				for (let value in ability_values_duplicates[ability]) {
 					// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
 					let ability_value = await FindValueByName(sFileName + "/" + file, ability.replace(/"/g, ''), value);
 
 					if (ability_value) {
 						console.log("Separate ability value: " + JSON.stringify(ability_value));
-						await RemoveDuplicateByName(sFileName + "/" + file, ability_value);
+						// await RemoveDuplicateByName(sFileName + "/" + file, ability_value);
 						counter++;
 					}
 				}
 			}
 		}
-		
 
 		console.log('Removed ' + counter + ' duplicates in separate files.');
 	} catch (err) {
@@ -402,6 +422,7 @@ async function RemoveDuplicates(sFileName) {
 
 function RemoveDuplicateByName(sFileName, value) {
 	try {
+		console.log('Removing duplicate value in \x1b[32m' + value.ability_name + '\x1b[0m: \x1b[34m' + value.value_name + '\x1b[0m');
 		// read data from the file synchronously
 		const data = fs.readFileSync(sFileName, 'utf8');
 		const lines = data.split('\n');

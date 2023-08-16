@@ -5,7 +5,7 @@
 -----------------------------
 --      FATAL BONDS        --
 -----------------------------
-imba_warlock_fatal_bonds = class({})
+imba_warlock_fatal_bonds = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_fatal_bonds", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_fatal_bonds:IsHiddenWhenStolen()
@@ -96,7 +96,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	end
 end
 
-modifier_imba_fatal_bonds = class({})
+modifier_imba_fatal_bonds = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fatal_bonds:IsHidden() return false end
 
@@ -275,7 +275,7 @@ end
 -----------------------------
 --      SHADOW WORD        --
 -----------------------------
-imba_warlock_shadow_word = class({})
+imba_warlock_shadow_word = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_shadow_word", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_shadow_word:GetCastRange()
@@ -348,7 +348,7 @@ function imba_warlock_shadow_word:OnSpellStart()
 	end)
 end
 
-modifier_imba_shadow_word = class({})
+modifier_imba_shadow_word = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shadow_word:OnCreated()
 	-- Ability properties
@@ -483,7 +483,7 @@ end
 --        UPHEAVAL         --
 -----------------------------
 
-imba_warlock_upheaval = class({})
+imba_warlock_upheaval = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_upheaval", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_debuff", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_buff", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
@@ -580,7 +580,7 @@ function imba_warlock_upheaval:OnChannelFinish()
 end
 
 -- Upheaval modifier
-modifier_imba_upheaval = class({})
+modifier_imba_upheaval = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_upheaval:OnCreated()
 	-- Ability properties
@@ -670,7 +670,7 @@ function modifier_imba_upheaval:OnIntervalThink()
 	end
 end
 
-modifier_imba_upheaval_debuff = class({})
+modifier_imba_upheaval_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_upheaval_debuff:OnCreated()
 	-- Ability properties
@@ -735,7 +735,7 @@ function modifier_imba_upheaval_debuff:GetModifierAttackSpeedBonus_Constant()
 end
 
 -- Golem Upheaval buff
-modifier_imba_upheaval_buff = class({})
+modifier_imba_upheaval_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_upheaval_buff:IsHidden() return false end
 
@@ -746,7 +746,7 @@ function modifier_imba_upheaval_buff:IsDebuff() return false end
 -----------------------------
 --    CHAOTIC OFFERING     --
 -----------------------------
-imba_warlock_rain_of_chaos = class({})
+imba_warlock_rain_of_chaos = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_rain_of_chaos_stun", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_as", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_ms", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1124,7 +1124,7 @@ function imba_warlock_rain_of_chaos:OnOwnerDied()
 end
 
 -- Stun modifier
-modifier_imba_rain_of_chaos_stun = class({})
+modifier_imba_rain_of_chaos_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_of_chaos_stun:CheckState()
 	return { [MODIFIER_STATE_STUNNED] = true }
@@ -1145,7 +1145,7 @@ function modifier_imba_rain_of_chaos_stun:IsPurgeException() return true end
 function modifier_imba_rain_of_chaos_stun:IsStunDebuff() return true end
 
 -- Golem attack speed bonus modifier
-modifier_imba_rain_of_chaos_golem_as = class({})
+modifier_imba_rain_of_chaos_golem_as = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_of_chaos_golem_as:IsHidden() return true end
 
@@ -1177,7 +1177,7 @@ function modifier_imba_rain_of_chaos_golem_as:GetModifierMagicalResistanceBonus(
 end
 
 -- Golem move speed bonus modifier
-modifier_imba_rain_of_chaos_golem_ms = class({})
+modifier_imba_rain_of_chaos_golem_ms = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_of_chaos_golem_ms:IsHidden() return true end
 
@@ -1194,7 +1194,7 @@ function modifier_imba_rain_of_chaos_golem_ms:GetModifierMoveSpeedBonus_Constant
 end
 
 -- Demon Link modifier (placed on golem)
-modifier_imba_rain_of_chaos_demon_link = class({})
+modifier_imba_rain_of_chaos_demon_link = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rain_of_chaos_demon_link:IsPurgable() return false end
 
 function modifier_imba_rain_of_chaos_demon_link:IsPurgeException() return false end
@@ -1367,7 +1367,7 @@ function modifier_imba_rain_of_chaos_demon_link:OnRemoved()
 end
 
 -- Visbility modifier (placed on demons)
-modifier_imba_rain_of_chaos_demon_visible = class({})
+modifier_imba_rain_of_chaos_demon_visible = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_of_chaos_demon_visible:IsPurgable() return false end
 
@@ -1400,7 +1400,7 @@ end
 -----------------------------
 --      FLAMING FISTS      --
 -----------------------------
-imba_warlock_flaming_fists = class({})
+imba_warlock_flaming_fists = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_flaming_fists", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_flaming_fists:GetAbilityTextureName()
@@ -1412,7 +1412,7 @@ function imba_warlock_flaming_fists:GetIntrinsicModifierName()
 end
 
 -- Flaming fists modifier
-modifier_imba_flaming_fists = class({})
+modifier_imba_flaming_fists = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_flaming_fists:OnCreated()
 	-- Ability properties
@@ -1525,7 +1525,7 @@ function modifier_imba_flaming_fists:IsDebuff() return false end
 -----------------------------
 --  PERMANENT IMMOLATION   --
 -----------------------------
-imba_warlock_permanent_immolation = class({})
+imba_warlock_permanent_immolation = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_permanent_immolation_aura", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_permanent_immolation_debuff", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1538,7 +1538,7 @@ function imba_warlock_permanent_immolation:GetAbilityTextureName()
 end
 
 -- Permanent immolation aura modifier
-modifier_imba_permanent_immolation_aura = class({})
+modifier_imba_permanent_immolation_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_permanent_immolation_aura:OnCreated()
 	-- Ability properties
@@ -1654,7 +1654,7 @@ function modifier_imba_permanent_immolation_aura:IsPurgable() return false end
 function modifier_imba_permanent_immolation_aura:IsDebuff() return false end
 
 -- Permanent immolation debuff modifier
-modifier_imba_permanent_immolation_debuff = class({})
+modifier_imba_permanent_immolation_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_permanent_immolation_debuff:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
@@ -1669,7 +1669,7 @@ function modifier_imba_permanent_immolation_debuff:IsDebuff() return true end
 -----------------------------
 --     SPELL IMMUNITY      --
 -----------------------------
-imba_warlock_golem_spell_immunity = class({})
+imba_warlock_golem_spell_immunity = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_golem_spell_immunity", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_golem_spell_immunity:GetAbilityTextureName()
@@ -1681,7 +1681,7 @@ function imba_warlock_golem_spell_immunity:GetIntrinsicModifierName()
 end
 
 -- Spell immunity modifier
-modifier_imba_golem_spell_immunity = class({})
+modifier_imba_golem_spell_immunity = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_golem_spell_immunity:GetEffectName()
 	return "particles/items_fx/black_king_bar_avatar.vpcf"
@@ -1707,11 +1707,11 @@ LinkLuaModifier("modifier_special_bonus_imba_warlock_9", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_warlock_5", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_warlock_4", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_warlock_1 = modifier_special_bonus_imba_warlock_1 or class({})
-modifier_special_bonus_imba_warlock_3 = modifier_special_bonus_imba_warlock_3 or class({})
-modifier_special_bonus_imba_warlock_9 = modifier_special_bonus_imba_warlock_9 or class({})
-modifier_special_bonus_imba_warlock_5 = modifier_special_bonus_imba_warlock_5 or class({})
-modifier_special_bonus_imba_warlock_4 = modifier_special_bonus_imba_warlock_4 or class({})
+modifier_special_bonus_imba_warlock_1 = modifier_special_bonus_imba_warlock_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_warlock_3 = modifier_special_bonus_imba_warlock_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_warlock_9 = modifier_special_bonus_imba_warlock_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_warlock_5 = modifier_special_bonus_imba_warlock_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_warlock_4 = modifier_special_bonus_imba_warlock_4 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_warlock_1:IsHidden() return true end
 
@@ -1745,7 +1745,7 @@ function modifier_special_bonus_imba_warlock_4:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance", "components/abilities/heroes/hero_warlock", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance = class({})
+modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_warlock_chaotic_offering_magic_resistance:IsHidden() return true end
 

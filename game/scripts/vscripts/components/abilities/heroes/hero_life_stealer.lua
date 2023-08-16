@@ -44,46 +44,46 @@ LinkLuaModifier("modifier_imba_life_stealer_assimilate_counter", "components/abi
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller",
 	LUA_MODIFIER_MOTION_BOTH)
 
-imba_life_stealer_rage                                     = class({})
-modifier_imba_life_stealer_rage                            = class({})
-modifier_imba_life_stealer_rage_insanity                   = class({})
-modifier_imba_life_stealer_rage_insanity_active            = class({})
-modifier_imba_life_stealer_rage_insanity_target            = class({})
+imba_life_stealer_rage                                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_rage                            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_rage_insanity                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_rage_insanity_active            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_rage_insanity_target            = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_life_stealer_rage_723                                 = imba_life_stealer_rage
 
-imba_life_stealer_feast                                    = class({})
-modifier_imba_life_stealer_feast                           = class({})
-modifier_imba_life_stealer_feast_engorge                   = class({})
-modifier_imba_life_stealer_feast_engorge_counter           = class({})
-modifier_imba_life_stealer_feast_banquet                   = class({})
+imba_life_stealer_feast                                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_feast                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_feast_engorge                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_feast_engorge_counter           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_feast_banquet                   = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_life_stealer_feast_723                                = imba_life_stealer_feast
 
-imba_life_stealer_open_wounds                              = class({})
-modifier_imba_life_stealer_open_wounds                     = class({})
-modifier_imba_life_stealer_open_wounds_cross_contamination = class({})
+imba_life_stealer_open_wounds                              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_open_wounds                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_open_wounds_cross_contamination = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_life_stealer_open_wounds_723                          = imba_life_stealer_open_wounds
 
-imba_life_stealer_infest                                   = class({})
-modifier_imba_life_stealer_infest                          = class({})
-modifier_imba_life_stealer_infest_effect                   = class({})
+imba_life_stealer_infest                                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_infest                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_infest_effect                   = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_life_stealer_infest_723                               = imba_life_stealer_infest
 
-imba_life_stealer_control                                  = class({})
-modifier_imba_life_stealer_control                         = class({})
+imba_life_stealer_control                                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_control                         = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_life_stealer_consume                                  = class({})
+imba_life_stealer_consume                                  = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_life_stealer_assimilate                               = class({})
-modifier_imba_life_stealer_assimilate_handler              = class({})
-modifier_imba_life_stealer_assimilate                      = class({})
-modifier_imba_life_stealer_assimilate_effect               = class({})
-modifier_imba_life_stealer_assimilate_counter              = class({})
+imba_life_stealer_assimilate                               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_assimilate_handler              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_assimilate                      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_assimilate_effect               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_life_stealer_assimilate_counter              = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_life_stealer_assimilate_eject                         = class({})
+imba_life_stealer_assimilate_eject                         = class(VANILLA_ABILITIES_BASECLASS)
 
 ----------
 -- RAGE --
@@ -123,7 +123,7 @@ function modifier_imba_life_stealer_rage:OnCreated()
 	if not IsServer() then return end
 
 	local rage_particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControlEnt(rage_particle, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc",
 		self:GetCaster():GetAbsOrigin(), true)
 	self:AddParticle(rage_particle, false, false, -1, true, false)
@@ -404,7 +404,7 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 	-- "Cannot damage and lifesteal off of wards, buildings, Roshan and allied units."
 	if keys.target and not keys.target:IsOther() and not keys.target:IsBuilding() and not keys.target:IsRoshan() and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 		local heal_amount = keys.target:GetMaxHealth() * self:GetAbility():GetTalentSpecialValueFor("hp_leech_percent") /
-		100
+			100
 
 		local lifesteal_particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
 			PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -415,7 +415,7 @@ function modifier_imba_life_stealer_feast:GetModifierProcAttack_BonusDamage_Phys
 			local health_differential = heal_amount - (self:GetParent():GetMaxHealth() - self:GetParent():GetHealth())
 
 			local engorge_modifier = self:GetParent():FindModifierByNameAndCaster(
-			"modifier_imba_life_stealer_feast_engorge", keys.target)
+				"modifier_imba_life_stealer_feast_engorge", keys.target)
 
 			if not engorge_modifier then
 				-- Making the target the caster here so we can easily allow only one engorge modifier per unit as seen with the "FindModifierByNameAndCaster" above
@@ -478,7 +478,7 @@ function modifier_imba_life_stealer_feast_engorge:OnDestroy()
 	if not IsServer() then return end
 
 	local engorge_counter_modifier = self:GetParent():FindModifierByNameAndCaster(
-	"modifier_imba_life_stealer_feast_engorge_counter", self:GetCaster())
+		"modifier_imba_life_stealer_feast_engorge_counter", self:GetCaster())
 
 	if engorge_counter_modifier then
 		engorge_counter_modifier:SetStackCount(engorge_counter_modifier:GetStackCount() - self:GetStackCount())
@@ -515,7 +515,7 @@ function modifier_imba_life_stealer_feast_banquet:OnCreated()
 
 	-- Feed Engorge stacks into the meal's health
 	local engorge_counter_modifier = self:GetCaster():FindModifierByNameAndCaster(
-	"modifier_imba_life_stealer_feast_engorge_counter", self:GetCaster())
+		"modifier_imba_life_stealer_feast_engorge_counter", self:GetCaster())
 
 	if engorge_counter_modifier then
 		self:SetStackCount(engorge_counter_modifier:GetStackCount())
@@ -581,7 +581,7 @@ function modifier_imba_life_stealer_feast_banquet:OnAttacked(keys)
 			keys.attacker:Heal(damage_amount, self:GetAbility())
 
 			local lifesteal_particle = ParticleManager:CreateParticle(
-			"particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
+				"particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.attacker)
 			ParticleManager:ReleaseParticleIndex(lifesteal_particle)
 
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, keys.attacker, damage_amount, nil)
@@ -599,7 +599,7 @@ function modifier_imba_life_stealer_feast_banquet:OnAttacked(keys)
 
 		if self:GetParent():GetHealth() <= 0 then
 			local infest_effect_modifier = self:GetParent():FindModifierByNameAndCaster(
-			"modifier_imba_life_stealer_infest_effect", self:GetCaster())
+				"modifier_imba_life_stealer_infest_effect", self:GetCaster())
 
 			if infest_effect_modifier then
 				infest_effect_modifier:Destroy()
@@ -650,7 +650,7 @@ function imba_life_stealer_open_wounds:OnSpellStart()
 	end
 
 	local impact_particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target,
+		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, target,
 		self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
 
@@ -676,7 +676,7 @@ function modifier_imba_life_stealer_open_wounds:OnCreated()
 	if not IsServer() then return end
 
 	local impact_particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		"particles/units/heroes/hero_life_stealer/life_stealer_open_wounds.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	ParticleManager:ReleaseParticleIndex(impact_particle)
 
 	self.slow_steps = {}
@@ -732,7 +732,7 @@ function modifier_imba_life_stealer_open_wounds:OnTakeDamage(keys)
 
 		-- IMBAfication: Cross-Contamination
 		local cross_contamination_modifier = keys.unit:FindModifierByNameAndCaster(
-		"modifier_imba_life_stealer_open_wounds_cross_contamination", self:GetCaster())
+			"modifier_imba_life_stealer_open_wounds_cross_contamination", self:GetCaster())
 
 		if cross_contamination_modifier and cross_contamination_modifier.attacking_units and not cross_contamination_modifier.attacking_units[keys.attacker] then
 			cross_contamination_modifier.attacking_units[keys.attacker] = true
@@ -816,7 +816,7 @@ end
 
 function imba_life_stealer_infest:GetCooldown(level)
 	if not self:GetCaster():HasScepter() or self:GetName() ~= "imba_life_stealer_infest_723" then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return self:GetSpecialValueFor("cooldown_scepter")
 	end
@@ -863,7 +863,7 @@ function imba_life_stealer_infest:OnSpellStart()
 	end
 
 	local infest_particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, target)
+		"particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, target)
 	ParticleManager:SetParticleControl(infest_particle, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControlEnt(infest_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
 		target:GetAbsOrigin(), true)
@@ -900,10 +900,10 @@ function imba_life_stealer_infest:OnSpellStart()
 
 	-- Hide Rage and Feast abilities
 	local rage_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_rage") or
-	self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
+		self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 
 	local feast_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_feast") or
-	self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
+		self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
 
 	if rage_ability then
 		rage_ability:SetHidden(true)
@@ -1012,7 +1012,7 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 		self:GetParent():EmitSound("Hero_LifeStealer.Consume")
 
 		local infest_particle = ParticleManager:CreateParticle(
-		"particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+			"particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 			self:GetCaster(), self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(infest_particle)
 
@@ -1047,10 +1047,10 @@ function modifier_imba_life_stealer_infest:OnDestroy()
 
 	-- Unhide Rage and Feast abilities
 	local rage_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_rage") or
-	self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
+		self:GetCaster():FindAbilityByName("imba_life_stealer_rage_723")
 
 	local feast_ability = self:GetCaster():FindAbilityByName("imba_life_stealer_feast") or
-	self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
+		self:GetCaster():FindAbilityByName("imba_life_stealer_feast_723")
 
 	if rage_ability then
 		rage_ability:SetHidden(false)
@@ -1134,8 +1134,10 @@ end
 
 -- IMBAfication: Chestburster
 -- Gonna use this modifier to handle the IMBAfication as well, just kind of with separate blocks
-function modifier_imba_life_stealer_infest_effect:IsHidden() return self:GetCaster():GetTeamNumber() ==
-	self:GetParent():GetTeamNumber() or not self:GetParent():IsHero() end
+function modifier_imba_life_stealer_infest_effect:IsHidden()
+	return self:GetCaster():GetTeamNumber() ==
+		self:GetParent():GetTeamNumber() or not self:GetParent():IsHero()
+end
 
 function modifier_imba_life_stealer_infest_effect:IsPurgable() return false end
 
@@ -1154,11 +1156,11 @@ function modifier_imba_life_stealer_infest_effect:OnCreated()
 	self.chestburster_orders_to_tick_down     = self:GetAbility():GetSpecialValueFor("chestburster_orders_to_tick_down")
 	self.chestburster_ticks_per_damage        = self:GetAbility():GetSpecialValueFor("chestburster_ticks_per_damage")
 	self.chestburster_fail_knockback_distance = self:GetAbility():GetSpecialValueFor(
-	"chestburster_fail_knockback_distance")
+		"chestburster_fail_knockback_distance")
 	self.chestburster_fail_knockback_height   = self:GetAbility():GetSpecialValueFor(
-	"chestburster_fail_knockback_height")
+		"chestburster_fail_knockback_height")
 	self.chestburster_fail_knockback_duration = self:GetAbility():GetSpecialValueFor(
-	"chestburster_fail_knockback_duration")
+		"chestburster_fail_knockback_duration")
 	self.chestburster_fail_stun_duration      = self:GetAbility():GetSpecialValueFor("chestburster_fail_stun_duration")
 
 	self.chestburster_starting_stacks         = self:GetAbility():GetSpecialValueFor("chestburster_starting_stacks")
@@ -1176,11 +1178,11 @@ function modifier_imba_life_stealer_infest_effect:OnCreated()
 
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() and not self:GetParent():IsBuilding() and not self:GetParent():IsOther() then
 		infest_overhead_particle = ParticleManager:CreateParticleForTeam(
-		"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
+			"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
 			self:GetParent(), self:GetParent():GetTeamNumber(), self:GetCaster())
 	else
 		infest_overhead_particle = ParticleManager:CreateParticle(
-		"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
+			"particles/units/heroes/hero_life_stealer/life_stealer_infested_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
 			self:GetParent(), self:GetCaster())
 	end
 
@@ -1613,7 +1615,7 @@ function imba_life_stealer_assimilate:OnSpellStart()
 	for _, target in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCursorTarget():GetAbsOrigin(), nil, self.consume_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)) do
 		if target ~= self:GetCaster() and not PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then
 			local infest_particle = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, self:GetCaster())
+				"particles/units/heroes/hero_life_stealer/life_stealer_infest_cast.vpcf", PATTACH_POINT, self:GetCaster())
 			ParticleManager:SetParticleControl(infest_particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControlEnt(infest_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW,
 				"attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
@@ -1729,14 +1731,14 @@ function modifier_imba_life_stealer_assimilate:OnDestroy()
 	self:GetParent():EmitSound("Hero_LifeStealer.Consume")
 
 	local assimilate_particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+		"particles/units/heroes/hero_life_stealer/life_stealer_infest_emerge_bloody.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 		self:GetCaster(), self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(assimilate_particle)
 
 	self:GetCaster():StartGesture(ACT_DOTA_LIFESTEALER_EJECT)
 
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self
-	.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
+		.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER, false)
 
 	for _, enemy in pairs(enemies) do
@@ -1761,7 +1763,7 @@ function modifier_imba_life_stealer_assimilate:OnDestroy()
 	end
 
 	local assimilate_counter_modifier = self:GetCaster():FindModifierByNameAndCaster(
-	"modifier_imba_life_stealer_assimilate_counter", self:GetCaster())
+		"modifier_imba_life_stealer_assimilate_counter", self:GetCaster())
 
 	if assimilate_counter_modifier then
 		assimilate_counter_modifier:DecrementStackCount()
@@ -1825,11 +1827,11 @@ function modifier_imba_life_stealer_assimilate_effect:OnCreated()
 
 	if self:GetParent():GetTeamNumber() == self:GetCaster():GetTeamNumber() then
 		assimilate_overhead_particle = ParticleManager:CreateParticleForTeam(
-		"particles/units/heroes/hero_life_stealer/life_stealer_assimilated_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
+			"particles/units/heroes/hero_life_stealer/life_stealer_assimilated_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
 			self:GetParent(), self:GetParent():GetTeamNumber())
 	else
 		assimilate_overhead_particle = ParticleManager:CreateParticle(
-		"particles/units/heroes/hero_life_stealer/life_stealer_assimilated_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
+			"particles/units/heroes/hero_life_stealer/life_stealer_assimilated_unit.vpcf", PATTACH_OVERHEAD_FOLLOW,
 			self:GetParent())
 	end
 
@@ -1921,7 +1923,7 @@ end
 
 function imba_life_stealer_assimilate_eject:OnSpellStart()
 	local assimilate_effect_modifiers = self:GetCaster():FindAllModifiersByName(
-	"modifier_imba_life_stealer_assimilate_effect")
+		"modifier_imba_life_stealer_assimilate_effect")
 
 	for _, modifier in pairs(assimilate_effect_modifiers) do
 		local assimilate_modifier = modifier.assimilate_modifier

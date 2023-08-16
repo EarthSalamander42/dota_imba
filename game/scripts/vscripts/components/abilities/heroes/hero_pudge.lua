@@ -5,9 +5,9 @@
 ---- PUDGE'S HOOK
 --------------------------------------------------------
 
-imba_pudge_meat_hook = imba_pudge_meat_hook or class({})
-imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
-imba_pudge_light_hook = imba_pudge_light_hook or class({})
+imba_pudge_meat_hook = imba_pudge_meat_hook or class(VANILLA_ABILITIES_BASECLASS)
+imba_pudge_sharp_hook = imba_pudge_sharp_hook or class(VANILLA_ABILITIES_BASECLASS)
+imba_pudge_light_hook = imba_pudge_light_hook or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_hook_sharp_stack", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_light_stack", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -68,8 +68,8 @@ function imba_pudge_light_hook:OnInventoryContentsChanged()
 	end
 end
 
-modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
-modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class({})
+modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hook_sharp_stack:IsDebuff() return false end
 
@@ -645,7 +645,7 @@ function imba_pudge_meat_hook:GetIntrinsicModifierName()
 	return "modifier_imba_pudge_meat_hook_handler"
 end
 
-if modifier_imba_pudge_meat_hook_handler == nil then modifier_imba_pudge_meat_hook_handler = class({}) end
+if modifier_imba_pudge_meat_hook_handler == nil then modifier_imba_pudge_meat_hook_handler = class(VANILLA_ABILITIES_BASECLASS) end
 
 function modifier_imba_pudge_meat_hook_handler:IsHidden() return true end
 
@@ -678,7 +678,7 @@ function modifier_imba_pudge_meat_hook_handler:GetActivityTranslationModifiers()
 	end
 end
 
-modifier_imba_pudge_meat_hook_caster_root = modifier_imba_pudge_meat_hook_caster_root or class({})
+modifier_imba_pudge_meat_hook_caster_root = modifier_imba_pudge_meat_hook_caster_root or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_pudge_meat_hook_caster_root:IsDebuff() return true end
 
@@ -724,7 +724,7 @@ function modifier_imba_pudge_meat_hook_caster_root:OnDestroy()
 	end
 end
 
-modifier_imba_hook_target_enemy = modifier_imba_hook_target_enemy or class({})
+modifier_imba_hook_target_enemy = modifier_imba_hook_target_enemy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hook_target_enemy:IsDebuff()
 	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
@@ -773,7 +773,7 @@ function modifier_imba_hook_target_enemy:CheckState()
 	end
 end
 
-modifier_imba_hook_target_ally = modifier_imba_hook_target_ally or class({})
+modifier_imba_hook_target_ally = modifier_imba_hook_target_ally or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hook_target_ally:IsDebuff()
 	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
@@ -818,9 +818,9 @@ end
 LinkLuaModifier("modifier_imba_pudge_rot", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_rot_slow", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
-imba_pudge_rot               = imba_pudge_rot or class({})
-modifier_imba_pudge_rot      = modifier_imba_pudge_rot or class({})
-modifier_imba_pudge_rot_slow = modifier_imba_pudge_rot_slow or class({})
+imba_pudge_rot               = imba_pudge_rot or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_pudge_rot      = modifier_imba_pudge_rot or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_pudge_rot_slow = modifier_imba_pudge_rot_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_pudge_rot:IsHiddenWhenStolen() return false end
 
@@ -987,7 +987,7 @@ end
 --// Pudge's Flesh Heap
 --//=================================================================================================================
 
-imba_pudge_flesh_heap = imba_pudge_flesh_heap or class({})
+imba_pudge_flesh_heap = imba_pudge_flesh_heap or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_flesh_heap_stacks", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -996,7 +996,7 @@ function imba_pudge_flesh_heap:GetIntrinsicModifierName()
 	return "modifier_imba_flesh_heap_stacks"
 end
 
-modifier_imba_pudge_flesh_heap_handler = class({})
+modifier_imba_pudge_flesh_heap_handler = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_pudge_flesh_heap_handler:IsDebuff() return false end
 
 function modifier_imba_pudge_flesh_heap_handler:IsHidden() return true end
@@ -1031,7 +1031,7 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 	end
 end
 
-modifier_imba_flesh_heap_stacks = modifier_imba_flesh_heap_stacks or class({})
+modifier_imba_flesh_heap_stacks = modifier_imba_flesh_heap_stacks or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_flesh_heap_stacks:IsDebuff() return false end
 
@@ -1111,7 +1111,7 @@ end
 -- Pudge's Dismember
 --=================================================================================================================
 
-imba_pudge_dismember = imba_pudge_dismember or class({})
+imba_pudge_dismember = imba_pudge_dismember or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_pudge_dismember_handler", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dismember", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -1231,7 +1231,7 @@ end
 -- DISMEMBER HANDLER MODIFIER --
 --------------------------------
 
-modifier_imba_pudge_dismember_handler = class({})
+modifier_imba_pudge_dismember_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_pudge_dismember_handler:IsHidden() return true end
 
@@ -1260,7 +1260,7 @@ function modifier_imba_pudge_dismember_handler:OnAbilityExecuted(keys)
 	end
 end
 
-modifier_imba_dismember = class({})
+modifier_imba_dismember = class(VANILLA_ABILITIES_BASECLASS)
 
 -- Doesn't actually ignore status resist, but this is handled in the channel time function
 function modifier_imba_dismember:IgnoreTenacity() return true end
@@ -1329,7 +1329,7 @@ function modifier_imba_dismember:GetOverrideAnimation()
 	return ACT_DOTA_DISABLED
 end
 
-modifier_imba_pudge_dismember_buff = modifier_imba_pudge_dismember_buff or class({})
+modifier_imba_pudge_dismember_buff = modifier_imba_pudge_dismember_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_pudge_dismember_buff:IsDebuff() return false end
 
@@ -1367,7 +1367,7 @@ end
 -- DISMEMBER PULL MODIFIER --
 -----------------------------
 
-modifier_imba_pudge_dismember_pull = class({})
+modifier_imba_pudge_dismember_pull = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_pudge_dismember_pull:OnCreated(params)
 	if not IsServer() then return end
@@ -1407,7 +1407,7 @@ function modifier_imba_pudge_dismember_pull:OnDestroy()
 	self.parent:RemoveHorizontalMotionController(self)
 end
 
-modifier_imba_dismember_scepter = modifier_imba_dismember_scepter or class({})
+modifier_imba_dismember_scepter = modifier_imba_dismember_scepter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dismember_scepter:CheckState()
 	return {
@@ -1493,7 +1493,7 @@ function modifier_imba_dismember_scepter:OnDestroy()
 	ParticleManager:ReleaseParticleIndex(pfx)
 end
 
-imba_pudge_eject = imba_pudge_eject or class({})
+imba_pudge_eject = imba_pudge_eject or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_pudge_eject:IsInnateAbility() return true end
 
@@ -1546,11 +1546,11 @@ LinkLuaModifier("modifier_special_bonus_imba_pudge_7", "components/abilities/her
 LinkLuaModifier("modifier_special_bonus_imba_pudge_8", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pudge_9", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_pudge_4 = class({})
-modifier_special_bonus_imba_pudge_5 = class({})
-modifier_special_bonus_imba_pudge_7 = class({})
-modifier_special_bonus_imba_pudge_8 = class({})
-modifier_special_bonus_imba_pudge_9 = class({})
+modifier_special_bonus_imba_pudge_4 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pudge_5 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pudge_7 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pudge_8 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pudge_9 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_pudge_4:IsHidden() return true end
 
@@ -1597,7 +1597,7 @@ end
 LinkLuaModifier("modifier_pudge_arcana", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 -- Arcana animation handler
-modifier_pudge_arcana = modifier_pudge_arcana or class({})
+modifier_pudge_arcana = modifier_pudge_arcana or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_pudge_arcana:RemoveOnDeath()
 	return false

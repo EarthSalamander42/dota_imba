@@ -94,12 +94,12 @@ LinkLuaModifier("modifier_imba_wisp_spirits_v2", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_wisp_spirit_v2_invulnerable", "components/abilities/heroes/hero_wisp_v2", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_v2_slow", "components/abilities/heroes/hero_wisp_v2", LUA_MODIFIER_MOTION_NONE)
 
-imba_wisp_spirits_v2                      = imba_wisp_spirits_v2 or class({})
-modifier_imba_wisp_spirits_v2             = modifier_imba_wisp_spirits_v2 or class({})
-modifier_imba_wisp_spirit_v2_invulnerable = modifier_imba_wisp_spirit_v2_invulnerable or class({})
-modifier_imba_wisp_spirits_v2_slow        = modifier_imba_wisp_spirits_v2_slow or class({})
+imba_wisp_spirits_v2                      = imba_wisp_spirits_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_wisp_spirits_v2             = modifier_imba_wisp_spirits_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_wisp_spirit_v2_invulnerable = modifier_imba_wisp_spirit_v2_invulnerable or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_wisp_spirits_v2_slow        = modifier_imba_wisp_spirits_v2_slow or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_wisp_spirits_in_v2                   = imba_wisp_spirits_in_v2 or class({})
+imba_wisp_spirits_in_v2                   = imba_wisp_spirits_in_v2 or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------
 -- IMBA_WISP_SPIRITS_V2 --
@@ -165,7 +165,7 @@ end
 -- ------------------------------
 -- --			TETHER			--
 -- ------------------------------
--- imba_wisp_tether = class({})
+-- imba_wisp_tether = class(VANILLA_ABILITIES_BASECLASS)
 -- -- This modifier applies on Wisp and deals with giving the target heal and mana amp
 -- LinkLuaModifier("modifier_imba_wisp_tether", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_tether_ally", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
@@ -326,7 +326,7 @@ end
 -- -- TETHER MODIFIER --
 -- ---------------------
 
--- modifier_imba_wisp_tether = class({})
+-- modifier_imba_wisp_tether = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether:IsHidden() return false end
 -- function modifier_imba_wisp_tether:IsPurgable() return false end
@@ -491,7 +491,7 @@ end
 -- ------------------------------
 -- --	 TETHER Regen modifier	--
 -- ------------------------------
--- -- modifier_imba_wisp_tether_bonus_regen = class({})
+-- -- modifier_imba_wisp_tether_bonus_regen = class(VANILLA_ABILITIES_BASECLASS)
 -- -- function modifier_imba_wisp_tether_bonus_regen:IsHidden() return true end
 -- -- function modifier_imba_wisp_tether_bonus_regen:IsPurgable() return false end
 -- -- function modifier_imba_wisp_tether_bonus_regen:DeclareFunctions()
@@ -514,7 +514,7 @@ end
 -- ------------------------------
 -- --	 TETHER AllY modifier	--
 -- ------------------------------
--- modifier_imba_wisp_tether_ally = class({})
+-- modifier_imba_wisp_tether_ally = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether_ally:IsHidden() return false end
 -- function modifier_imba_wisp_tether_ally:IsPurgable() return false end
@@ -630,7 +630,7 @@ end
 -- --------------------------------------
 -- --	 TETHER Track attack modifier	--
 -- --------------------------------------
--- modifier_imba_wisp_tether_ally_attack = class({})
+-- modifier_imba_wisp_tether_ally_attack = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_tether_ally_attack:IsHidden() return true end
 -- function modifier_imba_wisp_tether_ally_attack:IsPurgable() return false end
 -- function modifier_imba_wisp_tether_ally_attack:DeclareFunctions()
@@ -652,7 +652,7 @@ end
 -- --------------------------------------
 -- --	 TETHER slow immune modifier	--
 -- --------------------------------------
--- -- modifier_imba_wisp_tether_slow_immune = class({})
+-- -- modifier_imba_wisp_tether_slow_immune = class(VANILLA_ABILITIES_BASECLASS)
 -- -- function modifier_imba_wisp_tether_slow_immune:IsHidden() return true end
 -- -- function modifier_imba_wisp_tether_slow_immune:DeclareFunctions()
 -- -- local funcs = {
@@ -684,7 +684,7 @@ end
 -- ------------------------------
 -- --	 TETHER slow modifier	--
 -- ------------------------------
--- modifier_imba_wisp_tether_slow = class({})
+-- modifier_imba_wisp_tether_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether_slow:DeclareFunctions()
 -- local funcs = {
@@ -705,7 +705,7 @@ end
 -- ------------------------------
 -- --	 TETHER latch modifier	--
 -- ------------------------------
--- modifier_imba_wisp_tether_latch = class({})
+-- modifier_imba_wisp_tether_latch = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether_latch:IsHidden()	return true end
 -- function modifier_imba_wisp_tether_latch:IsPurgable()	return false end
@@ -766,7 +766,7 @@ end
 -- ------------------------------
 -- --		 BREAK TETHER 		--
 -- ------------------------------
--- imba_wisp_tether_break = class({})
+-- imba_wisp_tether_break = class(VANILLA_ABILITIES_BASECLASS)
 -- function imba_wisp_tether_break:IsInnateAbility() return true end
 -- function imba_wisp_tether_break:IsStealable() return false end
 
@@ -797,7 +797,7 @@ end
 -- -- TETHER HANDLER MODIFIER --
 -- -----------------------------
 
--- modifier_imba_wisp_tether_handler = class({})
+-- modifier_imba_wisp_tether_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether_handler:IsHidden()		return true end
 -- function modifier_imba_wisp_tether_handler:IsPurgable()		return false end
@@ -825,7 +825,7 @@ end
 -- -- TETHER BACKPACK MODIFIER --
 -- -----------------------------
 
--- modifier_imba_wisp_tether_backpack = class({})
+-- modifier_imba_wisp_tether_backpack = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_tether_backpack:IsPurgable()	return false end
 
@@ -857,7 +857,7 @@ end
 -- ------------------------------
 -- --			SPIRITS			--
 -- ------------------------------
--- imba_wisp_spirits = class({})
+-- imba_wisp_spirits = class(VANILLA_ABILITIES_BASECLASS)
 -- LinkLuaModifier("modifier_imba_wisp_spirits", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_spirit_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_spirits_hero_hit", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
@@ -873,7 +873,7 @@ end
 -- end
 
 -- function imba_wisp_spirits:GetCooldown(level)
--- return self.BaseClass.GetCooldown(self, level) * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_wisp_10", "cdr_mult"), 1)
+-- return self:GetRightfulKV("AbilityCooldown") * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_wisp_10", "cdr_mult"), 1)
 -- end
 
 -- function imba_wisp_spirits:OnSpellStart()
@@ -958,7 +958,7 @@ end
 -- end
 -- end
 
--- modifier_imba_wisp_spirit_damage_handler = class({})
+-- modifier_imba_wisp_spirit_damage_handler = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirit_damage_handler:IsHidden() return true end
 -- function modifier_imba_wisp_spirit_damage_handler:IsPurgable() return false end
 -- function modifier_imba_wisp_spirit_damage_handler:OnCreated(params)
@@ -979,7 +979,7 @@ end
 -- ------------------------------
 -- --		SPIRITS	modifier	--
 -- ------------------------------
--- modifier_imba_wisp_spirits = class({})
+-- modifier_imba_wisp_spirits = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirits:OnCreated(params)
 -- if IsServer() then
 -- self.start_time 				= params.spirits_starttime
@@ -1213,7 +1213,7 @@ end
 -- ----------------------------------------------------------------------
 -- --		SPIRITS	true_sight modifier 								--
 -- ----------------------------------------------------------------------
--- modifier_imba_wisp_spirits_true_sight = class({})
+-- modifier_imba_wisp_spirits_true_sight = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirits_true_sight:IsAura()
 -- return true
 -- end
@@ -1252,7 +1252,7 @@ end
 -- ----------------------------------------------------------------------
 -- --		SPIRITS	on creep hit modifier 								--
 -- ----------------------------------------------------------------------
--- modifier_imba_wisp_spirits_creep_hit = class({})
+-- modifier_imba_wisp_spirits_creep_hit = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirits_creep_hit:IsHidden() return true end
 -- function modifier_imba_wisp_spirits_creep_hit:OnCreated()
 -- if IsServer() then
@@ -1271,7 +1271,7 @@ end
 -- ----------------------------------------------------------------------
 -- --		SPIRITS	on hero hit modifier 								--
 -- ----------------------------------------------------------------------
--- modifier_imba_wisp_spirits_hero_hit = class({})
+-- modifier_imba_wisp_spirits_hero_hit = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirits_hero_hit:IsHidden() return true end
 -- function modifier_imba_wisp_spirits_hero_hit:OnCreated(params)
 -- if IsServer() then
@@ -1284,7 +1284,7 @@ end
 -- ----------------------------------------------------------------------
 -- --		SPIRITS	on hero hit slow modifier							--
 -- ----------------------------------------------------------------------
--- modifier_imba_wisp_spirits_slow = class({})
+-- modifier_imba_wisp_spirits_slow = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirits_slow:IsDebuff() return true end
 -- function modifier_imba_wisp_spirits_slow:IsHidden() return true end
 -- function modifier_imba_wisp_spirits_slow:DeclareFunctions()
@@ -1304,7 +1304,7 @@ end
 -- ----------------------------------------------------------------------
 -- --		SPIRITS	modifier (keep them from getting targeted)			--
 -- ----------------------------------------------------------------------
--- modifier_imba_wisp_spirit_handler = class({})
+-- modifier_imba_wisp_spirit_handler = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_spirit_handler:CheckState()
 -- local state = {
 -- [MODIFIER_STATE_NO_TEAM_MOVE_TO] 	= true,
@@ -1439,7 +1439,7 @@ end
 -- --------------------------------------
 -- --		SPIRITS	TOGGLE	Near/Far	--
 -- --------------------------------------
--- imba_wisp_spirits_toggle = class({})
+-- imba_wisp_spirits_toggle = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function imba_wisp_spirits_toggle:GetAbilityTextureName()
 -- if not IsClient() then return end
@@ -1483,7 +1483,7 @@ end
 -- ------------------------------------------
 -- LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
--- imba_wisp_swap_spirits = class({})
+-- imba_wisp_swap_spirits = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function imba_wisp_swap_spirits:IsInnateAbility() return true end
 -- function imba_wisp_swap_spirits:IsStealable() return false end
@@ -1556,13 +1556,13 @@ end
 -- end
 -- end
 
--- modifier_imba_wisp_swap_spirits_disarm = class({})
+-- modifier_imba_wisp_swap_spirits_disarm = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_swap_spirits_disarm:IsHidden() return true end
 -- function modifier_imba_wisp_swap_spirits_disarm:IsPurgable() return false end
 -- function modifier_imba_wisp_swap_spirits_disarm:RemoveOnDeath() return false end
 
--- modifier_imba_wisp_swap_spirits_silence = class({})
+-- modifier_imba_wisp_swap_spirits_silence = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_wisp_swap_spirits_silence:IsHidden() return true end
 -- function modifier_imba_wisp_swap_spirits_silence:IsPurgable() return false end
@@ -1572,7 +1572,7 @@ end
 -- ------------------------------
 -- --		OVERCHARGE		--
 -- ------------------------------
--- imba_wisp_overcharge = class({})
+-- imba_wisp_overcharge = class(VANILLA_ABILITIES_BASECLASS)
 -- LinkLuaModifier("modifier_imba_wisp_overcharge", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_overcharge_drain", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_overcharge_regen_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1699,7 +1699,7 @@ end
 -- ----------------------------------
 -- --	Overchargge Aura modifier	--
 -- ----------------------------------
--- modifier_imba_wisp_overcharge_aura = class({})
+-- modifier_imba_wisp_overcharge_aura = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_overcharge_aura:IsHidden() return false end
 -- function modifier_imba_wisp_overcharge_aura:IsPurgable() return false end
 -- function modifier_imba_wisp_overcharge_aura:IsNetherWardStealable()
@@ -1741,7 +1741,7 @@ end
 -- ----------------------------------
 -- --	Overchargge buff modifier	--
 -- ----------------------------------
--- modifier_imba_wisp_overcharge = class({})
+-- modifier_imba_wisp_overcharge = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_overcharge:IsBuff() return true end
 -- function modifier_imba_wisp_overcharge:IsPurgable() return false end
 -- function modifier_imba_wisp_overcharge:IsNetherWardStealable() return false end
@@ -1806,7 +1806,7 @@ end
 -- ----------------------------------------------
 -- --	Overchargge health/mana-drain modifier	--
 -- ----------------------------------------------
--- modifier_imba_wisp_overcharge_drain = class({})
+-- modifier_imba_wisp_overcharge_drain = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_overcharge_drain:IsHidden() return true end
 -- function modifier_imba_wisp_overcharge_drain:IsPurgable() return false end
 -- function modifier_imba_wisp_overcharge_drain:OnCreated(params)
@@ -1832,7 +1832,7 @@ end
 -- ------------------------------
 -- --	Overcharge Talent	    --
 -- ------------------------------
--- modifier_imba_wisp_overcharge_regen_talent = class({})
+-- modifier_imba_wisp_overcharge_regen_talent = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_overcharge_regen_talent:IsHidden() return true end
 -- function modifier_imba_wisp_overcharge_regen_talent:IsPurgable() return false end
 -- function modifier_imba_wisp_overcharge_regen_talent:DeclareFunctions()
@@ -1850,7 +1850,7 @@ end
 -- ------------------------------
 -- --			RELOCATE		--
 -- ------------------------------
--- imba_wisp_relocate = class({})
+-- imba_wisp_relocate = class(VANILLA_ABILITIES_BASECLASS)
 -- LinkLuaModifier("modifier_imba_wisp_relocate", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_relocate_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1862,7 +1862,7 @@ end
 -- end
 
 -- function imba_wisp_relocate:GetCooldown(level)
--- return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_wisp_9")
+-- return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_wisp_9")
 -- end
 
 -- function imba_wisp_relocate:GetBehavior()
@@ -1966,13 +1966,13 @@ end
 -- ----------------------
 -- --	Relocate timer	--
 -- ----------------------
--- modifier_imba_wisp_relocate_cast_delay = class({})
+-- modifier_imba_wisp_relocate_cast_delay = class(VANILLA_ABILITIES_BASECLASS)
 
 
 -- --------------------------
 -- --	Relocate modifier	--
 -- --------------------------
--- modifier_imba_wisp_relocate = class({})
+-- modifier_imba_wisp_relocate = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_relocate:IsDebuff() return false end
 -- function modifier_imba_wisp_relocate:IsHidden() return false end
 -- function modifier_imba_wisp_relocate:IsPurgable() return false end
@@ -2063,7 +2063,7 @@ end
 -- end
 -- end
 
--- modifier_imba_wisp_relocate_talent = class({})
+-- modifier_imba_wisp_relocate_talent = class(VANILLA_ABILITIES_BASECLASS)
 -- function modifier_imba_wisp_relocate_talent:IsDebuff() return false end
 -- function modifier_imba_wisp_relocate_talent:IsHidden() return false end
 -- function modifier_imba_wisp_relocate_talent:IsPurgable() return false end
@@ -2087,7 +2087,7 @@ end
 -- ------------------------------
 -- --		RELOCATE BREAK		--
 -- ------------------------------
--- imba_wisp_relocate_break = class({})
+-- imba_wisp_relocate_break = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function imba_wisp_relocate_break:IsStealable() return false end
 
@@ -2106,10 +2106,10 @@ end
 -- LinkLuaModifier("modifier_imba_wisp_overcharge_721_aura", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_wisp_overcharge_721_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
--- imba_wisp_overcharge_721					= class({})
--- modifier_imba_wisp_overcharge_721			= class({})
--- modifier_imba_wisp_overcharge_721_aura		= class({})
--- modifier_imba_wisp_overcharge_721_handler	= class({})
+-- imba_wisp_overcharge_721					= class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_wisp_overcharge_721			= class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_wisp_overcharge_721_aura		= class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_wisp_overcharge_721_handler	= class(VANILLA_ABILITIES_BASECLASS)
 
 -- function imba_wisp_overcharge_721:GetBehavior()
 -- if self:GetCaster():HasTalent("special_bonus_imba_wisp_12") then
@@ -2128,10 +2128,10 @@ end
 -- if self:GetCaster():GetModifierStackCount("modifier_imba_wisp_overcharge_721_handler", self:GetCaster()) == 0 then
 -- return self:GetSpecialValueFor("talent_cooldown")
 -- else
--- return self.BaseClass.GetCooldown(self, level)
+-- return self:GetRightfulKV("AbilityCooldown")
 -- end	
 -- else
--- return self.BaseClass.GetCooldown(self, level)
+-- return self:GetRightfulKV("AbilityCooldown")
 -- end
 -- end
 
@@ -2392,25 +2392,25 @@ end
 -- LinkLuaModifier("modifier_special_bonus_imba_wisp_10", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_special_bonus_imba_wisp_12", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
 
--- modifier_special_bonus_imba_wisp_4	= class({})
+-- modifier_special_bonus_imba_wisp_4	= class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_special_bonus_imba_wisp_4:IsHidden() 			return true end
 -- function modifier_special_bonus_imba_wisp_4:IsPurgable() 		return false end
 -- function modifier_special_bonus_imba_wisp_4:RemoveOnDeath() 	return false end
 
--- modifier_special_bonus_imba_wisp_9	= class({})
+-- modifier_special_bonus_imba_wisp_9	= class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_special_bonus_imba_wisp_9:IsHidden() 			return true end
 -- function modifier_special_bonus_imba_wisp_9:IsPurgable() 		return false end
 -- function modifier_special_bonus_imba_wisp_9:RemoveOnDeath() 	return false end
 
--- modifier_special_bonus_imba_wisp_10	= class({})
+-- modifier_special_bonus_imba_wisp_10	= class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_special_bonus_imba_wisp_10:IsHidden() 		return true end
 -- function modifier_special_bonus_imba_wisp_10:IsPurgable() 		return false end
 -- function modifier_special_bonus_imba_wisp_10:RemoveOnDeath() 	return false end
 
--- modifier_special_bonus_imba_wisp_12	= class({})
+-- modifier_special_bonus_imba_wisp_12	= class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_special_bonus_imba_wisp_12:IsHidden() 		return true end
 -- function modifier_special_bonus_imba_wisp_12:IsPurgable() 		return false end

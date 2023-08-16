@@ -19,7 +19,7 @@ local function ShallowCopy(orig)
 end
 
 -- Base local ability to be used for fire breath and ice breath
-local base_ability_dual_breath = class({})
+local base_ability_dual_breath = class(VANILLA_ABILITIES_BASECLASS)
 
 function base_ability_dual_breath:IsNetherWardStealable() return false end
 
@@ -497,11 +497,11 @@ LinkLuaModifier("modifier_imba_jakiro_dual_breath_self_root", "components/abilit
 LinkLuaModifier("modifier_imba_jakiro_dual_breath_self_disable_turning", "components/abilities/heroes/hero_jakiro",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_jakiro_dual_breath                               = imba_jakiro_dual_breath or class({})
-modifier_imba_jakiro_dual_breath_slow                 = modifier_imba_jakiro_dual_breath_slow or class({})
-modifier_imba_jakiro_dual_breath_burn                 = modifier_imba_jakiro_dual_breath_burn or class({})
-modifier_imba_jakiro_dual_breath_self_root            = modifier_imba_jakiro_dual_breath_self_root or class({})
-modifier_imba_jakiro_dual_breath_self_disable_turning = modifier_imba_jakiro_dual_breath_self_disable_turning or class({})
+imba_jakiro_dual_breath                               = imba_jakiro_dual_breath or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_jakiro_dual_breath_slow                 = modifier_imba_jakiro_dual_breath_slow or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_jakiro_dual_breath_burn                 = modifier_imba_jakiro_dual_breath_burn or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_jakiro_dual_breath_self_root            = modifier_imba_jakiro_dual_breath_self_root or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_jakiro_dual_breath_self_disable_turning = modifier_imba_jakiro_dual_breath_self_disable_turning or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_jakiro_dual_breath:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_1")
@@ -796,7 +796,7 @@ end
 --		Ice Path           --
 -----------------------------
 
-imba_jakiro_ice_path = class({})
+imba_jakiro_ice_path = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_ice_path_thinker", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ice_path_freeze_debuff", "components/abilities/heroes/hero_jakiro",
 	LUA_MODIFIER_MOTION_NONE)
@@ -821,7 +821,7 @@ function imba_jakiro_ice_path:OnSpellStart()
 	end
 end
 
-modifier_imba_ice_path_thinker                 = class({})
+modifier_imba_ice_path_thinker                 = class(VANILLA_ABILITIES_BASECLASS)
 modifier_imba_ice_path_thinker.modifier_freeze = "modifier_imba_ice_path_freeze_debuff"
 modifier_imba_ice_path_thinker.modifier_slow   = "modifier_imba_ice_path_slow_debuff"
 function modifier_imba_ice_path_thinker:OnCreated(kv)
@@ -1306,7 +1306,7 @@ function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_A
 --		Macropyre          --
 -----------------------------
 
-imba_jakiro_macropyre = class({})
+imba_jakiro_macropyre = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_macropyre_thinker", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_macropyre_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
@@ -1335,7 +1335,7 @@ function imba_jakiro_macropyre:OnSpellStart()
 	end
 end
 
-modifier_imba_macropyre_thinker = class({})
+modifier_imba_macropyre_thinker = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_macropyre_thinker:OnCreated(kv)
 	if IsServer() then
 		local caster        = self:GetCaster()
@@ -1552,11 +1552,11 @@ LinkLuaModifier("modifier_special_bonus_imba_jakiro_6", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_jakiro_9", "components/abilities/heroes/hero_jakiro",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_jakiro_1 = modifier_special_bonus_imba_jakiro_1 or class({})
-modifier_special_bonus_imba_jakiro_7 = modifier_special_bonus_imba_jakiro_7 or class({})
-modifier_special_bonus_imba_jakiro_3 = modifier_special_bonus_imba_jakiro_3 or class({})
-modifier_special_bonus_imba_jakiro_6 = modifier_special_bonus_imba_jakiro_6 or class({})
-modifier_special_bonus_imba_jakiro_9 = modifier_special_bonus_imba_jakiro_9 or class({})
+modifier_special_bonus_imba_jakiro_1 = modifier_special_bonus_imba_jakiro_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_jakiro_7 = modifier_special_bonus_imba_jakiro_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_jakiro_3 = modifier_special_bonus_imba_jakiro_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_jakiro_6 = modifier_special_bonus_imba_jakiro_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_jakiro_9 = modifier_special_bonus_imba_jakiro_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_jakiro_1:IsHidden() return true end
 
@@ -1591,7 +1591,7 @@ function modifier_special_bonus_imba_jakiro_9:RemoveOnDeath() return false end
 LinkLuaModifier("modifier_special_bonus_imba_jakiro_2", "components/abilities/heroes/hero_jakiro",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_jakiro_2 = modifier_special_bonus_imba_jakiro_2 or class({})
+modifier_special_bonus_imba_jakiro_2 = modifier_special_bonus_imba_jakiro_2 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_jakiro_2:IsHidden() return true end
 

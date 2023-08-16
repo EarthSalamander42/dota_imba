@@ -1,7 +1,7 @@
 -- Editors:
 --     Fudge: 20.07.2017
 
-imba_storm_spirit_static_remnant = imba_storm_spirit_static_remnant or class({})
+imba_storm_spirit_static_remnant = imba_storm_spirit_static_remnant or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_static_remnant", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------
@@ -39,7 +39,7 @@ function imba_storm_spirit_static_remnant:OnSpellStart()
 	end
 end
 
-modifier_imba_static_remnant = modifier_imba_static_remnant or class({})
+modifier_imba_static_remnant = modifier_imba_static_remnant or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_static_remnant:OnCreated(params)
 	if IsServer() then
@@ -222,7 +222,7 @@ end
 --------------------------------------
 ---		   ELECTRIC VORTEX		   ---
 --------------------------------------
-imba_storm_spirit_electric_vortex = imba_storm_spirit_electric_vortex or class({})
+imba_storm_spirit_electric_vortex = imba_storm_spirit_electric_vortex or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_vortex_pull", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vortex_root", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vortex_self_slow", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
@@ -303,7 +303,7 @@ function imba_storm_spirit_electric_vortex:GetBehavior()
 end
 
 --- PULL MODIFIER
-modifier_imba_vortex_pull = modifier_imba_vortex_pull or class({})
+modifier_imba_vortex_pull = modifier_imba_vortex_pull or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_vortex_pull:IsHidden() return false end
@@ -408,7 +408,7 @@ function modifier_imba_vortex_pull:OnDestroy()
 end
 
 --- PULL MODIFIER (root only)
-modifier_imba_vortex_root = modifier_imba_vortex_root or class({})
+modifier_imba_vortex_root = modifier_imba_vortex_root or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_vortex_root:IsHidden() return false end
@@ -514,7 +514,7 @@ function modifier_imba_vortex_root:OnDestroy()
 end
 
 --- SELF SLOW MODIFIER
-modifier_imba_vortex_self_slow = modifier_imba_vortex_self_slow or class({})
+modifier_imba_vortex_self_slow = modifier_imba_vortex_self_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_vortex_self_slow:IsHidden() return false end
@@ -542,7 +542,7 @@ end
 --------------------------------------
 ---		   	  OVERLOAD		       ---
 --------------------------------------
-imba_storm_spirit_overload = imba_storm_spirit_overload or class({})
+imba_storm_spirit_overload = imba_storm_spirit_overload or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_overload", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_overload_buff", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_overload_debuff", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
@@ -556,7 +556,7 @@ function imba_storm_spirit_overload:GetAbilityTextureName()
 end
 
 --- OVERLOAD PASSIVE MODIFIER
-modifier_imba_overload = modifier_imba_overload or class({})
+modifier_imba_overload = modifier_imba_overload or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_overload:IsPassive() return true end
@@ -602,7 +602,7 @@ end
 --------------------------------
 --- OVERLOAD "ACTIVE" MODIFIER
 --------------------------------
-modifier_imba_overload_buff = modifier_imba_overload_buff or class({})
+modifier_imba_overload_buff = modifier_imba_overload_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_overload_buff:IsDebuff() return false end
@@ -714,7 +714,7 @@ function modifier_imba_overload_buff:OnDestroy()
 end
 
 --- OVERLOAD DEBUFF MODIFIER
-modifier_imba_overload_debuff = modifier_imba_overload_debuff or class({})
+modifier_imba_overload_debuff = modifier_imba_overload_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_overload_debuff:IsDebuff() return true end
@@ -751,7 +751,7 @@ end
 --------------------------------
 --- 	 BALL LIGHTNING      ---
 --------------------------------
-imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class({})
+imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_item_imba_lotus_orb_active", "components/items/item_lotus_orb.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_storm_spirit_ball_lightning", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
@@ -954,7 +954,7 @@ function imba_storm_spirit_ball_lightning:GetManaCost()
 end
 
 --- BALL LIGHTNING MODIFIER
-modifier_imba_storm_spirit_ball_lightning = modifier_imba_storm_spirit_ball_lightning or class({})
+modifier_imba_storm_spirit_ball_lightning = modifier_imba_storm_spirit_ball_lightning or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_storm_spirit_ball_lightning:IsDebuff() return false end
@@ -1040,9 +1040,9 @@ LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_6", "components/abilit
 LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_1", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_7", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_storm_spirit_6 = modifier_special_bonus_imba_storm_spirit_6 or class({})
-modifier_special_bonus_imba_storm_spirit_1 = modifier_special_bonus_imba_storm_spirit_1 or class({})
-modifier_special_bonus_imba_storm_spirit_7 = modifier_special_bonus_imba_storm_spirit_7 or class({})
+modifier_special_bonus_imba_storm_spirit_6 = modifier_special_bonus_imba_storm_spirit_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_storm_spirit_1 = modifier_special_bonus_imba_storm_spirit_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_storm_spirit_7 = modifier_special_bonus_imba_storm_spirit_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_storm_spirit_6:IsHidden() return true end
 
@@ -1066,7 +1066,7 @@ function modifier_special_bonus_imba_storm_spirit_7:RemoveOnDeath() return false
 
 LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_2", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_storm_spirit_2 = class({})
+modifier_special_bonus_imba_storm_spirit_2 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_storm_spirit_2:IsHidden() return true end
 

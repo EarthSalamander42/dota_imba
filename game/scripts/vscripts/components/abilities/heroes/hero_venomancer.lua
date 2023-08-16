@@ -8,10 +8,10 @@ LinkLuaModifier("modifier_imba_poison_sting_v2_ward", "components/abilities/hero
 
 LinkLuaModifier("modifier_imba_venomancer_plague_ward_v2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_poison_sting_v2_ward      = modifier_imba_poison_sting_v2_ward or class({})
+modifier_imba_poison_sting_v2_ward      = modifier_imba_poison_sting_v2_ward or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_venomancer_plague_ward_v2          = imba_venomancer_plague_ward_v2 or class({})
-modifier_imba_venomancer_plague_ward_v2 = modifier_imba_venomancer_plague_ward_v2 or class({})
+imba_venomancer_plague_ward_v2          = imba_venomancer_plague_ward_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_venomancer_plague_ward_v2 = modifier_imba_venomancer_plague_ward_v2 or class(VANILLA_ABILITIES_BASECLASS)
 
 -------------------------------------------
 --				TOXICITY
@@ -19,7 +19,7 @@ modifier_imba_venomancer_plague_ward_v2 = modifier_imba_venomancer_plague_ward_v
 LinkLuaModifier("modifier_imba_toxicity", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_toxicity_debuff", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_venomancer_toxicity = class({})
+imba_venomancer_toxicity = class(VANILLA_ABILITIES_BASECLASS)
 function imba_venomancer_toxicity:IsHiddenWhenStolen() return false end
 
 function imba_venomancer_toxicity:IsRefreshable() return false end
@@ -41,7 +41,7 @@ function imba_venomancer_toxicity:GetIntrinsicModifierName()
 end
 
 -------------------------------------------
-modifier_imba_toxicity = class({})
+modifier_imba_toxicity = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_toxicity:IsDebuff() return false end
 
 function modifier_imba_toxicity:IsHidden() return true end
@@ -98,7 +98,7 @@ function modifier_imba_toxicity:OnIntervalThink()
 end
 
 -------------------------------------------
-modifier_imba_toxicity_debuff = class({})
+modifier_imba_toxicity_debuff = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_toxicity_debuff:IsDebuff() return true end
 
 function modifier_imba_toxicity_debuff:IsHidden() return false end
@@ -156,7 +156,7 @@ end
 LinkLuaModifier("modifier_imba_venomous_gale", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_venomous_gale_wardcast", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_venomancer_venomous_gale = class({})
+imba_venomancer_venomous_gale = class(VANILLA_ABILITIES_BASECLASS)
 function imba_venomancer_venomous_gale:IsHiddenWhenStolen() return false end
 
 function imba_venomancer_venomous_gale:IsRefreshable() return true end
@@ -381,7 +381,7 @@ function imba_venomancer_venomous_gale:OnProjectileHit_ExtraData(target, locatio
 end
 
 -------------------------------------------
-modifier_imba_venomous_gale = class({})
+modifier_imba_venomous_gale = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_venomous_gale:IsDebuff() return true end
 
 function modifier_imba_venomous_gale:IsHidden() return false end
@@ -466,7 +466,7 @@ function modifier_imba_venomous_gale:GetModifierMoveSpeedBonus_Percentage()
 end
 
 -------------------------------------------
-modifier_imba_venomous_gale_wardcast = class({})
+modifier_imba_venomous_gale_wardcast = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_venomous_gale_wardcast:IsDebuff() return true end
 
 function modifier_imba_venomous_gale_wardcast:IsHidden() return true end
@@ -500,7 +500,7 @@ LinkLuaModifier("modifier_imba_poison_sting", "components/abilities/heroes/hero_
 LinkLuaModifier("modifier_imba_poison_sting_debuff", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_poison_sting_debuff_ward", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_venomancer_poison_sting = class({})
+imba_venomancer_poison_sting = class(VANILLA_ABILITIES_BASECLASS)
 function imba_venomancer_poison_sting:IsHiddenWhenStolen() return false end
 
 function imba_venomancer_poison_sting:IsRefreshable() return false end
@@ -520,7 +520,7 @@ function imba_venomancer_poison_sting:GetIntrinsicModifierName()
 end
 
 -------------------------------------------
-modifier_imba_poison_sting = class({})
+modifier_imba_poison_sting = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_poison_sting:IsDebuff() return false end
 
 function modifier_imba_poison_sting:IsHidden() return true end
@@ -598,7 +598,7 @@ function modifier_imba_poison_sting:OnAttackLanded(params)
 end
 
 -------------------------------------------
-modifier_imba_poison_sting_debuff = class({})
+modifier_imba_poison_sting_debuff = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_poison_sting_debuff:IsDebuff() return true end
 
 function modifier_imba_poison_sting_debuff:IsHidden() return false end
@@ -672,7 +672,7 @@ function modifier_imba_poison_sting_debuff:OnTooltip()
 end
 
 -------------------------------------------
-modifier_imba_poison_sting_debuff_ward = class({})
+modifier_imba_poison_sting_debuff_ward = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_poison_sting_debuff_ward:IsDebuff() return true end
 
 function modifier_imba_poison_sting_debuff_ward:IsHidden() return false end
@@ -820,7 +820,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_plague_ward", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_venomancer_plague_ward = class({})
+imba_venomancer_plague_ward = class(VANILLA_ABILITIES_BASECLASS)
 function imba_venomancer_plague_ward:IsHiddenWhenStolen() return false end
 
 function imba_venomancer_plague_ward:IsRefreshable() return true end
@@ -927,7 +927,7 @@ function imba_venomancer_plague_ward:OnSpellStart()
 end
 
 -------------------------------------------
-modifier_imba_plague_ward = class({})
+modifier_imba_plague_ward = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_plague_ward:IsDebuff() return false end
 
 function modifier_imba_plague_ward:IsHidden() return false end
@@ -1100,7 +1100,7 @@ end
 LinkLuaModifier("modifier_imba_poison_nova_ring", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_poison_nova", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_venomancer_poison_nova = class({})
+imba_venomancer_poison_nova = class(VANILLA_ABILITIES_BASECLASS)
 function imba_venomancer_poison_nova:IsHiddenWhenStolen() return false end
 
 function imba_venomancer_poison_nova:IsRefreshable() return true end
@@ -1184,14 +1184,14 @@ end
 
 function imba_venomancer_poison_nova:GetCooldown(nLevel)
 	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 ------------------------------------
 -- MODIFIER_IMBA_POISON_NOVA_RING --
 ------------------------------------
 
-modifier_imba_poison_nova_ring = modifier_imba_poison_nova_ring or class({})
+modifier_imba_poison_nova_ring = modifier_imba_poison_nova_ring or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_poison_nova_ring:IsHidden() return true end
 
@@ -1254,7 +1254,7 @@ function modifier_imba_poison_nova_ring:OnIntervalThink()
 end
 
 -------------------------------------------
-modifier_imba_poison_nova = class({})
+modifier_imba_poison_nova = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_poison_nova:IsDebuff() return true end
 
 function modifier_imba_poison_nova:IsHidden() return false end
@@ -1364,10 +1364,10 @@ LinkLuaModifier("modifier_special_bonus_imba_venomancer_venomous_gale_plague_war
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_6", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_plague_ward_upgrade", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_venomancer_4 = modifier_special_bonus_imba_venomancer_4 or class({})
-modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards = modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards or class({})
-modifier_special_bonus_imba_venomancer_6 = modifier_special_bonus_imba_venomancer_6 or class({})
-modifier_special_bonus_imba_venomancer_plague_ward_upgrade = modifier_special_bonus_imba_venomancer_plague_ward_upgrade or class({})
+modifier_special_bonus_imba_venomancer_4 = modifier_special_bonus_imba_venomancer_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards = modifier_special_bonus_imba_venomancer_venomous_gale_plague_wards or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_6 = modifier_special_bonus_imba_venomancer_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_plague_ward_upgrade = modifier_special_bonus_imba_venomancer_plague_ward_upgrade or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_venomancer_4:IsHidden() return true end
 
@@ -1400,12 +1400,12 @@ LinkLuaModifier("modifier_special_bonus_imba_venomancer_3", "components/abilitie
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_poison_sting_slow", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_venomancer_poison_nova_radius", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_venomancer_1                  = class({})
-modifier_special_bonus_imba_venomancer_2                  = class({})
-modifier_special_bonus_imba_venomancer_3                  = class({})
+modifier_special_bonus_imba_venomancer_1                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_2                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_3                  = class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_special_bonus_imba_venomancer_poison_sting_slow  = modifier_special_bonus_imba_venomancer_poison_sting_slow or class({})
-modifier_special_bonus_imba_venomancer_poison_nova_radius = modifier_special_bonus_imba_venomancer_poison_nova_radius or class({})
+modifier_special_bonus_imba_venomancer_poison_sting_slow  = modifier_special_bonus_imba_venomancer_poison_sting_slow or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_venomancer_poison_nova_radius = modifier_special_bonus_imba_venomancer_poison_nova_radius or class(VANILLA_ABILITIES_BASECLASS)
 
 -- -----------------------
 -- -- TALENT 1 MODIFIER --

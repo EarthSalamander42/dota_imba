@@ -137,7 +137,7 @@ function imba_earth_spirit_stone_caller:KillRemnant(remnantID)
 end
 
 -----	Stone Remnant recharge modifier
-modifier_imba_earth_spirit_remnant_handler = modifier_imba_earth_spirit_remnant_handler or class({})
+modifier_imba_earth_spirit_remnant_handler = modifier_imba_earth_spirit_remnant_handler or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_earth_spirit_remnant_handler:RemoveOnDeath() return false end
 
 function modifier_imba_earth_spirit_remnant_handler:DestroyOnExpire() return false end
@@ -242,7 +242,7 @@ function modifier_imba_earth_spirit_remnant_handler:OnAttackLanded(keys)
 end
 
 -----	Stone Remnant handler
-modifier_imba_stone_remnant = modifier_imba_stone_remnant or class({})
+modifier_imba_stone_remnant = modifier_imba_stone_remnant or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_stone_remnant:IsHidden() return true end
 
@@ -329,7 +329,7 @@ function modifier_imba_stone_remnant:SetPetrify(petrify)
 end
 
 -- Visible no charge Stone Remnant counter
-modifier_imba_earth_spirit_stone_caller_charge_counter = class({})
+modifier_imba_earth_spirit_stone_caller_charge_counter = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earth_spirit_stone_caller_charge_counter:IsHidden() return false end
 
@@ -358,7 +358,7 @@ end
 -- "DOTA_Tooltip_modifier_earth_spirit_stone_caller_charge_counter_Description"			"You can only place a Stone Remnant when you have a charge available.  Charges slowly restore over time."
 
 -----	Earths Mark
-modifier_imba_earths_mark = modifier_imba_earths_mark or class({})
+modifier_imba_earths_mark = modifier_imba_earths_mark or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_earths_mark:IsHidden() return false end
 
 function modifier_imba_earths_mark:IsDebuff() return true end
@@ -466,7 +466,7 @@ function modifier_imba_earths_mark:GetModifierMagicalResistanceBonus()
 end
 
 -----	Layout fix
-modifier_imba_earth_spirit_layout_fix = modifier_imba_earth_spirit_layout_fix or class({})
+modifier_imba_earth_spirit_layout_fix = modifier_imba_earth_spirit_layout_fix or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_earth_spirit_layout_fix:IsHidden() return true end
 
 function modifier_imba_earth_spirit_layout_fix:IsDebuff() return false end
@@ -672,7 +672,7 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 end
 
 -----	Movement handler
-modifier_imba_boulder_smash_push = modifier_imba_boulder_smash_push or class({})
+modifier_imba_boulder_smash_push = modifier_imba_boulder_smash_push or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_boulder_smash_push:IsHidden() return true end
 
 function modifier_imba_boulder_smash_push:IsDebuff() return true end
@@ -799,7 +799,7 @@ function modifier_imba_boulder_smash_push:HorizontalMotion(dt)
 end
 
 -----	Cast thinker
-modifier_imba_boulder_smash_cast_thinker = modifier_imba_boulder_smash_cast_thinker or class({})
+modifier_imba_boulder_smash_cast_thinker = modifier_imba_boulder_smash_cast_thinker or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_boulder_smash_cast_thinker:IsHidden() return true end
 
 function modifier_imba_boulder_smash_cast_thinker:IsDebuff() return false end
@@ -919,7 +919,7 @@ function imba_earth_spirit_rolling_boulder:OnSpellStart()
 end
 
 -----	Movement handler
-modifier_imba_rolling_boulder = modifier_imba_rolling_boulder or class({})
+modifier_imba_rolling_boulder = modifier_imba_rolling_boulder or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rolling_boulder:IsHidden() return true end
 
 function modifier_imba_rolling_boulder:IsMotionController() return true end
@@ -1136,7 +1136,7 @@ end
 
 -----	Slow Modifier
 
-modifier_imba_rolling_boulder_slow = modifier_imba_rolling_boulder_slow or class({})
+modifier_imba_rolling_boulder_slow = modifier_imba_rolling_boulder_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rolling_boulder_slow:IsDebuff() return true end
 
@@ -1159,7 +1159,7 @@ function modifier_imba_rolling_boulder_slow:GetModifierMoveSpeedBonus_Percentage
 end
 
 -----	Disarm modifier
-modifier_imba_rolling_boulder_disarm = modifier_imba_rolling_boulder_disarm or class({})
+modifier_imba_rolling_boulder_disarm = modifier_imba_rolling_boulder_disarm or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rolling_boulder_disarm:IsDebuff() return true end
 
 function modifier_imba_rolling_boulder_disarm:IsPurgable() return true end
@@ -1247,7 +1247,7 @@ function imba_earth_spirit_geomagnetic_grip:OnAbilityPhaseStart()
 end
 
 -----	Movement handler
-modifier_imba_geomagnetic_grip_pull = modifier_imba_geomagnetic_grip_pull or class({})
+modifier_imba_geomagnetic_grip_pull = modifier_imba_geomagnetic_grip_pull or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_geomagnetic_grip_pull:IsDebuff() return false end
 
 function modifier_imba_geomagnetic_grip_pull:IsHidden() return true end
@@ -1387,7 +1387,7 @@ function modifier_imba_geomagnetic_grip_pull:HorizontalMotion(dt)
 end
 
 -----	Silence modifier
-modifier_imba_geomagnetic_grip_silence = modifier_imba_geomagnetic_grip_silence or class({})
+modifier_imba_geomagnetic_grip_silence = modifier_imba_geomagnetic_grip_silence or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_geomagnetic_grip_silence:IsDebuff() return true end
 
 function modifier_imba_geomagnetic_grip_silence:IsPurgable() return true end
@@ -1405,7 +1405,7 @@ function modifier_imba_geomagnetic_grip_silence:CheckState()
 end
 
 -----	Root modifier
-modifier_imba_geomagnetic_grip_root = modifier_imba_geomagnetic_grip_root or class({})
+modifier_imba_geomagnetic_grip_root = modifier_imba_geomagnetic_grip_root or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_geomagnetic_grip_root:IsDebuff() return true end
 
 function modifier_imba_geomagnetic_grip_root:IsPurgable() return true end
@@ -1464,7 +1464,7 @@ function imba_earth_spirit_magnetize:OnSpellStart()
 end
 
 -----	Debuff modifier
-modifier_imba_magnetize = modifier_imba_magnetize or class({})
+modifier_imba_magnetize = modifier_imba_magnetize or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_magnetize:IsDebuff() return true end
 
 function modifier_imba_magnetize:IsPurgable() return not self:GetCaster():HasTalent("special_bonus_imba_earth_spirit_magnetize_unpurgable") end
@@ -1670,11 +1670,11 @@ LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silen
 LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_7", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_2", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_earth_spirit_1                                 = modifier_special_bonus_imba_earth_spirit_1 or class({})
-modifier_special_bonus_imba_earth_spirit_3                                 = modifier_special_bonus_imba_earth_spirit_3 or class({})
-modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration = modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration or class({})
-modifier_special_bonus_imba_earth_spirit_7                                 = modifier_special_bonus_imba_earth_spirit_7 or class({})
-modifier_special_bonus_imba_earth_spirit_2                                 = modifier_special_bonus_imba_earth_spirit_2 or class({})
+modifier_special_bonus_imba_earth_spirit_1                                 = modifier_special_bonus_imba_earth_spirit_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_earth_spirit_3                                 = modifier_special_bonus_imba_earth_spirit_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration = modifier_special_bonus_imba_earth_spirit_geomagnetic_grip_silence_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_earth_spirit_7                                 = modifier_special_bonus_imba_earth_spirit_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_earth_spirit_2                                 = modifier_special_bonus_imba_earth_spirit_2 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_earth_spirit_1:IsHidden() return true end
 
@@ -1710,7 +1710,7 @@ function modifier_special_bonus_imba_earth_spirit_2:RemoveOnDeath() return false
 
 LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_4", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_earth_spirit_4 = class({})
+modifier_special_bonus_imba_earth_spirit_4 = class(VANILLA_ABILITIES_BASECLASS)
 
 -----------------------
 -- TALENT 4 MODIFIER --

@@ -5,7 +5,7 @@
 -- --			Lycan's Summon Wolves
 -- ---------------------------------------------------
 
--- imba_lycan_summon_wolves = class({})
+-- imba_lycan_summon_wolves = class(VANILLA_ABILITIES_BASECLASS)
 -- LinkLuaModifier("modifier_imba_lycan_wolf_charge", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_lycan_wolf_death_check", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_summon_wolves_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
@@ -186,7 +186,7 @@
 
 
 -- -- Charge modifier
--- modifier_imba_lycan_wolf_charge = class({})
+-- modifier_imba_lycan_wolf_charge = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_lycan_wolf_charge:GetIntrinsicModifierName()
 -- return "modifier_imba_lycan_wolf_charge"
@@ -280,7 +280,7 @@
 
 
 -- -- Death check modifier (given to wolves)
--- modifier_imba_lycan_wolf_death_check = class({})
+-- modifier_imba_lycan_wolf_death_check = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_lycan_wolf_death_check:IsDebuff()
 -- return false	
@@ -409,7 +409,7 @@
 
 
 -- --- #2 TALENT modifier
--- modifier_imba_summon_wolves_talent = modifier_imba_summon_wolves_talent or class({})
+-- modifier_imba_summon_wolves_talent = modifier_imba_summon_wolves_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 -- -- Modifier properties
 -- function modifier_imba_summon_wolves_talent:IsDebuff()	return false end
@@ -452,9 +452,9 @@
 LinkLuaModifier("modifier_imba_lycan_summon_wolves_charges", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_summon_wolves_damage_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-imba_lycan_summon_wolves                        = imba_lycan_summon_wolves or class({})
-modifier_imba_lycan_summon_wolves_charges       = modifier_imba_lycan_summon_wolves_charges or class({})
-modifier_imba_lycan_summon_wolves_damage_talent = modifier_imba_lycan_summon_wolves_damage_talent or class({})
+imba_lycan_summon_wolves                        = imba_lycan_summon_wolves or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_lycan_summon_wolves_charges       = modifier_imba_lycan_summon_wolves_charges or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_lycan_summon_wolves_damage_talent = modifier_imba_lycan_summon_wolves_damage_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------------
 -- IMBA_LYCAN_SUMMON_WOLVES --
@@ -701,7 +701,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_lycan_howl = class({})
+imba_lycan_howl = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_howl_buff", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_howl_flying_movement_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
@@ -808,7 +808,7 @@ end
 -- HOWL MODIFIER --
 -------------------
 
-modifier_imba_howl_buff = class({})
+modifier_imba_howl_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_howl_buff:GetEffectName()
 	return "particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
@@ -873,7 +873,7 @@ function modifier_imba_howl_buff:CheckState()
 end
 
 --- #4 TALENT: flying movement modifier
-modifier_imba_howl_flying_movement_talent = modifier_imba_howl_flying_movement_talent or class({})
+modifier_imba_howl_flying_movement_talent = modifier_imba_howl_flying_movement_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_howl_flying_movement_talent:IsDebuff() return false end
@@ -914,9 +914,9 @@ end
 LinkLuaModifier("modifier_imba_lycan_howl_723", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_howl_723_phased", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-imba_lycan_howl_723                 = imba_lycan_howl_723 or class({})
-modifier_imba_lycan_howl_723        = modifier_imba_lycan_howl_723 or class({})
-modifier_imba_lycan_howl_723_phased = modifier_imba_lycan_howl_723_phased or class({})
+imba_lycan_howl_723                 = imba_lycan_howl_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_lycan_howl_723        = modifier_imba_lycan_howl_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_lycan_howl_723_phased = modifier_imba_lycan_howl_723_phased or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_lycan_howl_723:OnSpellStart()
 	EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Lycan.Howl", self:GetCaster())
@@ -1022,7 +1022,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_lycan_feral_impulse = class({})
+imba_lycan_feral_impulse = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_feral_impulse_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_feral_impulse", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
@@ -1035,7 +1035,7 @@ function imba_lycan_feral_impulse:GetIntrinsicModifierName()
 end
 
 -- Feral Impulse aura
-modifier_imba_feral_impulse_aura = class({})
+modifier_imba_feral_impulse_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_feral_impulse_aura:OnCreated()
 	if IsServer() then
@@ -1149,7 +1149,7 @@ function modifier_imba_feral_impulse_aura:IsPurgable()
 end
 
 -- Feral Impulse modifier
-modifier_imba_feral_impulse = class({})
+modifier_imba_feral_impulse = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_feral_impulse:OnCreated()
 	self.caster = self:GetCaster()
@@ -1202,7 +1202,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_lycan_shapeshift = class({})
+imba_lycan_shapeshift = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_shapeshift_transform_stun", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift_transform", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
@@ -1290,7 +1290,7 @@ function imba_lycan_shapeshift:GetCooldown(level)
 	local caster = self:GetCaster()
 	local ability = self
 	local ability_level = ability:GetLevel()
-	local base_cooldown = self.BaseClass.GetCooldown(self, level)
+	local base_cooldown = self:GetRightfulKV("AbilityCooldown")
 	local wolfsbane_modifier = "modifier_imba_wolfsbane_lycan"
 
 	-- Get amount of Wolfsbane stacks
@@ -1307,11 +1307,11 @@ function imba_lycan_shapeshift:GetCooldown(level)
 		return final_cooldown
 	end
 
-	return self.BaseClass.GetCooldown(self, level)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 -- Transform modifier (stuns Lycan so he can't do anything but channel his transformation)
-modifier_imba_shapeshift_transform_stun = class({})
+modifier_imba_shapeshift_transform_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shapeshift_transform_stun:CheckState()
 	local state = { [MODIFIER_STATE_STUNNED] = true }
@@ -1323,7 +1323,7 @@ function modifier_imba_shapeshift_transform_stun:IsHidden()
 end
 
 -- Transformation buff (changes model to wolf)
-modifier_imba_shapeshift_transform = class({})
+modifier_imba_shapeshift_transform = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shapeshift_transform:DeclareFunctions()
 	local decFuncs = { MODIFIER_PROPERTY_MODEL_CHANGE }
@@ -1379,7 +1379,7 @@ function modifier_imba_shapeshift_transform:IsDebuff()
 end
 
 -- Speed/crit aura
-modifier_imba_shapeshift_aura = class({})
+modifier_imba_shapeshift_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shapeshift_aura:OnCreated()
 	if IsServer() then
@@ -1442,7 +1442,7 @@ function modifier_imba_shapeshift_aura:GetAuraEntityReject(target)
 end
 
 -- Speed/crit modifier
-modifier_imba_shapeshift = class({})
+modifier_imba_shapeshift = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shapeshift:OnCreated()
 	-- Ability properties
@@ -1467,7 +1467,7 @@ function modifier_imba_shapeshift:OnCreated()
 end
 
 -- certain crit buff
-modifier_imba_shapeshift_certain_crit = class({})
+modifier_imba_shapeshift_certain_crit = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shapeshift_certain_crit:IsHidden()
 	return false
@@ -1489,7 +1489,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_lycan_wolfsbane = class({})
+imba_lycan_wolfsbane = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_wolfsbane_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_wolves", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_lycan", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
@@ -1521,7 +1521,7 @@ function imba_lycan_wolfsbane:OnUpgrade()
 end
 
 -- Wolfsbane's aura
-modifier_imba_wolfsbane_aura = class({})
+modifier_imba_wolfsbane_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wolfsbane_aura:OnCreated()
 	self.caster = self:GetCaster()
@@ -1620,7 +1620,7 @@ function modifier_imba_wolfsbane_aura:GetAuraEntityReject(target)
 end
 
 -- Wolfsbane modifier (wolves or anyone if Lycan holds a scepter)
-modifier_imba_wolfsbane_wolves = class({})
+modifier_imba_wolfsbane_wolves = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wolfsbane_wolves:OnCreated()
 	-- Ability properties
@@ -1676,7 +1676,7 @@ function modifier_imba_wolfsbane_wolves:GetModifierPreAttack_BonusDamage()
 end
 
 -- Wolfsbane modifier (lycan)
-modifier_imba_wolfsbane_lycan = class({})
+modifier_imba_wolfsbane_lycan = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wolfsbane_lycan:OnCreated()
 	-- Ability properties
@@ -1820,7 +1820,7 @@ function modifier_imba_wolfsbane_lycan:OnTooltip()
 end
 
 --Lycan wolfsbane prevent modifier
-modifier_imba_wolfsbane_lycan_prevent = class({})
+modifier_imba_wolfsbane_lycan_prevent = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wolfsbane_lycan_prevent:IsHidden()
 	return false
@@ -1835,7 +1835,7 @@ function modifier_imba_wolfsbane_lycan_prevent:IsDebuff()
 end
 
 --- #8 TALENT: Modifier
-modifier_imba_wolfsbane_talent = modifier_imba_wolfsbane_talent or class({})
+modifier_imba_wolfsbane_talent = modifier_imba_wolfsbane_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_wolfsbane_talent:IsHidden() return false end
@@ -1881,7 +1881,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_summoned_wolf_wicked_crunch = class({})
+imba_summoned_wolf_wicked_crunch = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_debuff", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_damage", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
@@ -1895,7 +1895,7 @@ function imba_summoned_wolf_wicked_crunch:GetIntrinsicModifierName()
 end
 
 -- Wolf attack modifier
-modifier_imba_summoned_wolf_wicked_crunch = class({})
+modifier_imba_summoned_wolf_wicked_crunch = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_summoned_wolf_wicked_crunch:OnCreated()
 	if IsServer() then
@@ -2000,7 +2000,7 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded(keys)
 end
 
 -- Crunch debuff
-modifier_imba_summoned_wolf_wicked_crunch_debuff = class({})
+modifier_imba_summoned_wolf_wicked_crunch_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnCreated(params)
 	if IsServer() then
@@ -2161,7 +2161,7 @@ function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetModifierProvidesFOW
 end
 
 --- BURST DAMAGE DEBUFF
-modifier_imba_summoned_wolf_wicked_crunch_damage = modifier_imba_summoned_wolf_wicked_crunch_damage or class({})
+modifier_imba_summoned_wolf_wicked_crunch_damage = modifier_imba_summoned_wolf_wicked_crunch_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_summoned_wolf_wicked_crunch_damage:IsDebuff() return true end
@@ -2288,7 +2288,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 ---------------------------------------------------
-imba_summoned_wolf_hunter_instincts = class({})
+imba_summoned_wolf_hunter_instincts = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_hunter_instincts:GetAbilityTextureName()
@@ -2300,7 +2300,7 @@ function imba_summoned_wolf_hunter_instincts:GetIntrinsicModifierName()
 end
 
 -- Hunter instincts buff
-modifier_imba_summoned_wolf_hunter_instincts = class({})
+modifier_imba_summoned_wolf_hunter_instincts = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_summoned_wolf_hunter_instincts:OnCreated()
 	-- Ability properties
@@ -2350,7 +2350,7 @@ end
 ---------------------------------------------------
 
 
-imba_summoned_wolf_invisibility = class({})
+imba_summoned_wolf_invisibility = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_summoned_wolf_invisibility_fade", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_summoned_wolf_invisibility", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
@@ -2372,7 +2372,7 @@ function imba_summoned_wolf_invisibility:OnUpgrade()
 end
 
 -- Invisibility fade buff
-modifier_imba_summoned_wolf_invisibility_fade = class({})
+modifier_imba_summoned_wolf_invisibility_fade = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_summoned_wolf_invisibility_fade:IsDebuff()
 	return false
@@ -2414,7 +2414,7 @@ function modifier_imba_summoned_wolf_invisibility_fade:OnAttackFinished(keys)
 end
 
 -- Actual invisibility buff
-modifier_imba_summoned_wolf_invisibility = class({})
+modifier_imba_summoned_wolf_invisibility = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_summoned_wolf_invisibility:OnCreated()
 	-- Ability properties
@@ -2457,7 +2457,7 @@ end
 -------------------------------------------------------------
 ------    #3 TALENT: Alpha Wolf's Packleader aura    -------
 -------------------------------------------------------------
-imba_summoned_wolf_pack_leader = imba_summoned_wolf_pack_leader or class({})
+imba_summoned_wolf_pack_leader = imba_summoned_wolf_pack_leader or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_talent_wolf_packleader_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_talent_wolf_packleader", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
@@ -2465,7 +2465,7 @@ function imba_summoned_wolf_pack_leader:GetIntrinsicModifierName()
 	return "modifier_imba_talent_wolf_packleader_aura"
 end
 
-modifier_imba_talent_wolf_packleader_aura = modifier_imba_talent_wolf_packleader_aura or class({})
+modifier_imba_talent_wolf_packleader_aura = modifier_imba_talent_wolf_packleader_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_talent_wolf_packleader_aura:IsAura() return true end
@@ -2507,7 +2507,7 @@ function modifier_imba_talent_wolf_packleader_aura:GetModifierAura()
 	return "modifier_imba_talent_wolf_packleader"
 end
 
-modifier_imba_talent_wolf_packleader = modifier_imba_talent_wolf_packleader or class({})
+modifier_imba_talent_wolf_packleader = modifier_imba_talent_wolf_packleader or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_talent_wolf_packleader:IsDebuff() return false end
@@ -2539,7 +2539,7 @@ function modifier_imba_talent_wolf_packleader:GetModifierBaseDamageOutgoing_Perc
 end
 
 -- Talent #7: Shapeshift Move Speed Cap Increase (need this modifier for client-side viewing)
-modifier_special_bonus_imba_lycan_7 = class({})
+modifier_special_bonus_imba_lycan_7 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lycan_7:IsHidden() return true end
 
@@ -2549,7 +2549,7 @@ function modifier_special_bonus_imba_lycan_7:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_lycan_10", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lycan_10 = modifier_special_bonus_imba_lycan_10 or class({})
+modifier_special_bonus_imba_lycan_10 = modifier_special_bonus_imba_lycan_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lycan_10:IsHidden() return true end
 
@@ -2582,12 +2582,12 @@ LinkLuaModifier("modifier_special_bonus_imba_lycan_2", "components/abilities/her
 LinkLuaModifier("modifier_special_bonus_imba_lycan_6", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lycan_9", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lycan_5 = modifier_special_bonus_imba_lycan_5 or class({})
-modifier_special_bonus_imba_lycan_3 = modifier_special_bonus_imba_lycan_3 or class({})
-modifier_special_bonus_imba_lycan_1 = modifier_special_bonus_imba_lycan_1 or class({})
-modifier_special_bonus_imba_lycan_2 = modifier_special_bonus_imba_lycan_2 or class({})
-modifier_special_bonus_imba_lycan_6 = modifier_special_bonus_imba_lycan_6 or class({})
-modifier_special_bonus_imba_lycan_9 = modifier_special_bonus_imba_lycan_9 or class({})
+modifier_special_bonus_imba_lycan_5 = modifier_special_bonus_imba_lycan_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lycan_3 = modifier_special_bonus_imba_lycan_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lycan_1 = modifier_special_bonus_imba_lycan_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lycan_2 = modifier_special_bonus_imba_lycan_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lycan_6 = modifier_special_bonus_imba_lycan_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lycan_9 = modifier_special_bonus_imba_lycan_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lycan_5:IsHidden() return true end
 

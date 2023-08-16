@@ -10,7 +10,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_bloodrage_buff_stats"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_bloodrage_blood_frenzy"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
+imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bloodseeker_bloodrage:GetAbilityTextureName()
 	return "bloodseeker_bloodrage"
@@ -32,7 +32,7 @@ function imba_bloodseeker_bloodrage:OnSpellStart()
 	EmitSoundOn("hero_bloodseeker.bloodRage", hTarget)
 end
 
-modifier_imba_bloodrage_buff_stats = modifier_imba_bloodrage_buff_stats or class({})
+modifier_imba_bloodrage_buff_stats = modifier_imba_bloodrage_buff_stats or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_bloodrage_buff_stats:GetEffectName()
 	return "particles/hero/bloodseeker/bloodseeker_boiling_blood.vpcf"
@@ -64,14 +64,14 @@ function modifier_imba_bloodrage_buff_stats:OnCreated()
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
 		if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
 			self.damage_increase_incoming_pct = self.damage_increase_incoming_pct -
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			self.damage_increase_outgoing_pct = self.damage_increase_outgoing_pct +
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 		else
 			self.damage_increase_incoming_pct = self.damage_increase_incoming_pct +
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			self.damage_increase_outgoing_pct = self.damage_increase_outgoing_pct -
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 		end
 	end
 
@@ -98,8 +98,13 @@ end
 
 function modifier_imba_bloodrage_buff_stats:OnIntervalThink()
 	for _, target in pairs(FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)) do
-		ApplyDamage({ victim = target, attacker = self:GetCaster(), damage = self.damage, damage_type = self.damage_type,
-			ability = self:GetAbility() })
+		ApplyDamage({
+			victim = target,
+			attacker = self:GetCaster(),
+			damage = self.damage,
+			damage_type = self.damage_type,
+			ability = self:GetAbility()
+		})
 	end
 end
 
@@ -123,9 +128,9 @@ function modifier_imba_bloodrage_buff_stats:GetModifierTotalDamageOutgoing_Perce
 
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
 			local ampPct = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value") /
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2")                                                                                       -- find amp per pct
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 			local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) *
-			100                                                                                                                                                                  -- missing hp in pct
+				100                                                                -- missing hp in pct
 			outamp = outamp + ampPct * hpPct
 		end
 		return outamp
@@ -142,9 +147,9 @@ function modifier_imba_bloodrage_buff_stats:GetModifierIncomingDamage_Percentage
 		end
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
 			local ampPct = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value") /
-			self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2")                                                                                       -- find amp per pct
+				self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 			local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) *
-			100                                                                                                                                                                  -- missing hp in pct
+				100                                                                -- missing hp in pct
 			inamp = inamp + ampPct * hpPct
 		end
 		return inamp
@@ -164,7 +169,7 @@ function modifier_imba_bloodrage_buff_stats:OnDeath(params)
 			ParticleManager:ReleaseParticleIndex(healFX)
 		elseif params.unit:IsRealHero() and (self:GetParent():GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= self.health_bonus_aoe then
 			local heal = params.unit:GetMaxHealth() * (self.health_bonus_pct / 100) *
-			(self.health_bonus_share_percent * 0.01)
+				(self.health_bonus_share_percent * 0.01)
 
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), heal, nil)
 			self:GetParent():Heal(heal, self:GetAbility())
@@ -188,7 +193,7 @@ function modifier_imba_bloodrage_buff_stats:OnDeath(params)
 end
 
 -- #7 Talent: Blood Frenzy bonuses
-modifier_imba_bloodrage_blood_frenzy = modifier_imba_bloodrage_blood_frenzy or class({})
+modifier_imba_bloodrage_blood_frenzy = modifier_imba_bloodrage_blood_frenzy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_bloodrage_blood_frenzy:OnCreated()
 	-- Ability properties
@@ -201,7 +206,7 @@ function modifier_imba_bloodrage_blood_frenzy:OnCreated()
 
 	-- Apply Blood Frenzy's effect
 	local particle_frenzy_fx = ParticleManager:CreateParticle(self.particle_frenzy, PATTACH_ABSORIGIN_FOLLOW, self
-	.parent)
+		.parent)
 	ParticleManager:SetParticleControl(particle_frenzy_fx, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(particle_frenzy_fx, false, false, -1, false, false)
 
@@ -235,7 +240,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_blood_bath_debuff_silence"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_special_bonus_imba_bloodseeker_9"] = LUA_MODIFIER_MOTION_NONE
 })
-imba_bloodseeker_blood_bath = imba_bloodseeker_blood_bath or class({})
+imba_bloodseeker_blood_bath = imba_bloodseeker_blood_bath or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bloodseeker_blood_bath:GetAbilityTextureName()
 	return "bloodseeker_blood_bath"
@@ -256,7 +261,7 @@ function imba_bloodseeker_blood_bath:GetCooldown(level)
 	if self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_9") then
 		talent_reduction = self:GetSpecialValueFor("cooldown_reduction_talent")
 	end
-	return self.BaseClass.GetCooldown(self, level) - talent_reduction
+	return self:GetRightfulKV("AbilityCooldown") - talent_reduction
 end
 
 -- Needed for the CD reduction talent
@@ -305,12 +310,12 @@ end
 
 function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 	AddFOWViewer(caster:GetTeamNumber(), vPos, self:GetSpecialValueFor("vision_aoe"),
-		self:GetSpecialValueFor("vision_duration"), true)                                                                            --gives ground vision
+		self:GetSpecialValueFor("vision_duration"), true) --gives ground vision
 	local radius = self:GetSpecialValueFor("radius")
 	EmitSoundOn("Hero_Bloodseeker.BloodRite.Cast", caster)
 	EmitSoundOnLocationWithCaster(vPos, "Hero_Bloodseeker.BloodRite", caster)
 	local bloodriteFX = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(bloodriteFX, 0, vPos)
 	ParticleManager:SetParticleControl(bloodriteFX, 1, Vector(radius, radius, radius))
 	ParticleManager:SetParticleControl(bloodriteFX, 3, vPos)
@@ -355,8 +360,13 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 				target:RemoveModifierByName("modifier_knockback")
 				target:AddNewModifier(caster, self, "modifier_knockback", knockback)
 			end
-			ApplyDamage({ victim = target, attacker = self:GetCaster(), damage = damage,
-				damage_type = self:GetAbilityDamageType(), ability = self })
+			ApplyDamage({
+				victim = target,
+				attacker = self:GetCaster(),
+				damage = damage,
+				damage_type = self:GetAbilityDamageType(),
+				ability = self
+			})
 		end
 	end)
 end
@@ -371,7 +381,7 @@ function imba_bloodseeker_blood_bath:Orthogonal(vec, clockwise)
 	return vector
 end
 
-modifier_imba_blood_bath_debuff_silence = modifier_imba_blood_bath_debuff_silence or class({})
+modifier_imba_blood_bath_debuff_silence = modifier_imba_blood_bath_debuff_silence or class(VANILLA_ABILITIES_BASECLASS)
 
 if IsServer() then
 	function modifier_imba_blood_bath_debuff_silence:OnCreated()
@@ -427,7 +437,7 @@ function modifier_imba_blood_bath_debuff_silence:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-modifier_imba_blood_bath_buff_stats = modifier_imba_blood_bath_buff_stats or class({})
+modifier_imba_blood_bath_buff_stats = modifier_imba_blood_bath_buff_stats or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_blood_bath_buff_stats:IsHidden()
 	return false
@@ -471,7 +481,7 @@ end
 
 -- Blood Rite's CD reduction talent (-6 seconds default)
 -- Separate modifier is needed to pass relevant information for client-side viewing
-modifier_special_bonus_imba_bloodseeker_9 = class({})
+modifier_special_bonus_imba_bloodseeker_9 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_bloodseeker_9:IsHidden() return true end
 
@@ -491,7 +501,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_thirst_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_thirst_haste"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_bloodseeker_thirst = imba_bloodseeker_thirst or class({})
+imba_bloodseeker_thirst = imba_bloodseeker_thirst or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bloodseeker_thirst:GetAbilityTextureName()
 	return "bloodseeker_thirst"
@@ -501,7 +511,7 @@ function imba_bloodseeker_thirst:GetIntrinsicModifierName()
 	return "modifier_imba_thirst_passive"
 end
 
-modifier_imba_thirst_passive = modifier_imba_thirst_passive or class({})
+modifier_imba_thirst_passive = modifier_imba_thirst_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_thirst_passive:IsHidden()
 	return true
@@ -639,7 +649,7 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 	end
 end
 
-modifier_imba_thirst_haste = modifier_imba_thirst_haste or class({})
+modifier_imba_thirst_haste = modifier_imba_thirst_haste or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_thirst_haste:OnCreated()
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed_atk")
@@ -675,7 +685,7 @@ function modifier_imba_thirst_haste:IsHidden()
 	return true
 end
 
-modifier_imba_thirst_debuff_vision = modifier_imba_thirst_debuff_vision or class({})
+modifier_imba_thirst_debuff_vision = modifier_imba_thirst_debuff_vision or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_thirst_debuff_vision:OnCreated()
 	self.visibility_threshold_pct = self:GetAbility():GetSpecialValueFor("visibility_threshold_pct")
@@ -729,10 +739,10 @@ LinkLuaModifier("modifier_bloodseeker_thirst_v2_speed", "components/abilities/he
 LinkLuaModifier("modifier_bloodseeker_thirst_v2_vision", "components/abilities/heroes/hero_bloodseeker",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_bloodseeker_thirst_v2            = imba_bloodseeker_thirst_v2 or class({})
-modifier_bloodseeker_thirst_v2        = modifier_bloodseeker_thirst_v2 or class({})
-modifier_bloodseeker_thirst_v2_speed  = modifier_bloodseeker_thirst_v2_speed or class({})
-modifier_bloodseeker_thirst_v2_vision = modifier_bloodseeker_thirst_v2_vision or class({})
+imba_bloodseeker_thirst_v2            = imba_bloodseeker_thirst_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_bloodseeker_thirst_v2        = modifier_bloodseeker_thirst_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_bloodseeker_thirst_v2_speed  = modifier_bloodseeker_thirst_v2_speed or class(VANILLA_ABILITIES_BASECLASS)
+modifier_bloodseeker_thirst_v2_vision = modifier_bloodseeker_thirst_v2_vision or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------
 -- IMBA_BLOODSEEKER_THIRST_V2 --
@@ -762,7 +772,7 @@ function modifier_bloodseeker_thirst_v2:OnIntervalThink()
 		for _, enemy in pairs(FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_DEAD, FIND_ANY_ORDER, false)) do
 			if (enemy:IsRealHero() or enemy:IsClone() or enemy:IsTempestDouble()) and enemy:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("min_bonus_pct") and (enemy:IsAlive() or enemy:HasModifier("modifier_bloodseeker_thirst_v2_vision")) then
 				self.health_percent_sum = self.health_percent_sum +
-				(self:GetAbility():GetSpecialValueFor("min_bonus_pct") - math.max(enemy:GetHealthPercent(), self:GetAbility():GetSpecialValueFor("max_bonus_pct")))
+					(self:GetAbility():GetSpecialValueFor("min_bonus_pct") - math.max(enemy:GetHealthPercent(), self:GetAbility():GetSpecialValueFor("max_bonus_pct")))
 
 				if enemy:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("visibility_threshold_pct") then
 					self.max_thirst_enemies = self.max_thirst_enemies + 1
@@ -797,12 +807,12 @@ end
 
 function modifier_bloodseeker_thirst_v2:GetModifierMoveSpeedBonus_Percentage()
 	return (self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self:GetAbility():GetSpecialValueFor("min_bonus_pct") - self:GetAbility():GetSpecialValueFor("max_bonus_pct"))) *
-	self:GetStackCount() / 100
+		self:GetStackCount() / 100
 end
 
 function modifier_bloodseeker_thirst_v2:GetModifierAttackSpeedBonus_Constant()
 	return (self:GetAbility():GetSpecialValueFor("bonus_attack_speed") / (self:GetAbility():GetSpecialValueFor("min_bonus_pct") - self:GetAbility():GetSpecialValueFor("max_bonus_pct"))) *
-	self:GetStackCount() / 100
+		self:GetStackCount() / 100
 end
 
 ------------------------------------------
@@ -879,7 +889,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_rupture_charges"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
+imba_bloodseeker_rupture = imba_bloodseeker_rupture or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bloodseeker_rupture:GetAbilityTextureName()
 	return "bloodseeker_rupture"
@@ -887,7 +897,7 @@ end
 
 function imba_bloodseeker_rupture:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) +
-	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_rupture_cast_range")
+		self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_rupture_cast_range")
 end
 
 function imba_bloodseeker_rupture:GetCooldown(nLevel)
@@ -896,7 +906,7 @@ function imba_bloodseeker_rupture:GetCooldown(nLevel)
 		return 0
 	end
 
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_bloodseeker_rupture:GetIntrinsicModifierName()
@@ -937,7 +947,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 			damage_type = DAMAGE_TYPE_PURE,
 			ability = self,
 			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS +
-			DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+				DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 		}
 
 		ApplyDamage(damage_table)
@@ -962,7 +972,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	self.from_blood_rite = false
 end
 
-modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
+modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class(VANILLA_ABILITIES_BASECLASS)
 -- Rupture is undispellable.
 function modifier_imba_rupture_debuff_dot:IsPurgable()
 	return false
@@ -975,7 +985,7 @@ if IsServer() then
 		self.parent = self:GetParent()
 
 		self.movedamage = self:GetParent():GetHealth() * self.ability:GetSpecialValueFor("movement_damage_pct") / 100 /
-		100
+			100
 		self.attackdamage = self.ability:GetSpecialValueFor("attack_damage")
 		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
@@ -996,9 +1006,14 @@ if IsServer() then
 
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
-				ApplyDamage({ victim = self.parent, attacker = self.caster, damage = move_damage,
-					damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NONE,
-					ability = self.ability })
+				ApplyDamage({
+					victim = self.parent,
+					attacker = self.caster,
+					damage = move_damage,
+					damage_type = self.ability:GetAbilityDamageType(),
+					damage_flags = DOTA_DAMAGE_FLAG_NONE,
+					ability = self.ability
+				})
 				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 					self.caster:Heal(move_damage, self.ability)
 					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
@@ -1019,9 +1034,14 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
 		if params.unit == self.parent then
-			ApplyDamage({ victim = self.parent, attacker = self.caster, damage = self.castdamage,
-				damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
-				ability = self.ability })
+			ApplyDamage({
+				victim = self.parent,
+				attacker = self.caster,
+				damage = self.castdamage,
+				damage_type = self.ability:GetAbilityDamageType(),
+				damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
+				ability = self.ability
+			})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
@@ -1033,9 +1053,14 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
 		if params.attacker == self.parent then
-			ApplyDamage({ victim = self.parent, attacker = self.caster, damage = self.attackdamage,
-				damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
-				ability = self.ability })
+			ApplyDamage({
+				victim = self.parent,
+				attacker = self.caster,
+				damage = self.attackdamage,
+				damage_type = self.ability:GetAbilityDamageType(),
+				damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
+				ability = self.ability
+			})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 				self.caster:Heal(self.castdamage, self.ability)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf",
@@ -1056,7 +1081,7 @@ function modifier_imba_rupture_debuff_dot:GetEffectName()
 end
 
 -- Rupture charges modifier
-modifier_imba_rupture_charges = modifier_imba_rupture_charges or class({})
+modifier_imba_rupture_charges = modifier_imba_rupture_charges or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rupture_charges:IsHidden()
 	if self:GetCaster():HasScepter() then
@@ -1230,11 +1255,11 @@ LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "components/abiliti
 LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_rupture_cast_range",
 	"components/abilities/heroes/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_bloodseeker_1                  = modifier_special_bonus_imba_bloodseeker_1 or class({})
-modifier_special_bonus_imba_bloodseeker_5                  = modifier_special_bonus_imba_bloodseeker_5 or class({})
-modifier_special_bonus_imba_bloodseeker_7                  = modifier_special_bonus_imba_bloodseeker_7 or class({})
+modifier_special_bonus_imba_bloodseeker_1                  = modifier_special_bonus_imba_bloodseeker_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bloodseeker_5                  = modifier_special_bonus_imba_bloodseeker_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bloodseeker_7                  = modifier_special_bonus_imba_bloodseeker_7 or class(VANILLA_ABILITIES_BASECLASS)
 modifier_special_bonus_imba_bloodseeker_rupture_cast_range = modifier_special_bonus_imba_bloodseeker_rupture_cast_range or
-class({})
+	class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_bloodseeker_1:IsHidden() return true end
 

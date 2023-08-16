@@ -94,7 +94,7 @@ function imba_alchemist_acid_spray:OnSpellStart()
 	caster:EmitSound("Hero_Alchemist.AcidSpray")
 end
 
-modifier_imba_acid_spray_thinker = modifier_imba_acid_spray_thinker or class({})
+modifier_imba_acid_spray_thinker = modifier_imba_acid_spray_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_acid_spray_thinker:IsAura()
 	return true
@@ -222,7 +222,7 @@ function modifier_imba_acid_spray_thinker:OnDestroy(keys)
 	ParticleManager:ReleaseParticleIndex(self.particle)
 end
 
-modifier_imba_acid_spray_handler = modifier_imba_acid_spray_handler or class({})
+modifier_imba_acid_spray_handler = modifier_imba_acid_spray_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_acid_spray_handler:IsHidden()
 	return true
@@ -335,7 +335,7 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 	end
 end
 
-modifier_imba_acid_spray_debuff_dot = modifier_imba_acid_spray_debuff_dot or class({})
+modifier_imba_acid_spray_debuff_dot = modifier_imba_acid_spray_debuff_dot or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_acid_spray_debuff_dot:IsDebuff()
 	return true
@@ -831,7 +831,7 @@ function imba_alchemist_unstable_concoction:GetAOERadius()
 	return radius
 end
 
-modifier_imba_unstable_concoction_handler = modifier_imba_unstable_concoction_handler or class({})
+modifier_imba_unstable_concoction_handler = modifier_imba_unstable_concoction_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_unstable_concoction_handler:IsPurgable()
 	return false
@@ -957,7 +957,7 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 	end
 end
 
-modifier_imba_unstable_concoction_stunned = modifier_imba_unstable_concoction_stunned or class({})
+modifier_imba_unstable_concoction_stunned = modifier_imba_unstable_concoction_stunned or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_unstable_concoction_stunned:CheckState()
 	return {
 		[MODIFIER_STATE_STUNNED] = true,
@@ -1137,7 +1137,7 @@ function imba_alchemist_goblins_greed:OnSpellStart()
 end
 
 -- Periodic gold modifier
-modifier_imba_greevil_gold = modifier_imba_greevil_gold or class({})
+modifier_imba_greevil_gold = modifier_imba_greevil_gold or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_greevil_gold:OnCreated()
 	if IsServer() then
@@ -1190,7 +1190,7 @@ function modifier_imba_greevil_gold:IsDebuff()
 	return false
 end
 
-modifier_imba_goblins_greed_passive = modifier_imba_goblins_greed_passive or class({})
+modifier_imba_goblins_greed_passive = modifier_imba_goblins_greed_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_goblins_greed_passive:RemoveOnDeath()
 	return false
@@ -1304,7 +1304,7 @@ function imba_alchemist_greevils_greed:GetIntrinsicModifierName()
 	return "modifier_imba_greevils_greed_handler"
 end
 
-modifier_imba_greevils_greed_handler = modifier_imba_greevils_greed_handler or class({})
+modifier_imba_greevils_greed_handler = modifier_imba_greevils_greed_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_greevils_greed_handler:OnCreated()
 	if not IsServer() then return end
@@ -1450,7 +1450,7 @@ function imba_alchemist_chemical_rage:OnSpellStart()
 	caster:EmitSound("Hero_Alchemist.ChemicalRage.Cast")
 end
 
-modifier_imba_chemical_rage_handler = modifier_imba_chemical_rage_handler or class({})
+modifier_imba_chemical_rage_handler = modifier_imba_chemical_rage_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chemical_rage_handler:IsHidden()
 	return true
@@ -1503,7 +1503,7 @@ function modifier_imba_chemical_rage_handler:OnDestroy()
 	end
 end
 
-modifier_imba_chemical_rage_buff_haste = modifier_imba_chemical_rage_buff_haste or class({})
+modifier_imba_chemical_rage_buff_haste = modifier_imba_chemical_rage_buff_haste or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chemical_rage_buff_haste:AllowIllusionDuplicate()
 	return true
@@ -1638,7 +1638,7 @@ function modifier_imba_chemical_rage_buff_haste:HeroEffectPriority()
 end
 
 -- Chemical Rage Acid aura
-modifier_imba_chemical_rage_aura = modifier_imba_chemical_rage_aura or class({})
+modifier_imba_chemical_rage_aura = modifier_imba_chemical_rage_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chemical_rage_aura:IsDebuff()
 	return true
@@ -1678,7 +1678,7 @@ function modifier_imba_chemical_rage_aura:OnIntervalThink()
 end
 
 -- #8 Talent: Chemical Rage gives a bonus damage aura equal to greed stacks
-modifier_imba_chemical_rage_aura_talent = modifier_imba_chemical_rage_aura_talent or class({})
+modifier_imba_chemical_rage_aura_talent = modifier_imba_chemical_rage_aura_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chemical_rage_aura_talent:IsHidden()
 	return true
@@ -1708,7 +1708,7 @@ function modifier_imba_chemical_rage_aura_talent:GetModifierAura()
 	return "modifier_imba_chemical_rage_aura_buff"
 end
 
-modifier_imba_chemical_rage_aura_buff = modifier_imba_chemical_rage_aura_buff or class({})
+modifier_imba_chemical_rage_aura_buff = modifier_imba_chemical_rage_aura_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chemical_rage_aura_buff:OnCreated()
 	if not IsServer() then
@@ -1750,7 +1750,7 @@ end
 -- CHEMICAL RAGE SCEPTER HANDLER MODIFIER --
 --------------------------------------------
 
--- modifier_imba_chemical_rage_scepter_handler = class({})
+-- modifier_imba_chemical_rage_scepter_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_chemical_rage_scepter_handler:IsPurgable()	return false end
 
@@ -1799,7 +1799,7 @@ MergeTables(
 		["modifier_mammonite_passive"] = LUA_MODIFIER_MOTION_NONE
 	}
 )
-imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
+imba_alchemist_mammonite = imba_alchemist_mammonite or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_alchemist_mammonite:GetAbilityTextureName()
 	return "alchemist_mammonite"
@@ -1818,7 +1818,7 @@ function imba_alchemist_mammonite:GetIntrinsicModifierName()
 end
 
 -- Scepter gold attacks modifier
-modifier_mammonite_passive = modifier_mammonite_passive or class({})
+modifier_mammonite_passive = modifier_mammonite_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_mammonite_passive:IsHidden()
 	return true
@@ -1942,14 +1942,14 @@ LinkLuaModifier(
 	LUA_MODIFIER_MOTION_NONE
 )
 
-modifier_special_bonus_imba_alchemist_1 = modifier_special_bonus_imba_alchemist_1 or class({})
-modifier_special_bonus_imba_alchemist_2 = modifier_special_bonus_imba_alchemist_2 or class({})
-modifier_special_bonus_imba_alchemist_3 = modifier_special_bonus_imba_alchemist_3 or class({})
-modifier_special_bonus_imba_alchemist_4 = modifier_special_bonus_imba_alchemist_4 or class({})
-modifier_special_bonus_imba_alchemist_5 = modifier_special_bonus_imba_alchemist_5 or class({})
-modifier_special_bonus_imba_alchemist_6 = modifier_special_bonus_imba_alchemist_6 or class({})
-modifier_special_bonus_imba_alchemist_7 = modifier_special_bonus_imba_alchemist_7 or class({})
-modifier_special_bonus_imba_alchemist_8 = modifier_special_bonus_imba_alchemist_8 or class({})
+modifier_special_bonus_imba_alchemist_1 = modifier_special_bonus_imba_alchemist_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_2 = modifier_special_bonus_imba_alchemist_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_3 = modifier_special_bonus_imba_alchemist_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_4 = modifier_special_bonus_imba_alchemist_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_5 = modifier_special_bonus_imba_alchemist_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_6 = modifier_special_bonus_imba_alchemist_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_7 = modifier_special_bonus_imba_alchemist_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_alchemist_8 = modifier_special_bonus_imba_alchemist_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_alchemist_1:IsHidden()
 	return true

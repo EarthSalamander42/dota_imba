@@ -21,7 +21,7 @@
 --          COLD FRONT           --
 -----------------------------------
 
-imba_lich_cold_front = class({})
+imba_lich_cold_front = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_cold_front_passive", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_cold_front_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_cold_front_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
@@ -39,7 +39,7 @@ function imba_lich_cold_front:GetIntrinsicModifierName()
 end
 
 -- Cold Front attack modifier
-modifier_imba_cold_front_passive = class({})
+modifier_imba_cold_front_passive = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_cold_front_passive:OnCreated()
 	if IsServer() then
@@ -127,7 +127,7 @@ function IncreaseStacksColdFront(caster, target, stacks)
 end
 
 -- Cold Front debuff
-modifier_imba_cold_front_debuff = class({})
+modifier_imba_cold_front_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_cold_front_debuff:IsHidden() return false end
 
@@ -192,7 +192,7 @@ function modifier_imba_cold_front_debuff:OnStackCountChanged()
 end
 
 -- Cold Front Freeze debuff
-modifier_imba_cold_front_freeze = class({})
+modifier_imba_cold_front_freeze = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_cold_front_freeze:IsHidden() return false end
 
@@ -224,7 +224,7 @@ end
 --          FROST NOVA           --
 -----------------------------------
 
-imba_lich_frost_nova = class({})
+imba_lich_frost_nova = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_frost_nova_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_nova_handler", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
@@ -250,10 +250,10 @@ end
 
 function imba_lich_frost_nova:GetCooldown(level)
 	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") and self:GetCaster():GetModifierStackCount("modifier_imba_frost_nova_handler", self:GetCaster()) == 1 then
-		return self.BaseClass.GetCooldown(self, level) *
-		self:GetCaster():FindTalentValue("special_bonus_imba_lich_11", "cooldown_mult")
+		return self:GetRightfulKV("AbilityCooldown") *
+			self:GetCaster():FindTalentValue("special_bonus_imba_lich_11", "cooldown_mult")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -522,8 +522,8 @@ function FrostNova(caster, ability, target, cold_front)
 
 					-- Might save this for a future update (makes a circle instead of a line)
 					local location = target_loc +
-					Vector(math.cos(math.rad((angle * j) + deviation + chaos_variable)),
-						math.sin(math.rad((angle * j) + deviation + chaos_variable))) * (i * ring_distance)
+						Vector(math.cos(math.rad((angle * j) + deviation + chaos_variable)),
+							math.sin(math.rad((angle * j) + deviation + chaos_variable))) * (i * ring_distance)
 
 					location.z = GetGroundHeight(location, nil)
 
@@ -587,7 +587,7 @@ function FrostNova(caster, ability, target, cold_front)
 end
 
 -- Slow debuff
-modifier_imba_frost_nova_debuff = class({})
+modifier_imba_frost_nova_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_nova_debuff:OnCreated()
 	-- Ability properties
@@ -628,7 +628,7 @@ end
 -- STROKE OF FATE EXTEND MODIFIER --
 ------------------------------------
 
-modifier_imba_frost_nova_handler = modifier_imba_frost_nova_handler or class({})
+modifier_imba_frost_nova_handler = modifier_imba_frost_nova_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_nova_handler:IsHidden() return true end
 
@@ -657,7 +657,7 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_lich_11", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lich_11 = modifier_special_bonus_imba_lich_11 or class({})
+modifier_special_bonus_imba_lich_11 = modifier_special_bonus_imba_lich_11 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lich_11:IsHidden() return true end
 
@@ -676,7 +676,7 @@ end
 --          FROST ARMOR          --
 -----------------------------------
 
-imba_lich_frost_armor = class({})
+imba_lich_frost_armor = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_frost_armor_buff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
@@ -773,7 +773,7 @@ end
 -- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
 LinkLuaModifier("modifier_special_bonus_imba_lich_5", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lich_5 = modifier_special_bonus_imba_lich_5 or class({})
+modifier_special_bonus_imba_lich_5 = modifier_special_bonus_imba_lich_5 or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_lich_5:IsHidden() return true end
 
 function modifier_special_bonus_imba_lich_5:IsPurgable() return false end
@@ -797,7 +797,7 @@ function modifier_special_bonus_imba_lich_5:OnIntervalThink()
 end
 
 -- Frost Armor buff
-modifier_imba_frost_armor_buff = class({})
+modifier_imba_frost_armor_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_armor_buff:OnCreated()
 	-- Ability properties
@@ -984,7 +984,7 @@ function modifier_imba_frost_armor_buff:GetModifierAura()
 end
 
 -- Freezing Point talent aura slow
-modifier_imba_frost_armor_freezing_point = modifier_imba_frost_armor_freezing_point or class({})
+modifier_imba_frost_armor_freezing_point = modifier_imba_frost_armor_freezing_point or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_armor_freezing_point:IsHidden() return false end
 
@@ -1012,7 +1012,7 @@ function modifier_imba_frost_armor_freezing_point:GetModifierAttackSpeedBonus_Co
 end
 
 -- Talent Modifier trigger
-modifier_special_bonus_imba_lich_8 = modifier_special_bonus_imba_lich_8 or class({})
+modifier_special_bonus_imba_lich_8 = modifier_special_bonus_imba_lich_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lich_8:OnCreated()
 	if IsServer() then
@@ -1026,7 +1026,7 @@ function modifier_special_bonus_imba_lich_8:OnCreated()
 end
 
 -- Frost debuff on attacker
-modifier_imba_frost_armor_debuff = class({})
+modifier_imba_frost_armor_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_armor_debuff:OnCreated()
 	-- Ability properties
@@ -1088,7 +1088,7 @@ function modifier_imba_frost_armor_debuff:OnStackCountChanged()
 end
 
 -- Freeze debuff
-modifier_imba_frost_armor_freeze = class({})
+modifier_imba_frost_armor_freeze = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_armor_freeze:OnCreated()
 	self.caster = self:GetCaster()
@@ -1117,7 +1117,7 @@ function modifier_imba_frost_armor_freeze:CheckState()
 end
 
 -- Auto cast thinker
-modifier_imba_frost_armor_auto_cast = class({})
+modifier_imba_frost_armor_auto_cast = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_frost_armor_auto_cast:OnCreated()
 	self.caster = self:GetCaster()
@@ -1199,7 +1199,7 @@ function modifier_imba_frost_armor_auto_cast:RemoveOnDeath() return false end
 --          SACRIFICE            --
 -----------------------------------
 
-imba_lich_dark_ritual = class({})
+imba_lich_dark_ritual = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_dark_ritual_creeps", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dark_ritual_allied_sacrifice", "components/abilities/heroes/hero_lich",
 	LUA_MODIFIER_MOTION_NONE)
@@ -1368,7 +1368,7 @@ function imba_lich_dark_ritual:OnSpellStart()
 end
 
 -- Allied creeps bonuses modifier
-modifier_imba_dark_ritual_creeps = class({})
+modifier_imba_dark_ritual_creeps = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dark_ritual_creeps:OnCreated()
 	-- Ability properties
@@ -1416,7 +1416,7 @@ function modifier_imba_dark_ritual_creeps:GetModifierPreAttack_BonusDamage()
 end
 
 -- Allied sacrificed creep hero bonuses
-modifier_imba_dark_ritual_allied_sacrifice = class({})
+modifier_imba_dark_ritual_allied_sacrifice = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dark_ritual_allied_sacrifice:OnCreated()
 	-- Ability properties
@@ -1448,7 +1448,7 @@ function modifier_imba_dark_ritual_allied_sacrifice:GetModifierIncomingDamage_Pe
 end
 
 -- Enemy sacrificed creep hero bonuses
-modifier_imba_dark_ritual_enemy_sacrifice = class({})
+modifier_imba_dark_ritual_enemy_sacrifice = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dark_ritual_enemy_sacrifice:OnCreated()
 	-- Ability properties
@@ -1489,7 +1489,7 @@ end
 --         CHAIN FROST           --
 -----------------------------------
 
-imba_lich_chain_frost = class({})
+imba_lich_chain_frost = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_chain_frost_slow", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "components/abilities/heroes/hero_lich",
 	LUA_MODIFIER_MOTION_NONE)
@@ -1565,8 +1565,12 @@ function imba_lich_chain_frost:LaunchProjectile(source, target)
 		bProvidesVision = true,
 		iVisionRadius = projectile_vision,
 		iVisionTeamNumber = caster:GetTeamNumber(),
-		ExtraData = { bounces_left = num_bounces, current_projectile_speed = projectile_base_speed,
-			main_chain_frost = true, counter = 0 }
+		ExtraData = {
+			bounces_left = num_bounces,
+			current_projectile_speed = projectile_base_speed,
+			main_chain_frost = true,
+			counter = 0
+		}
 	}
 
 	ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
@@ -1662,8 +1666,12 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 				bProvidesVision = true,
 				iVisionRadius = projectile_vision,
 				iVisionTeamNumber = caster:GetTeamNumber(),
-				ExtraData = { bounces_left = bounces_left, current_projectile_speed = projectile_speed,
-					main_chain_frost = true, counter = extradata.counter + 1 }
+				ExtraData = {
+					bounces_left = bounces_left,
+					current_projectile_speed = projectile_speed,
+					main_chain_frost = true,
+					counter = extradata.counter + 1
+				}
 			}
 
 			ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
@@ -1736,7 +1744,7 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 end
 
 -- Slow modifier
-modifier_imba_chain_frost_slow = class({})
+modifier_imba_chain_frost_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chain_frost_slow:OnCreated()
 	-- Ability properties
@@ -1770,7 +1778,7 @@ function modifier_imba_chain_frost_slow:GetModifierAttackSpeedBonus_Constant()
 end
 
 -- #6 Talent: Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
-modifier_imba_chain_frost_talent_buff = modifier_imba_chain_frost_talent_buff or class({})
+modifier_imba_chain_frost_talent_buff = modifier_imba_chain_frost_talent_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_chain_frost_talent_buff:IsHidden() return false end
 
@@ -1837,7 +1845,7 @@ end
 --			FROST SHIELD         --
 -----------------------------------
 
-imba_lich_frost_shield = class({})
+imba_lich_frost_shield = class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_lich_frost_shield", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lich_frost_shield_slow", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
@@ -1864,7 +1872,7 @@ end
 --		FROST SHIELD MODIFIER		--
 --------------------------------------
 
-modifier_imba_lich_frost_shield = class({})
+modifier_imba_lich_frost_shield = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lich_frost_shield:OnCreated()
 	-- Establish variables
@@ -1887,7 +1895,7 @@ function modifier_imba_lich_frost_shield:OnCreated()
 
 		if self.parent:IsBuilding() then
 			self.hp_regen = self.hp_regen *
-			(self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficiency") / 100)
+				(self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficiency") / 100)
 		end
 	end
 
@@ -1992,7 +2000,7 @@ end
 --		FROST SHIELD SLOW MODIFIER	--
 --------------------------------------
 
-modifier_imba_lich_frost_shield_slow = class({})
+modifier_imba_lich_frost_shield_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lich_frost_shield_slow:GetHeroEffectName()
 	return "particles/units/heroes/hero_lich/lich_ice_age_debuff.vpcf"
@@ -2024,7 +2032,7 @@ end
 --	FROST SHIELD HEALTH REGEN TALENT	--
 ------------------------------------------
 
-modifier_special_bonus_imba_lich_9 = class({})
+modifier_special_bonus_imba_lich_9 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lich_9:IsHidden() return true end
 
@@ -2042,7 +2050,7 @@ end
 --			SINISTER GAZE        --
 -----------------------------------
 
-imba_lich_sinister_gaze = class({})
+imba_lich_sinister_gaze = class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_lich_sinister_gaze_handler", "components/abilities/heroes/hero_lich",
 	LUA_MODIFIER_MOTION_NONE)
@@ -2254,7 +2262,7 @@ end
 -- SINISTER GAZE HANDLER MODIFIER --
 ------------------------------------
 
-modifier_imba_lich_sinister_gaze_handler = class({})
+modifier_imba_lich_sinister_gaze_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lich_sinister_gaze_handler:IsHidden() return true end
 
@@ -2276,18 +2284,18 @@ function modifier_imba_lich_sinister_gaze_handler:OnAbilityExecuted(keys)
 		if keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			if not keys.target:IsCreep() then
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
-				(1 - keys.target:GetStatusResistance()) * 100)
+					(1 - keys.target:GetStatusResistance()) * 100)
 			else
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
-				(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")) / 100 *
-				(1 - keys.target:GetStatusResistance()) * 100)
+					(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")) / 100 *
+					(1 - keys.target:GetStatusResistance()) * 100)
 			end
 		else
 			if not keys.target:IsCreep() then
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") * 100)
 			else
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("duration") *
-				(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")))
+					(100 - self:GetAbility():GetSpecialValueFor("creep_channel_reduction")))
 			end
 		end
 	else
@@ -2299,7 +2307,7 @@ end
 --	SINISTER GAZE MODIFIER 		 --
 -----------------------------------
 
-modifier_imba_lich_sinister_gaze = modifier_imba_lich_sinister_gaze or class({})
+modifier_imba_lich_sinister_gaze = modifier_imba_lich_sinister_gaze or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lich_sinister_gaze:IgnoreTenacity() return true end
 
@@ -2313,7 +2321,7 @@ function modifier_imba_lich_sinister_gaze:OnCreated()
 	self.parent      = self:GetParent()
 
 	self.destination = self.ability:GetSpecialValueFor("destination") +
-	self.caster:FindTalentValue("special_bonus_imba_lich_10")
+		self.caster:FindTalentValue("special_bonus_imba_lich_10")
 	self.distance    = CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
 	self.mana_drain  = self.ability:GetSpecialValueFor("mana_drain")
 
@@ -2411,7 +2419,7 @@ function modifier_imba_lich_sinister_gaze:GetModifierMoveSpeed_Limit()
 
 	if not self:GetCaster():HasScepter() then
 		return self.distance /
-		(self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999)))                  -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
+			(self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999))) -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
 	else
 		return self.distance / self.ability:GetChannelTime()
 	end
@@ -2421,7 +2429,7 @@ end
 --	SINISTER GAZE MODIFIER BONUS HEALTH	 --
 -------------------------------------------
 
-modifier_imba_lich_sinister_gaze_bonus_health = class({})
+modifier_imba_lich_sinister_gaze_bonus_health = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lich_sinister_gaze_bonus_health:IsDebuff() return false end
 
@@ -2448,10 +2456,10 @@ LinkLuaModifier("modifier_special_bonus_imba_lich_6", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_lich_1", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lich_7", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lich_10 = modifier_special_bonus_imba_lich_10 or class({})
-modifier_special_bonus_imba_lich_6 = modifier_special_bonus_imba_lich_6 or class({})
-modifier_special_bonus_imba_lich_1 = modifier_special_bonus_imba_lich_1 or class({})
-modifier_special_bonus_imba_lich_7 = modifier_special_bonus_imba_lich_7 or class({})
+modifier_special_bonus_imba_lich_10 = modifier_special_bonus_imba_lich_10 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lich_6 = modifier_special_bonus_imba_lich_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lich_1 = modifier_special_bonus_imba_lich_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lich_7 = modifier_special_bonus_imba_lich_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lich_10:IsHidden() return true end
 

@@ -29,7 +29,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_berserkers_call_talent"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_axe_berserkers_call = imba_axe_berserkers_call or class({})
+imba_axe_berserkers_call = imba_axe_berserkers_call or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_axe_berserkers_call:OnAbilityPhaseStart()
 	if IsServer() then
@@ -140,7 +140,7 @@ end
 -- Berserker's Call caster modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_buff_armor = modifier_imba_berserkers_call_buff_armor or class({})
+modifier_imba_berserkers_call_buff_armor = modifier_imba_berserkers_call_buff_armor or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_berserkers_call_buff_armor:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
@@ -180,7 +180,7 @@ end
 -- Berserker's Call caster talent modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_talent = modifier_imba_berserkers_call_talent or class({})
+modifier_imba_berserkers_call_talent = modifier_imba_berserkers_call_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_berserkers_call_talent:DeclareFunctions()
 	return {
@@ -221,7 +221,7 @@ end
 -- Berserker's Call enemy modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class({})
+modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_berserkers_call_debuff_cmd:OnCreated()
 	if not self:GetAbility() then
@@ -306,7 +306,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_battle_hunger_debuff_deny"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
+imba_axe_battle_hunger = imba_axe_battle_hunger or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_axe_battle_hunger:CastFilterResultTarget(target)
 	if IsServer() then
@@ -424,7 +424,7 @@ end
 -- Battle Hunger caster modifier
 -------------------------------------------
 
-modifier_imba_battle_hunger_buff_haste = modifier_imba_battle_hunger_buff_haste or class({})
+modifier_imba_battle_hunger_buff_haste = modifier_imba_battle_hunger_buff_haste or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_battle_hunger_buff_haste:OnCreated()
 	self.speed_bonus = self:GetAbility():GetSpecialValueFor("speed_bonus")
@@ -452,7 +452,7 @@ end
 -- Battle Hunger enemy modifier
 -------------------------------------------
 
-modifier_imba_battle_hunger_debuff_dot = modifier_imba_battle_hunger_debuff_dot or class({})
+modifier_imba_battle_hunger_debuff_dot = modifier_imba_battle_hunger_debuff_dot or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_battle_hunger_debuff_dot:GetStatusEffectName()
 	return "particles/status_fx/status_effect_battle_hunger.vpcf"
@@ -674,7 +674,7 @@ end
 -------------------------------------------
 -- Battle Hunger command restrict modifier
 -------------------------------------------
-modifier_imba_battle_hunger_debuff_cmd = modifier_imba_battle_hunger_debuff_cmd or class({})
+modifier_imba_battle_hunger_debuff_cmd = modifier_imba_battle_hunger_debuff_cmd or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_battle_hunger_debuff_cmd:CheckState()
 	return { [MODIFIER_STATE_COMMAND_RESTRICTED] = true }
@@ -703,7 +703,7 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Battle Hunger deny modifier to allow enemies to attack their allies
 ----------------------------------------------------------------------------------------------------
-modifier_imba_battle_hunger_debuff_deny = modifier_imba_battle_hunger_debuff_deny or class({})
+modifier_imba_battle_hunger_debuff_deny = modifier_imba_battle_hunger_debuff_deny or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_battle_hunger_debuff_deny:CheckState()
 	return { [MODIFIER_STATE_SPECIALLY_DENIABLE] = true }
@@ -731,7 +731,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_counter_helix_passive"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_counter_helix_spin_stacks"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_axe_counter_helix = imba_axe_counter_helix or class({})
+imba_axe_counter_helix = imba_axe_counter_helix or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_axe_counter_helix:GetCastRange()
 	return self:GetSpecialValueFor("radius")
@@ -745,7 +745,7 @@ end
 -- Counter Helix modifier
 -------------------------------------------
 
-modifier_imba_counter_helix_passive = modifier_imba_counter_helix_passive or class({})
+modifier_imba_counter_helix_passive = modifier_imba_counter_helix_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_counter_helix_passive:OnCreated()
 	self.caster = self:GetCaster()
@@ -889,7 +889,7 @@ function modifier_imba_counter_helix_passive:IsPurgable()
 end
 
 ----------------------------------------------------------------------------------------------------
-modifier_imba_counter_helix_spin_stacks = modifier_imba_counter_helix_spin_stacks or class({})
+modifier_imba_counter_helix_spin_stacks = modifier_imba_counter_helix_spin_stacks or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_counter_helix_spin_stacks:OnCreated()
 	self.stack_limit = self:GetAbility():GetSpecialValueFor("stack_limit")
@@ -928,7 +928,7 @@ MergeTables(LinkedModifiers, {
 MergeTables(LinkedModifiers, {
 	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_axe_culling_blade = imba_axe_culling_blade or class({})
+imba_axe_culling_blade = imba_axe_culling_blade or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_axe_culling_blade:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8")
@@ -1093,7 +1093,7 @@ end
 -------------------------------------------
 -- Culling Blade Cull Stack modifier - increases kill thresholds
 -------------------------------------------
-modifier_imba_culling_blade_cull_stacks = modifier_imba_culling_blade_cull_stacks or class({})
+modifier_imba_culling_blade_cull_stacks = modifier_imba_culling_blade_cull_stacks or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_culling_blade_cull_stacks:OnCreated()
 	self.stack_limit = self:GetAbility():GetSpecialValueFor("stack_limit")
@@ -1109,7 +1109,7 @@ end
 -- Culling Blade sprint modifier
 -------------------------------------------
 
-modifier_imba_culling_blade_buff_haste = modifier_imba_culling_blade_buff_haste or class({})
+modifier_imba_culling_blade_buff_haste = modifier_imba_culling_blade_buff_haste or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_culling_blade_buff_haste:OnCreated()
 	-- I know that's a terrible workaround
@@ -1172,7 +1172,7 @@ end
 -------------------------------------------
 -- credits goes to o0oradaro0o/Battleships_Reborn
 
-modifier_imba_culling_blade_motion = modifier_imba_culling_blade_motion or class({})
+modifier_imba_culling_blade_motion = modifier_imba_culling_blade_motion or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_culling_blade_motion:IsHidden() return true end
 
@@ -1300,7 +1300,7 @@ end
 LinkLuaModifier("modifier_axe_arcana", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
 -- Arcana handler
-modifier_axe_arcana = modifier_axe_arcana or class({})
+modifier_axe_arcana = modifier_axe_arcana or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_axe_arcana:RemoveOnDeath()
 	return false
@@ -1331,12 +1331,12 @@ LinkLuaModifier("modifier_special_bonus_imba_axe_5", "components/abilities/heroe
 LinkLuaModifier("modifier_special_bonus_imba_axe_8", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_axe_9", "components/abilities/heroes/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_axe_2 = modifier_special_bonus_imba_axe_2 or class({})
-modifier_special_bonus_imba_axe_3 = modifier_special_bonus_imba_axe_3 or class({})
-modifier_special_bonus_imba_axe_4 = modifier_special_bonus_imba_axe_4 or class({})
-modifier_special_bonus_imba_axe_5 = modifier_special_bonus_imba_axe_5 or class({})
-modifier_special_bonus_imba_axe_8 = modifier_special_bonus_imba_axe_8 or class({})
-modifier_special_bonus_imba_axe_9 = modifier_special_bonus_imba_axe_9 or class({})
+modifier_special_bonus_imba_axe_2 = modifier_special_bonus_imba_axe_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_axe_3 = modifier_special_bonus_imba_axe_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_axe_4 = modifier_special_bonus_imba_axe_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_axe_5 = modifier_special_bonus_imba_axe_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_axe_8 = modifier_special_bonus_imba_axe_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_axe_9 = modifier_special_bonus_imba_axe_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_axe_2:IsHidden() return true end
 

@@ -4,7 +4,7 @@
 ---------------------------
 --       ARCANE ORB      --
 ---------------------------
-imba_obsidian_destroyer_arcane_orb = class({})
+imba_obsidian_destroyer_arcane_orb = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_arcane_orb_thinker", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_orb_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_orb_debuff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
@@ -51,7 +51,7 @@ function imba_obsidian_destroyer_arcane_orb:GetCastRange(location, target)
 end
 
 -- Arcane Orb thinker modifier
-modifier_imba_arcane_orb_thinker = class({})
+modifier_imba_arcane_orb_thinker = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_orb_thinker:DeclareFunctions()
 	local decFunc = { MODIFIER_EVENT_ON_ATTACK_START,
@@ -534,7 +534,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 end
 
 -- Arcane Orb int steal buff
-modifier_imba_arcane_orb_buff = class({})
+modifier_imba_arcane_orb_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_orb_buff:GetTexture()
 	return "obsidian_destroyer_arcane_orb"
@@ -613,7 +613,7 @@ function modifier_imba_arcane_orb_buff:GetModifierBonusStats_Intellect()
 end
 
 -- Arcane Orb int steal debuff
-modifier_imba_arcane_orb_debuff = class({})
+modifier_imba_arcane_orb_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_orb_debuff:GetTexture()
 	return "obsidian_destroyer_arcane_orb"
@@ -698,7 +698,7 @@ function modifier_imba_arcane_orb_debuff:GetModifierBonusStats_Intellect()
 end
 
 -- Arcane Orb int steal instance
-modifier_imba_arcane_orb_instance = class({})
+modifier_imba_arcane_orb_instance = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_orb_instance:GetTexture()
 	return "obsidian_destroyer_sanity_eclipse"
@@ -768,7 +768,7 @@ function modifier_imba_arcane_orb_instance:IsDebuff() return false end
 ---------------------------
 --  ASTRAL IMPRISONMENT  --
 ---------------------------
-imba_obsidian_destroyer_astral_imprisonment = class({})
+imba_obsidian_destroyer_astral_imprisonment = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_astral_imprisonment", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_astral_imprisonment_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_astral_imprisonment_sucked", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
@@ -795,7 +795,7 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()
 		return 0
 	end
 
-	return self.BaseClass.GetCastPoint(self)
+	return self:GetRightfulKV("AbilityCastPoint")
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, target)
@@ -828,11 +828,11 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCooldown(level)
 	end
 
 	if IsServer() then
-		return self.BaseClass.GetCooldown(self, level) - prison_duration
+		return self:GetRightfulKV("AbilityCooldown") - prison_duration
 	end
 
 	-- Make the client see the full cooldown
-	return self.BaseClass.GetCooldown(self, level)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:IsHiddenWhenStolen()
@@ -915,7 +915,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 end
 
 -- Prison modifier
-modifier_imba_astral_imprisonment = class({})
+modifier_imba_astral_imprisonment = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_astral_imprisonment:OnCreated()
 	if IsServer() then
@@ -1049,7 +1049,7 @@ function modifier_imba_astral_imprisonment:OnDestroy()
 end
 
 -- Self prison buff
-modifier_imba_astral_imprisonment_buff = class({})
+modifier_imba_astral_imprisonment_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_astral_imprisonment_buff:OnCreated()
 	if IsServer() then
@@ -1180,7 +1180,7 @@ function modifier_imba_astral_imprisonment_buff:IsPurgable() return false end
 
 function modifier_imba_astral_imprisonment_buff:IsDebuff() return true end
 
-modifier_imba_astral_imprisonment_sucked = class({})
+modifier_imba_astral_imprisonment_sucked = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_astral_imprisonment_sucked:IsHidden() return true end
 
@@ -1217,7 +1217,7 @@ end
 ---------------------------
 --     ESSENCE AURA      --
 ---------------------------
-imba_obsidian_destroyer_essence_aura = class({})
+imba_obsidian_destroyer_essence_aura = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_essence_aura", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_essence_aura_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_essence_aura_proc", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1233,7 +1233,7 @@ function imba_obsidian_destroyer_essence_aura:GetIntrinsicModifierName()
 end
 
 -- Aura modifier
-modifier_imba_essence_aura = class({})
+modifier_imba_essence_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_essence_aura:OnCreated()
 	-- Ability properties
@@ -1334,7 +1334,7 @@ function modifier_imba_essence_aura:IsHidden() return true end
 
 function modifier_imba_essence_aura:IsPurgable() return false end
 
-modifier_imba_essence_aura_buff = class({})
+modifier_imba_essence_aura_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_essence_aura_buff:OnCreated()
 	-- Ability properties
@@ -1470,7 +1470,7 @@ function modifier_imba_essence_aura_buff:OnRefresh()
 end
 
 -- Caster's aura proc modifier
-modifier_imba_essence_aura_proc = class({})
+modifier_imba_essence_aura_proc = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_essence_aura_proc:OnCreated()
 	if IsServer() then
@@ -1545,7 +1545,7 @@ function modifier_imba_essence_aura_proc:IsPurgable() return false end
 function modifier_imba_essence_aura_proc:IsDebuff() return false end
 
 -- #8 Talent: Essence Aura can go beyond maximum mana temporarily
-modifier_imba_essence_aura_over_maximum = class({})
+modifier_imba_essence_aura_over_maximum = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_essence_aura_over_maximum:IsHidden() return true end
 
@@ -1620,7 +1620,7 @@ function modifier_imba_essence_aura_over_maximum:GetModifierExtraManaBonus()
 end
 
 -- #8 Talent: Indicator
-modifier_imba_essence_aura_over_maximum_indicator = class({})
+modifier_imba_essence_aura_over_maximum_indicator = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_essence_aura_over_maximum_indicator:IsHidden() return false end
 
@@ -1686,7 +1686,7 @@ end
 ---------------------------
 --    SANITY ECLIPSE     --
 ---------------------------
-imba_obsidian_destroyer_sanity_eclipse = class({})
+imba_obsidian_destroyer_sanity_eclipse = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_obsidian_destroyer_sanity_eclipse:GetAbilityTextureName()
 	return "obsidian_destroyer_sanity_eclipse"
@@ -1883,10 +1883,10 @@ LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium", "components/abil
 LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium_active", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium_debuff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_obsidian_destroyer_equilibrium                 = class({})
-modifier_imba_obsidian_destroyer_equilibrium        = class({})
-modifier_imba_obsidian_destroyer_equilibrium_active = class({})
-modifier_imba_obsidian_destroyer_equilibrium_debuff = class({})
+imba_obsidian_destroyer_equilibrium                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_obsidian_destroyer_equilibrium        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_obsidian_destroyer_equilibrium_active = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_obsidian_destroyer_equilibrium_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 -----------------
 -- EQUILIBRIUM --
@@ -2058,10 +2058,10 @@ LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_4", "components/
 LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_10", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_obsidian_destroyer_9", "components/abilities/heroes/hero_obsidian_destroyer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_obsidian_destroyer_2 = modifier_special_bonus_imba_obsidian_destroyer_2 or class({})
-modifier_special_bonus_imba_obsidian_destroyer_4 = modifier_special_bonus_imba_obsidian_destroyer_4 or class({})
-modifier_special_bonus_imba_obsidian_destroyer_10 = modifier_special_bonus_imba_obsidian_destroyer_10 or class({})
-modifier_special_bonus_imba_obsidian_destroyer_9 = modifier_special_bonus_imba_obsidian_destroyer_9 or class({})
+modifier_special_bonus_imba_obsidian_destroyer_2 = modifier_special_bonus_imba_obsidian_destroyer_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_obsidian_destroyer_4 = modifier_special_bonus_imba_obsidian_destroyer_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_obsidian_destroyer_10 = modifier_special_bonus_imba_obsidian_destroyer_10 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_obsidian_destroyer_9 = modifier_special_bonus_imba_obsidian_destroyer_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_obsidian_destroyer_2:IsHidden() return true end
 

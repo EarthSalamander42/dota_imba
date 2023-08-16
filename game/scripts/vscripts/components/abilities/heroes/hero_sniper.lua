@@ -4,7 +4,7 @@
 --------------------------------
 --         SHRAPNEL           --
 --------------------------------
-imba_sniper_shrapnel = class({})
+imba_sniper_shrapnel = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_shrapnel_attack", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shrapnel_charges", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shrapnel_aura", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
@@ -127,7 +127,7 @@ function imba_sniper_shrapnel:OnSpellStart()
 end
 
 -- Freely attack target modifier
-modifier_imba_shrapnel_attack = class({})
+modifier_imba_shrapnel_attack = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shrapnel_attack:OnCreated()
 	if IsServer() then
@@ -279,7 +279,7 @@ function modifier_imba_shrapnel_attack:GetModifierDamageOutgoing_Percentage()
 end
 
 -- Shrapnel charges modifier
-modifier_imba_shrapnel_charges = class({})
+modifier_imba_shrapnel_charges = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shrapnel_charges:OnCreated()
 	if IsServer() then
@@ -425,7 +425,7 @@ function modifier_imba_shrapnel_charges:IsDebuff() return false end
 -- Triggers the "restart" of the charges modifier
 LinkLuaModifier("modifier_special_bonus_imba_sniper_4", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_sniper_4 = modifier_special_bonus_imba_sniper_4 or class({})
+modifier_special_bonus_imba_sniper_4 = modifier_special_bonus_imba_sniper_4 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_sniper_4:IsHidden() return true end
 
@@ -452,7 +452,7 @@ function modifier_special_bonus_imba_sniper_4:RemoveOnDeath() return false end
 -- end
 
 -- Shrapnel slow aura modifier
-modifier_imba_shrapnel_aura = class({})
+modifier_imba_shrapnel_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shrapnel_aura:IsHidden() return true end
 
@@ -506,7 +506,7 @@ function modifier_imba_shrapnel_aura:IsAura()
 end
 
 -- Shrapnel slow debuff modifier
-modifier_imba_shrapnel_slow = class({})
+modifier_imba_shrapnel_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shrapnel_slow:IsHidden() return false end
 
@@ -581,7 +581,7 @@ end
 --------------------------------
 --         HEADSHOT           --
 --------------------------------
-imba_sniper_headshot = class({})
+imba_sniper_headshot = class(VANILLA_ABILITIES_BASECLASS)
 -- LinkLuaModifier("modifier_imba_headshot_attacks", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_headshot_slow", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_perfectshot_stun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
@@ -589,8 +589,8 @@ LinkLuaModifier("modifier_imba_headshot_eyeshot", "components/abilities/heroes/h
 
 LinkLuaModifier("modifier_imba_sniper_headshot", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_sniper_headshot = class({})
--- modifier_imba_sniper_headshot	= modifier_imba_sniper_headshot or class({})
+modifier_imba_sniper_headshot = class(VANILLA_ABILITIES_BASECLASS)
+-- modifier_imba_sniper_headshot	= modifier_imba_sniper_headshot or class(VANILLA_ABILITIES_BASECLASS)
 
 
 -- function imba_sniper_headshot:GetAbilityTextureName()
@@ -733,7 +733,7 @@ function modifier_imba_sniper_headshot:GetModifierPreAttack_CriticalStrike(keys)
 end
 
 -- -- Attacks counter
--- modifier_imba_headshot_attacks = class({})
+-- modifier_imba_headshot_attacks = class(VANILLA_ABILITIES_BASECLASS)
 
 -- function modifier_imba_headshot_attacks:OnCreated()
 -- if IsServer() then
@@ -1061,7 +1061,7 @@ end
 -- end
 
 -- Headshot slow modifier
-modifier_imba_headshot_slow = class({})
+modifier_imba_headshot_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headshot_slow:OnCreated()
 	-- Ability properties
@@ -1103,7 +1103,7 @@ function modifier_imba_headshot_slow:IsPurgable() return true end
 function modifier_imba_headshot_slow:IsDebuff() return true end
 
 -- Perfectshot stun modifier
-modifier_imba_perfectshot_stun = class({})
+modifier_imba_perfectshot_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_perfectshot_stun:OnCreated()
 	-- Ability properties
@@ -1149,7 +1149,7 @@ function modifier_imba_perfectshot_stun:IsPurgeException() return true end
 
 function modifier_imba_perfectshot_stun:IsStunDebuff() return true end
 
-modifier_imba_headshot_eyeshot = modifier_imba_headshot_eyeshot or class({})
+modifier_imba_headshot_eyeshot = modifier_imba_headshot_eyeshot or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headshot_eyeshot:IsHidden() return false end
 
@@ -1210,7 +1210,7 @@ end
 --------------------------------
 --         TAKE AIM           --
 --------------------------------
-imba_sniper_take_aim = class({})
+imba_sniper_take_aim = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_take_aim_range", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sniper_take_aim:GetAbilityTextureName()
@@ -1264,7 +1264,7 @@ function imba_sniper_take_aim:OnSpellStart()
 end
 
 -- Bonus range modifier
-modifier_imba_take_aim_range = class({})
+modifier_imba_take_aim_range = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_take_aim_range:OnCreated()
 	-- Ability properties
@@ -1381,7 +1381,7 @@ end
 --------------------------------
 --        ASSASSINATE         --
 --------------------------------
-imba_sniper_assassinate = class({})
+imba_sniper_assassinate = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_sniper_assassinate_handler", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_cross", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_ministun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1403,7 +1403,7 @@ function imba_sniper_assassinate:GetBehavior()
 end
 
 function imba_sniper_assassinate:GetCastPoint()
-	local cast_point = self.BaseClass.GetCastPoint(self)
+	local cast_point = self:GetRightfulKV("AbilityCastPoint")
 
 	-- #6 Talent: Assassination's cast point increases. When executed, it launches three projectiles towards the target.
 	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") and self:GetCaster():GetModifierStackCount("modifier_imba_sniper_assassinate_handler", self:GetCaster()) == 1 then
@@ -1825,7 +1825,7 @@ end
 -- MODIFIER_IMBA_SNIPER_ASSASSINATE_HANDLER --
 ----------------------------------------------
 
-modifier_imba_sniper_assassinate_handler = modifier_imba_sniper_assassinate_handler or class({})
+modifier_imba_sniper_assassinate_handler = modifier_imba_sniper_assassinate_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sniper_assassinate_handler:IsHidden() return true end
 
@@ -1853,7 +1853,7 @@ function modifier_imba_sniper_assassinate_handler:OnOrder(keys)
 end
 
 -- Cross enemy debuff
-modifier_imba_assassinate_cross = class({})
+modifier_imba_assassinate_cross = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_assassinate_cross:OnCreated()
 	if IsServer() then
@@ -1908,7 +1908,7 @@ function modifier_imba_assassinate_cross:GetPriority()
 end
 
 -- Ministun debuff
-modifier_imba_assassinate_ministun = class({})
+modifier_imba_assassinate_ministun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_assassinate_ministun:IsHidden() return false end
 
@@ -1943,8 +1943,8 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_sniper_7", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sniper_8", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_sniper_7 = modifier_special_bonus_imba_sniper_7 or class({})
-modifier_special_bonus_imba_sniper_8 = modifier_special_bonus_imba_sniper_8 or class({})
+modifier_special_bonus_imba_sniper_7 = modifier_special_bonus_imba_sniper_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sniper_8 = modifier_special_bonus_imba_sniper_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_sniper_7:IsHidden() return true end
 
@@ -1961,8 +1961,8 @@ function modifier_special_bonus_imba_sniper_8:RemoveOnDeath() return false end
 LinkLuaModifier("modifier_special_bonus_imba_sniper_6", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_sniper_9", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_sniper_6 = class({})
-modifier_special_bonus_imba_sniper_9 = class({})
+modifier_special_bonus_imba_sniper_6 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_sniper_9 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_sniper_6:IsHidden() return true end
 

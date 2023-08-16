@@ -8,11 +8,14 @@
 LinkLuaModifier("modifier_imba_naga_siren_mirror_image_invulnerable", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_naga_siren_mirror_image_perfect_image", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_naga_siren_mirror_image = imba_naga_siren_mirror_image or class({})
+imba_naga_siren_mirror_image = imba_naga_siren_mirror_image or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_naga_siren_mirror_image:IsHiddenWhenStolen() return false end
+
 function imba_naga_siren_mirror_image:IsRefreshable() return true end
+
 function imba_naga_siren_mirror_image:IsStealable() return true end
+
 function imba_naga_siren_mirror_image:IsNetherWardStealable() return false end
 
 function imba_naga_siren_mirror_image:OnSpellStart()
@@ -34,7 +37,7 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_siren/naga_siren_mirror_image.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
 
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_mirror_image_invulnerable", {duration = self:GetSpecialValueFor("invuln_duration")})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_mirror_image_invulnerable", { duration = self:GetSpecialValueFor("invuln_duration") })
 
 	if self.illusions then
 		for _, illusion in pairs(self.illusions) do
@@ -47,14 +50,14 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 	self:GetCaster():SetContextThink(DoUniqueString("naga_siren_mirror_image"), function()
 		-- "API Additions - Global (Server): * CreateIllusions( hOwner, hHeroToCopy, hModifierKeys, nNumIllusions, nPadding, bScramblePosition, bFindClearSpace ) Note: See script_help2 for supported modifier keys"
 		self.illusions = CreateIllusions(self:GetCaster(), self:GetCaster(), {
-			outgoing_damage 			= image_out_dmg,
-			incoming_damage				= self:GetSpecialValueFor("incoming_damage") - self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_damage_taken"),
-			bounty_base					= self:GetCaster():GetIllusionBounty(),
-			bounty_growth				= nil,
-			outgoing_damage_structure	= nil,
-			outgoing_damage_roshan		= nil,
---			duration					= self:GetSpecialValueFor("illusion_duration")
-			duration					= nil -- IMBAfication: Everlasting Reflection
+			outgoing_damage           = image_out_dmg,
+			incoming_damage           = self:GetSpecialValueFor("incoming_damage") - self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_mirror_image_damage_taken"),
+			bounty_base               = self:GetCaster():GetIllusionBounty(),
+			bounty_growth             = nil,
+			outgoing_damage_structure = nil,
+			outgoing_damage_roshan    = nil,
+			--			duration					= self:GetSpecialValueFor("illusion_duration")
+			duration                  = nil -- IMBAfication: Everlasting Reflection
 		}, image_count, self:GetCaster():GetHullRadius(), true, true)
 
 		for i = 1, #self.illusions do
@@ -77,33 +80,38 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_NagaSiren.MirrorImage")
 end
 
-modifier_imba_naga_siren_mirror_image_invulnerable = modifier_imba_naga_siren_mirror_image_invulnerable or class({})
+modifier_imba_naga_siren_mirror_image_invulnerable = modifier_imba_naga_siren_mirror_image_invulnerable or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_mirror_image_invulnerable:IsHidden() return true end
 
-function modifier_imba_naga_siren_mirror_image_invulnerable:CheckState() return {
-	[MODIFIER_STATE_INVULNERABLE] = true,
-	[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-	[MODIFIER_STATE_STUNNED] = true,
-	-- [MODIFIER_STATE_OUT_OF_GAME] = true,
-} end
+function modifier_imba_naga_siren_mirror_image_invulnerable:CheckState()
+	return {
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+		-- [MODIFIER_STATE_OUT_OF_GAME] = true,
+	}
+end
 
-modifier_imba_naga_siren_mirror_image_perfect_image = modifier_imba_naga_siren_mirror_image_perfect_image or class({})
+modifier_imba_naga_siren_mirror_image_perfect_image = modifier_imba_naga_siren_mirror_image_perfect_image or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:IsPurgable() return false end
+
 function modifier_imba_naga_siren_mirror_image_perfect_image:IsPurgeException() return false end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:OnCreated()
-	self.perfect_image_bonus_damage_incoming_pct					= self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_incoming_pct")
-	self.perfect_image_bonus_damage_outgoing_pct					= self:GetAbility():GetTalentSpecialValueFor("perfect_image_bonus_damage_outgoing_pct")
-	self.perfect_image_max_stacks									= self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks")
+	self.perfect_image_bonus_damage_incoming_pct = self:GetAbility():GetSpecialValueFor("perfect_image_bonus_damage_incoming_pct")
+	self.perfect_image_bonus_damage_outgoing_pct = self:GetAbility():GetTalentSpecialValueFor("perfect_image_bonus_damage_outgoing_pct")
+	self.perfect_image_max_stacks                = self:GetAbility():GetSpecialValueFor("perfect_image_max_stacks")
 end
 
-function modifier_imba_naga_siren_mirror_image_perfect_image:DeclareFunctions() return {
-	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-	MODIFIER_EVENT_ON_DEATH,
-} end
+function modifier_imba_naga_siren_mirror_image_perfect_image:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_EVENT_ON_DEATH,
+	}
+end
 
 function modifier_imba_naga_siren_mirror_image_perfect_image:GetModifierIncomingDamage_Percentage()
 	return self:GetStackCount() * self.perfect_image_bonus_damage_incoming_pct
@@ -145,7 +153,7 @@ end
 
 LinkLuaModifier("modifier_imba_naga_siren_ensnare", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_naga_siren_ensnare = imba_naga_siren_ensnare or class({})
+imba_naga_siren_ensnare = imba_naga_siren_ensnare or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_naga_siren_ensnare:GetCooldown(iLevel)
 	return self.BaseClass.GetCooldown(self, iLevel) - self:GetCaster():FindTalentValue("special_bonus_unique_naga_siren_2")
@@ -203,7 +211,7 @@ function imba_naga_siren_ensnare:OnSpellStart()
 
 	for _, naga in pairs(self.naga_sirens) do
 		if IsValidEntity(naga) and naga:IsAlive() then
---			local target = self:GetCursorTarget()
+			--			local target = self:GetCursorTarget()
 			local enemies = FindUnitsInRadius(
 				naga:GetTeamNumber(),
 				naga:GetAbsOrigin(),
@@ -227,7 +235,7 @@ function imba_naga_siren_ensnare:LaunchProjectile(source, target, projectile_dur
 	local net_speed = self:GetSpecialValueFor("net_speed")
 
 	if source:IsIllusion() then
-		net_speed = (target:GetAbsOrigin() - source:GetAbsOrigin()):Length2D() / projectile_duration 
+		net_speed = (target:GetAbsOrigin() - source:GetAbsOrigin()):Length2D() / projectile_duration
 	end
 
 	local info = {
@@ -237,36 +245,42 @@ function imba_naga_siren_ensnare:LaunchProjectile(source, target, projectile_dur
 		bDodgeable = true,
 		EffectName = "particles/units/heroes/hero_siren/siren_net_projectile.vpcf",
 		iMoveSpeed = net_speed,
-		ExtraData = {illusion = source:IsIllusion()}
+		ExtraData = { illusion = source:IsIllusion() }
 	}
 
 	ProjectileManager:CreateTrackingProjectile(info)
 end
 
 function imba_naga_siren_ensnare:OnProjectileHit_ExtraData(hTarget, vLocation, hExtraData)
---	if hExtraData.illusion == 0 and hTarget and not hTarget:TriggerSpellAbsorb(self) then
+	--	if hExtraData.illusion == 0 and hTarget and not hTarget:TriggerSpellAbsorb(self) then
 	if hTarget then
 		if not hTarget:HasModifier("modifier_imba_naga_siren_ensnare") then
 			hTarget:EmitSound("Hero_NagaSiren.Ensnare.Target")
 		end
 
-		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", {duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance())})
+		hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_ensnare", { duration = self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()) })
 	end
 end
 
-modifier_imba_naga_siren_ensnare = modifier_imba_naga_siren_ensnare or class({})
+modifier_imba_naga_siren_ensnare = modifier_imba_naga_siren_ensnare or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_ensnare:IsDebuff() return true end
+
 function modifier_imba_naga_siren_ensnare:GetEffectName() return "particles/units/heroes/hero_siren/siren_net.vpcf" end
+
 function modifier_imba_naga_siren_ensnare:GetEffectAttachType() return PATTACH_ABSORIGIN end
 
-function modifier_imba_naga_siren_ensnare:CheckState() return {
-	[MODIFIER_STATE_ROOTED] = true,
-} end
+function modifier_imba_naga_siren_ensnare:CheckState()
+	return {
+		[MODIFIER_STATE_ROOTED] = true,
+	}
+end
 
-function modifier_imba_naga_siren_ensnare:DeclareFunctions() return {
-	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-} end
+function modifier_imba_naga_siren_ensnare:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+	}
+end
 
 function modifier_imba_naga_siren_ensnare:GetModifierProvidesFOWVision()
 	return 1
@@ -279,25 +293,31 @@ end
 LinkLuaModifier("modifier_imba_naga_siren_rip_tide", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_naga_siren_rip_tide_debuff", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_naga_siren_rip_tide = imba_naga_siren_rip_tide or class({})
+imba_naga_siren_rip_tide = imba_naga_siren_rip_tide or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_naga_siren_rip_tide:IsHiddenWhenStolen() return false end
+
 function imba_naga_siren_rip_tide:IsRefreshable() return true end
+
 function imba_naga_siren_rip_tide:IsStealable() return true end
+
 function imba_naga_siren_rip_tide:IsNetherWardStealable() return true end
+
 function imba_naga_siren_rip_tide:GetCastRange() return self:GetSpecialValueFor("radius") end
 
 function imba_naga_siren_rip_tide:GetIntrinsicModifierName()
 	return "modifier_imba_naga_siren_rip_tide"
 end
 
-modifier_imba_naga_siren_rip_tide = modifier_imba_naga_siren_rip_tide or class({})
+modifier_imba_naga_siren_rip_tide = modifier_imba_naga_siren_rip_tide or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_rip_tide:IsHidden() return true end
 
-function modifier_imba_naga_siren_rip_tide:DeclareFunctions() return {
-	MODIFIER_EVENT_ON_ATTACK_LANDED,
-} end
+function modifier_imba_naga_siren_rip_tide:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+end
 
 function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 	if not IsServer() then return end
@@ -309,7 +329,7 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 		table.insert(caster_table, self:GetCaster())
 
 		for _, unit in pairs(self:GetCaster():GetAdditionalOwnedUnits()) do
---			print(unit:GetUnitName(), unit:entindex())
+			--			print(unit:GetUnitName(), unit:entindex())
 
 			if unit:GetUnitName() == self:GetCaster():GetUnitName() and unit:IsIllusion() then
 				table.insert(caster_table, unit)
@@ -349,7 +369,7 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 						damage = damage + (self:GetAbility():GetSpecialValueFor("wet_bonus_damage") * mod:GetStackCount())
 					else
 						-- self:GetCaster():GetPlayerOwner():GetAssignedHero() is to allow the armor reduction talent from the real unit to apply
-						mod = victim:AddNewModifier(self:GetCaster():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", {duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance())}):SetStackCount(1)
+						mod = victim:AddNewModifier(self:GetCaster():GetPlayerOwner():GetAssignedHero(), self:GetAbility(), "modifier_imba_naga_siren_rip_tide_debuff", { duration = self:GetAbility():GetSpecialValueFor("duration") * (1 - victim:GetStatusResistance()) }):SetStackCount(1)
 						damage = damage + self:GetAbility():GetSpecialValueFor("wet_bonus_damage")
 					end
 
@@ -370,9 +390,10 @@ function modifier_imba_naga_siren_rip_tide:OnAttackLanded(params)
 	end
 end
 
-modifier_imba_naga_siren_rip_tide_debuff = modifier_imba_naga_siren_rip_tide_debuff or class({})
+modifier_imba_naga_siren_rip_tide_debuff = modifier_imba_naga_siren_rip_tide_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_rip_tide_debuff:IsDebuff() return true end
+
 function modifier_imba_naga_siren_rip_tide_debuff:GetEffectName() return "particles/units/heroes/hero_siren/naga_siren_riptide_debuff.vpcf" end
 
 function modifier_imba_naga_siren_rip_tide_debuff:GetTexture()
@@ -380,17 +401,19 @@ function modifier_imba_naga_siren_rip_tide_debuff:GetTexture()
 end
 
 function modifier_imba_naga_siren_rip_tide_debuff:OnCreated()
-	self.armor_reduction	= self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_rip_tide_armor")
-	self.wet_bonus_armor	= self:GetAbility():GetSpecialValueFor("wet_bonus_armor")
+	self.armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_imba_naga_siren_rip_tide_armor")
+	self.wet_bonus_armor = self:GetAbility():GetSpecialValueFor("wet_bonus_armor")
 end
 
 function modifier_imba_naga_siren_rip_tide_debuff:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_imba_naga_siren_rip_tide_debuff:DeclareFunctions() return {
-	MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-} end
+function modifier_imba_naga_siren_rip_tide_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+end
 
 function modifier_imba_naga_siren_rip_tide_debuff:GetModifierPhysicalArmorBonus()
 	return (self.wet_bonus_armor * self:GetStackCount()) + self.armor_reduction
@@ -403,7 +426,7 @@ end
 LinkLuaModifier("modifier_imba_naga_siren_song_of_the_siren_aura", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_naga_siren_song_of_the_siren", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_naga_siren_song_of_the_siren = imba_naga_siren_song_of_the_siren or class({})
+imba_naga_siren_song_of_the_siren = imba_naga_siren_song_of_the_siren or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_naga_siren_song_of_the_siren:OnSpellStart()
 	if not IsServer() then return end
@@ -411,14 +434,14 @@ function imba_naga_siren_song_of_the_siren:OnSpellStart()
 	local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_siren/naga_siren_siren_song_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 
 	if self:GetAutoCastState() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_siren_temptation_aura", {duration = self:GetSpecialValueFor("duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_siren_temptation_aura", { duration = self:GetSpecialValueFor("duration") })
 		ParticleManager:SetParticleControl(pfx, 61, Vector(1, 0, 0))
 	else
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_song_of_the_siren_aura", {duration = self:GetSpecialValueFor("duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_song_of_the_siren_aura", { duration = self:GetSpecialValueFor("duration") })
 	end
 
 	if self:GetCaster():HasScepter() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_song_of_the_siren_heal_aura", {duration = self:GetSpecialValueFor("duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_naga_siren_song_of_the_siren_heal_aura", { duration = self:GetSpecialValueFor("duration") })
 	end
 
 	self:GetCaster():EmitSound("Hero_NagaSiren.SongOfTheSiren")
@@ -426,17 +449,24 @@ function imba_naga_siren_song_of_the_siren:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(pfx)
 end
 
-modifier_imba_naga_siren_song_of_the_siren_aura = modifier_imba_naga_siren_song_of_the_siren_aura or class({})
+modifier_imba_naga_siren_song_of_the_siren_aura = modifier_imba_naga_siren_song_of_the_siren_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_song_of_the_siren_aura:IsPurgable() return false end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:IsPurgeException() return false end
 
 function modifier_imba_naga_siren_song_of_the_siren_aura:IsAura() return true end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetAuraDuration() return self:GetAbility():GetSpecialValueFor("aura_linger") end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("radius") end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_ALL end
+
 function modifier_imba_naga_siren_song_of_the_siren_aura:GetModifierAura() return "modifier_imba_naga_siren_song_of_the_siren" end
 
 function modifier_imba_naga_siren_song_of_the_siren_aura:OnCreated()
@@ -461,10 +491,12 @@ function modifier_imba_naga_siren_song_of_the_siren_aura:OnDestroy()
 	self:GetCaster():SwapAbilities(self:GetAbility():GetAbilityName(), "imba_naga_siren_song_of_the_siren_cancel", true, false)
 end
 
-modifier_imba_naga_siren_song_of_the_siren = modifier_imba_naga_siren_song_of_the_siren or class({})
+modifier_imba_naga_siren_song_of_the_siren = modifier_imba_naga_siren_song_of_the_siren or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_song_of_the_siren:IsDebuff() return true end
+
 function modifier_imba_naga_siren_song_of_the_siren:IsPurgable() return false end
+
 function modifier_imba_naga_siren_song_of_the_siren:IsPurgeException() return false end
 
 function modifier_imba_naga_siren_song_of_the_siren:OnCreated()
@@ -482,14 +514,16 @@ function modifier_imba_naga_siren_song_of_the_siren:OnDestroy()
 	end
 end
 
-function modifier_imba_naga_siren_song_of_the_siren:CheckState() return {
-	[MODIFIER_STATE_INVULNERABLE] = true,
-	[MODIFIER_STATE_NIGHTMARED] = true,
-	[MODIFIER_STATE_STUNNED] = true,
-} end
+function modifier_imba_naga_siren_song_of_the_siren:CheckState()
+	return {
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NIGHTMARED] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+	}
+end
 
 function modifier_imba_naga_siren_song_of_the_siren:DeclareFunctions()
-	return {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+	return { MODIFIER_PROPERTY_OVERRIDE_ANIMATION }
 end
 
 function modifier_imba_naga_siren_song_of_the_siren:GetOverrideAnimation()
@@ -500,10 +534,12 @@ end
 -- Naga Siren: Song of the Siren (Cancel)
 --=================================================================================================================
 
-imba_naga_siren_song_of_the_siren_cancel = imba_naga_siren_song_of_the_siren_cancel or class({})
+imba_naga_siren_song_of_the_siren_cancel = imba_naga_siren_song_of_the_siren_cancel or class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_naga_siren_song_of_the_siren_cancel:IsInnateAbility()	return true end
+function imba_naga_siren_song_of_the_siren_cancel:IsInnateAbility() return true end
+
 function imba_naga_siren_song_of_the_siren_cancel:ProcsMagicStick() return false end
+
 function imba_naga_siren_song_of_the_siren_cancel:OnSpellStart()
 	if not IsServer() then return end
 
@@ -519,28 +555,39 @@ end
 LinkLuaModifier("modifier_imba_naga_siren_song_of_the_siren_heal_aura", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_naga_siren_song_of_the_siren_healing", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_naga_siren_song_of_the_siren_heal_aura = modifier_imba_naga_siren_song_of_the_siren_heal_aura or class({})
+modifier_imba_naga_siren_song_of_the_siren_heal_aura = modifier_imba_naga_siren_song_of_the_siren_heal_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:IsHidden() return true end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:IsPurgable() return false end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:IsPurgeException() return false end
 
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:IsAura() return true end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetAuraDuration() return self:GetAbility():GetSpecialValueFor("aura_linger") end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("radius") end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+
 function modifier_imba_naga_siren_song_of_the_siren_heal_aura:GetModifierAura() return "modifier_imba_naga_siren_song_of_the_siren_healing" end
 
-modifier_imba_naga_siren_song_of_the_siren_healing = modifier_imba_naga_siren_song_of_the_siren_healing or class({})
+modifier_imba_naga_siren_song_of_the_siren_healing = modifier_imba_naga_siren_song_of_the_siren_healing or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_song_of_the_siren_healing:IsPurgable() return false end
+
 function modifier_imba_naga_siren_song_of_the_siren_healing:IsPurgeException() return false end
 
-function modifier_imba_naga_siren_song_of_the_siren_healing:DeclareFunctions() return {
-	MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
-} end
+function modifier_imba_naga_siren_song_of_the_siren_healing:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
+	}
+end
 
 function modifier_imba_naga_siren_song_of_the_siren_healing:GetModifierHealthRegenPercentage()
 	return self:GetAbility():GetSpecialValueFor("scepter_regen_rate")
@@ -553,18 +600,26 @@ end
 LinkLuaModifier("modifier_imba_naga_siren_siren_temptation_aura", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_naga_siren_siren_temptation_debuff", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_naga_siren_siren_temptation_aura = modifier_imba_naga_siren_siren_temptation_aura or class({})
+modifier_imba_naga_siren_siren_temptation_aura = modifier_imba_naga_siren_siren_temptation_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_siren_temptation_aura:IsHidden() return true end
+
 function modifier_imba_naga_siren_siren_temptation_aura:IsPurgable() return false end
+
 function modifier_imba_naga_siren_siren_temptation_aura:IsPurgeException() return false end
 
 function modifier_imba_naga_siren_siren_temptation_aura:IsAura() return true end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetAuraDuration() return self:GetAbility():GetSpecialValueFor("aura_linger") end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("radius") end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_ALL end
+
 function modifier_imba_naga_siren_siren_temptation_aura:GetModifierAura() return "modifier_imba_naga_siren_siren_temptation_debuff" end
 
 function modifier_imba_naga_siren_siren_temptation_aura:OnCreated()
@@ -590,16 +645,20 @@ function modifier_imba_naga_siren_siren_temptation_aura:OnDestroy()
 	self:GetCaster():SwapAbilities(self:GetAbility():GetAbilityName(), "imba_naga_siren_song_of_the_siren_cancel", true, false)
 end
 
-modifier_imba_naga_siren_siren_temptation_debuff = modifier_imba_naga_siren_siren_temptation_debuff or class({})
+modifier_imba_naga_siren_siren_temptation_debuff = modifier_imba_naga_siren_siren_temptation_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_naga_siren_siren_temptation_debuff:IsDebuff() return true end
+
 function modifier_imba_naga_siren_siren_temptation_debuff:IsPurgable() return false end
+
 function modifier_imba_naga_siren_siren_temptation_debuff:IsPurgeException() return false end
 
-function modifier_imba_naga_siren_siren_temptation_debuff:DeclareFunctions() return {
-	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	-- MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-} end
+function modifier_imba_naga_siren_siren_temptation_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+	}
+end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:OnCreated()
 	if not IsServer() then return end
@@ -613,7 +672,7 @@ function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierIncomingDam
 end
 
 -- function modifier_imba_naga_siren_siren_temptation_debuff:GetModifierMagicalResistanceBonus()
-	-- return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct") * (-1)
+-- return self:GetAbility():GetSpecialValueFor("siren_temptation_magical_resistance_reduction_pct") * (-1)
 -- end
 
 function modifier_imba_naga_siren_siren_temptation_debuff:OnDestroy()
@@ -632,30 +691,38 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance						= modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance or class({})
-modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken				= modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken or class({})
+modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance      = modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken = modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken or class(VANILLA_ABILITIES_BASECLASS)
 
-function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsHidden() 		return true end
-function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsPurgable() 	return false end
-function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsHidden() return true end
 
-function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsHidden() 		return true end
-function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsPurgable() 	return false end
-function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:IsPurgable() return false end
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_proc_chance:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsHidden() return true end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:IsPurgable() return false end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_damage_taken:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_naga_siren_rip_tide_armor", "components/abilities/heroes/hero_naga_siren", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image	= modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image or class({})
-modifier_special_bonus_imba_naga_siren_rip_tide_armor				= modifier_special_bonus_imba_naga_siren_rip_tide_armor or class({})
+modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image = modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_naga_siren_rip_tide_armor             = modifier_special_bonus_imba_naga_siren_rip_tide_armor or class(VANILLA_ABILITIES_BASECLASS)
 
-function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsHidden() 		return true end
-function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsPurgable() 	return false end
-function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsHidden() return true end
 
-function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsHidden() 		return true end
-function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsPurgable() 	return false end
-function modifier_special_bonus_imba_naga_siren_rip_tide_armor:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:IsPurgable() return false end
+
+function modifier_special_bonus_imba_naga_siren_mirror_image_perfect_image:RemoveOnDeath() return false end
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsHidden() return true end
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:IsPurgable() return false end
+
+function modifier_special_bonus_imba_naga_siren_rip_tide_armor:RemoveOnDeath() return false end
 
 function imba_naga_siren_rip_tide:OnOwnerSpawned()
 	local caster = self:GetCaster()
@@ -667,7 +734,7 @@ function imba_naga_siren_rip_tide:OnOwnerSpawned()
 	if caster:HasTalent(talent_name_1) and not caster:HasModifier(mod_name_1) then
 		caster:AddNewModifier(caster, caster:FindAbilityByName(talent_name_1), mod_name_1, {})
 	end
-	
+
 	if caster:HasTalent(talent_name_2) and not caster:HasModifier(mod_name_2) then
 		caster:AddNewModifier(caster, caster:FindAbilityByName(talent_name_2), mod_name_2, {})
 	end

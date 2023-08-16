@@ -25,7 +25,7 @@ LinkLuaModifier("modifier_imba_rearm_animation", "components/abilities/heroes/he
 LinkLuaModifier("modifier_imba_rearm_overdrive", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rearm_shield", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
-imba_tinker_rearm = class({})
+imba_tinker_rearm = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tinker_rearm:GetAbilityTextureName()
 	return "tinker_rearm"
@@ -198,7 +198,7 @@ function imba_tinker_rearm:OnChannelFinish(bInterrupted)
 	end
 end
 
-modifier_imba_rearm_animation = class({})
+modifier_imba_rearm_animation = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rearm_animation:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -275,7 +275,7 @@ function modifier_imba_rearm_animation:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-modifier_imba_rearm_overdrive = class({})
+modifier_imba_rearm_overdrive = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rearm_overdrive:IsHidden()
 	if self:GetParent():HasScepter() then return false end
 	return true
@@ -318,7 +318,7 @@ function modifier_imba_rearm_overdrive:GetModifierSpellAmplify_Percentage()
 	return (self.aghs_spellpower * self:GetStackCount())
 end
 
-modifier_imba_rearm_shield = class({})
+modifier_imba_rearm_shield = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rearm_shield:DeclareFunctions()
 	local decFuncs =
 	{
@@ -393,7 +393,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_laser_blind", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
-imba_tinker_laser = imba_tinker_laser or class({})
+imba_tinker_laser = imba_tinker_laser or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tinker_laser:OnSpellStart()
 	if IsServer() then
@@ -594,7 +594,7 @@ function imba_tinker_laser:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_laser_blind = class({})
+modifier_imba_laser_blind = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_laser_blind:IsHidden() return false end
 
@@ -626,7 +626,7 @@ end
 --		HEAT-SEEKING MISSILES
 -------------------------------------------
 LinkLuaModifier("modifier_imba_heat_seeking_missile_break", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-imba_tinker_heat_seeking_missile = class({})
+imba_tinker_heat_seeking_missile = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tinker_heat_seeking_missile:GetAbilityTextureName()
 	return "tinker_heat_seeking_missile"
@@ -911,7 +911,7 @@ function imba_tinker_heat_seeking_missile:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_heat_seeking_missile_break = class({})
+modifier_imba_heat_seeking_missile_break = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_heat_seeking_missile_break:IsHidden()
 	return false
@@ -954,7 +954,7 @@ LinkLuaModifier("modifier_imba_march_sticky_root", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_march_dismantle", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_march_drone", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
-imba_tinker_march_of_the_machines = class({})
+imba_tinker_march_of_the_machines = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tinker_march_of_the_machines:GetAbilityTextureName()
 	return "tinker_march_of_the_machines"
@@ -1404,7 +1404,7 @@ function imba_tinker_march_of_the_machines:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_march_flame_aura = class({})
+modifier_imba_march_flame_aura = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_march_flame_aura:OnCreated(params)
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1443,7 +1443,7 @@ function modifier_imba_march_flame_aura:GetModifierAura()
 	return "modifier_imba_march_flame_damage"
 end
 
-modifier_imba_march_flame_damage = class({})
+modifier_imba_march_flame_damage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_march_flame_damage:IsDebuff()
 	return true
@@ -1476,7 +1476,7 @@ function modifier_imba_march_flame_damage:IsHidden()
 	return true
 end
 
-modifier_imba_march_tesla_stun = class({})
+modifier_imba_march_tesla_stun = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_march_tesla_stun:IsStunDebuff()
 	return true
 end
@@ -1506,7 +1506,7 @@ function modifier_imba_march_tesla_stun:IsHidden()
 	return true
 end
 
-modifier_imba_march_sticky_root = class({})
+modifier_imba_march_sticky_root = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_march_sticky_root:GetEffectName()
 	return "particles/units/heroes/hero_batrider/batrider_stickynapalm_debuff.vpcf"
 end
@@ -1527,7 +1527,7 @@ function modifier_imba_march_sticky_root:IsHidden()
 	return true
 end
 
-modifier_imba_march_dismantle = class({})
+modifier_imba_march_dismantle = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_march_dismantle:OnCreated(params)
 	self.dismantle_dmg_pct = self:GetAbility():GetTalentSpecialValueFor("dismantle_dmg_pct") * (-1)
 	self:SetStackCount(1)
@@ -1554,7 +1554,7 @@ function modifier_imba_march_dismantle:GetModifierBaseDamageOutgoing_Percentage(
 	return self.dismantle_dmg_pct * self:GetStackCount()
 end
 
-modifier_imba_march_drone = class({})
+modifier_imba_march_drone = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_march_drone:OnCreated(params)
 	local drone_order_interval = self:GetAbility():GetSpecialValueFor("drone_order_interval")
 	self:StartIntervalThink(drone_order_interval)
@@ -1585,7 +1585,7 @@ end
 -------------------------------------------
 --			TECHNOMANCY
 -------------------------------------------
-imba_tinker_technomancy = class({})
+imba_tinker_technomancy = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tinker_technomancy:GetAbilityTextureName()
 	return "tinker_tinkermaster"

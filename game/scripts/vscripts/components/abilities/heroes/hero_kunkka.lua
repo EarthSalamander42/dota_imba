@@ -26,7 +26,7 @@
 --			EBB & FLOW
 -------------------------------------------
 
-imba_kunkka_ebb_and_flow = class({})
+imba_kunkka_ebb_and_flow = class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_ebb_and_flow_thinker", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_low", "components/abilities/heroes/hero_kunkka",
@@ -58,22 +58,34 @@ end
 -- Remove current Tide
 function imba_kunkka_ebb_and_flow:RemoveTide()
 	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tsunami") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tsunami") end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_low") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tide_low") end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_red") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tide_red") end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_flood") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tide_flood") end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_high") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tide_high") end
-	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave") then caster:RemoveModifierByName(
-		"modifier_imba_ebb_and_flow_tide_wave") end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tsunami") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tsunami")
+	end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_low") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tide_low")
+	end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_red") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tide_red")
+	end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_flood") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tide_flood")
+	end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_high") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tide_high")
+	end
+	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave") then
+		caster:RemoveModifierByName(
+			"modifier_imba_ebb_and_flow_tide_wave")
+	end
 end
 
 function imba_kunkka_ebb_and_flow:GetCooldown(nLevel)
-	local cooldown = self.BaseClass.GetCooldown(self, nLevel)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 	return cooldown
 end
 
@@ -98,7 +110,7 @@ function imba_kunkka_ebb_and_flow:GetAbilityTextureName()
 	return "kunkka_ebb_and_flow"
 end
 
-modifier_imba_ebb_and_flow_thinker = class({})
+modifier_imba_ebb_and_flow_thinker = class(VANILLA_ABILITIES_BASECLASS)
 
 -- State defining
 function modifier_imba_ebb_and_flow_thinker:RemoveOnDeath()
@@ -153,7 +165,7 @@ function modifier_imba_ebb_and_flow_thinker:OnIntervalThink()
 	end
 end
 
-modifier_imba_ebb_and_flow_tide_low = class({})
+modifier_imba_ebb_and_flow_tide_low = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tide_low:IsHidden()
 	return false
@@ -167,7 +179,7 @@ function modifier_imba_ebb_and_flow_tide_low:GetTexture()
 	return "kunnka_tide_low"
 end
 
-modifier_imba_ebb_and_flow_tide_red = class({})
+modifier_imba_ebb_and_flow_tide_red = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tide_red:IsHidden()
 	return false
@@ -181,7 +193,7 @@ function modifier_imba_ebb_and_flow_tide_red:GetTexture()
 	return "kunnka_tide_red"
 end
 
-modifier_imba_ebb_and_flow_tide_flood = class({})
+modifier_imba_ebb_and_flow_tide_flood = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tide_flood:IsHidden()
 	return false
@@ -195,7 +207,7 @@ function modifier_imba_ebb_and_flow_tide_flood:GetTexture()
 	return "kunnka_tide_flood"
 end
 
-modifier_imba_ebb_and_flow_tide_high = class({})
+modifier_imba_ebb_and_flow_tide_high = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tide_high:IsHidden()
 	return false
@@ -209,7 +221,7 @@ function modifier_imba_ebb_and_flow_tide_high:GetTexture()
 	return "kunnka_tide_high"
 end
 
-modifier_imba_ebb_and_flow_tide_wave = class({})
+modifier_imba_ebb_and_flow_tide_wave = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tide_wave:IsHidden()
 	return false
@@ -223,7 +235,7 @@ function modifier_imba_ebb_and_flow_tide_wave:GetTexture()
 	return "kunnka_tide_wave"
 end
 
-modifier_imba_ebb_and_flow_tsunami = class({})
+modifier_imba_ebb_and_flow_tsunami = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ebb_and_flow_tsunami:IsHidden()
 	return false
@@ -277,7 +289,7 @@ end
 --			  TORRENT
 -------------------------------------------
 
-imba_kunkka_torrent = class({})
+imba_kunkka_torrent = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_torrent_handler", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_cast", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_slow_tide", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
@@ -431,8 +443,13 @@ function imba_kunkka_torrent:OnSpellStart()
 				-- Iterate through affected enemies
 				for _, enemy in pairs(enemies) do
 					-- Deals the initial damage
-					ApplyDamage({ victim = enemy, attacker = caster, ability = self, damage = damage_tick,
-						damage_type = damage_type })
+					ApplyDamage({
+						victim = enemy,
+						attacker = caster,
+						ability = self,
+						damage = damage_tick,
+						damage_type = damage_type
+					})
 					local current_ticks = 0
 					local randomness_x = 0
 					local randomness_y = 0
@@ -469,8 +486,13 @@ function imba_kunkka_torrent:OnSpellStart()
 					-- Deals tick damage tick_count times
 					Timers:CreateTimer(function()
 						if current_ticks < tick_count then
-							ApplyDamage({ victim = enemy, attacker = caster, ability = self, damage = damage_tick,
-								damage_type = damage_type })
+							ApplyDamage({
+								victim = enemy,
+								attacker = caster,
+								ability = self,
+								damage = damage_tick,
+								damage_type = damage_type
+							})
 							current_ticks = current_ticks + 1
 							return tick_interval
 						end
@@ -503,7 +525,7 @@ function imba_kunkka_torrent:OnSpellStart()
 				-- SUPER DUPER HYPER torrent animation if tsunami
 				if torrent_count == 0 and tsunami then
 					local torrent_tsunami_fx = ParticleManager:CreateParticle(
-					"particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf",
+						"particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf",
 						PATTACH_CUSTOMORIGIN, caster)
 					ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, target)
 					ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
@@ -554,7 +576,7 @@ end
 -- MODIFIER_IMBA_TORRENT_HANDLER --
 -----------------------------------
 
-modifier_imba_torrent_handler = class({})
+modifier_imba_torrent_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_torrent_handler:IsHidden() return true end
 
@@ -597,7 +619,7 @@ function modifier_imba_torrent_handler:GetModifierDisableTurning()
 	return 1
 end
 
-modifier_imba_torrent_phase = class({})
+modifier_imba_torrent_phase = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_torrent_phase:CheckState()
 	local state = { [MODIFIER_STATE_NO_UNIT_COLLISION] = true }
@@ -612,7 +634,7 @@ function modifier_imba_torrent_phase:IsDebuff()
 	return true
 end
 
-modifier_imba_torrent_slow_tide = class({})
+modifier_imba_torrent_slow_tide = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_torrent_slow_tide:IsHidden()
 	return true
@@ -626,7 +648,7 @@ function modifier_imba_torrent_slow_tide:IsPurgable()
 	return true
 end
 
-modifier_imba_torrent_slow = class({})
+modifier_imba_torrent_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_torrent_slow:DeclareFunctions()
 	local decFuncs =
@@ -657,7 +679,7 @@ function modifier_imba_torrent_slow:IsPurgable()
 	return true
 end
 
-modifier_imba_sec_torrent_slow = class({})
+modifier_imba_sec_torrent_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sec_torrent_slow:DeclareFunctions()
 	local decFuncs =
@@ -685,7 +707,7 @@ end
 
 -- Modifier for casting torrent without showing cast direction
 -- Modifier is added in the OrderFilter in imba.lua !
-modifier_imba_torrent_cast = class({})
+modifier_imba_torrent_cast = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_torrent_cast:DeclareFunctions()
 	local decFuncs =
@@ -720,7 +742,7 @@ function modifier_imba_torrent_cast:OnDestroy(params)
 	end
 end
 
-modifier_imba_kunkka_torrent_talent_thinker = class({})
+modifier_imba_kunkka_torrent_talent_thinker = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_kunkka_torrent_talent_thinker:IsHidden()
 	return false
@@ -761,7 +783,7 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 	if IsServer() then
 		local tsunami = self.caster:HasModifier("modifier_imba_ebb_and_flow_tsunami")
 		local interval = (math.random() + math.random(self.min_interval, ((self:GetRemainingTime() + self.tick) * 10))) /
-		10
+			10
 		-- Re-roll the interval
 		self.tick = (math.random() + math.random(self.min_interval, self.max_interval)) / 10
 
@@ -804,8 +826,13 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 		-- Iterate through affected enemies
 		for _, enemy in pairs(enemies) do
 			-- Deals the initial damage
-			ApplyDamage({ victim = enemy, attacker = self.caster, ability = self.ability, damage = damage_tick,
-				damage_type = self.ability:GetAbilityDamageType() })
+			ApplyDamage({
+				victim = enemy,
+				attacker = self.caster,
+				ability = self.ability,
+				damage = damage_tick,
+				damage_type = self.ability:GetAbilityDamageType()
+			})
 			local randomness_x = 0
 			local randomness_y = 0
 
@@ -857,7 +884,7 @@ end
 --			  TIDEBRINGER
 -------------------------------------------
 
-imba_kunkka_tidebringer = class({})
+imba_kunkka_tidebringer = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_tidebringer", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidebringer_sword_particle", "components/abilities/heroes/hero_kunkka",
 	LUA_MODIFIER_MOTION_NONE)
@@ -907,7 +934,7 @@ function imba_kunkka_tidebringer:OnUpgrade()
 end
 
 function imba_kunkka_tidebringer:GetCooldown(nLevel)
-	local cooldown = self.BaseClass.GetCooldown(self, nLevel)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 	local caster = self:GetCaster()
 
 	if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave") or caster:HasModifier("modifier_imba_ebb_and_flow_tsunami") or (caster:HasTalent("special_bonus_imba_kunkka_2") and caster:HasModifier("modifier_imba_ghostship_rum")) then
@@ -916,7 +943,7 @@ function imba_kunkka_tidebringer:GetCooldown(nLevel)
 	return cooldown
 end
 
-modifier_imba_tidebringer_sword_particle = class({})
+modifier_imba_tidebringer_sword_particle = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tidebringer_sword_particle:IsHidden()
 	return true
@@ -951,7 +978,7 @@ function modifier_imba_tidebringer_sword_particle:OnCreated()
 		if caster.tidebringer_weapon_pfx == 0 then
 			EmitSoundOn("Hero_Kunkaa.Tidebringer", caster)
 			caster.tidebringer_weapon_pfx = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf", PATTACH_CUSTOMORIGIN, caster)
+				"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf", PATTACH_CUSTOMORIGIN, caster)
 			ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 0, caster, PATTACH_POINT_FOLLOW,
 				"attach_tidebringer", caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 2, caster, PATTACH_POINT_FOLLOW,
@@ -960,13 +987,13 @@ function modifier_imba_tidebringer_sword_particle:OnCreated()
 	end
 end
 
-modifier_imba_tidebringer_manual = class({})
+modifier_imba_tidebringer_manual = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tidebringer_manual:IsHidden()
 	return false
 end
 
-modifier_imba_tidebringer = class({})
+modifier_imba_tidebringer = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tidebringer:DeclareFunctions()
 	return {
@@ -1063,8 +1090,8 @@ function modifier_imba_tidebringer:OnAttackLanded(params)
 			-- Torrent animation if Tsunami
 			if self.tide_index == 1 then
 				self.torrent_radius = radius_end *
-				(math.sqrt(math.pow((radius_end - radius_start), 2) + math.pow(range, 2)) + radius_start - radius_end) /
-				range
+					(math.sqrt(math.pow((radius_end - radius_start), 2) + math.pow(range, 2)) + radius_start - radius_end) /
+					range
 				self.position_center = parent:GetAbsOrigin() + parent:GetForwardVector() * self.torrent_radius
 
 				local torrent_fx_mini = ParticleManager:CreateParticle("particles/hero/kunkka/torrent_splash.vpcf",
@@ -1104,7 +1131,7 @@ function modifier_imba_tidebringer:OnAttackLanded(params)
 							if hit_enemy then
 								-- Play hit particle
 								local tidebringer_hit_fx = ParticleManager:CreateParticle(
-								"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf", PATTACH_CUSTOMORIGIN,
+									"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf", PATTACH_CUSTOMORIGIN,
 									self:GetParent())
 								ParticleManager:SetParticleControlEnt(tidebringer_hit_fx, 0, enemy, PATTACH_POINT_FOLLOW,
 									"attach_hitloc", enemy:GetAbsOrigin(), true)
@@ -1114,8 +1141,13 @@ function modifier_imba_tidebringer:OnAttackLanded(params)
 									"attach_hitloc", enemy:GetAbsOrigin(), true)
 
 								-- Deal the cleave damage
-								ApplyDamage({ attacker = self:GetParent(), victim = enemy, ability = ability,
-									damage = cleaveDamage, damage_type = DAMAGE_TYPE_PHYSICAL })
+								ApplyDamage({
+									attacker = self:GetParent(),
+									victim = enemy,
+									ability = ability,
+									damage = cleaveDamage,
+									damage_type = DAMAGE_TYPE_PHYSICAL
+								})
 							end
 						end
 					end
@@ -1127,7 +1159,7 @@ function modifier_imba_tidebringer:OnAttackLanded(params)
 						for _, enemy_to_hit in pairs(enemies_to_cleave) do
 							-- Play hit particle
 							local tidebringer_hit_fx = ParticleManager:CreateParticle(
-							"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf", PATTACH_CUSTOMORIGIN,
+								"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf", PATTACH_CUSTOMORIGIN,
 								self:GetParent())
 							ParticleManager:SetParticleControlEnt(tidebringer_hit_fx, 0, enemy_to_hit,
 								PATTACH_POINT_FOLLOW, "attach_hitloc", enemy_to_hit:GetAbsOrigin(), true)
@@ -1170,7 +1202,7 @@ function modifier_imba_tidebringer:OnAttackLanded(params)
 						ability_tide:CastAbility()
 					end
 					local cooldown = ability_tide:GetCooldownTimeRemaining() -
-					(self.hitCounter * ability:GetSpecialValueFor("cdr_per_hit"))
+						(self.hitCounter * ability:GetSpecialValueFor("cdr_per_hit"))
 					ability_tide:EndCooldown()
 					ability_tide:StartCooldown(cooldown)
 					self.hitCounter = nil
@@ -1210,7 +1242,7 @@ function modifier_imba_tidebringer:TidebringerEffects(target, ability)
 		local distance_from_center = (location - self.position_center):Length2D()
 
 		local knocking_up = ((self.torrent_radius / distance_from_center) * 50) *
-		(attacker:GetAverageTrueAttackDamage(attacker) / 300) + 40
+			(attacker:GetAverageTrueAttackDamage(attacker) / 300) + 40
 		local knockback =
 		{
 			should_stun = 1,
@@ -1247,7 +1279,7 @@ function modifier_imba_tidebringer:IsPurgable()
 	return false
 end
 
-modifier_imba_tidebringer_slow = class({})
+modifier_imba_tidebringer_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tidebringer_slow:DeclareFunctions()
 	local decFuncs =
@@ -1277,7 +1309,7 @@ function modifier_imba_tidebringer_slow:RemoveOnDeath()
 	return true
 end
 
-modifier_imba_tidebringer_cleave_hit_target = class({})
+modifier_imba_tidebringer_cleave_hit_target = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_tidebringer_cleave_hit_target:IsHidden()
 	return true
@@ -1297,8 +1329,13 @@ end
 
 function modifier_imba_tidebringer_cleave_hit_target:OnDestroy()
 	if IsServer() then
-		ApplyDamage({ attacker = self:GetCaster(), victim = self:GetParent(), ability = self:GetAbility(),
-			damage = self.cleave_damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+		ApplyDamage({
+			attacker = self:GetCaster(),
+			victim = self:GetParent(),
+			ability = self:GetAbility(),
+			damage = self.cleave_damage,
+			damage_type = DAMAGE_TYPE_PHYSICAL
+		})
 	end
 end
 
@@ -1314,7 +1351,7 @@ end
 --			X MARKS THE SPOT
 -------------------------------------------
 
-imba_kunkka_x_marks_the_spot = class({})
+imba_kunkka_x_marks_the_spot = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_x_marks_the_spot", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_x_marks_the_spot_return", "components/abilities/heroes/hero_kunkka",
 	LUA_MODIFIER_MOTION_NONE)
@@ -1354,8 +1391,10 @@ function imba_kunkka_x_marks_the_spot:OnSpellStart()
 		end
 		self:CreateVisibilityNode(target:GetAbsOrigin(), 300, 8)
 		if target:TriggerSpellAbsorb(self) then
-			if talent_hits then caster:AddNewModifier(caster, self, "modifier_imba_x_marks_the_spot_return",
-					{ duration = duration }) end
+			if talent_hits then
+				caster:AddNewModifier(caster, self, "modifier_imba_x_marks_the_spot_return",
+					{ duration = duration })
+			end
 			return nil
 		end
 		caster:AddNewModifier(caster, self, "modifier_imba_x_marks_the_spot_return", { duration = duration })
@@ -1393,7 +1432,7 @@ function imba_kunkka_x_marks_the_spot:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_x_marks_the_spot = class({})
+modifier_imba_x_marks_the_spot = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_x_marks_the_spot:OnCreated(params)
 	if IsServer() then
@@ -1498,7 +1537,7 @@ function modifier_imba_x_marks_the_spot:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
-modifier_imba_x_marks_the_spot_return = class({})
+modifier_imba_x_marks_the_spot_return = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_x_marks_the_spot_return:IsHidden()
 	return true
@@ -1538,7 +1577,7 @@ function modifier_imba_x_marks_the_spot_return:OnDestroy(params)
 	end
 end
 
-modifier_imba_x_marks_the_spot_talent_ms = class({})
+modifier_imba_x_marks_the_spot_talent_ms = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_x_marks_the_spot_talent_ms:IsDebuff()
 	local caster = self:GetCaster()
@@ -1582,7 +1621,7 @@ end
 --			   RETURN
 -------------------------------------------
 
-imba_kunkka_return = class({})
+imba_kunkka_return = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_kunkka_return:GetAbilityTextureName()
 	return "kunkka_return"
@@ -1629,7 +1668,7 @@ end
 --			GHOSTSHIP
 -------------------------------------------
 
-imba_kunkka_ghostship = class({})
+imba_kunkka_ghostship = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_ghostship_rum", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghostship_rum_damage", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghostship_tide_slow", "components/abilities/heroes/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
@@ -1757,7 +1796,7 @@ function imba_kunkka_ghostship:OnSpellStart()
 				if travel > crash_delay then
 					-- Water Nova on hit + crash sound
 					local water_fx = ParticleManager:CreateParticle(
-					"particles/units/heroes/hero_kunkka/kunkka_boat_splash_end.vpcf", PATTACH_CUSTOMORIGIN, caster)
+						"particles/units/heroes/hero_kunkka/kunkka_boat_splash_end.vpcf", PATTACH_CUSTOMORIGIN, caster)
 					ParticleManager:SetParticleControl(water_fx, 3, target)
 					Timers:CreateTimer(2, function()
 						ParticleManager:DestroyParticle(water_fx, false)
@@ -1772,8 +1811,13 @@ function imba_kunkka_ghostship:OnSpellStart()
 						--enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
 
 						-- Deal crash damage to enemies hit
-						ApplyDamage({ victim = enemy, attacker = caster, ability = self, damage = damage,
-							damage_type = self:GetAbilityDamageType() })
+						ApplyDamage({
+							victim = enemy,
+							attacker = caster,
+							ability = self,
+							damage = damage,
+							damage_type = self:GetAbilityDamageType()
+						})
 					end
 
 					-- Setting ship underneath the world + deleting it
@@ -1826,7 +1870,7 @@ function imba_kunkka_ghostship:OnSpellStart()
 
 			-- Show visual crash point effect to allies only
 			local crash_pfx = ParticleManager:CreateParticleForTeam(
-			"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf", PATTACH_ABSORIGIN, caster,
+				"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf", PATTACH_ABSORIGIN, caster,
 				caster:GetTeam())
 			ParticleManager:SetParticleControl(crash_pfx, 0, crash_pos)
 			-- Destroy particle after the crash
@@ -1846,12 +1890,19 @@ function imba_kunkka_ghostship:OnSpellStart()
 					end
 				end
 				for k, enemy in pairs(enemies) do
-					ApplyDamage({ victim = enemy, attacker = caster, ability = self, damage = damage,
-						damage_type = self:GetAbilityDamageType() })
+					ApplyDamage({
+						victim = enemy,
+						attacker = caster,
+						ability = self,
+						damage = damage,
+						damage_type = self:GetAbilityDamageType()
+					})
 					if extra_slow then
 						enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow",
-							{ duration = stun_duration +
-							self:GetSpecialValueFor("tide_red_slow_duration") * (1 - enemy:GetStatusResistance()) })
+							{
+								duration = stun_duration +
+									self:GetSpecialValueFor("tide_red_slow_duration") * (1 - enemy:GetStatusResistance())
+							})
 					end
 					enemy:AddNewModifier(caster, self, "modifier_stunned",
 						{ duration = stun_duration * (1 - enemy:GetStatusResistance()) })
@@ -1951,7 +2002,7 @@ function imba_kunkka_ghostship:OnProjectileHit_ExtraData(target, location, Extra
 	return false
 end
 
-modifier_imba_ghostship_drag = class({})
+modifier_imba_ghostship_drag = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghostship_drag:IsHidden()
 	return false
@@ -2045,7 +2096,7 @@ function modifier_imba_ghostship_drag:OnDestroy()
 	end
 end
 
-modifier_imba_ghostship_rum = class({})
+modifier_imba_ghostship_rum = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghostship_rum:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("rum_speed")
@@ -2119,7 +2170,7 @@ function modifier_imba_ghostship_rum:IsDebuff()
 	return false
 end
 
-modifier_imba_ghostship_rum_damage = class({})
+modifier_imba_ghostship_rum_damage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghostship_rum_damage:GetCustomIncomingDamagePct()
 	return self:GetAbility():GetSpecialValueFor("rum_reduce_pct")
@@ -2180,7 +2231,7 @@ function modifier_imba_ghostship_rum_damage:OnCreated(params)
 	end
 end
 
-modifier_imba_ghostship_tide_slow = class({})
+modifier_imba_ghostship_tide_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ghostship_tide_slow:DeclareFunctions()
 	local decFuncs =
@@ -2229,13 +2280,13 @@ LinkLuaModifier("modifier_special_bonus_imba_kunkka_8", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_kunkka_9", "components/abilities/heroes/hero_kunkka",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_kunkka_1 = modifier_special_bonus_imba_kunkka_1 or class({})
-modifier_special_bonus_imba_kunkka_2 = modifier_special_bonus_imba_kunkka_2 or class({})
-modifier_special_bonus_imba_kunkka_3 = modifier_special_bonus_imba_kunkka_3 or class({})
-modifier_special_bonus_imba_kunkka_4 = modifier_special_bonus_imba_kunkka_4 or class({})
-modifier_special_bonus_imba_kunkka_6 = modifier_special_bonus_imba_kunkka_6 or class({})
-modifier_special_bonus_imba_kunkka_8 = modifier_special_bonus_imba_kunkka_8 or class({})
-modifier_special_bonus_imba_kunkka_9 = modifier_special_bonus_imba_kunkka_9 or class({})
+modifier_special_bonus_imba_kunkka_1 = modifier_special_bonus_imba_kunkka_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_2 = modifier_special_bonus_imba_kunkka_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_3 = modifier_special_bonus_imba_kunkka_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_4 = modifier_special_bonus_imba_kunkka_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_6 = modifier_special_bonus_imba_kunkka_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_8 = modifier_special_bonus_imba_kunkka_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_kunkka_9 = modifier_special_bonus_imba_kunkka_9 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_kunkka_1:IsHidden() return true end
 

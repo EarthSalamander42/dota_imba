@@ -22330,7 +22330,7 @@
 	//=================================================================================================================
 	// Shadow Fiend's Shadow Raze (close)
 	//=================================================================================================================
-	"imba_nevermore_shadowraze_close"
+	"imba_nevermore_shadowraze1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22410,23 +22410,13 @@
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
 			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stack_bonus_damage"			 "50 60 70 80"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"8"
-			}
 		}
 	}
 
 	//=================================================================================================================
 	// Shadow Fiend's Shadow Raze (medium)
 	//=================================================================================================================
-	"imba_nevermore_shadowraze_medium"
+	"imba_nevermore_shadowraze2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22516,23 +22506,13 @@
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
 			}
-			"12"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"stack_bonus_damage" "50 60 70 80"
-			}
-			"13"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"8"
-			}
 		}
 	}
 
 	//=================================================================================================================
 	// Shadow Fiend's Shadow Raze (far)
 	//=================================================================================================================
-	"imba_nevermore_shadowraze_far"
+	"imba_nevermore_shadowraze3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22641,16 +22621,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
-			}
-			"16"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"stack_bonus_damage" "50 60 70 80"
-			}
-			"17"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"8"
 			}
 		}
 	}
@@ -22816,12 +22786,6 @@
 		"ScriptFile"						"components/abilities/heroes/hero_nevermore.lua"
 		"HasScepterUpgrade" 				"1"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -22915,9 +22879,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_shadowraze_close"
-			"02"	"imba_nevermore_shadowraze_medium"
-			"03"	"imba_nevermore_shadowraze_far"
+			"01"	"imba_nevermore_shadowraze1"
+			"02"	"imba_nevermore_shadowraze2"
+			"03"	"imba_nevermore_shadowraze3"
 		}
 
 		// Special
@@ -23072,9 +23036,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_shadowraze_far"
-			"02"	"imba_nevermore_shadowraze_medium"
-			"03"	"imba_nevermore_shadowraze_close"
+			"01"	"imba_nevermore_shadowraze3"
+			"02"	"imba_nevermore_shadowraze2"
+			"03"	"imba_nevermore_shadowraze1"
 		}
 
 		// Special
@@ -23124,9 +23088,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_shadowraze_far"
-			"02"	"imba_nevermore_shadowraze_medium"
-			"03"	"imba_nevermore_shadowraze_close"
+			"01"	"imba_nevermore_shadowraze3"
+			"02"	"imba_nevermore_shadowraze2"
+			"03"	"imba_nevermore_shadowraze1"
 		}
 
 		// Special

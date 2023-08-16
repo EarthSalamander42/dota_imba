@@ -34,28 +34,28 @@ LinkLuaModifier("modifier_imba_ancient_apparition_ice_blast_cold_hearted",
 	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 imba_ancient_apparition_cold_feet                         = class(VANILLA_ABILITIES_BASECLASS)
-modifier_imba_ancient_apparition_cold_feet                = class({})
-modifier_imba_ancient_apparition_cold_feet_freeze         = class({})
+modifier_imba_ancient_apparition_cold_feet                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_cold_feet_freeze         = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_ancient_apparition_ice_vortex                        = class(VANILLA_ABILITIES_BASECLASS)
-modifier_imba_ancient_apparition_ice_vortex_thinker       = class({})
-modifier_imba_ancient_apparition_ice_vortex               = class({})
+modifier_imba_ancient_apparition_ice_vortex_thinker       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_ice_vortex               = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_ancient_apparition_chilling_touch                    = class(VANILLA_ABILITIES_BASECLASS)
-modifier_imba_ancient_apparition_chilling_touch_slow      = class({})
+modifier_imba_ancient_apparition_chilling_touch_slow      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_ancient_apparition_imbued_ice                        = class({})
-modifier_imba_ancient_apparition_imbued_ice               = class({})
-modifier_imba_ancient_apparition_imbued_ice_slow          = class({})
+imba_ancient_apparition_imbued_ice                        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_imbued_ice               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_imbued_ice_slow          = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_ancient_apparition_anti_abrasion                     = class({})
-modifier_imba_ancient_apparition_anti_abrasion_thinker    = class({})
+imba_ancient_apparition_anti_abrasion                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_anti_abrasion_thinker    = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_ancient_apparition_ice_blast                         = class(VANILLA_ABILITIES_BASECLASS)
-modifier_imba_ancient_apparition_ice_blast_thinker        = class({})
-modifier_imba_ancient_apparition_ice_blast                = class({})
-modifier_imba_ancient_apparition_ice_blast_global_cooling = class({})
-modifier_imba_ancient_apparition_ice_blast_cold_hearted   = class({})
+modifier_imba_ancient_apparition_ice_blast_thinker        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_ice_blast                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_ice_blast_global_cooling = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_ancient_apparition_ice_blast_cold_hearted   = class(VANILLA_ABILITIES_BASECLASS)
 
 imba_ancient_apparition_ice_blast_release                 = class(VANILLA_ABILITIES_BASECLASS)
 
@@ -253,7 +253,7 @@ end
 
 --[[
 function imba_ancient_apparition_ice_vortex:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_ancient_apparition_ice_vortex_cooldown")
 end
 --]]
 function imba_ancient_apparition_ice_vortex:OnUpgrade()
@@ -427,7 +427,7 @@ end
 --[[
 function imba_ancient_apparition_chilling_touch:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -1200,13 +1200,13 @@ LinkLuaModifier("modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe",
 	"components/abilities/heroes/hero_ancient_apparition", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_ancient_apparition_chilling_touch_range     =
-	modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class({})
-modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown      = class({})
-modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage    = class({})
-modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost         = class({})
+	modifier_special_bonus_imba_ancient_apparition_chilling_touch_range or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ancient_apparition_ice_vortex_cooldown      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ancient_apparition_chilling_touch_damage    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ancient_apparition_ice_vortex_boost         = class(VANILLA_ABILITIES_BASECLASS)
 modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold =
-	modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold or class({})
-modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe            = class({})
+	modifier_special_bonus_imba_ancient_apparition_ice_blast_kill_threshold or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ancient_apparition_cold_feet_aoe            = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_ancient_apparition_chilling_touch_range:IsHidden() return true end
 

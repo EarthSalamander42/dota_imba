@@ -17,28 +17,28 @@ LinkLuaModifier("modifier_imba_terrorblade_metamorphosis_fear_thinker", "compone
 
 LinkLuaModifier("modifier_imba_terrorblade_power_rend", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
-imba_terrorblade_reflection                                    = imba_terrorblade_reflection or class({})
-modifier_imba_terrorblade_reflection_slow                      = modifier_imba_terrorblade_reflection_slow or class({})
-modifier_imba_terrorblade_reflection_unit                      = modifier_imba_terrorblade_reflection_unit or class({})
-modifier_imba_terrorblade_reflection_infinity_mirror_stacks    = modifier_imba_terrorblade_reflection_infinity_mirror_stacks or class({})
+imba_terrorblade_reflection                                    = imba_terrorblade_reflection or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_reflection_slow                      = modifier_imba_terrorblade_reflection_slow or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_reflection_unit                      = modifier_imba_terrorblade_reflection_unit or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_reflection_infinity_mirror_stacks    = modifier_imba_terrorblade_reflection_infinity_mirror_stacks or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_terrorblade_conjure_image                                 = imba_terrorblade_conjure_image or class({})
-modifier_imba_terrorblade_conjure_image_autocast               = modifier_imba_terrorblade_conjure_image_autocast or class({})
-modifier_imba_terrorblade_conjure_image_autocast_cooldown      = modifier_imba_terrorblade_conjure_image_autocast_cooldown or class({})
+imba_terrorblade_conjure_image                                 = imba_terrorblade_conjure_image or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_conjure_image_autocast               = modifier_imba_terrorblade_conjure_image_autocast or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_conjure_image_autocast_cooldown      = modifier_imba_terrorblade_conjure_image_autocast_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_terrorblade_metamorphosis                                 = imba_terrorblade_metamorphosis or class({})
-modifier_imba_terrorblade_metamorphosis_transform              = modifier_imba_terrorblade_metamorphosis_transform or class({})
-modifier_imba_terrorblade_metamorphosis                        = modifier_imba_terrorblade_metamorphosis or class({})
-modifier_imba_terrorblade_metamorphosis_transform_aura         = modifier_imba_terrorblade_metamorphosis_transform_aura or class({})
-modifier_imba_terrorblade_metamorphosis_transform_aura_applier = modifier_imba_terrorblade_metamorphosis_transform_aura_applier or class({})
+imba_terrorblade_metamorphosis                                 = imba_terrorblade_metamorphosis or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_metamorphosis_transform              = modifier_imba_terrorblade_metamorphosis_transform or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_metamorphosis                        = modifier_imba_terrorblade_metamorphosis or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_metamorphosis_transform_aura         = modifier_imba_terrorblade_metamorphosis_transform_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_metamorphosis_transform_aura_applier = modifier_imba_terrorblade_metamorphosis_transform_aura_applier or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_terrorblade_terror_wave                                   = imba_terrorblade_terror_wave or class({})
-modifier_imba_terrorblade_metamorphosis_fear_thinker           = modifier_imba_terrorblade_metamorphosis_fear_thinker or class({})
+imba_terrorblade_terror_wave                                   = imba_terrorblade_terror_wave or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_metamorphosis_fear_thinker           = modifier_imba_terrorblade_metamorphosis_fear_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_terrorblade_power_rend                                    = imba_terrorblade_power_rend or class({})
-modifier_imba_terrorblade_power_rend                           = modifier_imba_terrorblade_power_rend or class({})
+imba_terrorblade_power_rend                                    = imba_terrorblade_power_rend or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_terrorblade_power_rend                           = modifier_imba_terrorblade_power_rend or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_terrorblade_sunder                                        = imba_terrorblade_sunder or class({})
+imba_terrorblade_sunder                                        = imba_terrorblade_sunder or class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------
 -- IMBA_TERRORBLADE_REFLECTION --
@@ -53,7 +53,7 @@ function imba_terrorblade_reflection:GetCastRange(location, target)
 end
 
 function imba_terrorblade_reflection:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_reflection_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_reflection_cooldown")
 end
 
 -- IMBAfication: Infinity Mirror
@@ -844,9 +844,9 @@ end
 
 function imba_terrorblade_sunder:GetCooldown(level)
 	if self.GetCursorTarget and self:GetCursorTarget() and self:GetCursorTarget():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and self:GetCursorTarget():IsMagicImmune() then
-		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown") + self:GetSpecialValueFor("spell_immunity_cooldown_increase")
+		return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown") + self:GetSpecialValueFor("spell_immunity_cooldown_increase")
 	else
-		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown")
+		return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_terrorblade_sunder_cooldown")
 	end
 end
 
@@ -926,9 +926,9 @@ LinkLuaModifier("modifier_special_bonus_imba_terrorblade_reflection_cooldown", "
 LinkLuaModifier("modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_terrorblade_sunder_cooldown", "components/abilities/heroes/hero_terrorblade", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_terrorblade_reflection_cooldown        = modifier_special_bonus_imba_terrorblade_reflection_cooldown or class({})
-modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range = modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range or class({})
-modifier_special_bonus_imba_terrorblade_sunder_cooldown            = modifier_special_bonus_imba_terrorblade_sunder_cooldown or class({})
+modifier_special_bonus_imba_terrorblade_reflection_cooldown        = modifier_special_bonus_imba_terrorblade_reflection_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range = modifier_special_bonus_imba_terrorblade_metamorphosis_attack_range or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_terrorblade_sunder_cooldown            = modifier_special_bonus_imba_terrorblade_sunder_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_terrorblade_reflection_cooldown:IsHidden() return true end
 

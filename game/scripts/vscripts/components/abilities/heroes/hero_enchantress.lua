@@ -14,7 +14,7 @@ LinkLuaModifier("modifier_imba_enchantress_untouchable_slow", "components/abilit
 LinkLuaModifier("modifier_imba_enchantress_untouchable_peace_on_earth",
 	"components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_untouchable = class({})
+imba_enchantress_untouchable = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_untouchable:GetCastAnimation()
 	return ACT_DOTA_CAST_ABILITY_3
@@ -72,7 +72,7 @@ end
 -- UNTOUCHABLE MODIFIER --
 --------------------------
 
-modifier_imba_enchantress_untouchable = class({})
+modifier_imba_enchantress_untouchable = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_untouchable:IsHidden() return self:GetCaster() == self:GetParent() end
 
@@ -121,7 +121,7 @@ end
 -- UNTOUCHABLE MODIFIER SLOW --
 -------------------------------
 
-modifier_imba_enchantress_untouchable_slow = class({})
+modifier_imba_enchantress_untouchable_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_untouchable_slow:OnCreated()
 	self.ability                    = self:GetAbility()
@@ -130,7 +130,7 @@ function modifier_imba_enchantress_untouchable_slow:OnCreated()
 
 	-- AbilitySpecials
 	self.slow_attack_speed          = self.ability:GetSpecialValueFor("slow_attack_speed") +
-	self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
+		self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_enchantress_5")
 	--self.slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 	self.stopgap_bat_increase       = self.ability:GetSpecialValueFor("stopgap_bat_increase")
 	self.kindred_spirits_multiplier = self.ability:GetSpecialValueFor("kindred_spirits_multiplier")
@@ -184,7 +184,7 @@ end
 -- UNTOUCHABLE PEACE ON EARTH MODIFIER --
 -----------------------------------------
 
-modifier_imba_enchantress_untouchable_peace_on_earth = class({})
+modifier_imba_enchantress_untouchable_peace_on_earth = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_untouchable_peace_on_earth:IsDebuff() return true end
 
@@ -206,7 +206,7 @@ function modifier_imba_enchantress_untouchable_peace_on_earth:OnCreated()
 	self:AddParticle(self.particle2, false, false, -1, false, false)
 
 	self.particle3 = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_enchantress/enchantress_natures_attendants_test.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+		"particles/units/heroes/hero_enchantress/enchantress_natures_attendants_test.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 		self.parent)
 	for wisp = 1, 4 do
 		ParticleManager:SetParticleControlEnt(self.particle3, wisp, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
@@ -237,7 +237,7 @@ LinkLuaModifier("modifier_imba_enchantress_enchant_controlled", "components/abil
 LinkLuaModifier("modifier_imba_enchantress_enchant_slow", "components/abilities/heroes/hero_enchantress.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_enchant = class({})
+imba_enchantress_enchant = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_enchant:GetAbilityTargetTeam()
 	return DOTA_UNIT_TARGET_TEAM_BOTH
@@ -273,7 +273,7 @@ function imba_enchantress_enchant:OnSpellStart()
 	self.dominate_duration   = self:GetSpecialValueFor("dominate_duration")
 	self.slow_movement_speed = self:GetSpecialValueFor("slow_movement_speed")
 	self.tooltip_duration    = self:GetSpecialValueFor("tooltip_duration") +
-	self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
+		self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
 
 	if self.caster:HasTalent("special_bonus_imba_enchantress_6") then
 		self.dominate_duration = self.dominate_duration * self.caster:FindTalentValue("special_bonus_imba_enchantress_6")
@@ -344,13 +344,13 @@ end
 -- ENCHANT MODIFIER --
 ----------------------
 
--- modifier_imba_enchantress_enchant				= class({})
+-- modifier_imba_enchantress_enchant				= class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------
 -- ENCHANT CONTROLLED MODIFIER --
 ---------------------------------
 
-modifier_imba_enchantress_enchant_controlled = class({})
+modifier_imba_enchantress_enchant_controlled = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_enchant_controlled:IsHidden() return true end
 
@@ -444,7 +444,7 @@ end
 -- ENCHANT SLOW MODIFIER --
 ---------------------------
 
-modifier_imba_enchantress_enchant_slow = class({})
+modifier_imba_enchantress_enchant_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_enchant_slow:GetStatusEffectName()
 	return "particles/status_fx/status_effect_enchantress_enchant_slow.vpcf"
@@ -459,7 +459,7 @@ function modifier_imba_enchantress_enchant_slow:OnCreated()
 	if not IsServer() then return end
 
 	self.particle = ParticleManager:CreateParticle(
-	"particles/units/heroes/hero_enchantress/enchantress_enchant_slow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		"particles/units/heroes/hero_enchantress/enchantress_enchant_slow.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
 	self:AddParticle(self.particle, false, false, -1, false, false)
 
@@ -498,7 +498,7 @@ LinkLuaModifier("modifier_imba_enchantress_natures_attendants", "components/abil
 LinkLuaModifier("modifier_imba_enchantress_natures_attendants_mini", "components/abilities/heroes/hero_enchantress.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_natures_attendants = class({})
+imba_enchantress_natures_attendants = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_natures_attendants:GetCastAnimation()
 	return ACT_DOTA_CAST_ABILITY_3
@@ -533,7 +533,7 @@ end
 -- NATURE'S ATTENDANTS MODIFIER --
 ----------------------------------
 
-modifier_imba_enchantress_natures_attendants = class({})
+modifier_imba_enchantress_natures_attendants = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_natures_attendants:IsPurgable() return false end
 
@@ -592,7 +592,7 @@ function modifier_imba_enchantress_natures_attendants:OnCreated()
 	-- 3-5/7/9/11 for the wisp control points
 	-- CP60 for colour, CP61 Vector(1, 0, 0) to activate it
 	self.particle_name = "particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl" ..
-	self.level .. ".vpcf"
+		self.level .. ".vpcf"
 
 	self.particle = ParticleManager:CreateParticle(self.particle_name, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 
@@ -752,7 +752,7 @@ end
 -- NATURE'S ATTENDANTS MINI MODIFIER --
 ---------------------------------------
 
-modifier_imba_enchantress_natures_attendants_mini = class({})
+modifier_imba_enchantress_natures_attendants_mini = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_natures_attendants_mini:OnCreated()
 	self.ability         = self:GetAbility()
@@ -807,7 +807,7 @@ end
 LinkLuaModifier("modifier_imba_enchantress_natura_shift", "components/abilities/heroes/hero_enchantress.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_natura_shift = class({})
+imba_enchantress_natura_shift = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_natura_shift:IsInnateAbility() return true end
 
@@ -847,7 +847,7 @@ function imba_enchantress_natura_shift:GetAbilityTextureName()
 	end
 end
 
-modifier_imba_enchantress_natura_shift = class({})
+modifier_imba_enchantress_natura_shift = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_natura_shift:IsHidden() return true end
 
@@ -889,7 +889,7 @@ LinkLuaModifier("modifier_imba_enchantress_impetus", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_enchantress_impetus_huntmastery_timer", "components/abilities/heroes/hero_enchantress.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_impetus = class({})
+imba_enchantress_impetus = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_impetus:IsStealable() return false end
 
@@ -901,7 +901,7 @@ end
 -- IMPETUS MODIFIER --
 ----------------------
 
-modifier_imba_enchantress_impetus = class({})
+modifier_imba_enchantress_impetus = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_impetus:OnCreated()
 	self.ability                    = self:GetAbility()
@@ -1008,7 +1008,7 @@ function modifier_imba_enchantress_impetus:OnAttackLanded(keys)
 			--local distance 			= math.min(CalcDistanceBetweenEntityOBB(self.caster, keys.target), self.distance_cap)
 			local distance       = (self.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Length()
 			local impetus_damage = distance *
-			((self.distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_enchantress_9")) / 100)
+				((self.distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_enchantress_9")) / 100)
 
 			local damageTable    = {
 				victim = keys.target,
@@ -1035,9 +1035,9 @@ function modifier_imba_enchantress_impetus:OnAttackLanded(keys)
 				end
 
 				local phys_damage       = impetus_damage * keys.target:GetSpellAmplification(false) *
-				self.armament_spell_amp_pct
+					self.armament_spell_amp_pct
 				local magic_damage      = impetus_damage * (keys.target:GetAverageTrueAttackDamage(self.caster) / 100) *
-				self.armament_attack_dmg_pct
+					self.armament_attack_dmg_pct
 
 				-- First apply the extra physical damage...
 				damageTable.damage      = phys_damage
@@ -1101,7 +1101,7 @@ end
 -- IMPETUS HUNTMASTERY TIMER MODIFIER --
 ----------------------------------------
 
-modifier_imba_enchantress_impetus_huntmastery_timer = class({})
+modifier_imba_enchantress_impetus_huntmastery_timer = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enchantress_impetus_huntmastery_timer:IgnoreTenacity() return true end
 
@@ -1155,8 +1155,8 @@ LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic
 LinkLuaModifier("modifier_imba_enchantress_impetus_723", "components/abilities/heroes/hero_enchantress",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_enchantress_impetus_723          = imba_enchantress_impetus_723 or class({})
-modifier_imba_enchantress_impetus_723 = modifier_imba_enchantress_impetus_723 or class({})
+imba_enchantress_impetus_723          = imba_enchantress_impetus_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_enchantress_impetus_723 = modifier_imba_enchantress_impetus_723 or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_enchantress_impetus_723:IsStealable() return false end
 
@@ -1285,20 +1285,20 @@ LinkLuaModifier("modifier_special_bonus_imba_enchantress_8", "components/abiliti
 LinkLuaModifier("modifier_special_bonus_imba_enchantress_9", "components/abilities/heroes/hero_enchantress",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_enchantress_2_aura = class({})
-modifier_special_bonus_imba_enchantress_3      = class({})
-modifier_special_bonus_imba_enchantress_4      = class({})
-modifier_special_bonus_imba_enchantress_5      = class({})
-modifier_special_bonus_imba_enchantress_6      = class({})
-modifier_special_bonus_imba_enchantress_7      = class({})
-modifier_special_bonus_imba_enchantress_8      = class({})
-modifier_special_bonus_imba_enchantress_9      = class({})
+modifier_special_bonus_imba_enchantress_2_aura = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_3      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_4      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_5      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_6      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_7      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_8      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enchantress_9      = class(VANILLA_ABILITIES_BASECLASS)
 
 -----------------------
 -- TALENT 1 MODIFIER --
 -----------------------
 -- Magic Resistance Aura
-modifier_special_bonus_imba_enchantress_1      = class({})
+modifier_special_bonus_imba_enchantress_1      = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enchantress_1:IsHidden() return true end
 
@@ -1316,17 +1316,21 @@ function modifier_special_bonus_imba_enchantress_1:GetAuraSearchFlags() return D
 
 function modifier_special_bonus_imba_enchantress_1:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
-function modifier_special_bonus_imba_enchantress_1:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
-	DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_enchantress_1:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO +
+		DOTA_UNIT_TARGET_BASIC
+end
 
-function modifier_special_bonus_imba_enchantress_1:GetModifierAura() return
-	"modifier_special_bonus_imba_enchantress_1_aura" end
+function modifier_special_bonus_imba_enchantress_1:GetModifierAura()
+	return
+	"modifier_special_bonus_imba_enchantress_1_aura"
+end
 
 ----------------------------
 -- TALENT 1 MODIFIER AURA --
 ----------------------------
 
-modifier_special_bonus_imba_enchantress_1_aura = class({})
+modifier_special_bonus_imba_enchantress_1_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enchantress_1_aura:GetTexture()
 	return "enchantress_enchant"
@@ -1350,7 +1354,7 @@ end
 -- TALENT 2 MODIFIER --
 -----------------------
 -- Movement Speed Aura
-modifier_special_bonus_imba_enchantress_2 = class({})
+modifier_special_bonus_imba_enchantress_2 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enchantress_2:IsHidden() return true end
 
@@ -1368,17 +1372,21 @@ function modifier_special_bonus_imba_enchantress_2:GetAuraSearchFlags() return D
 
 function modifier_special_bonus_imba_enchantress_2:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 
-function modifier_special_bonus_imba_enchantress_2:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO +
-	DOTA_UNIT_TARGET_BASIC end
+function modifier_special_bonus_imba_enchantress_2:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO +
+		DOTA_UNIT_TARGET_BASIC
+end
 
-function modifier_special_bonus_imba_enchantress_2:GetModifierAura() return
-	"modifier_special_bonus_imba_enchantress_2_aura" end
+function modifier_special_bonus_imba_enchantress_2:GetModifierAura()
+	return
+	"modifier_special_bonus_imba_enchantress_2_aura"
+end
 
 ----------------------------
 -- TALENT 2 MODIFIER AURA --
 ----------------------------
 
-modifier_special_bonus_imba_enchantress_2_aura = class({})
+modifier_special_bonus_imba_enchantress_2_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enchantress_2_aura:GetTexture()
 	return "enchantress_enchant"

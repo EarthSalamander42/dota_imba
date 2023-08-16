@@ -5,7 +5,7 @@
 --          PURIFICATION         --
 -----------------------------------
 
-imba_omniknight_purification = class({})
+imba_omniknight_purification = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_purification_buff", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_purification_omniguard_ready", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_purification_omniguard_recharging", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
@@ -179,7 +179,7 @@ function Purification(caster, ability, target)
 end
 
 -- Purifiception modifier
-modifier_imba_purification_buff = class({})
+modifier_imba_purification_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_purification_buff:OnCreated()
 	-- Ability properties
@@ -246,7 +246,7 @@ function modifier_imba_purification_buff:OnStackCountChanged()
 end
 
 -- Purification Omniguard - ready mode
-modifier_imba_purification_omniguard_ready = class({})
+modifier_imba_purification_omniguard_ready = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_purification_omniguard_ready:OnCreated()
 	-- Ability properties
@@ -317,7 +317,7 @@ function modifier_imba_purification_omniguard_ready:OnTakeDamage(keys)
 end
 
 -- Purification Omniguard - recharging
-modifier_imba_purification_omniguard_recharging = class({})
+modifier_imba_purification_omniguard_recharging = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_purification_omniguard_recharging:OnCreated()
 	self.caster = self:GetCaster()
@@ -345,7 +345,7 @@ end
 --            REPEL              --
 -----------------------------------
 
-imba_omniknight_repel = class({})
+imba_omniknight_repel = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_repel", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_degen_aura", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_degen_debuff", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
@@ -457,7 +457,7 @@ function Repel(caster, ability, target, duration)
 end
 
 -- Repel modifier
-modifier_imba_repel = class({})
+modifier_imba_repel = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_repel:IsHidden() return false end
 
@@ -489,7 +489,7 @@ function modifier_imba_repel:GetEffectAttachType()
 end
 
 -- Degen Aura
-modifier_imba_degen_aura = class({})
+modifier_imba_degen_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_degen_aura:OnCreated()
 	-- Ability properties
@@ -553,7 +553,7 @@ function modifier_imba_degen_aura:OnRefresh()
 end
 
 -- Degen slow debuff
-modifier_imba_degen_debuff = class({})
+modifier_imba_degen_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_degen_debuff:OnCreated()
 	-- Ability properties
@@ -603,15 +603,15 @@ end
 
 LinkLuaModifier("modifier_imba_omniknight_heavenly_grace", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 
-imba_omniknight_heavenly_grace          = class({})
-modifier_imba_omniknight_heavenly_grace = class({})
+imba_omniknight_heavenly_grace          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_omniknight_heavenly_grace = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_omniknight_heavenly_grace:GetIntrinsicModifierName()
 	return "modifier_imba_degen_aura"
 end
 
 function imba_omniknight_heavenly_grace:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_omniknight_10")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_omniknight_10")
 end
 
 function imba_omniknight_heavenly_grace:OnSpellStart()
@@ -679,7 +679,7 @@ end
 --       HAMMER OF VIRTUE        --
 -----------------------------------
 
-imba_omniknight_hammer_of_virtue = class({})
+imba_omniknight_hammer_of_virtue = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_hammer_of_virtue", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hammer_of_virtue_nodamage", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -725,7 +725,7 @@ function imba_omniknight_hammer_of_virtue:GetIntrinsicModifierName()
 end
 
 -- Hammer of virtue passive modifier
-modifier_imba_hammer_of_virtue = class({})
+modifier_imba_hammer_of_virtue = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hammer_of_virtue:OnCreated()
 	if IsServer() then
@@ -863,7 +863,7 @@ end
 
 -- Hammer of Virtue no damage buff
 
-modifier_imba_hammer_of_virtue_nodamage = class({})
+modifier_imba_hammer_of_virtue_nodamage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hammer_of_virtue_nodamage:IsHidden() return true end
 
@@ -886,7 +886,7 @@ end
 --        GUARDIAN ANGEL         --
 -----------------------------------
 
-imba_omniknight_guardian_angel = class({})
+imba_omniknight_guardian_angel = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_guardian_angel", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_guardian_angel_shield", "components/abilities/heroes/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -900,7 +900,7 @@ end
 
 function imba_omniknight_guardian_angel:GetCooldown(level)
 	local caster = self:GetCaster()
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	-- #7 Talent: Guardian Angel cooldown decrease
 	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
@@ -956,7 +956,7 @@ function imba_omniknight_guardian_angel:OnSpellStart()
 end
 
 -- Physical immunity modifier
-modifier_imba_guardian_angel = class({})
+modifier_imba_guardian_angel = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_guardian_angel:OnCreated()
 	-- Ability properties
@@ -1032,7 +1032,7 @@ function modifier_imba_guardian_angel:OnDestroy()
 end
 
 -- Guardian Shield modifier
-modifier_imba_guardian_angel_shield = class({})
+modifier_imba_guardian_angel_shield = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_guardian_angel_shield:OnCreated()
 	if IsServer() then
@@ -1144,16 +1144,16 @@ LinkLuaModifier("modifier_special_bonus_imba_omniknight_8", "components/abilitie
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_9", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_omniknight_10", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_omniknight_1  = modifier_special_bonus_imba_omniknight_1 or class({})
-modifier_special_bonus_imba_omniknight_2  = modifier_special_bonus_imba_omniknight_2 or class({})
-modifier_special_bonus_imba_omniknight_3  = modifier_special_bonus_imba_omniknight_3 or class({})
-modifier_special_bonus_imba_omniknight_4  = modifier_special_bonus_imba_omniknight_4 or class({})
-modifier_special_bonus_imba_omniknight_5  = modifier_special_bonus_imba_omniknight_5 or class({})
-modifier_special_bonus_imba_omniknight_6  = modifier_special_bonus_imba_omniknight_6 or class({})
-modifier_special_bonus_imba_omniknight_7  = modifier_special_bonus_imba_omniknight_7 or class({})
-modifier_special_bonus_imba_omniknight_8  = modifier_special_bonus_imba_omniknight_8 or class({})
-modifier_special_bonus_imba_omniknight_9  = modifier_special_bonus_imba_omniknight_9 or class({})
-modifier_special_bonus_imba_omniknight_10 = modifier_special_bonus_imba_omniknight_10 or class({})
+modifier_special_bonus_imba_omniknight_1  = modifier_special_bonus_imba_omniknight_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_2  = modifier_special_bonus_imba_omniknight_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_3  = modifier_special_bonus_imba_omniknight_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_4  = modifier_special_bonus_imba_omniknight_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_5  = modifier_special_bonus_imba_omniknight_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_6  = modifier_special_bonus_imba_omniknight_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_7  = modifier_special_bonus_imba_omniknight_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_8  = modifier_special_bonus_imba_omniknight_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_9  = modifier_special_bonus_imba_omniknight_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_omniknight_10 = modifier_special_bonus_imba_omniknight_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_omniknight_1:IsHidden() return true end
 

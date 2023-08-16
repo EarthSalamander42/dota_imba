@@ -14,7 +14,7 @@ end
 local astral_spirit
 
 -- Echo Stomp
-imba_elder_titan_echo_stomp = class({})
+imba_elder_titan_echo_stomp = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_elder_titan_echo_stomp:GetAbilityTextureName()
 	return "imba_elder_titan_echo_stomp"
@@ -40,7 +40,7 @@ function imba_elder_titan_echo_stomp:GetCastPoint()
 	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then
 		return self:GetSpecialValueFor("cast_time")
 	else
-		return self.BaseClass.GetCastPoint(self)
+		return self:GetRightfulKV("AbilityCastPoint")
 	end
 end
 
@@ -213,7 +213,7 @@ end
 
 LinkLuaModifier("modifier_imba_elder_titan_magic_immune", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_elder_titan_magic_immune = class({})
+modifier_imba_elder_titan_magic_immune = class(VANILLA_ABILITIES_BASECLASS)
 
 -- IDK what the texture name is called
 -- function modifier_imba_elder_titan_magic_immune:GetTexture()
@@ -229,7 +229,7 @@ function modifier_imba_elder_titan_magic_immune:CheckState()
 end
 
 -- Astral Spirit
-imba_elder_titan_ancestral_spirit = class({})
+imba_elder_titan_ancestral_spirit = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_damage", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_ms", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
@@ -256,7 +256,7 @@ function imba_elder_titan_ancestral_spirit:GetCastRange(location, target)
 end
 
 -- function imba_elder_titan_ancestral_spirit:OnAbilityPhaseStart()
--- StartAnimation(self:GetCaster(), {duration=self.BaseClass.GetCastPoint(self), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
+-- StartAnimation(self:GetCaster(), {duration=self:GetRightfulKV("AbilityCastPoint"), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
 
 -- return true
 -- end
@@ -308,7 +308,7 @@ end
 -- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_SELF --
 -----------------------------------------------------
 
-modifier_imba_elder_titan_ancestral_spirit_self = modifier_imba_elder_titan_ancestral_spirit_self or class({})
+modifier_imba_elder_titan_ancestral_spirit_self = modifier_imba_elder_titan_ancestral_spirit_self or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_elder_titan_ancestral_spirit_self:IsHidden() return true end
@@ -540,7 +540,7 @@ end
 -- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_DAMAGE --
 -------------------------------------------------------
 
-modifier_imba_elder_titan_ancestral_spirit_damage = modifier_imba_elder_titan_ancestral_spirit_damage or class({})
+modifier_imba_elder_titan_ancestral_spirit_damage = modifier_imba_elder_titan_ancestral_spirit_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_elder_titan_ancestral_spirit_damage:IsDebuff() return false end
@@ -569,7 +569,7 @@ end
 -- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_MS --
 ---------------------------------------------------
 
-modifier_imba_elder_titan_ancestral_spirit_ms = modifier_imba_elder_titan_ancestral_spirit_ms or class({})
+modifier_imba_elder_titan_ancestral_spirit_ms = modifier_imba_elder_titan_ancestral_spirit_ms or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_elder_titan_ancestral_spirit_ms:IsDebuff() return false end
@@ -594,7 +594,7 @@ end
 -- MODIFIER_IMBA_ELDER_TITAN_ANCESTRAL_SPIRIT_ARMOR --
 ------------------------------------------------------
 
-modifier_imba_elder_titan_ancestral_spirit_armor = class({})
+modifier_imba_elder_titan_ancestral_spirit_armor = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_elder_titan_ancestral_spirit_armor:IsPurgable() return false end
 
@@ -615,7 +615,7 @@ end
 ------------------------------------
 
 -- Return Spirit
-imba_elder_titan_return_spirit = class({})
+imba_elder_titan_return_spirit = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_elder_titan_return_spirit:GetAbilityTextureName()
 	return "elder_titan_return_spirit"
@@ -652,7 +652,7 @@ end
 ------------------------------------
 
 -- Natural Order
-imba_elder_titan_natural_order = imba_elder_titan_natural_order or class({})
+imba_elder_titan_natural_order = imba_elder_titan_natural_order or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_elder_titan_natural_order", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
@@ -668,7 +668,7 @@ function imba_elder_titan_natural_order:GetIntrinsicModifierName()
 	return "modifier_imba_elder_titan_natural_order_aura"
 end
 
-modifier_imba_elder_titan_natural_order_aura = modifier_imba_elder_titan_natural_order_aura or class({})
+modifier_imba_elder_titan_natural_order_aura = modifier_imba_elder_titan_natural_order_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_elder_titan_natural_order_aura:IsAura() return true end
@@ -712,7 +712,7 @@ function modifier_imba_elder_titan_natural_order_aura:GetAuraDuration()
 	return 1
 end
 
-modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_order or class({})
+modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_order or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_elder_titan_natural_order:IsDebuff() return true end
@@ -786,7 +786,7 @@ end
 --	SPIRIT	--
 ---------------
 
-imba_elder_titan_echo_stomp_spirit = class({})
+imba_elder_titan_echo_stomp_spirit = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_elder_titan_echo_stomp_spirit:GetAbilityTextureName()
 	return "imba_elder_titan_echo_stomp"
@@ -803,7 +803,7 @@ end
 
 -- The subtraction of FrameTimes somewhat helps syncing up when trying to immediately cast Echo Stomp after Astral Spirit spawning
 function imba_elder_titan_echo_stomp_spirit:GetCastPoint()
-	return self.BaseClass.GetCastPoint(self) - (FrameTime())
+	return self:GetRightfulKV("AbilityCastPoint") - (FrameTime())
 end
 
 function imba_elder_titan_echo_stomp_spirit:GetCastRange(location, target)
@@ -883,7 +883,7 @@ end
 -----------------------------
 --    Earth Splitter     --
 -----------------------------
-imba_elder_titan_earth_splitter = class({})
+imba_elder_titan_earth_splitter = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_earth_splitter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_earth_splitter_scepter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -909,9 +909,9 @@ end
 
 function imba_elder_titan_earth_splitter:GetCooldown(level)
 	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_9") then
-		return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_9")
+		return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_9")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -977,7 +977,7 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 end
 
 -- Earth Splitter modifier
-modifier_imba_earth_splitter = class({})
+modifier_imba_earth_splitter = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earth_splitter:IsHidden() return false end
 
@@ -1003,7 +1003,7 @@ function modifier_imba_earth_splitter:GetModifierMoveSpeedBonus_Percentage()
 end
 
 -- Earth Splitter Scepter modifier
-modifier_imba_earth_splitter_scepter = class({})
+modifier_imba_earth_splitter_scepter = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earth_splitter_scepter:IsHidden() return false end
 
@@ -1027,12 +1027,12 @@ LinkLuaModifier("modifier_special_bonus_imba_elder_titan_5", "components/abiliti
 LinkLuaModifier("modifier_special_bonus_imba_elder_titan_6", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_elder_titan_9", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_elder_titan_1 = class({})
-modifier_special_bonus_imba_elder_titan_2 = class({})
-modifier_special_bonus_imba_elder_titan_4 = class({})
-modifier_special_bonus_imba_elder_titan_5 = class({})
-modifier_special_bonus_imba_elder_titan_6 = class({})
-modifier_special_bonus_imba_elder_titan_9 = class({})
+modifier_special_bonus_imba_elder_titan_1 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_elder_titan_2 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_elder_titan_4 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_elder_titan_5 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_elder_titan_6 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_elder_titan_9 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_elder_titan_1:IsHidden() return true end
 

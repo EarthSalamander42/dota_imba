@@ -24,7 +24,7 @@
 LinkLuaModifier("modifier_imba_breathe_fire_debuff", "components/abilities/heroes/hero_dragon_knight",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dragon_knight_breathe_fire = class({})
+imba_dragon_knight_breathe_fire = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_dragon_knight_breathe_fire:GetAbilityTextureName()
 	return "dragon_knight_breathe_fire"
@@ -88,8 +88,13 @@ function imba_dragon_knight_breathe_fire:OnProjectileHit(target, location)
 		end
 
 		-- Deal damage
-		ApplyDamage({ victim = target, damage = damage + health_as_damage, damage_type = damage_type,
-			attacker = self:GetCaster(), ability = self })
+		ApplyDamage({
+			victim = target,
+			damage = damage + health_as_damage,
+			damage_type = damage_type,
+			attacker = self:GetCaster(),
+			ability = self
+		})
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_breathe_fire_debuff",
@@ -97,7 +102,7 @@ function imba_dragon_knight_breathe_fire:OnProjectileHit(target, location)
 	end
 end
 
-modifier_imba_breathe_fire_debuff = class({})
+modifier_imba_breathe_fire_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_breathe_fire_debuff:OnCreated()
 	self.strength_reduction = 0
@@ -148,7 +153,7 @@ LinkLuaModifier("modifier_imba_dragon_tail_miss", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_dragon_tail_debuff", "components/abilities/heroes/hero_dragon_knight.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dragon_knight_dragon_tail = class({})
+imba_dragon_knight_dragon_tail = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_dragon_knight_dragon_tail:GetCastRange()
 	self.cast_range = 150
@@ -175,15 +180,20 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 
 				self.main_target:EmitSound("Hero_DragonKnight.DragonTail.Target")
 				ParticleManager:CreateParticle(
-				"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+					"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 					self.main_target)
 				self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail",
 					{ duration = self:GetSpecialValueFor("duration_instances") })
 				self.main_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff",
 					{ duration = self:GetSpecialValueFor("stun_duration") * (1 - self.main_target:GetStatusResistance()) })
 
-				ApplyDamage({ attacker = self:GetCaster(), victim = self.main_target,
-					damage_type = self:GetAbilityDamageType(), damage = self:GetAbilityDamage(), ability = self })
+				ApplyDamage({
+					attacker = self:GetCaster(),
+					victim = self.main_target,
+					damage_type = self:GetAbilityDamageType(),
+					damage = self:GetAbilityDamage(),
+					ability = self
+				})
 			else
 				self:GetCaster():EmitSound("Hero_DragonKnight.DragonTail.DragonFormCast")
 
@@ -200,11 +210,16 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 				for _, enemy in pairs(enemies_to_cleave) do
 					self.main_target:EmitSound("Hero_DragonKnight.DragonTail.Target")
 					ParticleManager:CreateParticle(
-					"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+						"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 						self.main_target)
 					if not enemy:HasModifier("modifier_imba_dragon_tail_debuff") then
-						ApplyDamage({ attacker = self:GetCaster(), victim = enemy, ability = self,
-							damage = self:GetAbilityDamage(), damage_type = self:GetAbilityDamageType() })
+						ApplyDamage({
+							attacker = self:GetCaster(),
+							victim = enemy,
+							ability = self,
+							damage = self:GetAbilityDamage(),
+							damage_type = self:GetAbilityDamageType()
+						})
 					end
 
 					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff",
@@ -239,8 +254,13 @@ function imba_dragon_knight_dragon_tail:OnProjectileHit(target, location, ExtraD
 				PATTACH_ABSORIGIN_FOLLOW, target)
 
 			if not target:HasModifier("modifier_imba_dragon_tail_debuff") then
-				ApplyDamage({ attacker = self:GetCaster(), victim = target, damage_type = self:GetAbilityDamageType(),
-					damage = self:GetAbilityDamage(), ability = self })
+				ApplyDamage({
+					attacker = self:GetCaster(),
+					victim = target,
+					damage_type = self:GetAbilityDamageType(),
+					damage = self:GetAbilityDamage(),
+					ability = self
+				})
 			end
 
 			target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff",
@@ -249,7 +269,7 @@ function imba_dragon_knight_dragon_tail:OnProjectileHit(target, location, ExtraD
 	end
 end
 
-modifier_imba_dragon_tail = modifier_imba_dragon_tail or class({})
+modifier_imba_dragon_tail = modifier_imba_dragon_tail or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dragon_tail:IsHidden() return false end
 
@@ -299,7 +319,7 @@ function modifier_imba_dragon_tail:OnAttackLanded(keys)
 	end
 end
 
-modifier_imba_dragon_tail_debuff = class({})
+modifier_imba_dragon_tail_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dragon_tail_debuff:CheckState()
 	local state = {}
@@ -349,13 +369,13 @@ function modifier_imba_dragon_tail_debuff:GetEffectAttachType() return PATTACH_O
 LinkLuaModifier("modifier_imba_dragon_blood", "components/abilities/heroes/hero_dragon_knight.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dragon_knight_dragon_blood = imba_dragon_knight_dragon_blood or class({})
+imba_dragon_knight_dragon_blood = imba_dragon_knight_dragon_blood or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_dragon_knight_dragon_blood:GetIntrinsicModifierName()
 	return "modifier_imba_dragon_blood"
 end
 
-modifier_imba_dragon_blood = modifier_imba_dragon_blood or class({})
+modifier_imba_dragon_blood = modifier_imba_dragon_blood or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dragon_blood:OnCreated()
 	if not IsServer() then return end
@@ -404,12 +424,14 @@ end
 LinkLuaModifier("modifier_imba_elder_dragon_charge", "components/abilities/heroes/hero_dragon_knight.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dragon_knight_elder_dragon_charge = class({})
+imba_dragon_knight_elder_dragon_charge = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_dragon_knight_elder_dragon_charge:IsInnateAbility() return true end
 
-function imba_dragon_knight_elder_dragon_charge:GetAssociatedSecondaryAbilities() return
-	"imba_dragon_knight_elder_dragon_form" end
+function imba_dragon_knight_elder_dragon_charge:GetAssociatedSecondaryAbilities()
+	return
+	"imba_dragon_knight_elder_dragon_form"
+end
 
 function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 	self:SetActivated(false)
@@ -429,7 +451,7 @@ function imba_dragon_knight_elder_dragon_charge:OnSpellStart()
 	local cone_length = self:GetSpecialValueFor("cone_length")
 	local fire_speed = self:GetSpecialValueFor("fire_speed")
 	local rush_distance = self:GetSpecialValueFor("rush_distance") + GetCastRangeIncrease(self:GetCaster()) +
-	self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_2")
+		self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_2")
 	local rush_speed = rush_distance / self:GetSpecialValueFor("rush_duration")
 
 	self:GetCaster():EmitSound("Hero_DragonKnight.BreathFire")
@@ -502,19 +524,28 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 
 		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_1") then
 			health_as_damage = self:GetCaster():GetMaxHealth() / 100 *
-			breathe_fire:GetSpecialValueFor("health_as_damage")
+				breathe_fire:GetSpecialValueFor("health_as_damage")
 		end
 
-		ApplyDamage({ attacker = self:GetCaster(), victim = target,
-			damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type,
-			ability = breathe_fire })
+		ApplyDamage({
+			attacker = self:GetCaster(),
+			victim = target,
+			damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage,
+			damage_type = dmg_type,
+			ability = breathe_fire
+		})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
 		target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff",
 			{ duration = breathe_fire:GetSpecialValueFor("duration") * (1 - target:GetStatusResistance()) })
 
 		if dragon_tail then
-			ApplyDamage({ attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(),
-				damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail })
+			ApplyDamage({
+				attacker = self:GetCaster(),
+				victim = target,
+				damage = dragon_tail:GetAbilityDamage(),
+				damage_type = dragon_tail:GetAbilityDamageType(),
+				ability = dragon_tail
+			})
 			target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff",
 				{ duration = dragon_tail:GetSpecialValueFor("stun_duration") * (1 - target:GetStatusResistance()) })
 		end
@@ -529,7 +560,7 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 	end
 end
 
-modifier_imba_elder_dragon_charge = class({})
+modifier_imba_elder_dragon_charge = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_elder_dragon_charge:IsDebuff() return false end
 
@@ -590,10 +621,12 @@ LinkLuaModifier("modifier_imba_elder_dragon_form", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_elder_dragon_form_debuff", "components/abilities/heroes/hero_dragon_knight.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dragon_knight_elder_dragon_form = class({})
+imba_dragon_knight_elder_dragon_form = class(VANILLA_ABILITIES_BASECLASS)
 
-function imba_dragon_knight_elder_dragon_form:GetAssociatedPrimaryAbilities() return
-	"imba_dragon_knight_elder_dragon_charge" end
+function imba_dragon_knight_elder_dragon_form:GetAssociatedPrimaryAbilities()
+	return
+	"imba_dragon_knight_elder_dragon_charge"
+end
 
 -- this makes the ability passive when it has scepter
 function imba_dragon_knight_elder_dragon_form:GetBehavior()
@@ -611,7 +644,7 @@ function imba_dragon_knight_elder_dragon_form:GetCooldown(level)
 		return 0
 	end
 
-	return self.BaseClass.GetCooldown(self, level)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 function imba_dragon_knight_elder_dragon_form:GetManaCost(level)
@@ -663,7 +696,7 @@ function imba_dragon_knight_elder_dragon_form:OnInventoryContentsChanged()
 	end
 end
 
-modifier_imba_elder_dragon_form = class({})
+modifier_imba_elder_dragon_form = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_elder_dragon_form:IsHidden() return true end
 
@@ -750,7 +783,7 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 
 		if self:GetParent():HasTalent("special_bonus_imba_dragon_knight_8") and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
 			self.bonus_ms = self:GetCaster():GetHealth() / 100 *
-			self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
+				self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
 			self:SetStackCount(self.bonus_ms)
 		else
 			self:SetStackCount(0)
@@ -796,7 +829,7 @@ function modifier_imba_elder_dragon_form:GetModifierMoveSpeedBonus_Constant()
 	return self:GetStackCount()
 end
 
-modifier_imba_elder_dragon_form_debuff = class({})
+modifier_imba_elder_dragon_form_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_elder_dragon_form_debuff:IsHidden() return false end
 
@@ -815,8 +848,10 @@ function modifier_imba_elder_dragon_form_debuff:GetModifierBaseDamageOutgoing_Pe
 	return self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_6", "reduction")
 end
 
-function modifier_imba_elder_dragon_form_debuff:GetEffectName() return
-	"particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf" end
+function modifier_imba_elder_dragon_form_debuff:GetEffectName()
+	return
+	"particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf"
+end
 
 function modifier_imba_elder_dragon_form_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
@@ -835,11 +870,11 @@ LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_7", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_dragon_knight_4", "components/abilities/heroes/hero_dragon_knight",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_dragon_knight_1 = modifier_special_bonus_imba_dragon_knight_1 or class({})
-modifier_special_bonus_imba_dragon_knight_3 = modifier_special_bonus_imba_dragon_knight_3 or class({})
-modifier_special_bonus_imba_dragon_knight_5 = modifier_special_bonus_imba_dragon_knight_5 or class({})
-modifier_special_bonus_imba_dragon_knight_7 = modifier_special_bonus_imba_dragon_knight_7 or class({})
-modifier_special_bonus_imba_dragon_knight_4 = modifier_special_bonus_imba_dragon_knight_4 or class({})
+modifier_special_bonus_imba_dragon_knight_1 = modifier_special_bonus_imba_dragon_knight_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dragon_knight_3 = modifier_special_bonus_imba_dragon_knight_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dragon_knight_5 = modifier_special_bonus_imba_dragon_knight_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dragon_knight_7 = modifier_special_bonus_imba_dragon_knight_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dragon_knight_4 = modifier_special_bonus_imba_dragon_knight_4 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_dragon_knight_1:IsHidden() return true end
 

@@ -19,30 +19,30 @@ LinkLuaModifier("modifier_imba_oracle_false_promise_timer", "components/abilitie
 LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_oracle_false_promise_timer_alter_targets", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
-imba_oracle_fortunes_end                               = class({})
-modifier_imba_oracle_fortunes_end_delay                = class({})
-modifier_imba_oracle_fortunes_end_purge                = class({})
-modifier_imba_oracle_fortunes_end_purge_alter          = class({})
+imba_oracle_fortunes_end                               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fortunes_end_delay                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fortunes_end_purge                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fortunes_end_purge_alter          = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_oracle_fates_edict                                = class({})
-modifier_imba_oracle_fates_edict_delay                 = class({})
-modifier_imba_oracle_fates_edict                       = class({})
-modifier_imba_oracle_fates_edict_alter                 = class({})
+imba_oracle_fates_edict                                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fates_edict_delay                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fates_edict                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_fates_edict_alter                 = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_oracle_purifying_flames                           = class({})
-modifier_imba_oracle_purifying_flames                  = class({})
-modifier_imba_oracle_purifying_flames_alter            = class({})
+imba_oracle_purifying_flames                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_purifying_flames                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_purifying_flames_alter            = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_oracle_alter_self                                 = class({})
-modifier_imba_oracle_alter_self                        = class({})
+imba_oracle_alter_self                                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_alter_self                        = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_oracle_false_promise_alter                        = imba_oracle_false_promise_alter or class({})
+imba_oracle_false_promise_alter                        = imba_oracle_false_promise_alter or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_oracle_false_promise                              = class({})
-modifier_imba_oracle_false_promise_delay               = class({})
-modifier_imba_oracle_false_promise_timer               = class({})
-modifier_imba_oracle_false_promise_timer_alter         = class({})
-modifier_imba_oracle_false_promise_timer_alter_targets = class({})
+imba_oracle_false_promise                              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_false_promise_delay               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_false_promise_timer               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_false_promise_timer_alter         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_oracle_false_promise_timer_alter_targets = class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------------
 -- IMBA_ORACLE_FORTUNES_END --
@@ -349,7 +349,7 @@ function imba_oracle_fates_edict:GetAbilityTextureName()
 end
 
 function imba_oracle_fates_edict:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_fates_edict_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_fates_edict_cooldown")
 end
 
 function imba_oracle_fates_edict:OnSpellStart()
@@ -556,7 +556,7 @@ end
 
 function imba_oracle_purifying_flames:GetCastPoint()
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCastPoint(self)
+		return self:GetRightfulKV("AbilityCastPoint")
 	else
 		return self:GetSpecialValueFor("castpoint_scepter")
 	end
@@ -564,7 +564,7 @@ end
 
 function imba_oracle_purifying_flames:GetCooldown(level)
 	-- if not self:GetCaster():HasScepter() then
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_purifying_flames_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_purifying_flames_cooldown")
 	-- else
 	-- return self:GetSpecialValueFor("cooldown_scepter") - self:GetCaster():FindTalentValue("special_bonus_imba_oracle_purifying_flames_cooldown")
 	-- end
@@ -1375,9 +1375,9 @@ LinkLuaModifier("modifier_special_bonus_imba_oracle_fortunes_end_max_duration", 
 LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_invisibility", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_oracle_false_promise_duration", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_oracle_fortunes_end_max_duration  = modifier_special_bonus_imba_oracle_fortunes_end_max_duration or class({})
-modifier_special_bonus_imba_oracle_false_promise_invisibility = modifier_special_bonus_imba_oracle_false_promise_invisibility or class({})
-modifier_special_bonus_imba_oracle_false_promise_duration     = modifier_special_bonus_imba_oracle_false_promise_duration or class({})
+modifier_special_bonus_imba_oracle_fortunes_end_max_duration  = modifier_special_bonus_imba_oracle_fortunes_end_max_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_oracle_false_promise_invisibility = modifier_special_bonus_imba_oracle_false_promise_invisibility or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_oracle_false_promise_duration     = modifier_special_bonus_imba_oracle_false_promise_duration or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_oracle_fortunes_end_max_duration:IsHidden() return true end
 
@@ -1400,8 +1400,8 @@ function modifier_special_bonus_imba_oracle_false_promise_duration:RemoveOnDeath
 LinkLuaModifier("modifier_special_bonus_imba_oracle_purifying_flames_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_oracle_fates_edict_cooldown", "components/abilities/heroes/hero_oracle", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_oracle_purifying_flames_cooldown = modifier_special_bonus_imba_oracle_purifying_flames_cooldown or class({})
-modifier_special_bonus_imba_oracle_fates_edict_cooldown      = class({})
+modifier_special_bonus_imba_oracle_purifying_flames_cooldown = modifier_special_bonus_imba_oracle_purifying_flames_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_oracle_fates_edict_cooldown      = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_oracle_purifying_flames_cooldown:IsHidden() return true end
 

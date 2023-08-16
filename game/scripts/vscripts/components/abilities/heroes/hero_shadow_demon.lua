@@ -11,11 +11,11 @@ LinkLuaModifier("modifier_imba_disruption_hidden", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_disruption_soul_illusion", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_disruption_disrupted_reality_debuff", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_shadow_demon_disruption = imba_shadow_demon_disruption or class({})
+imba_shadow_demon_disruption = imba_shadow_demon_disruption or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_shadow_demon_disruption:GetCooldown(level)
 	if not self:GetCaster():HasTalent("special_bonus_imba_shadow_demon_disruption_charges") then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -63,7 +63,7 @@ end
 -- DISRUPTION MODIFIER --
 -------------------------
 
-modifier_imba_disruption_hidden = modifier_imba_disruption_hidden or class({})
+modifier_imba_disruption_hidden = modifier_imba_disruption_hidden or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_disruption_hidden:IsHidden() return false end
 
@@ -228,7 +228,7 @@ end
 -- SOUL ILLUSION MODIFIER --
 ----------------------------
 
-modifier_imba_disruption_soul_illusion = modifier_imba_disruption_soul_illusion or class({})
+modifier_imba_disruption_soul_illusion = modifier_imba_disruption_soul_illusion or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_disruption_soul_illusion:IsHidden() return false end
 
@@ -308,7 +308,7 @@ end
 -- DISRUPTION'S DISRUPTED REALITY DEBUFF MODIFIER --
 ----------------------------------------------------
 
-modifier_imba_disruption_disrupted_reality_debuff = modifier_imba_disruption_disrupted_reality_debuff or class({})
+modifier_imba_disruption_disrupted_reality_debuff = modifier_imba_disruption_disrupted_reality_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_disruption_disrupted_reality_debuff:OnCreated()
 	if IsServer() then
@@ -355,14 +355,14 @@ end
 ------------------
 LinkLuaModifier("modifier_imba_soul_catcher_buff", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_soul_catcher_debuff", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
-imba_shadow_demon_soul_catcher = imba_shadow_demon_soul_catcher or class({})
+imba_shadow_demon_soul_catcher = imba_shadow_demon_soul_catcher or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_shadow_demon_soul_catcher:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
 function imba_shadow_demon_soul_catcher:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_demon_soul_catcher_cd")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_demon_soul_catcher_cd")
 end
 
 function imba_shadow_demon_soul_catcher:OnSpellStart()
@@ -521,7 +521,7 @@ end
 -- SOUL CATCHER BUFF --
 -----------------------
 
-modifier_imba_soul_catcher_buff = modifier_imba_soul_catcher_buff or class({})
+modifier_imba_soul_catcher_buff = modifier_imba_soul_catcher_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_soul_catcher_buff:IsHidden() return false end
 
@@ -603,7 +603,7 @@ end
 -- SOUL CATCHER DEBUFF MODIFIER --
 ----------------------------------
 
-modifier_imba_soul_catcher_debuff = modifier_imba_soul_catcher_debuff or class({})
+modifier_imba_soul_catcher_debuff = modifier_imba_soul_catcher_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_soul_catcher_debuff:IsHidden() return false end
 
@@ -710,10 +710,10 @@ end
 -- SHADOW POISON --
 -------------------
 LinkLuaModifier("modifier_shadow_poison_debuff", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
-imba_shadow_demon_shadow_poison = imba_shadow_demon_shadow_poison or class({})
+imba_shadow_demon_shadow_poison = imba_shadow_demon_shadow_poison or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_shadow_demon_shadow_poison:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_demon_shadow_poison_cd")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_shadow_demon_shadow_poison_cd")
 end
 
 function imba_shadow_demon_shadow_poison:OnUpgrade()
@@ -896,7 +896,7 @@ end
 -- SHADOW POISON DEBUFF MODIFIER --
 -----------------------------------
 
-modifier_shadow_poison_debuff = modifier_shadow_poison_debuff or class({})
+modifier_shadow_poison_debuff = modifier_shadow_poison_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_shadow_poison_debuff:IsHidden() return false end
 
@@ -1129,7 +1129,7 @@ end
 -- SHADOW POISON RELEASE --
 ---------------------------
 
-imba_shadow_demon_shadow_poison_release = imba_shadow_demon_shadow_poison_release or class({})
+imba_shadow_demon_shadow_poison_release = imba_shadow_demon_shadow_poison_release or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_shadow_demon_shadow_poison_release:OnSpellStart()
 	-- Ability properties
@@ -1211,13 +1211,13 @@ LinkLuaModifier("modifier_imba_demonic_purge_slow_freeze", "components/abilities
 LinkLuaModifier("modifier_imba_demonic_purge_elated_demon_buff", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-imba_shadow_demon_demonic_purge = imba_shadow_demon_demonic_purge or class({})
+imba_shadow_demon_demonic_purge = imba_shadow_demon_demonic_purge or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_shadow_demon_demonic_purge:RequiresScepterForCharges() return true end
 
 function imba_shadow_demon_demonic_purge:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -1328,7 +1328,7 @@ end
 -- DEMONIC PURGE DEBUFF MODIFIER --
 -----------------------------------
 
-modifier_imba_demonic_purge_debuff = modifier_imba_demonic_purge_debuff or class({})
+modifier_imba_demonic_purge_debuff = modifier_imba_demonic_purge_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_demonic_purge_debuff:IsDebuff() return true end
 
@@ -1518,7 +1518,7 @@ end
 -- DEMONIC PURGE DEBUFF SLOW STOPPER MODIFIER --
 ------------------------------------------------
 
-modifier_imba_demonic_purge_slow_freeze = modifier_imba_demonic_purge_slow_freeze or class({})
+modifier_imba_demonic_purge_slow_freeze = modifier_imba_demonic_purge_slow_freeze or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_demonic_purge_slow_freeze:IsHidden() return true end
 
@@ -1530,7 +1530,7 @@ function modifier_imba_demonic_purge_slow_freeze:IsDebuff() return true end
 -- DEMONIC PURGE ELATED DEMON BUFF MODIFIER --
 ----------------------------------------------
 
-modifier_imba_demonic_purge_elated_demon_buff = modifier_imba_demonic_purge_elated_demon_buff or class({})
+modifier_imba_demonic_purge_elated_demon_buff = modifier_imba_demonic_purge_elated_demon_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_demonic_purge_elated_demon_buff:IsHidden() return false end
 
@@ -1623,11 +1623,11 @@ LinkLuaModifier("modifier_special_bonus_imba_shadow_demon_soul_catcher_cd", "com
 LinkLuaModifier("modifier_special_bonus_imba_shadow_demon_demonic_purge_damage", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_shadow_demon_disruption_charges", "components/abilities/heroes/hero_shadow_demon.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_shadow_demon_shadow_poison_damage = modifier_special_bonus_imba_shadow_demon_shadow_poison_damage or class({})
-modifier_special_bonus_imba_shadow_demon_shadow_poison_cd = modifier_special_bonus_imba_shadow_demon_shadow_poison_cd or class({})
-modifier_special_bonus_imba_shadow_demon_soul_catcher_cd = modifier_special_bonus_imba_shadow_demon_soul_catcher_cd or class({})
-modifier_special_bonus_imba_shadow_demon_demonic_purge_damage = modifier_special_bonus_imba_shadow_demon_demonic_purge_damage or class({})
-modifier_special_bonus_imba_shadow_demon_disruption_charges = modifier_special_bonus_imba_shadow_demon_disruption_charges or class({})
+modifier_special_bonus_imba_shadow_demon_shadow_poison_damage = modifier_special_bonus_imba_shadow_demon_shadow_poison_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_demon_shadow_poison_cd = modifier_special_bonus_imba_shadow_demon_shadow_poison_cd or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_demon_soul_catcher_cd = modifier_special_bonus_imba_shadow_demon_soul_catcher_cd or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_demon_demonic_purge_damage = modifier_special_bonus_imba_shadow_demon_demonic_purge_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_shadow_demon_disruption_charges = modifier_special_bonus_imba_shadow_demon_disruption_charges or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_shadow_demon_shadow_poison_damage:IsHidden() return true end
 

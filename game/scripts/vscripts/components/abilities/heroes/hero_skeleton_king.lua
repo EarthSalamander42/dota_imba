@@ -5,8 +5,8 @@
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_2", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_5", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_skeleton_king_2 = class({})
-modifier_special_bonus_imba_skeleton_king_5 = class({})
+modifier_special_bonus_imba_skeleton_king_2 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skeleton_king_5 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_skeleton_king_2:IsHidden() return true end
 
@@ -37,7 +37,7 @@ end
 --------------------------------
 --      WRAITHFIRE BLAST      --
 --------------------------------
-imba_wraith_king_wraithfire_blast = class({})
+imba_wraith_king_wraithfire_blast = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_wraithfire_blast_stun", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraithfire_blast_debuff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraithfire_blast_debuff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -229,7 +229,7 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
 end
 
 -- Stun modifier
-modifier_imba_wraithfire_blast_stun = class({})
+modifier_imba_wraithfire_blast_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraithfire_blast_stun:CheckState()
 	local state = { [MODIFIER_STATE_STUNNED] = true }
@@ -251,7 +251,7 @@ function modifier_imba_wraithfire_blast_stun:IsPurgeException() return true end
 function modifier_imba_wraithfire_blast_stun:IsStunDebuff() return true end
 
 -- Debuff modifier
-modifier_imba_wraithfire_blast_debuff = class({})
+modifier_imba_wraithfire_blast_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraithfire_blast_debuff:OnCreated()
 	-- Ability properties
@@ -352,7 +352,7 @@ function modifier_imba_wraithfire_blast_debuff:OnAttackLanded(keys)
 	end
 end
 
-modifier_imba_wraithfire_blast_debuff_talent = modifier_imba_wraithfire_blast_debuff_talent or class({})
+modifier_imba_wraithfire_blast_debuff_talent = modifier_imba_wraithfire_blast_debuff_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraithfire_blast_debuff_talent:IsDebuff() return true end
 
@@ -430,7 +430,7 @@ end
 --------------------------------
 --      VAMPIRIC AURA      --
 --------------------------------
-imba_wraith_king_vampiric_aura = class({})
+imba_wraith_king_vampiric_aura = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_vampiric_aura", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vampiric_aura_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -453,7 +453,7 @@ function imba_wraith_king_vampiric_aura:OnOwnerDied()
 end
 
 -- Aura modifier
-modifier_imba_vampiric_aura = class({})
+modifier_imba_vampiric_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_vampiric_aura:OnCreated()
 	-- Ability properties
@@ -510,7 +510,7 @@ function modifier_imba_vampiric_aura:IsAura()
 end
 
 -- Aura buff modifier
-modifier_imba_vampiric_aura_buff = class({})
+modifier_imba_vampiric_aura_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_vampiric_aura_buff:OnCreated()
 	-- Ability properties
@@ -731,7 +731,7 @@ end
 --------------------------------
 --       MORTAL STRIKE        --
 --------------------------------
-imba_wraith_king_mortal_strike = class({})
+imba_wraith_king_mortal_strike = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mortal_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -799,7 +799,7 @@ function imba_wraith_king_mortal_strike:OnSpellStart()
 end
 
 -- Skeleton Modifier (mostly handles reincarnation)
-modifier_imba_mortal_strike_skeleton = class({})
+modifier_imba_mortal_strike_skeleton = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mortal_strike_skeleton:RemoveOnDeath() return end
 
@@ -857,7 +857,7 @@ function modifier_imba_mortal_strike_skeleton:OnRemoved()
 end
 
 -- Critical strikes modifier
-modifier_imba_mortal_strike = class({})
+modifier_imba_mortal_strike = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mortal_strike:OnCreated()
 	-- Ability properties
@@ -1024,7 +1024,7 @@ function modifier_imba_mortal_strike:OnDeath(keys)
 end
 
 -- Bonus health modifier
-modifier_imba_mortal_strike_buff = class({})
+modifier_imba_mortal_strike_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mortal_strike_buff:OnCreated()
 	if IsServer() then
@@ -1102,7 +1102,7 @@ function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
 end
 
 -- Bonus strength modifier
-modifier_imba_mortal_strike_buff_talent = class({})
+modifier_imba_mortal_strike_buff_talent = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mortal_strike_buff_talent:OnCreated()
 	if IsServer() then
@@ -1186,7 +1186,7 @@ end
 --------------------------------
 --       REINCARNATION        --
 --------------------------------
-imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class({})
+imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_reincarnation", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1294,7 +1294,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing(OnDeathKeys, BuffInfo)
 end
 
 -- Reicarnation modifier
-modifier_imba_reincarnation = modifier_imba_reincarnation or class({})
+modifier_imba_reincarnation = modifier_imba_reincarnation or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reincarnation:OnCreated()
 	-- Ability properties
@@ -1458,7 +1458,7 @@ function modifier_imba_reincarnation:IsAura()
 end
 
 -- Wraith Form modifier (given from aura, not yet Wraith Form)
-modifier_imba_reincarnation_wraith_form_buff = modifier_imba_reincarnation_wraith_form_buff or class({})
+modifier_imba_reincarnation_wraith_form_buff = modifier_imba_reincarnation_wraith_form_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reincarnation_wraith_form_buff:OnCreated()
 	-- Ability properties
@@ -1534,7 +1534,7 @@ function modifier_imba_reincarnation_wraith_form_buff:OnTakeDamage(keys)
 end
 
 -- Wraith Form (actual Wraith Form)
-modifier_imba_reincarnation_wraith_form = modifier_imba_reincarnation_wraith_form or class({})
+modifier_imba_reincarnation_wraith_form = modifier_imba_reincarnation_wraith_form or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_reincarnation_wraith_form:OnCreated()
 	-- Ability properties
@@ -1677,7 +1677,7 @@ end
 --------------------------------
 --        KINGDOM COME        --
 --------------------------------
-imba_wraith_king_kingdom_come = imba_wraith_king_kingdom_come or class({})
+imba_wraith_king_kingdom_come = imba_wraith_king_kingdom_come or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_kingdom_come", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_stun", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1752,7 +1752,7 @@ function imba_wraith_king_kingdom_come:OnSpellStart()
 	imba_wraith_king_create_kingdom(keys)
 end
 
-modifier_imba_kingdom_come = class({})
+modifier_imba_kingdom_come = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_kingdom_come:OnCreated()
 	-- Ability properties
@@ -1792,7 +1792,7 @@ function modifier_imba_kingdom_come:OnDeath(keys)
 end
 
 -- Kingdom Come slow
-modifier_imba_kingdom_come_slow = class({})
+modifier_imba_kingdom_come_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_kingdom_come_slow:OnCreated()
 	-- Ability properties
@@ -1898,7 +1898,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 end
 
 -- Kingdom Come stun modifier
-modifier_imba_kingdom_come_stun = class({})
+modifier_imba_kingdom_come_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_kingdom_come_stun:CheckState()
 	local state = { [MODIFIER_STATE_STUNNED] = true }
@@ -1951,7 +1951,7 @@ end
 --------------------------------
 --    WRAITH'S SOUL STRIKE    --
 --------------------------------
-imba_wraith_king_wraith_soul_strike = class({})
+imba_wraith_king_wraith_soul_strike = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_wraith_soul_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraith_soul_strike_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1964,7 +1964,7 @@ function imba_wraith_king_wraith_soul_strike:GetIntrinsicModifierName()
 	return "modifier_imba_wraith_soul_strike"
 end
 
-modifier_imba_wraith_soul_strike = class({})
+modifier_imba_wraith_soul_strike = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraith_soul_strike:OnCreated()
 	if IsServer() then
@@ -2050,7 +2050,7 @@ function modifier_imba_wraith_soul_strike:OnAttackLanded(keys)
 end
 
 -- Soul Strike slow modifier - #4 Talent
-modifier_imba_wraith_soul_strike_slow = class({})
+modifier_imba_wraith_soul_strike_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraith_soul_strike_slow:OnCreated()
 	if IsServer() then
@@ -2089,7 +2089,7 @@ end
 
 -- This is just to display the wraith has the slowing talent, as requested by Flat...
 
-modifier_imba_wraith_soul_strike_talent = modifier_imba_wraith_soul_strike_talent or class({})
+modifier_imba_wraith_soul_strike_talent = modifier_imba_wraith_soul_strike_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_wraith_soul_strike_talent:IsPurgable() return false end
 
@@ -2102,10 +2102,10 @@ LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_4", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_9", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_10", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_skeleton_king_1  = modifier_special_bonus_imba_skeleton_king_1 or class({})
-modifier_special_bonus_imba_skeleton_king_4  = modifier_special_bonus_imba_skeleton_king_4 or class({})
-modifier_special_bonus_imba_skeleton_king_9  = modifier_special_bonus_imba_skeleton_king_9 or class({})
-modifier_special_bonus_imba_skeleton_king_10 = modifier_special_bonus_imba_skeleton_king_10 or class({})
+modifier_special_bonus_imba_skeleton_king_1  = modifier_special_bonus_imba_skeleton_king_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skeleton_king_4  = modifier_special_bonus_imba_skeleton_king_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skeleton_king_9  = modifier_special_bonus_imba_skeleton_king_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skeleton_king_10 = modifier_special_bonus_imba_skeleton_king_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_skeleton_king_1:IsHidden() return true end
 
@@ -2133,7 +2133,7 @@ function modifier_special_bonus_imba_skeleton_king_10:RemoveOnDeath() return fal
 
 LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_6", "components/abilities/heroes/hero_skeleton_king", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_skeleton_king_6 = modifier_special_bonus_imba_skeleton_king_6 or class({})
+modifier_special_bonus_imba_skeleton_king_6 = modifier_special_bonus_imba_skeleton_king_6 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_skeleton_king_6:IsHidden() return true end
 
@@ -2141,7 +2141,7 @@ function modifier_special_bonus_imba_skeleton_king_6:IsPurgable() return false e
 
 function modifier_special_bonus_imba_skeleton_king_6:RemoveOnDeath() return false end
 
-modifier_skeleton_king_ambient = modifier_skeleton_king_ambient or class({})
+modifier_skeleton_king_ambient = modifier_skeleton_king_ambient or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_skeleton_king_ambient:IsHidden() return true end
 

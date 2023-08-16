@@ -4,7 +4,7 @@
 
 LinkLuaModifier("modifier_imba_faceless_void_chronocharges", "components/abilities/heroes/hero_faceless_void.lua",
 	LUA_MODIFIER_MOTION_NONE) -- Chronocharges counter
-if modifier_imba_faceless_void_chronocharges == nil then modifier_imba_faceless_void_chronocharges = class({}) end
+if modifier_imba_faceless_void_chronocharges == nil then modifier_imba_faceless_void_chronocharges = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_chronocharges:IsPurgable() return false end
 
 function modifier_imba_faceless_void_chronocharges:IsDebuff() return false end
@@ -20,7 +20,7 @@ end
 -------------------------------------------------------------
 --------------------	  Timelord		 --------------------
 -------------------------------------------------------------
-if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class({}) end
+if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_faceless_void_timelord", "components/abilities/heroes/hero_faceless_void.lua",
 	LUA_MODIFIER_MOTION_NONE) -- increases attack speed by [current attack speed] * 0.15
 
@@ -43,7 +43,7 @@ end
 ----------------------------------
 -----	Timelord Modifier	  ----
 ----------------------------------
-if modifier_imba_faceless_void_timelord == nil then modifier_imba_faceless_void_timelord = class({}) end
+if modifier_imba_faceless_void_timelord == nil then modifier_imba_faceless_void_timelord = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_timelord:IsPurgable() return false end
 
 function modifier_imba_faceless_void_timelord:IsDebuff() return false end
@@ -224,7 +224,7 @@ end
 ------------------------------------------
 if modifier_imba_faceless_void_time_walk_damage_counter == nil then
 	modifier_imba_faceless_void_time_walk_damage_counter =
-		class({})
+		class(VANILLA_ABILITIES_BASECLASS)
 end
 function modifier_imba_faceless_void_time_walk_damage_counter:IsPurgable() return false end
 
@@ -274,7 +274,7 @@ end
 ----------------------------------
 -----	Time Walk AS buff	 -----
 ----------------------------------
-if modifier_imba_faceless_void_time_walk_buff_as == nil then modifier_imba_faceless_void_time_walk_buff_as = class({}) end
+if modifier_imba_faceless_void_time_walk_buff_as == nil then modifier_imba_faceless_void_time_walk_buff_as = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_walk_buff_as:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_faceless_void_time_walk_buff_as:IsPurgable() return false end
@@ -294,7 +294,7 @@ end
 ----------------------------------
 -----	Time Walk MS buff	 -----
 ----------------------------------
-if modifier_imba_faceless_void_time_walk_buff_ms == nil then modifier_imba_faceless_void_time_walk_buff_ms = class({}) end
+if modifier_imba_faceless_void_time_walk_buff_ms == nil then modifier_imba_faceless_void_time_walk_buff_ms = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_walk_buff_ms:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_faceless_void_time_walk_buff_ms:IsPurgable() return false end
@@ -314,7 +314,7 @@ end
 ---------------------------------------------------
 -----	Time Walk casting buff + particle	  -----
 ---------------------------------------------------
-if modifier_imba_faceless_void_time_walk_cast == nil then modifier_imba_faceless_void_time_walk_cast = class({}) end
+if modifier_imba_faceless_void_time_walk_cast == nil then modifier_imba_faceless_void_time_walk_cast = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_walk_cast:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_faceless_void_time_walk_cast:IsPurgable() return false end
@@ -501,7 +501,7 @@ end
 -----------------------------------
 -----	Time Walk debuff	  -----
 -----------------------------------
-if modifier_imba_faceless_void_time_walk_slow == nil then modifier_imba_faceless_void_time_walk_slow = class({}) end
+if modifier_imba_faceless_void_time_walk_slow == nil then modifier_imba_faceless_void_time_walk_slow = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_walk_slow:IsPurgable() return true end
 
 function modifier_imba_faceless_void_time_walk_slow:IsHidden() return false end
@@ -539,7 +539,7 @@ end
 ----------------------------------------------------------------
 --------------------	  Time Dilation		--------------------
 ----------------------------------------------------------------
-if imba_faceless_void_time_dilation == nil then imba_faceless_void_time_dilation = class({}) end
+if imba_faceless_void_time_dilation == nil then imba_faceless_void_time_dilation = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_faceless_void_time_dilation_buff", "components/abilities/heroes/hero_faceless_void.lua",
 	LUA_MODIFIER_MOTION_NONE) -- Ally/Caster buff
 LinkLuaModifier("modifier_imba_faceless_void_time_dilation_slow", "components/abilities/heroes/hero_faceless_void.lua",
@@ -727,7 +727,7 @@ end
 -----------------------------------
 -----	Time Dilation buff	  -----
 -----------------------------------
-if modifier_imba_faceless_void_time_dilation_buff == nil then modifier_imba_faceless_void_time_dilation_buff = class({}) end
+if modifier_imba_faceless_void_time_dilation_buff == nil then modifier_imba_faceless_void_time_dilation_buff = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_dilation_buff:IsPurgable() return true end
 
 function modifier_imba_faceless_void_time_dilation_buff:IsHidden() return false end
@@ -772,7 +772,7 @@ end
 -----------------------------------
 -----	Time Dilation slow	  -----
 -----------------------------------
-if modifier_imba_faceless_void_time_dilation_slow == nil then modifier_imba_faceless_void_time_dilation_slow = class({}) end
+if modifier_imba_faceless_void_time_dilation_slow == nil then modifier_imba_faceless_void_time_dilation_slow = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_dilation_slow:IsPurgable() return true end
 
 function modifier_imba_faceless_void_time_dilation_slow:IsHidden() return false end
@@ -813,7 +813,7 @@ end
 --------------------------------------
 ---	Time Dilation Backtrack talent --- (#1 TALENT modifier)
 --------------------------------------
-modifier_imba_time_dilation_talent = modifier_imba_time_dilation_talent or class({})
+modifier_imba_time_dilation_talent = modifier_imba_time_dilation_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_time_dilation_talent:IsPurgable() return false end
@@ -875,7 +875,7 @@ end
 -------------------------------------------------------------
 --------------------	  Time Lock		 --------------------
 -------------------------------------------------------------
-if imba_faceless_void_time_lock == nil then imba_faceless_void_time_lock = class({}) end
+if imba_faceless_void_time_lock == nil then imba_faceless_void_time_lock = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_faceless_void_time_lock", "components/abilities/heroes/hero_faceless_void.lua",
 	LUA_MODIFIER_MOTION_NONE) -- Passive effect
 LinkLuaModifier("modifier_imba_faceless_void_time_lock_stun", "components/abilities/heroes/hero_faceless_void.lua",
@@ -890,7 +890,7 @@ end
 --------------------------------
 -----	Time Lock passive	----
 --------------------------------
-if modifier_imba_faceless_void_time_lock == nil then modifier_imba_faceless_void_time_lock = class({}) end
+if modifier_imba_faceless_void_time_lock == nil then modifier_imba_faceless_void_time_lock = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_lock:IsPurgable() return false end
 
 function modifier_imba_faceless_void_time_lock:IsDebuff() return false end
@@ -1080,7 +1080,7 @@ end
 --------------------------------
 -----	Time Lock Stun		----
 --------------------------------
-if modifier_imba_faceless_void_time_lock_stun == nil then modifier_imba_faceless_void_time_lock_stun = class({}) end
+if modifier_imba_faceless_void_time_lock_stun == nil then modifier_imba_faceless_void_time_lock_stun = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_time_lock_stun:IsPurgable() return false end
 
 function modifier_imba_faceless_void_time_lock_stun:IsDebuff() return true end
@@ -1123,7 +1123,7 @@ end
 ----------------------------------------------------------------
 --------------------	  Chronosphere		--------------------
 ----------------------------------------------------------------
-if imba_faceless_void_chronosphere == nil then imba_faceless_void_chronosphere = class({}) end
+if imba_faceless_void_chronosphere == nil then imba_faceless_void_chronosphere = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_faceless_void_chronosphere_aura", "components/abilities/heroes/hero_faceless_void.lua",
 	LUA_MODIFIER_MOTION_NONE)                                                    -- Aura - Handle applier
 LinkLuaModifier("modifier_imba_faceless_void_chronosphere_handler", "components/abilities/heroes/hero_faceless_void.lua",
@@ -1234,7 +1234,7 @@ end
 ---------------------------------
 -----	Chronosphere Aura	-----
 ---------------------------------
-if modifier_imba_faceless_void_chronosphere_aura == nil then modifier_imba_faceless_void_chronosphere_aura = class({}) end
+if modifier_imba_faceless_void_chronosphere_aura == nil then modifier_imba_faceless_void_chronosphere_aura = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_chronosphere_aura:IsPurgable() return false end
 
 function modifier_imba_faceless_void_chronosphere_aura:IsHidden() return true end
@@ -1362,7 +1362,7 @@ end
 -------------------------------------
 -----	Chronosphere Handler	-----
 -------------------------------------
-if modifier_imba_faceless_void_chronosphere_handler == nil then modifier_imba_faceless_void_chronosphere_handler = class({}) end
+if modifier_imba_faceless_void_chronosphere_handler == nil then modifier_imba_faceless_void_chronosphere_handler = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_faceless_void_chronosphere_handler:IsHidden() return true end
 
 function modifier_imba_faceless_void_chronosphere_handler:IsPurgable() return false end
@@ -1549,7 +1549,7 @@ end
 -----------------------------------------------
 if modifier_imba_faceless_void_chronosphere_caster_buff == nil then
 	modifier_imba_faceless_void_chronosphere_caster_buff =
-		class({})
+		class(VANILLA_ABILITIES_BASECLASS)
 end
 function modifier_imba_faceless_void_chronosphere_caster_buff:IsPurgable() return false end
 
@@ -1581,9 +1581,9 @@ LinkLuaModifier("modifier_imba_faceless_void_time_lock_720", "components/abiliti
 LinkLuaModifier("modifier_imba_faceless_void_time_lock_720_freeze", "components/abilities/heroes/hero_faceless_void",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_faceless_void_time_lock_720                 = class({})
-modifier_imba_faceless_void_time_lock_720        = class({})
-modifier_imba_faceless_void_time_lock_720_freeze = class({})
+imba_faceless_void_time_lock_720                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_faceless_void_time_lock_720        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_faceless_void_time_lock_720_freeze = class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------------
 -- TIME LOCK (7.20 Version) --
@@ -1776,8 +1776,8 @@ LinkLuaModifier("modifier_special_bonus_imba_faceless_void_7", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_12", "components/abilities/heroes/hero_faceless_void",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_faceless_void_7  = modifier_special_bonus_imba_faceless_void_7 or class({})
-modifier_special_bonus_imba_faceless_void_12 = modifier_special_bonus_imba_faceless_void_12 or class({})
+modifier_special_bonus_imba_faceless_void_7  = modifier_special_bonus_imba_faceless_void_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_faceless_void_12 = modifier_special_bonus_imba_faceless_void_12 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_faceless_void_7:IsHidden() return true end
 
@@ -1801,10 +1801,10 @@ LinkLuaModifier("modifier_special_bonus_imba_faceless_void_10", "components/abil
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_11", "components/abilities/heroes/hero_faceless_void",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_faceless_void_3  = class({})
-modifier_special_bonus_imba_faceless_void_9  = class({})
-modifier_special_bonus_imba_faceless_void_10 = class({})
-modifier_special_bonus_imba_faceless_void_11 = class({})
+modifier_special_bonus_imba_faceless_void_3  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_faceless_void_9  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_faceless_void_10 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_faceless_void_11 = class(VANILLA_ABILITIES_BASECLASS)
 
 -------------------
 -- SPEED BARRIER --

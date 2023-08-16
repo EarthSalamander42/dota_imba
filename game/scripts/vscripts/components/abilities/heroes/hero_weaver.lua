@@ -14,21 +14,21 @@ LinkLuaModifier("modifier_imba_weaver_geminate_attack_delay", "components/abilit
 LinkLuaModifier("modifier_imba_weaver_time_lapse_aura", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_weaver_time_lapse", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 
-imba_weaver_the_swarm                      = class({})
-modifier_imba_weaver_the_swarm_unit        = class({})
-modifier_imba_weaver_the_swarm_debuff      = class({})
+imba_weaver_the_swarm                      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_the_swarm_unit        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_the_swarm_debuff      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_weaver_shukuchi                       = class({})
-modifier_imba_weaver_shukuchi_handler      = class({})
-modifier_imba_weaver_shukuchi              = class({})
+imba_weaver_shukuchi                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_shukuchi_handler      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_shukuchi              = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_weaver_geminate_attack                = class({})
-modifier_imba_weaver_geminate_attack       = class({})
-modifier_imba_weaver_geminate_attack_delay = class({})
+imba_weaver_geminate_attack                = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_geminate_attack       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_geminate_attack_delay = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_weaver_time_lapse                     = class({})
-modifier_imba_weaver_time_lapse_aura       = class({})
-modifier_imba_weaver_time_lapse            = class({})
+imba_weaver_time_lapse                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_time_lapse_aura       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_weaver_time_lapse            = class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------
 -- THE SWARM --
@@ -353,7 +353,7 @@ end
 
 function imba_weaver_shukuchi:GetCooldown(level)
 	if not self.glitch_point_position then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -642,7 +642,7 @@ end
 
 function imba_weaver_time_lapse:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return self:GetSpecialValueFor("cooldown_scepter")
 	end
@@ -844,9 +844,9 @@ LinkLuaModifier("modifier_special_bonus_imba_weaver_shukuchi_damage", "component
 LinkLuaModifier("modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_weaver_shukuchi_damage = modifier_special_bonus_imba_weaver_shukuchi_damage or class({})
-modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks = modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks or class({})
-modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack = modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack or class({})
+modifier_special_bonus_imba_weaver_shukuchi_damage = modifier_special_bonus_imba_weaver_shukuchi_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks = modifier_special_bonus_imba_weaver_the_swarm_destroy_attacks or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack = modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_weaver_shukuchi_damage:IsHidden() return true end
 
@@ -869,8 +869,8 @@ function modifier_special_bonus_imba_weaver_geminate_attack_tooltip_attack:Remov
 LinkLuaModifier("modifier_special_bonus_imba_weaver_the_swarm_armor_reduction", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_weaver_shukuchi_hasted_speed", "components/abilities/heroes/hero_weaver", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_weaver_the_swarm_armor_reduction = class({})
-modifier_special_bonus_imba_weaver_shukuchi_hasted_speed     = class({})
+modifier_special_bonus_imba_weaver_the_swarm_armor_reduction = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_weaver_shukuchi_hasted_speed     = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_weaver_the_swarm_armor_reduction:IsHidden() return true end
 

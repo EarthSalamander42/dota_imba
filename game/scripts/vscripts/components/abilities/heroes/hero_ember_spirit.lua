@@ -63,7 +63,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Flame Guard talent checker
-modifier_imba_flame_guard_talent = modifier_imba_flame_guard_talent or class({})
+modifier_imba_flame_guard_talent = modifier_imba_flame_guard_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_flame_guard_talent:IsDebuff() return false end
 
@@ -99,7 +99,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Flame Guard passive
-modifier_imba_flame_guard_passive = modifier_imba_flame_guard_passive or class({})
+modifier_imba_flame_guard_passive = modifier_imba_flame_guard_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_flame_guard_passive:IsHidden() return false end
 
@@ -157,7 +157,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Flame Guard fire aura
-modifier_imba_flame_guard_aura = modifier_imba_flame_guard_aura or class({})
+modifier_imba_flame_guard_aura = modifier_imba_flame_guard_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_flame_guard_aura:IsDebuff() return false end
 
@@ -251,7 +251,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Sleight of Fist caster modifier
-modifier_imba_sleight_of_fist_caster = modifier_imba_sleight_of_fist_caster or class({})
+modifier_imba_sleight_of_fist_caster = modifier_imba_sleight_of_fist_caster or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sleight_of_fist_caster:IsPurgable() return false end
 
@@ -315,7 +315,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Sleight of Fist target marker
-modifier_imba_sleight_of_fist_marker = modifier_imba_sleight_of_fist_marker or class({})
+modifier_imba_sleight_of_fist_marker = modifier_imba_sleight_of_fist_marker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sleight_of_fist_marker:IsDebuff() return true end
 
@@ -334,7 +334,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Searing Chains attack proc
-modifier_imba_searing_chains_attack = modifier_imba_searing_chains_attack or class({})
+modifier_imba_searing_chains_attack = modifier_imba_searing_chains_attack or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_searing_chains_attack:IsDebuff() return false end
 
@@ -368,7 +368,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Searing Chains debuff
-modifier_imba_searing_chains_debuff = modifier_imba_searing_chains_debuff or class({})
+modifier_imba_searing_chains_debuff = modifier_imba_searing_chains_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_searing_chains_debuff:IsDebuff() return true end
 
@@ -412,7 +412,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Charge counter modifier
-modifier_imba_fire_remnant_charges = modifier_imba_fire_remnant_charges or class({})
+modifier_imba_fire_remnant_charges = modifier_imba_fire_remnant_charges or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fire_remnant_charges:OnStackCountChanged(stack)
 	if not IsServer() then return end
@@ -515,7 +515,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Remnant state modifier
-modifier_imba_fire_remnant_state = modifier_imba_fire_remnant_state or class({})
+modifier_imba_fire_remnant_state = modifier_imba_fire_remnant_state or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fire_remnant_state:IsDebuff() return false end
 
@@ -611,7 +611,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Remnant cooldown modifier
-modifier_imba_fire_remnant_cooldown = modifier_imba_fire_remnant_cooldown or class({})
+modifier_imba_fire_remnant_cooldown = modifier_imba_fire_remnant_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fire_remnant_cooldown:IsDebuff() return true end
 
@@ -637,7 +637,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Dash state modifier
-modifier_imba_fire_remnant_dash = modifier_imba_fire_remnant_dash or class({})
+modifier_imba_fire_remnant_dash = modifier_imba_fire_remnant_dash or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fire_remnant_dash:IsDebuff() return false end
 
@@ -668,7 +668,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Searing Chains ability
-imba_ember_spirit_searing_chains = imba_ember_spirit_searing_chains or class({})
+imba_ember_spirit_searing_chains = imba_ember_spirit_searing_chains or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_ember_spirit_searing_chains:GetIntrinsicModifierName()
 	return "modifier_imba_searing_chains_attack"
@@ -729,7 +729,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Sleight of Fist ability
-imba_ember_spirit_sleight_of_fist = imba_ember_spirit_sleight_of_fist or class({})
+imba_ember_spirit_sleight_of_fist = imba_ember_spirit_sleight_of_fist or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_ember_spirit_sleight_of_fist:GetAOERadius()
 	return self:GetSpecialValueFor("effect_radius")
@@ -854,7 +854,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Fire Remnant ability
-imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class({})
+imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_ember_spirit_fire_remnant:GetAssociatedPrimaryAbilities() return "imba_ember_spirit_activate_fire_remnant" end
 
@@ -960,7 +960,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Flame Guard ability
-imba_ember_spirit_flame_guard = imba_ember_spirit_flame_guard or class({})
+imba_ember_spirit_flame_guard = imba_ember_spirit_flame_guard or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_ember_spirit_flame_guard:GetIntrinsicModifierName()
 	return "modifier_imba_flame_guard_talent"
@@ -1005,7 +1005,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Activate Fire Remnant ability
-imba_ember_spirit_activate_fire_remnant = imba_ember_spirit_activate_fire_remnant or class({})
+imba_ember_spirit_activate_fire_remnant = imba_ember_spirit_activate_fire_remnant or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_ember_spirit_activate_fire_remnant:GetAssociatedSecondaryAbilities() return "imba_ember_spirit_fire_remnant" end
 
@@ -1070,7 +1070,7 @@ end
 --------------------------------------------------------------------------------
 
 -- Fire Remnant Expiry Timer (for caster)
-modifier_imba_fire_remnant_timer = modifier_imba_fire_remnant_timer or class({})
+modifier_imba_fire_remnant_timer = modifier_imba_fire_remnant_timer or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fire_remnant_timer:IsHidden() return false end
 

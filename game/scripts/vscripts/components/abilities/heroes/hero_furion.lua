@@ -14,13 +14,13 @@ LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_stack", "components
 LinkLuaModifier("modifier_imba_furion_wrath_of_nature_damage_counter", "components/abilities/heroes/hero_furion",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_furion_wrath_of_nature                         = imba_furion_wrath_of_nature_spawn or class({})
-modifier_imba_furion_wrath_of_nature                = modifier_imba_furion_wrath_of_nature or class({})
-modifier_imba_furion_wrath_of_nature_aura           = modifier_imba_furion_wrath_of_nature_aura or class({})
-modifier_imba_furion_wrath_of_nature_thinker        = modifier_imba_furion_wrath_of_nature_thinker or class({})
-modifier_imba_furion_wrath_of_nature_spawn          = modifier_imba_furion_wrath_of_nature_spawn or class({})
-modifier_imba_furion_wrath_of_nature_damage_stack   = modifier_imba_furion_wrath_of_nature_damage_stack or class({})
-modifier_imba_furion_wrath_of_nature_damage_counter = modifier_imba_furion_wrath_of_nature_damage_counter or class({})
+imba_furion_wrath_of_nature                         = imba_furion_wrath_of_nature_spawn or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature                = modifier_imba_furion_wrath_of_nature or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature_aura           = modifier_imba_furion_wrath_of_nature_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature_thinker        = modifier_imba_furion_wrath_of_nature_thinker or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature_spawn          = modifier_imba_furion_wrath_of_nature_spawn or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature_damage_stack   = modifier_imba_furion_wrath_of_nature_damage_stack or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_furion_wrath_of_nature_damage_counter = modifier_imba_furion_wrath_of_nature_damage_counter or class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------------
 -- IMBA_FURION_WRATH_OF_NATURE --
@@ -402,7 +402,7 @@ LinkLuaModifier("modifier_special_bonus_imba_furion_wrath_of_nature_boost", "com
 	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_furion_wrath_of_nature_boost = modifier_special_bonus_imba_furion_wrath_of_nature_boost or
-	class({})
+	class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_furion_wrath_of_nature_boost:IsHidden() return true end
 

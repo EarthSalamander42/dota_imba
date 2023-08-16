@@ -5,7 +5,7 @@
 --       NETHER BLAST         --
 --------------------------------
 
-imba_pugna_nether_blast = class({})
+imba_pugna_nether_blast = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_nether_blast_magic_res", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_nether_blast:GetAbilityTextureName()
@@ -182,7 +182,7 @@ function imba_pugna_nether_blast:OnSpellStart()
 end
 
 -- Magic resistance reduction modifier
-modifier_imba_nether_blast_magic_res = class({})
+modifier_imba_nether_blast_magic_res = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nether_blast_magic_res:OnCreated()
 	-- Ability properties
@@ -217,7 +217,7 @@ end
 --         DECREPIFY          --
 --------------------------------
 
-imba_pugna_decrepify = class({})
+imba_pugna_decrepify = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_decrepify", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_decrepify:GetAbilityTextureName() return "pugna_decrepify" end
@@ -264,7 +264,7 @@ function imba_pugna_decrepify:OnSpellStart()
 end
 
 -- Decrepify modifier
-modifier_imba_decrepify = class({})
+modifier_imba_decrepify = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_decrepify:GetEffectName()
 	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
@@ -439,7 +439,7 @@ end
 --------------------------------
 --       NETHER WARD          --
 --------------------------------
-imba_pugna_nether_ward = class({})
+imba_pugna_nether_ward = class(VANILLA_ABILITIES_BASECLASS)
 function imba_pugna_nether_ward:IsHiddenWhenStolen() return false end
 
 function imba_pugna_nether_ward:IsRefreshable() return true end
@@ -518,7 +518,7 @@ end
 --------------------------------
 --        NETHER AURA         --
 --------------------------------
-imba_pugna_nether_ward_aura = class({})
+imba_pugna_nether_ward_aura = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_nether_ward_aura", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_nether_ward_degen", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -535,7 +535,7 @@ function imba_pugna_nether_ward_aura:GetCastRange()
 end
 
 -- Aura modifier
-modifier_imba_nether_ward_aura = class({})
+modifier_imba_nether_ward_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nether_ward_aura:OnCreated()
 	-- Ability properties
@@ -641,7 +641,7 @@ function modifier_imba_nether_ward_aura:IsAura()
 end
 
 -- Degen modifier
-modifier_imba_nether_ward_degen = class({})
+modifier_imba_nether_ward_degen = class(VANILLA_ABILITIES_BASECLASS)
 
 
 function modifier_imba_nether_ward_degen:OnCreated()
@@ -973,7 +973,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 		end
 
 		-- Shadowraze: face the caster
-		if cast_ability_name == "imba_nevermore_shadowraze_close" or cast_ability_name == "imba_nevermore_shadowraze_medium" or cast_ability_name == "imba_nevermore_shadowraze_far" then
+		if cast_ability_name == "imba_nevermore_shadowraze1" or cast_ability_name == "imba_nevermore_shadowraze2" or cast_ability_name == "imba_nevermore_shadowraze3" then
 			ward:SetForwardVector((target_point - ward_position):Normalized())
 		end
 
@@ -1155,7 +1155,7 @@ end
 --------------------------------
 --       LIFE DRAIN           --
 --------------------------------
-imba_pugna_life_drain = class({})
+imba_pugna_life_drain = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_life_drain", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_life_drain:GetAbilityTextureName()
@@ -1190,7 +1190,7 @@ function imba_pugna_life_drain:GetCooldown(level)
 	if self:GetCaster():HasScepter() then
 		return 0
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -1243,7 +1243,7 @@ function imba_pugna_life_drain:OnSpellStart()
 end
 
 -- Life drain modifier
-modifier_imba_life_drain = class({})
+modifier_imba_life_drain = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_life_drain:GetPriority()
 	return MODIFIER_PRIORITY_HIGH
@@ -1488,7 +1488,7 @@ end
 --------------------------------
 --     LIFE DRAIN CANCEL      --
 --------------------------------
-imba_pugna_life_drain_end = class({})
+imba_pugna_life_drain_end = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_pugna_life_drain_end:GetAbilityTextureName()
 	return "pugna_life_drain_end"
@@ -1556,15 +1556,15 @@ LinkLuaModifier("modifier_special_bonus_imba_pugna_7", "components/abilities/her
 LinkLuaModifier("modifier_special_bonus_imba_pugna_8", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_pugna_nether_ward_damage", "components/abilities/heroes/hero_pugna", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_pugna_1 = modifier_special_bonus_imba_pugna_1 or class({})
-modifier_special_bonus_imba_pugna_2 = modifier_special_bonus_imba_pugna_2 or class({})
-modifier_special_bonus_imba_pugna_3 = modifier_special_bonus_imba_pugna_3 or class({})
-modifier_special_bonus_imba_pugna_4 = modifier_special_bonus_imba_pugna_4 or class({})
-modifier_special_bonus_imba_pugna_5 = modifier_special_bonus_imba_pugna_5 or class({})
-modifier_special_bonus_imba_pugna_6 = modifier_special_bonus_imba_pugna_6 or class({})
-modifier_special_bonus_imba_pugna_7 = modifier_special_bonus_imba_pugna_7 or class({})
-modifier_special_bonus_imba_pugna_8 = modifier_special_bonus_imba_pugna_8 or class({})
-modifier_special_bonus_imba_pugna_nether_ward_damage = modifier_special_bonus_imba_pugna_nether_ward_damage or class({})
+modifier_special_bonus_imba_pugna_1 = modifier_special_bonus_imba_pugna_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_2 = modifier_special_bonus_imba_pugna_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_3 = modifier_special_bonus_imba_pugna_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_4 = modifier_special_bonus_imba_pugna_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_5 = modifier_special_bonus_imba_pugna_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_6 = modifier_special_bonus_imba_pugna_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_7 = modifier_special_bonus_imba_pugna_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_8 = modifier_special_bonus_imba_pugna_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_pugna_nether_ward_damage = modifier_special_bonus_imba_pugna_nether_ward_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_pugna_1:IsHidden() return true end
 

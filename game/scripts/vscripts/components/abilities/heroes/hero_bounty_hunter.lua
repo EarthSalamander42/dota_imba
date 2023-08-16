@@ -11,7 +11,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_shuriken_toss_stunned"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_bounty_hunter_shuriken_toss = imba_bounty_hunter_shuriken_toss or class({})
+imba_bounty_hunter_shuriken_toss = imba_bounty_hunter_shuriken_toss or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bounty_hunter_shuriken_toss:GetCastRange(location, target)
 	if self:GetCaster():HasScepter() then
@@ -25,7 +25,7 @@ function imba_bounty_hunter_shuriken_toss:GetCooldown(level)
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cooldown")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -221,7 +221,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 				if actual_gold_to_steal > 0 then
 					-- Add money particle effect
 					self.money_particle = ParticleManager:CreateParticle(
-					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 						target)
 					ParticleManager:SetParticleControlEnt(self.money_particle, 1, self:GetCaster(), PATTACH_POINT_FOLLOW,
 						"attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
@@ -235,8 +235,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
 					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self
-					:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() +
-					actual_gold_to_steal)
+						:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() +
+						actual_gold_to_steal)
 				end
 			end
 		end
@@ -318,7 +318,7 @@ function imba_bounty_hunter_shuriken_toss:IsHiddenWhenStolen()
 end
 
 -- Stun modifier
-modifier_imba_shuriken_toss_stunned = modifier_imba_shuriken_toss_stunned or class({})
+modifier_imba_shuriken_toss_stunned = modifier_imba_shuriken_toss_stunned or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shuriken_toss_stunned:CheckState()
 	return { [MODIFIER_STATE_STUNNED] = true }
@@ -341,7 +341,7 @@ function modifier_imba_shuriken_toss_stunned:GetEffectAttachType()
 end
 
 -- Pull modifier
-modifier_imba_shuriken_toss_debuff_pull = modifier_imba_shuriken_toss_debuff_pull or class({})
+modifier_imba_shuriken_toss_debuff_pull = modifier_imba_shuriken_toss_debuff_pull or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shuriken_toss_debuff_pull:OnCreated()
 	if IsServer() then
@@ -438,7 +438,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_jinada_gold_tracker"] = LUA_MODIFIER_MOTION_NONE
 })
 
-imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
+imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bounty_hunter_jinada:GetAbilityTextureName()
 	return "bounty_hunter_jinada"
@@ -572,7 +572,7 @@ function imba_bounty_hunter_jinada:IsStealable()
 end
 
 -- Jinada thinker modifier
-modifier_imba_jinada_passive = modifier_imba_jinada_passive or class({})
+modifier_imba_jinada_passive = modifier_imba_jinada_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_jinada_passive:GetAttributes()
 	return MODIFIER_ATTRIBUTE_PERMANENT
@@ -610,7 +610,7 @@ function modifier_imba_jinada_passive:IsDebuff()
 end
 
 -- Slow debuff modifier
-modifier_imba_jinada_debuff_slow = modifier_imba_jinada_debuff_slow or class({})
+modifier_imba_jinada_debuff_slow = modifier_imba_jinada_debuff_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_jinada_debuff_slow:OnCreated()
 	-- Prepare variables
@@ -648,7 +648,7 @@ function modifier_imba_jinada_debuff_slow:IsHidden()
 end
 
 -- Jinada crit modifier
-modifier_imba_jinada_buff_crit = modifier_imba_jinada_buff_crit or class({})
+modifier_imba_jinada_buff_crit = modifier_imba_jinada_buff_crit or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_jinada_buff_crit:OnCreated()
 	if IsServer() then
@@ -683,7 +683,7 @@ function modifier_imba_jinada_buff_crit:OnCreated()
 			self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)
 		else
 			self.particle_glow_fx = ParticleManager:CreateParticle(
-			"particles/hero/bounty_hunter/bounty_hunter_jinada_ally.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+				"particles/hero/bounty_hunter/bounty_hunter_jinada_ally.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
 			ParticleManager:SetParticleControl(self.particle_glow_fx, 0, self.parent:GetAbsOrigin())
 			self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)
 		end
@@ -747,7 +747,7 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 				if actual_gold_to_steal > 0 then
 					-- Add money particle effect
 					self.money_particle = ParticleManager:CreateParticle(
-					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 						target)
 					ParticleManager:SetParticleControlEnt(self.money_particle, 1, self.parent, PATTACH_POINT_FOLLOW,
 						"attach_hitloc", self.parent:GetAbsOrigin(), true)
@@ -760,8 +760,8 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 				if self:GetCaster():HasModifier("modifier_imba_jinada_gold_tracker") then
 					self:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):SetStackCount(self
-					:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() +
-					actual_gold_to_steal)
+						:GetCaster():FindModifierByName("modifier_imba_jinada_gold_tracker"):GetStackCount() +
+						actual_gold_to_steal)
 				end
 			end
 
@@ -849,7 +849,7 @@ end
 -- MODIFIER_IMBA_JINADA_GOLD_TRACKER --
 ---------------------------------------
 
-modifier_imba_jinada_gold_tracker = modifier_imba_jinada_gold_tracker or class({})
+modifier_imba_jinada_gold_tracker = modifier_imba_jinada_gold_tracker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_jinada_gold_tracker:IsHidden() return true end
 
@@ -869,7 +869,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_shadow_walk_vision"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_bounty_hunter_shadow_walk = imba_bounty_hunter_shadow_walk or class({})
+imba_bounty_hunter_shadow_walk = imba_bounty_hunter_shadow_walk or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_shadow_walk_buff_invis", "components/abilities/heroes/hero_bounty_hunter",
 	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_walk_vision", "components/abilities/heroes/hero_bounty_hunter",
@@ -936,7 +936,7 @@ function imba_bounty_hunter_shadow_walk:IsHiddenWhenStolen()
 end
 
 -- invisibility modifier
-modifier_imba_shadow_walk_buff_invis = modifier_imba_shadow_walk_buff_invis or class({})
+modifier_imba_shadow_walk_buff_invis = modifier_imba_shadow_walk_buff_invis or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shadow_walk_buff_invis:OnCreated()
 	self.caster = self:GetCaster()
@@ -1123,7 +1123,7 @@ function modifier_imba_shadow_walk_buff_invis:IsPurgable()
 end
 
 -- True sight debuff
-modifier_imba_shadow_walk_vision = modifier_imba_shadow_walk_vision or class({})
+modifier_imba_shadow_walk_vision = modifier_imba_shadow_walk_vision or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_shadow_walk_vision:CheckState()
 	local state = { [MODIFIER_STATE_INVISIBLE] = false }
@@ -1155,7 +1155,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_track_debuff_mark"] = LUA_MODIFIER_MOTION_NONE,
 })
 
-imba_bounty_hunter_track = imba_bounty_hunter_track or class({})
+imba_bounty_hunter_track = imba_bounty_hunter_track or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bounty_hunter_track:GetAbilityTextureName()
 	return "bounty_hunter_track"
@@ -1224,7 +1224,7 @@ function imba_bounty_hunter_track:IsHiddenWhenStolen()
 end
 
 -- Track modifier (aura)
-modifier_imba_track_debuff_mark = modifier_imba_track_debuff_mark or class({})
+modifier_imba_track_debuff_mark = modifier_imba_track_debuff_mark or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_track_debuff_mark:OnCreated()
 	-- Ability properties
@@ -1444,7 +1444,7 @@ function modifier_imba_track_debuff_mark:GetPriority()
 end
 
 -- Allied haste modifier
-modifier_imba_track_buff_ms = modifier_imba_track_buff_ms or class({})
+modifier_imba_track_buff_ms = modifier_imba_track_buff_ms or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_track_buff_ms:OnCreated()
 	-- Ability properties
@@ -1491,7 +1491,7 @@ MergeTables(LinkedModifiers, {
 	["modifier_imba_headhunter_debuff_handler"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_headhunter_debuff_illu"] = LUA_MODIFIER_MOTION_NONE,
 })
-imba_bounty_hunter_headhunter = imba_bounty_hunter_headhunter or class({})
+imba_bounty_hunter_headhunter = imba_bounty_hunter_headhunter or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_headhunter_passive", "components/abilities/heroes/hero_bounty_hunter",
 	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_headhunter_debuff_handler", "components/abilities/heroes/hero_bounty_hunter",
@@ -1540,7 +1540,7 @@ function imba_bounty_hunter_headhunter:OnProjectileHit(target, location)
 end
 
 --Contract buff (self)
-modifier_imba_headhunter_passive = modifier_imba_headhunter_passive or class({})
+modifier_imba_headhunter_passive = modifier_imba_headhunter_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headhunter_passive:OnCreated()
 	if IsServer() then
@@ -1639,7 +1639,7 @@ function modifier_imba_headhunter_passive:IsHidden()
 end
 
 -- Contract self buff
-modifier_imba_headhunter_buff_handler = class({})
+modifier_imba_headhunter_buff_handler = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headhunter_buff_handler:IsDebuff()
 	return false
@@ -1654,7 +1654,7 @@ function modifier_imba_headhunter_buff_handler:IsHidden()
 end
 
 -- Contract debuff
-modifier_imba_headhunter_debuff_handler = modifier_imba_headhunter_debuff_handler or class({})
+modifier_imba_headhunter_debuff_handler = modifier_imba_headhunter_debuff_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headhunter_debuff_handler:OnCreated()
 	if IsServer() then
@@ -1813,7 +1813,7 @@ function modifier_imba_headhunter_debuff_handler:IsHidden()
 	return true
 end
 
-modifier_imba_headhunter_debuff_illu = modifier_imba_headhunter_debuff_illu or class({})
+modifier_imba_headhunter_debuff_illu = modifier_imba_headhunter_debuff_illu or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_headhunter_debuff_illu:OnCreated()
 	if IsServer() then
@@ -1866,13 +1866,13 @@ LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_9", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_bounty_hunter_8", "components/abilities/heroes/hero_bounty_hunter",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_bounty_hunter_6 = modifier_special_bonus_imba_bounty_hunter_6 or class({})
-modifier_special_bonus_imba_bounty_hunter_3 = modifier_special_bonus_imba_bounty_hunter_3 or class({})
-modifier_special_bonus_imba_bounty_hunter_2 = modifier_special_bonus_imba_bounty_hunter_2 or class({})
-modifier_special_bonus_imba_bounty_hunter_7 = modifier_special_bonus_imba_bounty_hunter_7 or class({})
-modifier_special_bonus_imba_bounty_hunter_1 = modifier_special_bonus_imba_bounty_hunter_1 or class({})
-modifier_special_bonus_imba_bounty_hunter_9 = modifier_special_bonus_imba_bounty_hunter_9 or class({})
-modifier_special_bonus_imba_bounty_hunter_8 = modifier_special_bonus_imba_bounty_hunter_8 or class({})
+modifier_special_bonus_imba_bounty_hunter_6 = modifier_special_bonus_imba_bounty_hunter_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_3 = modifier_special_bonus_imba_bounty_hunter_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_2 = modifier_special_bonus_imba_bounty_hunter_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_7 = modifier_special_bonus_imba_bounty_hunter_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_1 = modifier_special_bonus_imba_bounty_hunter_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_9 = modifier_special_bonus_imba_bounty_hunter_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bounty_hunter_8 = modifier_special_bonus_imba_bounty_hunter_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_bounty_hunter_6:IsHidden() return true end
 

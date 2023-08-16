@@ -7,11 +7,11 @@ end
 -- GameEvent:OnGameRulesStateChange
 --------------------------------------------------------------------------------
 function HeroDemo:OnGameRulesStateChange()
-	if not GameRules:IsCheatMode() then
+	if not GameRules:IsCheatMode() or GetMapName() ~= "imba_demo" then
 		return
 	end
 	local nNewState = GameRules:State_Get()
-	--print( "OnGameRulesStateChange: " .. nNewState )
+	print("OnGameRulesStateChange: " .. nNewState)
 
 	if nNewState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		--print( "OnGameRulesStateChange: Hero Selection" )
@@ -31,7 +31,7 @@ end
 -- GameEvent: OnNPCSpawned
 --------------------------------------------------------------------------------
 function HeroDemo:OnNPCSpawned(event)
-	if not GameRules:IsCheatMode() then
+	if not GameRules:IsCheatMode() or GetMapName() ~= "imba_demo" then
 		return
 	end
 	--print( "^^^HeroDemo:OnNPCSpawned" )
@@ -86,7 +86,7 @@ end
 -- GameEvent: OnItemPurchased
 --------------------------------------------------------------------------------
 function HeroDemo:OnItemPurchased(event)
-	if not GameRules:IsCheatMode() then
+	if not GameRules:IsCheatMode() or GetMapName() ~= "imba_demo" then
 		return
 	end
 	local hBuyer = PlayerResource:GetPlayer(event.PlayerID)
@@ -98,7 +98,7 @@ end
 -- GameEvent: OnNPCReplaced
 --------------------------------------------------------------------------------
 function HeroDemo:OnNPCReplaced(event)
-	if not GameRules:IsCheatMode() then
+	if not GameRules:IsCheatMode() or GetMapName() ~= "imba_demo" then
 		return
 	end
 	local sNewHeroName = PlayerResource:GetSelectedHeroName(event.new_entindex)

@@ -5,7 +5,7 @@
 --			Ursa's Earthshock
 ---------------------------------------------------
 
-imba_ursa_earthshock = class({})
+imba_ursa_earthshock = class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_earthshock_movement", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier("modifier_imba_earthshock_slow", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -141,7 +141,7 @@ function imba_ursa_earthshock:ApplyEarthShock()
 end
 
 -- Earthshock slow debuff
-modifier_imba_earthshock_slow = class({})
+modifier_imba_earthshock_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earthshock_slow:OnCreated()
 	-- Ability properties
@@ -174,7 +174,7 @@ end
 -- EARTHSHOCK MOVEMENT MODIFIER --
 ----------------------------------
 
-modifier_imba_earthshock_movement = modifier_imba_earthshock_movement or class({})
+modifier_imba_earthshock_movement = modifier_imba_earthshock_movement or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Gonna copy-paste my generic motion controller code here cause there's too many changes that need to be made (and I can't copy the class itself for some reason)
 
@@ -274,7 +274,7 @@ function modifier_imba_earthshock_slow:GetModifierMoveSpeedBonus_Percentage()
 end
 
 -- Trembling Steps buff
-modifier_imba_trembling_steps_buff = class({})
+modifier_imba_trembling_steps_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_trembling_steps_buff:OnCreated()
 	if IsServer() then
@@ -400,7 +400,7 @@ function modifier_imba_trembling_steps_buff:IsPurgable()
 end
 
 -- Trembling Steps prevention modifier
-modifier_imba_trembling_steps_prevent = class({})
+modifier_imba_trembling_steps_prevent = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_trembling_steps_prevent:IsDebuff()
 	return false
@@ -415,7 +415,7 @@ function modifier_imba_trembling_steps_prevent:IsPurgable()
 end
 
 -- Trembling Steps slow debuff
-modifier_imba_trembling_steps_debuff = class({})
+modifier_imba_trembling_steps_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_trembling_steps_debuff:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_earthshock_modifier.vpcf"
@@ -458,7 +458,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_ursa_overpower = class({})
+imba_ursa_overpower = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_overpower_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_overpower_disarm", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_overpower_talent_fangs", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -577,7 +577,7 @@ function imba_ursa_overpower:DisarmEnemies(caster, ability)
 end
 
 -- Overpower attack speed buff
-modifier_imba_overpower_buff = class({})
+modifier_imba_overpower_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_overpower_buff:OnCreated()
 	if IsServer() then
@@ -658,7 +658,7 @@ function modifier_imba_overpower_buff:OnAttack(keys)
 end
 
 -- Overpower disarm debuff
-modifier_imba_overpower_disarm = class({})
+modifier_imba_overpower_disarm = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_overpower_disarm:GetEffectName()
 	return "particles/generic_gameplay/generic_disarm.vpcf"
@@ -699,7 +699,7 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_8", "components/abilities/heroes/hero_ursa.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_8 = modifier_special_bonus_imba_ursa_8 or class({})
+modifier_special_bonus_imba_ursa_8 = modifier_special_bonus_imba_ursa_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_ursa_8:IsHidden() return true end
 
@@ -715,7 +715,7 @@ function modifier_special_bonus_imba_ursa_8:OnCreated()
 	end
 end
 
-modifier_imba_overpower_talent_fangs = modifier_imba_overpower_talent_fangs or class({})
+modifier_imba_overpower_talent_fangs = modifier_imba_overpower_talent_fangs or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_overpower_talent_fangs:IsHidden() return false end
 
@@ -783,7 +783,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_ursa_fury_swipes = class({})
+imba_ursa_fury_swipes = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_fury_swipes", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fury_swipes_debuff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fury_swipes_talent_ripper", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -797,7 +797,7 @@ function imba_ursa_fury_swipes:GetIntrinsicModifierName()
 end
 
 -- Fury swipes debuff
-modifier_imba_fury_swipes_debuff = class({})
+modifier_imba_fury_swipes_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fury_swipes_debuff:GetEffectName()
 	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
@@ -832,7 +832,7 @@ function modifier_imba_fury_swipes_debuff:OnRefresh()
 end
 
 -- Fury Swipes modifier buff
-modifier_imba_fury_swipes = class({})
+modifier_imba_fury_swipes = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fury_swipes:IsDebuff()
 	return false
@@ -975,7 +975,7 @@ function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical(ke
 end
 
 -- #4 Talent: Ripper Claw modifier
-modifier_imba_fury_swipes_talent_ripper = modifier_imba_fury_swipes_talent_ripper or class({})
+modifier_imba_fury_swipes_talent_ripper = modifier_imba_fury_swipes_talent_ripper or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fury_swipes_talent_ripper:IsHidden() return false end
 
@@ -1001,7 +1001,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_ursa_enrage = class({})
+imba_ursa_enrage = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_enrage_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_enrage_talent_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_talent_enrage_damage", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -1018,7 +1018,7 @@ function imba_ursa_enrage:GetCooldown(level)
 	local ability = self
 	local scepter = caster:HasScepter()
 
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 	local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
 
 	if scepter then
@@ -1068,7 +1068,7 @@ function imba_ursa_enrage:OnSpellStart()
 end
 
 -- Enrage active buff
-modifier_imba_enrage_buff = class({})
+modifier_imba_enrage_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enrage_buff:AllowIllusionDuplicate()
 	return false
@@ -1168,7 +1168,7 @@ function modifier_imba_enrage_buff:GetModifierStatusResistanceStacking()
 end
 
 -- #7 Talent: Increases Ursa's damage as a portion of his current health
-modifier_imba_enrage_talent_buff = modifier_imba_enrage_talent_buff or class({})
+modifier_imba_enrage_talent_buff = modifier_imba_enrage_talent_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enrage_talent_buff:IsHidden() return true end
 
@@ -1217,7 +1217,7 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_1", "components/abilities/heroes/hero_ursa.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_1 = modifier_special_bonus_imba_ursa_1 or class({})
+modifier_special_bonus_imba_ursa_1 = modifier_special_bonus_imba_ursa_1 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_ursa_1:IsHidden() return true end
 
@@ -1233,7 +1233,7 @@ function modifier_special_bonus_imba_ursa_1:OnCreated()
 end
 
 -- Enrage talent damage counter modifier
-modifier_imba_talent_enrage_damage = class({})
+modifier_imba_talent_enrage_damage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_talent_enrage_damage:OnCreated()
 	if IsServer() then
@@ -1347,7 +1347,7 @@ function modifier_imba_talent_enrage_damage:OnTakeDamage(keys)
 	end
 end
 
-modifier_imba_talent_enrage_prevent = class({})
+modifier_imba_talent_enrage_prevent = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_talent_enrage_prevent:IsHidden()
 	return false
@@ -1365,7 +1365,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_ursa_territorial_hunter = class({})
+imba_ursa_territorial_hunter = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_terrorital_hunter_aura", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_terrorital_hunter_fogvision", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_terrorital_hunter_talent_tenacity", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
@@ -1403,7 +1403,7 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 end
 
 -- Territorial Hunter aura modifier
-modifier_terrorital_hunter_aura = class({})
+modifier_terrorital_hunter_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_terrorital_hunter_aura:OnCreated()
 	-- Ability properties
@@ -1483,7 +1483,7 @@ function modifier_terrorital_hunter_aura:GetVisualZDelta()
 end
 
 -- Territorial Hunter debuff
-modifier_terrorital_hunter_fogvision = class({})
+modifier_terrorital_hunter_fogvision = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_terrorital_hunter_fogvision:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
@@ -1563,7 +1563,7 @@ function modifier_terrorital_hunter_fogvision:OnHeroKilled(keys)
 end
 
 -- #3 Talent: Tenacity bonus to Ursa
-modifier_terrorital_hunter_talent_tenacity = modifier_terrorital_hunter_talent_tenacity or class({})
+modifier_terrorital_hunter_talent_tenacity = modifier_terrorital_hunter_talent_tenacity or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_terrorital_hunter_talent_tenacity:IsHidden() return false end
 
@@ -1595,11 +1595,11 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_5", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_ursa_6", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_ursa_7", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_2 = modifier_special_bonus_imba_ursa_2 or class({})
-modifier_special_bonus_imba_ursa_4 = modifier_special_bonus_imba_ursa_4 or class({})
-modifier_special_bonus_imba_ursa_5 = modifier_special_bonus_imba_ursa_5 or class({})
-modifier_special_bonus_imba_ursa_6 = modifier_special_bonus_imba_ursa_6 or class({})
-modifier_special_bonus_imba_ursa_7 = modifier_special_bonus_imba_ursa_7 or class({})
+modifier_special_bonus_imba_ursa_2 = modifier_special_bonus_imba_ursa_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ursa_4 = modifier_special_bonus_imba_ursa_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ursa_5 = modifier_special_bonus_imba_ursa_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ursa_6 = modifier_special_bonus_imba_ursa_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_ursa_7 = modifier_special_bonus_imba_ursa_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_ursa_2:IsHidden() return true end
 
@@ -1633,7 +1633,7 @@ function modifier_special_bonus_imba_ursa_7:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_ursa_3", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_ursa_3 = class({})
+modifier_special_bonus_imba_ursa_3 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_ursa_3:IsHidden() return true end
 

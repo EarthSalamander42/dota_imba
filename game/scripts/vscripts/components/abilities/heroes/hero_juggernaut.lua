@@ -53,7 +53,7 @@ LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit",
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_succ", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class({})
+modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_fury:IsAura()
 	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_1") then
@@ -376,7 +376,7 @@ function ProjectileHit(params, projectileID, modifier, attacker, target, deflect
 end
 
 -- G I B B D A S U C C
-modifier_imba_juggernaut_blade_fury_succ = modifier_imba_juggernaut_blade_fury_succ or class({})
+modifier_imba_juggernaut_blade_fury_succ = modifier_imba_juggernaut_blade_fury_succ or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_juggernaut_blade_fury_succ:IsPurgable() return true end
 
 function modifier_imba_juggernaut_blade_fury_succ:IsPurgeException() return true end
@@ -461,7 +461,7 @@ end
 
 -- Deflected kill credited to the caster.
 modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit = modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit or
-	class({})
+	class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:IsHidden() return false end
 
@@ -515,7 +515,7 @@ function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:GetAttribute
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
-modifier_imba_juggernaut_blade_fury_deflect_buff = modifier_imba_juggernaut_blade_fury_deflect_buff or class({})
+modifier_imba_juggernaut_blade_fury_deflect_buff = modifier_imba_juggernaut_blade_fury_deflect_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_fury_deflect_buff:IsHidden() return true end
 
@@ -567,7 +567,7 @@ function imba_juggernaut_healing_ward:OnSpellStart()
 	end, FrameTime())
 end
 
-imba_juggernaut_healing_ward_passive = imba_juggernaut_healing_ward_passive or class({})
+imba_juggernaut_healing_ward_passive = imba_juggernaut_healing_ward_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_juggernaut_healing_ward_passive:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_healing_ward_passive"
@@ -606,7 +606,7 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_healing_ward_passive = modifier_imba_juggernaut_healing_ward_passive or class({})
+modifier_imba_juggernaut_healing_ward_passive = modifier_imba_juggernaut_healing_ward_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
 	self.caster = self:GetCaster()
@@ -760,7 +760,7 @@ function modifier_imba_juggernaut_healing_ward_passive:OnDeath(params) -- modifi
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class({})
+modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
 	if not self:GetAbility() then
@@ -833,7 +833,7 @@ end
 LinkLuaModifier("modifier_imba_juggernaut_healing_ward_totem", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_juggernaut_healing_ward_totem = modifier_imba_juggernaut_healing_ward_totem or class({})
+modifier_imba_juggernaut_healing_ward_totem = modifier_imba_juggernaut_healing_ward_totem or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_healing_ward_totem:IsPurgable() return false end
 
@@ -891,7 +891,7 @@ end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_empowered_slice", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_blade_dance_empowered_slice = modifier_imba_juggernaut_blade_dance_empowered_slice or class({})
+modifier_imba_juggernaut_blade_dance_empowered_slice = modifier_imba_juggernaut_blade_dance_empowered_slice or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:IsHidden()
 	return true
@@ -1344,7 +1344,7 @@ end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_passive", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_blade_dance_passive = modifier_imba_juggernaut_blade_dance_passive or class({})
+modifier_imba_juggernaut_blade_dance_passive = modifier_imba_juggernaut_blade_dance_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_dance_passive:IsHidden()
 	return true
@@ -1503,7 +1503,7 @@ end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_wind_dance", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_blade_dance_wind_dance = modifier_imba_juggernaut_blade_dance_wind_dance or class({})
+modifier_imba_juggernaut_blade_dance_wind_dance = modifier_imba_juggernaut_blade_dance_wind_dance or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_dance_wind_dance:GetTexture()
 	return "juggernaut_blade_dance"
@@ -1540,7 +1540,7 @@ end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_secret_blade", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_blade_dance_secret_blade = modifier_imba_juggernaut_blade_dance_secret_blade or class({})
+modifier_imba_juggernaut_blade_dance_secret_blade = modifier_imba_juggernaut_blade_dance_secret_blade or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture() return "juggernaut_secret_blade" end
 
@@ -1583,7 +1583,7 @@ end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_jade_blossom", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_blade_dance_jade_blossom = modifier_imba_juggernaut_blade_dance_jade_blossom or class({})
+modifier_imba_juggernaut_blade_dance_jade_blossom = modifier_imba_juggernaut_blade_dance_jade_blossom or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_blade_dance_jade_blossom:GetTexture()
 	return "juggernaut_omni_slash"
@@ -1643,7 +1643,7 @@ function imba_juggernaut_omni_slash:GetCooldown(level)
 	-- if self:GetCaster():HasScepter() then
 		-- return self:GetSpecialValueFor("cooldown_scepter")
 	-- else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	-- end
 end
 --]]
@@ -1872,7 +1872,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	end
 end
 
-modifier_imba_omni_slash_image = modifier_imba_omni_slash_image or class({})
+modifier_imba_omni_slash_image = modifier_imba_omni_slash_image or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_omni_slash_image:DeclareFunctions()
 	return { MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE }
@@ -1926,7 +1926,7 @@ function modifier_imba_omni_slash_image:GetAttributes()
 	return MODIFIER_ATTRIBUTE_PERMANENT
 end
 
-modifier_imba_omni_slash_talent = modifier_imba_omni_slash_talent or class({})
+modifier_imba_omni_slash_talent = modifier_imba_omni_slash_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_omni_slash_talent:DeclareFunctions()
 	return { MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
@@ -1992,7 +1992,7 @@ function modifier_imba_omni_slash_talent:GetStatusEffectName()
 	end
 end
 
-modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
+modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_omni_slash_caster:OnCreated()
 	self.caster = self:GetCaster()
@@ -2297,7 +2297,7 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 	end
 end
 
-modifier_omnislash_image_afterimage_fade = modifier_omnislash_image_afterimage_fade or class({})
+modifier_omnislash_image_afterimage_fade = modifier_omnislash_image_afterimage_fade or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_omnislash_image_afterimage_fade:OnCreated(keys)
 	if not IsServer() then return end
@@ -2342,7 +2342,7 @@ function modifier_imba_omni_slash_caster:IsDebuff() return false end
 
 LinkLuaModifier("modifier_imba_juggernaut_omni_slash_cdr", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
-modifier_imba_juggernaut_omni_slash_cdr = modifier_imba_juggernaut_omni_slash_cdr or class({})
+modifier_imba_juggernaut_omni_slash_cdr = modifier_imba_juggernaut_omni_slash_cdr or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_juggernaut_omni_slash_cdr:IsHidden()
 	return true
@@ -2368,7 +2368,7 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_juggernaut_7", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_juggernaut_7 = class({})
+modifier_special_bonus_imba_juggernaut_7 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_juggernaut_7:IsHidden() return true end
 
 function modifier_special_bonus_imba_juggernaut_7:IsPurgable() return false end
@@ -2376,7 +2376,7 @@ function modifier_special_bonus_imba_juggernaut_7:IsPurgable() return false end
 function modifier_special_bonus_imba_juggernaut_7:RemoveOnDeath() return false end
 
 -- Arcana animation handler
-modifier_juggernaut_arcana = modifier_juggernaut_arcana or class({})
+modifier_juggernaut_arcana = modifier_juggernaut_arcana or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_juggernaut_arcana:RemoveOnDeath()
 	return false
@@ -2429,7 +2429,7 @@ end
 LinkLuaModifier("modifier_juggernaut_arcana_kill", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_juggernaut_arcana_kill = modifier_juggernaut_arcana_kill or class({})
+modifier_juggernaut_arcana_kill = modifier_juggernaut_arcana_kill or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_juggernaut_arcana_kill:IsHidden()
 	return true
@@ -2486,11 +2486,11 @@ LinkLuaModifier("modifier_special_bonus_imba_juggernaut_4", "components/abilitie
 LinkLuaModifier("modifier_special_bonus_imba_juggernaut_10", "components/abilities/heroes/hero_juggernaut",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_juggernaut_2 = modifier_special_bonus_imba_juggernaut_2 or class({})
-modifier_special_bonus_imba_juggernaut_3 = modifier_special_bonus_imba_juggernaut_3 or class({})
-modifier_special_bonus_imba_juggernaut_1 = modifier_special_bonus_imba_juggernaut_1 or class({})
-modifier_special_bonus_imba_juggernaut_4 = modifier_special_bonus_imba_juggernaut_4 or class({})
-modifier_special_bonus_imba_juggernaut_10 = modifier_special_bonus_imba_juggernaut_10 or class({})
+modifier_special_bonus_imba_juggernaut_2 = modifier_special_bonus_imba_juggernaut_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_juggernaut_3 = modifier_special_bonus_imba_juggernaut_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_juggernaut_1 = modifier_special_bonus_imba_juggernaut_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_juggernaut_4 = modifier_special_bonus_imba_juggernaut_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_juggernaut_10 = modifier_special_bonus_imba_juggernaut_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_juggernaut_2:IsHidden() return true end
 
@@ -2525,7 +2525,7 @@ function modifier_special_bonus_imba_juggernaut_10:RemoveOnDeath() return false 
 LinkLuaModifier("modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed",
 	"components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed = class({})
+modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_juggernaut_blade_fury_movement_speed:IsHidden() return true end
 

@@ -17,7 +17,7 @@ LinkLuaModifier("modifier_imba_phoenix_icarus_dive_extend_burn", "components/abi
 LinkLuaModifier("modifier_imba_phoenix_icarus_dive_ignore_turn_ray", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_icarus_dive_slow_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-imba_phoenix_icarus_dive = imba_phoenix_icarus_dive or class({})
+imba_phoenix_icarus_dive = imba_phoenix_icarus_dive or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_icarus_dive:IsHiddenWhenStolen() return false end
 
@@ -200,7 +200,7 @@ function imba_phoenix_icarus_dive:OnUpgrade()
 	end
 end
 
-modifier_imba_phoenix_icarus_dive_dash_dummy = modifier_imba_phoenix_icarus_dive_dash_dummy or class({})
+modifier_imba_phoenix_icarus_dive_dash_dummy = modifier_imba_phoenix_icarus_dive_dash_dummy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_icarus_dive_dash_dummy:IsDebuff() return false end
 
@@ -321,7 +321,7 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 	end, 0)
 end
 
-modifier_imba_phoenix_icarus_dive_ignore_turn_ray = modifier_imba_phoenix_icarus_dive_ignore_turn_ray or class({})
+modifier_imba_phoenix_icarus_dive_ignore_turn_ray = modifier_imba_phoenix_icarus_dive_ignore_turn_ray or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsDebuff() return false end
 
@@ -335,7 +335,7 @@ function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:IsStunDebuff() return
 
 function modifier_imba_phoenix_icarus_dive_ignore_turn_ray:RemoveOnDeath() return true end
 
-modifier_imba_phoenix_icarus_dive_slow_debuff = modifier_imba_phoenix_icarus_dive_slow_debuff or class({})
+modifier_imba_phoenix_icarus_dive_slow_debuff = modifier_imba_phoenix_icarus_dive_slow_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_icarus_dive_slow_debuff:IsDebuff() return true end
 
@@ -414,7 +414,7 @@ function modifier_imba_phoenix_icarus_dive_slow_debuff:OnIntervalThink()
 	ApplyDamage(damageTable)
 end
 
-modifier_imba_phoenix_icarus_dive_extend_burn = modifier_imba_phoenix_icarus_dive_extend_burn or class({})
+modifier_imba_phoenix_icarus_dive_extend_burn = modifier_imba_phoenix_icarus_dive_extend_burn or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_icarus_dive_extend_burn:IsDebuff() return false end
 
@@ -480,7 +480,7 @@ end
 --			  Icarus Dive : Stop
 -------------------------------------------
 
-imba_phoenix_icarus_dive_stop = imba_phoenix_icarus_dive_stop or class({})
+imba_phoenix_icarus_dive_stop = imba_phoenix_icarus_dive_stop or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_icarus_dive_stop:IsHiddenWhenStolen() return true end
 
@@ -527,7 +527,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_phoenix_fire_spirits_count", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-imba_phoenix_fire_spirits = imba_phoenix_fire_spirits or class({})
+imba_phoenix_fire_spirits = imba_phoenix_fire_spirits or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_fire_spirits:IsHiddenWhenStolen() return false end
 
@@ -620,7 +620,7 @@ function imba_phoenix_fire_spirits:OnUpgrade()
 	end
 end
 
-modifier_imba_phoenix_fire_spirits_count = modifier_imba_phoenix_fire_spirits_count or class({})
+modifier_imba_phoenix_fire_spirits_count = modifier_imba_phoenix_fire_spirits_count or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_fire_spirits_count:IsDebuff() return false end
 
@@ -689,7 +689,7 @@ end
 LinkLuaModifier("modifier_imba_phoenix_fire_spirits_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_fire_spirits_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-imba_phoenix_launch_fire_spirit = imba_phoenix_launch_fire_spirit or class({})
+imba_phoenix_launch_fire_spirit = imba_phoenix_launch_fire_spirit or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_launch_fire_spirit:IsHiddenWhenStolen() return true end
 
@@ -874,7 +874,7 @@ function imba_phoenix_launch_fire_spirit:OnUpgrade()
 	end
 end
 
-modifier_imba_phoenix_fire_spirits_debuff = modifier_imba_phoenix_fire_spirits_debuff or class({})
+modifier_imba_phoenix_fire_spirits_debuff = modifier_imba_phoenix_fire_spirits_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_fire_spirits_debuff:IsDebuff() return true end
 
@@ -962,7 +962,7 @@ function modifier_imba_phoenix_fire_spirits_debuff:GetModifierAttackSpeedBonus_C
 	end
 end
 
-modifier_imba_phoenix_fire_spirits_buff = modifier_imba_phoenix_fire_spirits_buff or class({})
+modifier_imba_phoenix_fire_spirits_buff = modifier_imba_phoenix_fire_spirits_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_fire_spirits_buff:IsDebuff() return false end
 
@@ -1031,7 +1031,7 @@ end
 --			  Sun Ray
 -------------------------------------------
 
-imba_phoenix_sun_ray = imba_phoenix_sun_ray or class({})
+imba_phoenix_sun_ray = imba_phoenix_sun_ray or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_sun_ray:IsHiddenWhenStolen() return false end
 
@@ -1276,7 +1276,7 @@ function imba_phoenix_sun_ray:OnUpgrade()
 	end
 end
 
-modifier_imba_phoenix_sun_ray_caster_dummy = modifier_imba_phoenix_sun_ray_caster_dummy or class({})
+modifier_imba_phoenix_sun_ray_caster_dummy = modifier_imba_phoenix_sun_ray_caster_dummy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:IsDebuff() return false end
 
@@ -1407,7 +1407,7 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnDestroy()
 	end, 0)
 end
 
-modifier_imba_phoenix_sun_ray_dummy_unit_thinker = modifier_imba_phoenix_sun_ray_dummy_unit_thinker or class({})
+modifier_imba_phoenix_sun_ray_dummy_unit_thinker = modifier_imba_phoenix_sun_ray_dummy_unit_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:IsDebuff() return false end
 
@@ -1435,7 +1435,7 @@ function modifier_imba_phoenix_sun_ray_dummy_unit_thinker:OnRefresh()
 	self:IncrementStackCount()
 end
 
-modifier_imba_phoenix_sun_ray_dummy_buff = modifier_imba_phoenix_sun_ray_dummy_buff or class({})
+modifier_imba_phoenix_sun_ray_dummy_buff = modifier_imba_phoenix_sun_ray_dummy_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_sun_ray_dummy_buff:IsDebuff() return false end
 
@@ -1474,7 +1474,7 @@ function modifier_imba_phoenix_sun_ray_dummy_buff:OnIntervalThink()
 	end
 end
 
-modifier_imba_phoenix_sun_ray_debuff = modifier_imba_phoenix_sun_ray_debuff or class({})
+modifier_imba_phoenix_sun_ray_debuff = modifier_imba_phoenix_sun_ray_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_sun_ray_debuff:IsDebuff() return false end
 
@@ -1566,7 +1566,7 @@ function modifier_imba_phoenix_sun_ray_debuff:OnIntervalThink()
 	end
 end
 
-modifier_imba_phoenix_sun_ray_buff = modifier_imba_phoenix_sun_ray_buff or class({})
+modifier_imba_phoenix_sun_ray_buff = modifier_imba_phoenix_sun_ray_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_sun_ray_buff:IsDebuff() return false end
 
@@ -1697,7 +1697,7 @@ end
 --			  Sun Ray Stop
 -------------------------------------------
 
-imba_phoenix_sun_ray_stop = imba_phoenix_sun_ray_stop or class({})
+imba_phoenix_sun_ray_stop = imba_phoenix_sun_ray_stop or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_sun_ray_stop:IsHiddenWhenStolen() return true end
 
@@ -1725,7 +1725,7 @@ end
 --			  Sun Ray Move
 -------------------------------------------
 
-imba_phoenix_sun_ray_toggle_move = imba_phoenix_sun_ray_toggle_move or class({})
+imba_phoenix_sun_ray_toggle_move = imba_phoenix_sun_ray_toggle_move or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_sun_ray_toggle_move:IsHiddenWhenStolen() return false end
 
@@ -1768,7 +1768,7 @@ LinkLuaModifier("modifier_kill_no_timer", "modifier/modifier_kill_no_timer", LUA
 
 LinkLuaModifier("modifier_imba_phoenix_supernova_force_day", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-imba_phoenix_supernova = imba_phoenix_supernova or class({})
+imba_phoenix_supernova = imba_phoenix_supernova or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_supernova:IsHiddenWhenStolen() return false end
 
@@ -1922,7 +1922,7 @@ function imba_phoenix_supernova:OnSpellStart()
 	end
 end
 
-modifier_imba_phoenix_supernova_caster_dummy = modifier_imba_phoenix_supernova_caster_dummy or class({})
+modifier_imba_phoenix_supernova_caster_dummy = modifier_imba_phoenix_supernova_caster_dummy or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_caster_dummy:IsDebuff() return false end
 
@@ -2049,7 +2049,7 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnDestroy()
 	end
 end
 
-modifier_imba_phoenix_supernova_bird_thinker = modifier_imba_phoenix_supernova_bird_thinker or class({})
+modifier_imba_phoenix_supernova_bird_thinker = modifier_imba_phoenix_supernova_bird_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_bird_thinker:IsDebuff() return false end
 
@@ -2194,7 +2194,7 @@ function modifier_imba_phoenix_supernova_bird_thinker:OnDestroy()
 	local caster = self:GetCaster()
 end
 
-modifier_imba_phoenix_supernova_egg_double = modifier_imba_phoenix_supernova_egg_double or class({})
+modifier_imba_phoenix_supernova_egg_double = modifier_imba_phoenix_supernova_egg_double or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_egg_double:IsDebuff() return false end
 
@@ -2226,7 +2226,7 @@ function modifier_imba_phoenix_supernova_egg_double:OnCreated()
 	})
 end
 
-modifier_imba_phoenix_supernova_egg_thinker = modifier_imba_phoenix_supernova_egg_thinker or class({})
+modifier_imba_phoenix_supernova_egg_thinker = modifier_imba_phoenix_supernova_egg_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_egg_thinker:IsDebuff() return false end
 
@@ -2483,7 +2483,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked(keys)
 	--ParticleManager:ReleaseParticleIndex(pfx)
 end
 
-modifier_imba_phoenix_supernova_dmg = modifier_imba_phoenix_supernova_dmg or class({})
+modifier_imba_phoenix_supernova_dmg = modifier_imba_phoenix_supernova_dmg or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_dmg:IsHidden() return false end
 
@@ -2561,7 +2561,7 @@ function modifier_imba_phoenix_supernova_dmg:GetModifierSpellAmplify_Percentage(
 	return self.extreme_burning_spell_amp
 end
 
-modifier_imba_phoenix_supernova_scepter_passive = modifier_imba_phoenix_supernova_scepter_passive or class({})
+modifier_imba_phoenix_supernova_scepter_passive = modifier_imba_phoenix_supernova_scepter_passive or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_scepter_passive:IsDebuff() return false end
 
@@ -2670,7 +2670,7 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage(keys)
 	end
 end
 
-modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class({})
+modifier_imba_phoenix_supernova_scepter_passive_cooldown = modifier_imba_phoenix_supernova_scepter_passive_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_scepter_passive_cooldown:IsDebuff() return true end
 
@@ -2702,7 +2702,7 @@ end
 -- SUPERNOVA FORCE DAY MODIFIER --
 ----------------------------------
 
-modifier_imba_phoenix_supernova_force_day = class({})
+modifier_imba_phoenix_supernova_force_day = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_supernova_force_day:IsHidden() return true end
 
@@ -2732,7 +2732,7 @@ end
 LinkLuaModifier("modifier_imba_phoenix_burning_wings_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_burning_wings_ally_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-imba_phoenix_burning_wings = imba_phoenix_burning_wings or class({})
+imba_phoenix_burning_wings = imba_phoenix_burning_wings or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_phoenix_burning_wings:IsHiddenWhenStolen() return false end
 
@@ -2763,7 +2763,7 @@ function imba_phoenix_burning_wings:OnToggle()
 	end
 end
 
-modifier_imba_phoenix_burning_wings_buff = modifier_imba_phoenix_burning_wings_buff or class({})
+modifier_imba_phoenix_burning_wings_buff = modifier_imba_phoenix_burning_wings_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_burning_wings_buff:IsDebuff() return false end
 
@@ -2860,7 +2860,7 @@ function modifier_imba_phoenix_burning_wings_buff:OnDestroy()
 	end
 end
 
-modifier_imba_phoenix_burning_wings_ally_buff = modifier_imba_phoenix_burning_wings_ally_buff or class({})
+modifier_imba_phoenix_burning_wings_ally_buff = modifier_imba_phoenix_burning_wings_ally_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_phoenix_burning_wings_ally_buff:IsDebuff() return false end
 
@@ -2901,13 +2901,13 @@ LinkLuaModifier("modifier_special_bonus_imba_phoenix_6", "components/abilities/h
 LinkLuaModifier("modifier_special_bonus_imba_phoenix_3", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phoenix_8", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_phoenix_2 = modifier_special_bonus_imba_phoenix_2 or class({})
-modifier_special_bonus_imba_phoenix_7 = modifier_special_bonus_imba_phoenix_7 or class({})
-modifier_special_bonus_imba_phoenix_4 = modifier_special_bonus_imba_phoenix_4 or class({})
-modifier_special_bonus_imba_phoenix_5 = modifier_special_bonus_imba_phoenix_5 or class({})
-modifier_special_bonus_imba_phoenix_6 = modifier_special_bonus_imba_phoenix_6 or class({})
-modifier_special_bonus_imba_phoenix_3 = modifier_special_bonus_imba_phoenix_3 or class({})
-modifier_special_bonus_imba_phoenix_8 = modifier_special_bonus_imba_phoenix_8 or class({})
+modifier_special_bonus_imba_phoenix_2 = modifier_special_bonus_imba_phoenix_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_7 = modifier_special_bonus_imba_phoenix_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_4 = modifier_special_bonus_imba_phoenix_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_5 = modifier_special_bonus_imba_phoenix_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_6 = modifier_special_bonus_imba_phoenix_6 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_3 = modifier_special_bonus_imba_phoenix_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phoenix_8 = modifier_special_bonus_imba_phoenix_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_phoenix_2:IsHidden() return true end
 

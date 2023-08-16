@@ -25,15 +25,15 @@ LinkLuaModifier("modifier_imba_bane_fiends_grip_723_handler", "components/abilit
 	LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_bane_fiends_grip_723", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
-imba_bane_enfeeble_723                     = imba_bane_enfeeble_723 or class({})
-modifier_imba_bane_enfeeble_723_handler    = modifier_imba_bane_enfeeble_723_handler or class({})
-modifier_imba_bane_enfeeble_723_effect     = modifier_imba_bane_enfeeble_723_effect or class({})
+imba_bane_enfeeble_723                     = imba_bane_enfeeble_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_bane_enfeeble_723_handler    = modifier_imba_bane_enfeeble_723_handler or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_bane_enfeeble_723_effect     = modifier_imba_bane_enfeeble_723_effect or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_bane_brain_sap_723                    = imba_bane_brain_sap_723 or class({})
+imba_bane_brain_sap_723                    = imba_bane_brain_sap_723 or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_bane_fiends_grip_723                  = imba_bane_fiends_grip_723 or class({})
-modifier_imba_bane_fiends_grip_723_handler = modifier_imba_bane_fiends_grip_723_handler or class({})
-modifier_imba_bane_fiends_grip_723         = modifier_imba_bane_fiends_grip_723 or class({})
+imba_bane_fiends_grip_723                  = imba_bane_fiends_grip_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_bane_fiends_grip_723_handler = modifier_imba_bane_fiends_grip_723_handler or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_bane_fiends_grip_723         = modifier_imba_bane_fiends_grip_723 or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------
 ----------    ENFEEBLE    ------------
@@ -49,7 +49,7 @@ local function findtarget(source) -- simple list return function for finding a p
 end
 
 -- Main enfeeble casting
-imba_bane_enfeeble = imba_bane_enfeeble or class({})
+imba_bane_enfeeble = imba_bane_enfeeble or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Enfeeble Spell Cast
 function imba_bane_enfeeble:OnSpellStart()
@@ -117,7 +117,7 @@ function imba_bane_enfeeble:GetAOERadius()
 end
 
 -- Enfeeble Debuff
-modifier_imba_enfeeble_debuff = modifier_imba_enfeeble_debuff or class({})
+modifier_imba_enfeeble_debuff = modifier_imba_enfeeble_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enfeeble_debuff:GetEffectName() return "particles/units/heroes/hero_bane/bane_enfeeble.vpcf" end
 
@@ -196,8 +196,10 @@ function modifier_imba_enfeeble_debuff:OnDestroy()
 	-- Remove vision debuff at the end
 	if IsServer() then
 		local vision_modifier_handler = "modifier_imba_enfeeble_debuff_vision_handler"
-		if self.parent:HasModifier(vision_modifier_handler) then self.parent:RemoveModifierByName(
-			vision_modifier_handler) end
+		if self.parent:HasModifier(vision_modifier_handler) then
+			self.parent:RemoveModifierByName(
+				vision_modifier_handler)
+		end
 	end
 end
 
@@ -267,7 +269,7 @@ end
 
 -- Enfeeble vision debuff applier
 
-modifier_imba_enfeeble_debuff_vision_handler = modifier_imba_enfeeble_debuff_vision_handler or class({})
+modifier_imba_enfeeble_debuff_vision_handler = modifier_imba_enfeeble_debuff_vision_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enfeeble_debuff_vision_handler:IsDebuff() return true end
 
@@ -383,33 +385,35 @@ end
 -- MODIFIER_IMBA_BANE_ENFEEBLE_723_EFFECT --
 --------------------------------------------
 
-function modifier_imba_bane_enfeeble_723_effect:GetEffectName() return
-	"particles/units/heroes/hero_bane/bane_enfeeble.vpcf" end
+function modifier_imba_bane_enfeeble_723_effect:GetEffectName()
+	return
+	"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
+end
 
 function modifier_imba_bane_enfeeble_723_effect:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 
 function modifier_imba_bane_enfeeble_723_effect:OnCreated()
 	self.status_resistance_reduction                      = self:GetAbility():GetSpecialValueFor(
-	"status_resistance_reduction") * (-1)
+		"status_resistance_reduction") * (-1)
 	self.magic_resistance_reduction                       = self:GetAbility():GetSpecialValueFor(
-	"magic_resistance_reduction") * (-1)
+		"magic_resistance_reduction") * (-1)
 
 	-- IMBAfication: Growing Discomfort
 	self.discomfort_status_resistance_reduction_per_stack = self:GetAbility():GetSpecialValueFor(
-	"discomfort_status_resistance_reduction_per_stack") * (-1)
+		"discomfort_status_resistance_reduction_per_stack") * (-1)
 	self.discomfort_magic_resistance_reduction_per_stack  = self:GetAbility():GetSpecialValueFor(
-	"discomfort_magic_resistance_reduction_per_stack") * (-1)
+		"discomfort_magic_resistance_reduction_per_stack") * (-1)
 
 	-- IMBAfication: The Terror Within
 	self.terror_night_vision_reduction_per_stack          = self:GetAbility():GetSpecialValueFor(
-	"terror_night_vision_reduction_per_stack") * (-1)
+		"terror_night_vision_reduction_per_stack") * (-1)
 
 	self.total_status_resistance_reduction                = self.status_resistance_reduction +
-	self.discomfort_status_resistance_reduction_per_stack * self:GetStackCount()
+		self.discomfort_status_resistance_reduction_per_stack * self:GetStackCount()
 	self.total_magic_resistance_reduction                 = self.magic_resistance_reduction +
-	self.discomfort_magic_resistance_reduction_per_stack * self:GetStackCount()
+		self.discomfort_magic_resistance_reduction_per_stack * self:GetStackCount()
 	self.terror_night_vision_reduction                    = self.terror_night_vision_reduction_per_stack *
-	self:GetStackCount()
+		self:GetStackCount()
 end
 
 function modifier_imba_bane_enfeeble_723_effect:OnRefresh()
@@ -448,11 +452,11 @@ LinkLuaModifier("modifier_imba_brain_sap_mana", "components/abilities/heroes/her
 LinkLuaModifier("modifier_imba_brain_sap_baby_bane", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Brain Sap casting
-imba_bane_brain_sap = imba_bane_brain_sap or class({})
+imba_bane_brain_sap = imba_bane_brain_sap or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bane_brain_sap:GetCastPoint()
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCastPoint(self)
+		return self:GetRightfulKV("AbilityCastPoint")
 	else
 		return self:GetSpecialValueFor("castpoint_scepter")
 	end
@@ -545,7 +549,7 @@ function imba_bane_brain_sap:GetCooldown(level)
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("cooldown_scepter")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -563,7 +567,7 @@ function imba_bane_brain_sap:GetAbilityTextureName()
 end
 
 -- Brain_sap Debuff
-modifier_imba_brain_sap_mana = modifier_imba_brain_sap_mana or class({})
+modifier_imba_brain_sap_mana = modifier_imba_brain_sap_mana or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_brain_sap_mana:IsDebuff() return true end
 
@@ -599,7 +603,7 @@ function modifier_imba_brain_sap_mana:OnDestroy()
 end
 
 -- #5 TALENT: baby Bane modifier
-modifier_imba_brain_sap_baby_bane = modifier_imba_brain_sap_baby_bane or class({})
+modifier_imba_brain_sap_baby_bane = modifier_imba_brain_sap_baby_bane or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_brain_sap_baby_bane:OnCreated()
 	if IsServer() then
@@ -648,7 +652,7 @@ end
 
 function imba_bane_brain_sap_723:GetCastPoint()
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCastPoint(self)
+		return self:GetRightfulKV("AbilityCastPoint")
 	else
 		return self:GetSpecialValueFor("castpoint_scepter")
 	end
@@ -656,7 +660,7 @@ end
 
 function imba_bane_brain_sap_723:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return self:GetSpecialValueFor("cooldown_scepter")
 	end
@@ -718,7 +722,7 @@ LinkLuaModifier("modifier_imba_nightmare_vision", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_nightmare_talent", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Nightmare casting
-imba_bane_nightmare = imba_bane_nightmare or class({})
+imba_bane_nightmare = imba_bane_nightmare or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bane_nightmare:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
@@ -794,7 +798,7 @@ function imba_bane_nightmare:GetAbilityTextureName()
 end
 
 -- Nightmare's sub ability (Nightmare end)
-imba_bane_nightmare_end = imba_bane_nightmare_end or class({})
+imba_bane_nightmare_end = imba_bane_nightmare_end or class(VANILLA_ABILITIES_BASECLASS)
 
 -- End Nightmares
 function imba_bane_nightmare_end:OnSpellStart()
@@ -837,7 +841,7 @@ function imba_bane_nightmare_end:GetAbilityTextureName()
 end
 
 -- Nightmare Debuff
-modifier_imba_nightmare_dot = modifier_imba_nightmare_dot or class({})
+modifier_imba_nightmare_dot = modifier_imba_nightmare_dot or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nightmare_dot:IsDebuff() return true end
 
@@ -998,7 +1002,7 @@ function modifier_imba_nightmare_dot:GetDisableHealing()
 end
 
 -- Nightmare Invulnerability
-modifier_imba_nightmare_invul = modifier_imba_nightmare_invul or class({})
+modifier_imba_nightmare_invul = modifier_imba_nightmare_invul or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nightmare_invul:IsDebuff() return true end
 
@@ -1019,7 +1023,7 @@ function modifier_imba_nightmare_invul:CheckState()
 end
 
 -- Nightmare Baneful Visions
-modifier_imba_nightmare_vision = modifier_imba_nightmare_vision or class({})
+modifier_imba_nightmare_vision = modifier_imba_nightmare_vision or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nightmare_vision:GetBonusVisionPercentage() return -100 end
 
@@ -1027,7 +1031,7 @@ function modifier_imba_nightmare_vision:DeclareFunctions()
 	return { MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE }
 end
 
-modifier_imba_nightmare_talent = modifier_imba_nightmare_talent or class({})
+modifier_imba_nightmare_talent = modifier_imba_nightmare_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_nightmare_talent:CheckState()
 	return {
@@ -1048,7 +1052,7 @@ LinkLuaModifier("modifier_imba_fiends_grip_handler", "components/abilities/heroe
 LinkLuaModifier("modifier_imba_fiends_grip_demon", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiends_grip_talent", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
-imba_bane_fiends_grip = imba_bane_fiends_grip or class({})
+imba_bane_fiends_grip = imba_bane_fiends_grip or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_bane_fiends_grip:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
@@ -1145,8 +1149,10 @@ function imba_bane_fiends_grip:OnChannelThink()
 					-- If the angle is inside the vision cone, and the channeling caster can be seen by the enemy team, GET GRIPPED NOOB
 					if view_angle <= (vision_cone / 2) and enemy:CanEntityBeSeenByMyTeam(caster) then
 						enemy:AddNewModifier(caster, self, "modifier_imba_fiends_grip_handler",
-							{ duration = fiends_grip_duration - (GameRules:GetGameTime() - self:GetChannelStartTime()),
-								propogated = 0 })
+							{
+								duration = fiends_grip_duration - (GameRules:GetGameTime() - self:GetChannelStartTime()),
+								propogated = 0
+							})
 						table.insert(self.fiendgriptable, enemy)
 					end
 				end
@@ -1162,7 +1168,7 @@ function imba_bane_fiends_grip:GetBehavior()
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	else
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED +
-		DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+			DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	end
 end
 
@@ -1177,7 +1183,7 @@ end
 
 function imba_bane_fiends_grip:GetCooldown(nLevel)
 	local talentcooldownbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_8")
-	return self.BaseClass.GetCooldown(self, nLevel) - talentcooldownbonus
+	return self:GetRightfulKV("AbilityCooldown") - talentcooldownbonus
 end
 
 function imba_bane_fiends_grip:GetChannelAnimation()
@@ -1190,7 +1196,7 @@ function imba_bane_fiends_grip:GetAbilityTextureName()
 end
 
 -- Fiends Grip Debuff
-modifier_imba_fiends_grip_handler = modifier_imba_fiends_grip_handler or class({})
+modifier_imba_fiends_grip_handler = modifier_imba_fiends_grip_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fiends_grip_handler:IsDebuff() return true end
 
@@ -1198,8 +1204,10 @@ function modifier_imba_fiends_grip_handler:IsStunDebuff() return true end
 
 function modifier_imba_fiends_grip_handler:IsPurgableException() return true end
 
-function modifier_imba_fiends_grip_handler:GetEffectName() return
-	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf" end
+function modifier_imba_fiends_grip_handler:GetEffectName()
+	return
+	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+end
 
 function modifier_imba_fiends_grip_handler:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 
@@ -1279,7 +1287,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 				demon:SetRenderColor(75, 0, 130)
 				-- Apply link particle
 				parent.grip_link_particle_table[#parent.grip_link_particle_table + 1] = ParticleManager:CreateParticle(
-				drain_particle, PATTACH_ABSORIGIN, demon)                                                                                            -- Create a seperate link particle for each demon
+					drain_particle, PATTACH_ABSORIGIN, demon) -- Create a seperate link particle for each demon
 				local particle = parent.grip_link_particle_table[#parent.grip_link_particle_table]
 				ParticleManager:SetParticleControlEnt(particle, 0, demon, PATTACH_POINT_FOLLOW, "attach_hitloc",
 					demon:GetAbsOrigin(), true)
@@ -1296,7 +1304,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 
 		-- Drain mana
 		local mana_drained = math.min(
-		parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01, parent:GetMana())
+			parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01, parent:GetMana())
 		parent:ReduceMana(mana_drained * baby_multiplier, ability)
 		caster:GiveMana(mana_drained)
 
@@ -1381,7 +1389,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 end
 
 -- #3 TALENT: check for interruptions and #8 talent modifier
-modifier_imba_fiends_grip_talent = modifier_imba_fiends_grip_talent or class({})
+modifier_imba_fiends_grip_talent = modifier_imba_fiends_grip_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fiends_grip_talent:IsDebuff() return false end
 
@@ -1439,8 +1447,10 @@ function modifier_imba_fiends_grip_talent:OnIntervalThink()
 					-- If the angle is inside the vision cone, and the channeling caster can be seen by the enemy team, GET GRIPPED NOOB
 					if view_angle <= (vision_cone / 2) and enemy:CanEntityBeSeenByMyTeam(caster) then
 						enemy:AddNewModifier(caster, ability, "modifier_imba_fiends_grip_handler",
-							{ duration = fiends_grip_duration - (GameRules:GetGameTime() - self:GetCreationTime()),
-								propogated = 0 })
+							{
+								duration = fiends_grip_duration - (GameRules:GetGameTime() - self:GetCreationTime()),
+								propogated = 0
+							})
 						table.insert(ability.fiendgriptable, enemy)
 					end
 				end
@@ -1484,7 +1494,7 @@ function modifier_imba_fiends_grip_talent:OnDestroy()
 end
 
 -- Demon modifier
-modifier_imba_fiends_grip_demon = modifier_imba_fiends_grip_demon or class({})
+modifier_imba_fiends_grip_demon = modifier_imba_fiends_grip_demon or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_fiends_grip_demon:CheckState()
 	return {
@@ -1513,7 +1523,7 @@ end
 function imba_bane_fiends_grip_723:GetChannelTime()
 	if not self:GetCaster():HasTalent("special_bonus_imba_bane_3") then
 		return self:GetCaster():GetModifierStackCount("modifier_imba_bane_fiends_grip_723_handler", self:GetCaster()) /
-		100
+			100
 	else
 		return 0
 	end
@@ -1534,7 +1544,8 @@ function imba_bane_fiends_grip_723:OnSpellStart()
 			self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_bane_fiends_grip_723",
 				{
 					duration = (self.BaseClass.GetChannelTime(self) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) *
-					(1 - self.target:GetStatusResistance()) })
+						(1 - self.target:GetStatusResistance())
+				})
 		end
 	else
 		self:GetCaster():Interrupt()
@@ -1571,14 +1582,14 @@ function modifier_imba_bane_fiends_grip_723_handler:OnAbilityExecuted(keys)
 	if keys.ability == self:GetAbility() and keys.target then
 		if keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 			self:SetStackCount(((self:GetAbility().BaseClass.GetChannelTime(self:GetAbility()) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) * (1 - keys.target:GetStatusResistance())) *
-			100)
+				100)
 		else
 			self:SetStackCount((self:GetAbility().BaseClass.GetChannelTime(self:GetAbility()) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) *
-			100)
+				100)
 		end
 	else
 		self:SetStackCount((self:GetAbility().BaseClass.GetChannelTime(self:GetAbility()) + self:GetCaster():FindTalentValue("special_bonus_imba_bane_fiends_grip_duration")) *
-		100)
+			100)
 	end
 end
 
@@ -1588,8 +1599,10 @@ end
 
 function modifier_imba_bane_fiends_grip_723:IgnoreTenacity() return true end
 
-function modifier_imba_bane_fiends_grip_723:GetEffectName() return
-	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf" end
+function modifier_imba_bane_fiends_grip_723:GetEffectName()
+	return
+	"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+end
 
 function modifier_imba_bane_fiends_grip_723:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 
@@ -1600,7 +1613,7 @@ function modifier_imba_bane_fiends_grip_723:OnCreated()
 	if not IsServer() then return end
 
 	self.fiend_grip_tick_interval = self:GetAbility():GetSpecialValueFor("fiend_grip_tick_interval") *
-	(1 - self:GetParent():GetStatusResistance())
+		(1 - self:GetParent():GetStatusResistance())
 	self.mana_drain_per_tick      = self.fiend_grip_mana_drain * self.fiend_grip_tick_interval
 	self.damage_per_tick          = self.fiend_grip_damage * self.fiend_grip_tick_interval
 
@@ -1696,11 +1709,11 @@ LinkLuaModifier("modifier_special_bonus_imba_bane_brain_sap_damage", "components
 LinkLuaModifier("modifier_special_bonus_imba_bane_fiends_grip_duration", "components/abilities/heroes/hero_bane",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_bane_7 = modifier_special_bonus_imba_bane_7 or class({})
-modifier_special_bonus_imba_bane_3 = modifier_special_bonus_imba_bane_3 or class({})
-modifier_special_bonus_imba_bane_brain_sap_damage = modifier_special_bonus_imba_bane_brain_sap_damage or class({})
+modifier_special_bonus_imba_bane_7 = modifier_special_bonus_imba_bane_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bane_3 = modifier_special_bonus_imba_bane_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_bane_brain_sap_damage = modifier_special_bonus_imba_bane_brain_sap_damage or class(VANILLA_ABILITIES_BASECLASS)
 modifier_special_bonus_imba_bane_fiends_grip_duration = modifier_special_bonus_imba_bane_fiends_grip_duration or
-class({})
+	class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_bane_7:IsHidden() return true end
 
@@ -1730,7 +1743,7 @@ function modifier_special_bonus_imba_bane_fiends_grip_duration:RemoveOnDeath() r
 
 LinkLuaModifier("modifier_special_bonus_imba_bane_2", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_bane_2 = class({})
+modifier_special_bonus_imba_bane_2 = class(VANILLA_ABILITIES_BASECLASS)
 
 -------------------------
 -- ENFEEBLE AOE TALENT --

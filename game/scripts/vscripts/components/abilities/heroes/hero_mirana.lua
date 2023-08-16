@@ -5,7 +5,7 @@
 --        STARSTORM          --
 -------------------------------
 
-imba_mirana_starfall = class({})
+imba_mirana_starfall = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_starfall_scepter_thinker", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_starfall_talent_seed_debuff", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
@@ -228,7 +228,7 @@ function SecondaryStarfallTarget(caster, ability, target, damage)
 end
 
 -- Aghnaim's Scepter thinker modifier
-modifier_imba_starfall_scepter_thinker = class({})
+modifier_imba_starfall_scepter_thinker = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_starfall_scepter_thinker:OnCreated()
 	if IsServer() then
@@ -312,7 +312,7 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 end
 
 -- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
-modifier_imba_starfall_talent_seed_debuff = modifier_imba_starfall_talent_seed_debuff or class({})
+modifier_imba_starfall_talent_seed_debuff = modifier_imba_starfall_talent_seed_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_starfall_talent_seed_debuff:IsHidden() return false end
 
@@ -365,7 +365,7 @@ end
 --        SACRED ARROW       --
 -------------------------------
 
-imba_mirana_arrow = class({})
+imba_mirana_arrow = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_sacred_arrow_stun", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sacred_arrow_haste", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
@@ -578,7 +578,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 end
 
 -- Arrow stun modifier
-modifier_imba_sacred_arrow_stun = class({})
+modifier_imba_sacred_arrow_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sacred_arrow_stun:OnCreated()
 	if IsServer() then
@@ -686,7 +686,7 @@ function modifier_imba_sacred_arrow_stun:OnDestroy()
 end
 
 -- Allies haste modifier
-modifier_imba_sacred_arrow_haste = class({})
+modifier_imba_sacred_arrow_haste = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_sacred_arrow_haste:IsHidden() return false end
 
@@ -724,7 +724,7 @@ end
 --           LEAP            --
 -------------------------------
 
-imba_mirana_leap = class({})
+imba_mirana_leap = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mirana_leap", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_movement", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_aura", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
@@ -885,7 +885,7 @@ function imba_mirana_leap:OnUpgrade()
 end
 
 -- Charges modifier
-modifier_imba_mirana_leap = class({})
+modifier_imba_mirana_leap = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mirana_leap:IsHidden() return false end
 
@@ -917,7 +917,7 @@ function modifier_imba_mirana_leap:OnIntervalThink()
 end
 
 -- Leap movement modifier
-modifier_imba_leap_movement = class({})
+modifier_imba_leap_movement = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_leap_movement:OnCreated()
 	-- Ability properties
@@ -1064,7 +1064,7 @@ function modifier_imba_leap_movement:OnRemoved()
 end
 
 -- Leap aura modifier
-modifier_imba_leap_aura = class({})
+modifier_imba_leap_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_leap_aura:OnCreated()
 	-- Ability properties
@@ -1111,7 +1111,7 @@ function modifier_imba_leap_aura:IsAura()
 end
 
 -- Leap speed boost modifier
-modifier_imba_leap_speed_boost = class({})
+modifier_imba_leap_speed_boost = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_leap_speed_boost:OnCreated()
 	-- Ability properties
@@ -1152,7 +1152,7 @@ function modifier_imba_leap_speed_boost:GetModifierAttackSpeedBonus_Constant()
 end
 
 -- #7 Talent: Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles.
-modifier_imba_leap_talent_cast_angle_handler = modifier_imba_leap_talent_cast_angle_handler or class({})
+modifier_imba_leap_talent_cast_angle_handler = modifier_imba_leap_talent_cast_angle_handler or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_leap_talent_cast_angle_handler:DeclareFunctions()
 	local decFuncs =
@@ -1181,7 +1181,7 @@ end
 --     MOONLIGHT SHADOW      --
 -------------------------------
 
-imba_mirana_moonlight_shadow = class({})
+imba_mirana_moonlight_shadow = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_moonlight_shadow", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
@@ -1254,7 +1254,7 @@ function imba_mirana_moonlight_shadow:OnSpellStart()
 end
 
 -- Main modifier (Mirana)
-modifier_imba_moonlight_shadow = class({})
+modifier_imba_moonlight_shadow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_moonlight_shadow:OnCreated()
 	if IsServer() then
@@ -1327,7 +1327,7 @@ function modifier_imba_moonlight_shadow:OnDestroy()
 end
 
 -- Invisibility modifier (hidden)
-modifier_imba_moonlight_shadow_invis = class({})
+modifier_imba_moonlight_shadow_invis = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_moonlight_shadow_invis:OnCreated()
 	-- this stacks is the actual invisibility, but since it has a on/off triggers, it's counted with stacks
@@ -1494,7 +1494,7 @@ function modifier_imba_moonlight_shadow_invis:CheckState()
 end
 
 -- Dummy invisibility modifier (shown)
-modifier_imba_moonlight_shadow_invis_dummy = class({})
+modifier_imba_moonlight_shadow_invis_dummy = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_moonlight_shadow_invis_dummy:IsHidden() return false end
 
@@ -1511,7 +1511,7 @@ function modifier_imba_moonlight_shadow_invis_dummy:GetEffectAttachType()
 end
 
 -- Dummy fade modifier (shown)
-modifier_imba_moonlight_shadow_invis_fade_time = class({})
+modifier_imba_moonlight_shadow_invis_fade_time = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_moonlight_shadow_invis_fade_time:IsHidden() return false end
 
@@ -1522,7 +1522,7 @@ function modifier_imba_moonlight_shadow_invis_fade_time:IsPurgeException() retur
 function modifier_imba_moonlight_shadow_invis_fade_time:IsDebuff() return false end
 
 -- #1 Talent: Moonlight Shadow grants allies a single Starstorm which will proc when they go out of invisibility
-modifier_imba_moonlight_shadow_talent_starstorm = modifier_imba_moonlight_shadow_talent_starstorm or class({})
+modifier_imba_moonlight_shadow_talent_starstorm = modifier_imba_moonlight_shadow_talent_starstorm or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_moonlight_shadow_talent_starstorm:IsHidden() return false end
 
@@ -1593,7 +1593,7 @@ function modifier_imba_moonlight_shadow_talent_starstorm:OnIntervalThink()
 	end
 end
 
-modifier_imba_mirana_silence_stance = modifier_imba_mirana_silence_stance or class({})
+modifier_imba_mirana_silence_stance = modifier_imba_mirana_silence_stance or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mirana_silence_stance:IsHidden() return true end
 
@@ -1695,7 +1695,7 @@ function modifier_imba_mirana_silence_stance:GetModifierInvisibilityLevel()
 end
 
 -- Responsible for showing Mirana that she's invisible thanks to Silence Stance talent
-modifier_imba_mirana_silence_stance_visible = modifier_imba_mirana_silence_stance_visible or class({})
+modifier_imba_mirana_silence_stance_visible = modifier_imba_mirana_silence_stance_visible or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mirana_silence_stance_visible:GetTexture()
 	return "mirana_princess_of_the_night"
@@ -1727,11 +1727,11 @@ LinkLuaModifier("modifier_special_bonus_imba_mirana_4", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_mirana_8", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_mirana_10", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_mirana_1 = modifier_special_bonus_imba_mirana_1 or class({})
-modifier_special_bonus_imba_mirana_9 = modifier_special_bonus_imba_mirana_9 or class({})
-modifier_special_bonus_imba_mirana_4 = modifier_special_bonus_imba_mirana_4 or class({})
-modifier_special_bonus_imba_mirana_8 = modifier_special_bonus_imba_mirana_8 or class({})
-modifier_special_bonus_imba_mirana_10 = modifier_special_bonus_imba_mirana_10 or class({})
+modifier_special_bonus_imba_mirana_1 = modifier_special_bonus_imba_mirana_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_mirana_9 = modifier_special_bonus_imba_mirana_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_mirana_4 = modifier_special_bonus_imba_mirana_4 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_mirana_8 = modifier_special_bonus_imba_mirana_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_mirana_10 = modifier_special_bonus_imba_mirana_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_mirana_1:IsHidden() return true end
 

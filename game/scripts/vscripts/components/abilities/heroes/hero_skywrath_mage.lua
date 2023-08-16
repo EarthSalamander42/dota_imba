@@ -4,7 +4,7 @@
 ----------------------------
 --      ARCANE BOLT       --
 ----------------------------
-imba_skywrath_mage_arcane_bolt = class({})
+imba_skywrath_mage_arcane_bolt = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_arcane_bolt_buff", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 -- LinkLuaModifier("modifier_imba_skywrath_flying_movement", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -27,7 +27,7 @@ function imba_skywrath_mage_arcane_bolt:GetManaCost(level)
 end
 
 function imba_skywrath_mage_arcane_bolt:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_skywrath_mage_5")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_skywrath_mage_5")
 end
 
 function imba_skywrath_mage_arcane_bolt:CastFilterResultTarget(target)
@@ -259,7 +259,7 @@ function imba_skywrath_mage_arcane_bolt:OnProjectileHit(target, location)
 end
 
 -- Arcane Wrath modifier
-modifier_imba_arcane_bolt_buff = class({})
+modifier_imba_arcane_bolt_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_bolt_buff:IsHidden() return false end
 
@@ -287,7 +287,7 @@ end
 ----------------------------
 --    CONCUSSIVE SHOT     --
 ----------------------------
-imba_skywrath_mage_concussive_shot = class({})
+imba_skywrath_mage_concussive_shot = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_concussive_shot_slow", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_concussive_shot:GetAbilityTextureName()
@@ -577,7 +577,7 @@ function LaunchConcussiveShot(caster, source, ability, target, primary, bounces_
 end
 
 -- Concussive Shot slow modifier
-modifier_imba_concussive_shot_slow = class({})
+modifier_imba_concussive_shot_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_concussive_shot_slow:OnCreated()
 	-- Ability properties
@@ -615,7 +615,7 @@ end
 ----------------------------
 --      ANCIENT SEAL      --
 ----------------------------
-imba_skywrath_mage_ancient_seal = class({})
+imba_skywrath_mage_ancient_seal = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_ancient_seal_main", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_seal_aura", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_seal_secondary", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
@@ -630,7 +630,7 @@ end
 
 function imba_skywrath_mage_ancient_seal:GetCooldown(level)
 	local caster = self:GetCaster()
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 
 	-- #3 Talent: Ancient Seal cooldown decrease
 	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_skywrath_mage_3")
@@ -736,7 +736,7 @@ function ApplyAncientSeal(caster, ability, target)
 end
 
 -- Main seal modifier
-modifier_imba_ancient_seal_main = class({})
+modifier_imba_ancient_seal_main = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ancient_seal_main:OnCreated()
 	-- Ability properties
@@ -775,7 +775,7 @@ function modifier_imba_ancient_seal_main:CheckState()
 end
 
 -- Aura modifier
-modifier_imba_ancient_seal_aura = class({})
+modifier_imba_ancient_seal_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ancient_seal_aura:OnCreated()
 	-- Ability properties
@@ -836,7 +836,7 @@ function modifier_imba_ancient_seal_aura:IsAura()
 end
 
 -- Secondary seal modifier
-modifier_imba_ancient_seal_secondary = class({})
+modifier_imba_ancient_seal_secondary = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_ancient_seal_secondary:OnCreated()
 	if not self:GetAbility() then
@@ -888,7 +888,7 @@ end
 ----------------------------
 --      MYSTIC FLARE      --
 ----------------------------
-imba_skywrath_mage_mystic_flare = class({})
+imba_skywrath_mage_mystic_flare = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_mystic_flare", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_mystic_flare:GetAbilityTextureName()
@@ -1005,7 +1005,7 @@ function ExecuteMysticFlare(caster, ability, target_point)
 	CreateModifierThinker(caster, ability, modifier_mystic, { duration = damage_duration }, target_point, caster:GetTeamNumber(), false)
 end
 
-modifier_imba_mystic_flare = class({})
+modifier_imba_mystic_flare = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_mystic_flare:OnCreated()
 	if IsServer() then
@@ -1183,7 +1183,7 @@ end
 --------------------------------
 -- PERMANENT FLYING MOVEMENT  --
 --------------------------------
-modifier_imba_skywrath_flying_movement = class({})
+modifier_imba_skywrath_flying_movement = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_skywrath_flying_movement:CheckState()
 	local caster = self:GetCaster()
 	local state
@@ -1209,9 +1209,9 @@ LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_9", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_11", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_6", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_skywrath_mage_9 = modifier_special_bonus_imba_skywrath_mage_9 or class({})
-modifier_special_bonus_imba_skywrath_mage_11 = modifier_special_bonus_imba_skywrath_mage_11 or class({})
-modifier_special_bonus_imba_skywrath_mage_6 = modifier_special_bonus_imba_skywrath_mage_6 or class({})
+modifier_special_bonus_imba_skywrath_mage_9 = modifier_special_bonus_imba_skywrath_mage_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skywrath_mage_11 = modifier_special_bonus_imba_skywrath_mage_11 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skywrath_mage_6 = modifier_special_bonus_imba_skywrath_mage_6 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_skywrath_mage_9:IsHidden() return true end
 
@@ -1235,9 +1235,9 @@ LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_3", "components/abili
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_10", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce", "components/abilities/heroes/hero_skywrath_mage", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_skywrath_mage_3                  = class({})
-modifier_special_bonus_imba_skywrath_mage_10                 = class({})
-modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce = modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce or class({})
+modifier_special_bonus_imba_skywrath_mage_3                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skywrath_mage_10                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce = modifier_special_bonus_imba_skywrath_mage_arcane_bolt_pierce or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_skywrath_mage_3:IsHidden() return true end
 

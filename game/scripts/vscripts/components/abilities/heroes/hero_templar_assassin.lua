@@ -23,36 +23,36 @@ LinkLuaModifier("modifier_imba_templar_assassin_psionic_trap_handler", "componen
 LinkLuaModifier("modifier_imba_templar_assassin_psionic_trap", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_templar_assassin_psionic_trap_counter", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 
-imba_templar_assassin_refraction                    = class({})
-modifier_imba_templar_assassin_refraction_handler   = class({})
-modifier_imba_templar_assassin_refraction_damage    = class({})
-modifier_imba_templar_assassin_refraction_absorb    = class({})
-modifier_imba_templar_assassin_refraction_reality   = class({})
+imba_templar_assassin_refraction                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_refraction_handler   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_refraction_damage    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_refraction_absorb    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_refraction_reality   = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_meld                          = class({})
-modifier_imba_templar_assassin_meld                 = class({})
-modifier_imba_templar_assassin_meld_animation       = class({})
-modifier_imba_templar_assassin_meld_armor           = class({})
-modifier_imba_templar_assassin_meld_linger          = class({})
+imba_templar_assassin_meld                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_meld                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_meld_animation       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_meld_armor           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_meld_linger          = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_psi_blades                    = class({})
-modifier_imba_templar_assassin_psi_blades           = class({})
+imba_templar_assassin_psi_blades                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_psi_blades           = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_trap                          = class({})
-modifier_imba_templar_assassin_trap_slow            = class({})
-modifier_imba_templar_assassin_trap_limbs           = class({})
-modifier_imba_templar_assassin_trap_eyes            = class({})
-modifier_imba_templar_assassin_trap_nerves          = class({})
-modifier_imba_templar_assassin_trap_springboard     = class({})
+imba_templar_assassin_trap                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_trap_slow            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_trap_limbs           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_trap_eyes            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_trap_nerves          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_trap_springboard     = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_trap_teleport                 = class({})
+imba_templar_assassin_trap_teleport                 = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_psionic_trap                  = class({})
-modifier_imba_templar_assassin_psionic_trap_handler = class({})
-modifier_imba_templar_assassin_psionic_trap         = class({})
-modifier_imba_templar_assassin_psionic_trap_counter = class({})
+imba_templar_assassin_psionic_trap                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_psionic_trap_handler = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_psionic_trap         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_templar_assassin_psionic_trap_counter = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_templar_assassin_self_trap                     = class({})
+imba_templar_assassin_self_trap                     = class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------
 -- IMBA_TEMPLAR_ASSASSIN_REFRACTION --
@@ -1405,9 +1405,9 @@ LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_dispels", "co
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_bash", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_refraction_instances", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_templar_assassin_meld_dispels         = modifier_special_bonus_imba_templar_assassin_meld_dispels or class({})
-modifier_special_bonus_imba_templar_assassin_meld_bash            = modifier_special_bonus_imba_templar_assassin_meld_bash or class({})
-modifier_special_bonus_imba_templar_assassin_refraction_instances = modifier_special_bonus_imba_templar_assassin_refraction_instances or class({})
+modifier_special_bonus_imba_templar_assassin_meld_dispels         = modifier_special_bonus_imba_templar_assassin_meld_dispels or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_templar_assassin_meld_bash            = modifier_special_bonus_imba_templar_assassin_meld_bash or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_templar_assassin_refraction_instances = modifier_special_bonus_imba_templar_assassin_refraction_instances or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_templar_assassin_meld_dispels:IsHidden() return true end
 
@@ -1430,8 +1430,8 @@ function modifier_special_bonus_imba_templar_assassin_refraction_instances:Remov
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_meld_armor_reduction", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_templar_assassin_psionic_trap_damage", "components/abilities/heroes/hero_templar_assassin", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_templar_assassin_meld_armor_reduction = modifier_special_bonus_imba_templar_assassin_meld_armor_reduction or class({})
-modifier_special_bonus_imba_templar_assassin_psionic_trap_damage  = modifier_special_bonus_imba_templar_assassin_psionic_trap_damage or class({})
+modifier_special_bonus_imba_templar_assassin_meld_armor_reduction = modifier_special_bonus_imba_templar_assassin_meld_armor_reduction or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_templar_assassin_psionic_trap_damage  = modifier_special_bonus_imba_templar_assassin_psionic_trap_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_templar_assassin_meld_armor_reduction:IsHidden() return true end
 

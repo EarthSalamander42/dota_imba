@@ -71,7 +71,7 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 		{ duration = 1.0 * (1 - victim:GetStatusResistance()), target = hThinker:entindex(), length = iLenght })
 end
 
-modifier_imba_enigma_generic_pull = modifier_imba_enigma_generic_pull or class({})
+modifier_imba_enigma_generic_pull = modifier_imba_enigma_generic_pull or class(VANILLA_ABILITIES_BASECLASS)
 
 
 
@@ -126,7 +126,7 @@ function modifier_imba_enigma_generic_pull:OnDestroy()
 end
 
 LinkLuaModifier("modifier_enigma_magic_immunity", "components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-modifier_enigma_magic_immunity = class({})
+modifier_enigma_magic_immunity = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_enigma_magic_immunity:IsDebuff() return false end
 
@@ -162,7 +162,7 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_enigma_7", "components/abilities/heroes/hero_enigma.lua",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_enigma_7 = modifier_special_bonus_imba_enigma_7 or class({})
+modifier_special_bonus_imba_enigma_7 = modifier_special_bonus_imba_enigma_7 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_7:IsPurgable() return false end
 
@@ -269,7 +269,7 @@ function imba_enigma_malefice:OnSpellStart()
 	end
 end
 
-modifier_imba_enigma_malefice = modifier_imba_enigma_malefice or class({})
+modifier_imba_enigma_malefice = modifier_imba_enigma_malefice or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_malefice:IsDebuff() return true end
 
@@ -380,7 +380,7 @@ function imba_enigma_demonic_conversion:CreateEidolon(hParent, vLocation, iWave,
 		{ duration = fDuration, wave = iWave, parent = hParent:entindex(), stack = attacks_needed })
 end
 
-modifier_imba_enigma_eidolon = modifier_imba_enigma_eidolon or class({})
+modifier_imba_enigma_eidolon = modifier_imba_enigma_eidolon or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_eidolon:IsDebuff() return true end
 
@@ -484,8 +484,8 @@ function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 	end
 end
 
-modifier_imba_enigma_eidolon_attack_counter = modifier_imba_enigma_eidolon_attack_counter or class({})
-modifier_imba_enigma_eidolon_attacks_debuff = modifier_imba_enigma_eidolon_attacks_debuff or class({})
+modifier_imba_enigma_eidolon_attack_counter = modifier_imba_enigma_eidolon_attack_counter or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_enigma_eidolon_attacks_debuff = modifier_imba_enigma_eidolon_attacks_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_eidolon_attack_counter:IsDebuff() return true end
 
@@ -551,7 +551,7 @@ function imba_enigma_midnight_pulse:OnSpellStart()
 		caster:GetTeamNumber(), false)
 end
 
-modifier_imba_enigma_midnight_pulse_thinker = modifier_imba_enigma_midnight_pulse_thinker or class({})
+modifier_imba_enigma_midnight_pulse_thinker = modifier_imba_enigma_midnight_pulse_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_midnight_pulse_thinker:IsAura() return true end
 
@@ -651,7 +651,7 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnDestroy()
 	ParticleManager:ReleaseParticleIndex(self.particle)
 end
 
-modifier_imba_enigma_midnight_pulse_aura = modifier_imba_enigma_midnight_pulse_aura or class({})
+modifier_imba_enigma_midnight_pulse_aura = modifier_imba_enigma_midnight_pulse_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_midnight_pulse_aura:IsDebuff() return true end
 
@@ -774,9 +774,9 @@ function imba_enigma_black_hole:OnOwnerDied()
 	end
 end
 
-modifier_imba_enigma_black_hole_thinker = modifier_imba_enigma_black_hole_thinker or class({})
-modifier_imba_enigma_black_hole = modifier_imba_enigma_black_hole or class({})
-modifier_imba_enigma_black_hole_pull = modifier_imba_enigma_black_hole_pull or class({})
+modifier_imba_enigma_black_hole_thinker = modifier_imba_enigma_black_hole_thinker or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_enigma_black_hole = modifier_imba_enigma_black_hole or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_enigma_black_hole_pull = modifier_imba_enigma_black_hole_pull or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_enigma_black_hole_thinker:IsAura() return true end
 
@@ -1133,7 +1133,7 @@ function modifier_imba_enigma_black_hole_pull:GetModifierMoveSpeedBonus_Percenta
 	return self.ms_reduction * (-1)
 end
 --]]
-modifier_imba_singularity = modifier_imba_singularity or class({})
+modifier_imba_singularity = modifier_imba_singularity or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_singularity:IsDebuff() return false end
 
@@ -1185,10 +1185,10 @@ LinkLuaModifier("modifier_special_bonus_imba_enigma_3", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_enigma_4", "components/abilities/heroes/hero_enigma",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_enigma_8 = modifier_special_bonus_imba_enigma_8 or class({})
-modifier_special_bonus_imba_enigma_malefice_damage = modifier_special_bonus_imba_enigma_malefice_damage or class({})
-modifier_special_bonus_imba_enigma_3 = modifier_special_bonus_imba_enigma_3 or class({})
-modifier_special_bonus_imba_enigma_4 = modifier_special_bonus_imba_enigma_4 or class({})
+modifier_special_bonus_imba_enigma_8 = modifier_special_bonus_imba_enigma_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enigma_malefice_damage = modifier_special_bonus_imba_enigma_malefice_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enigma_3 = modifier_special_bonus_imba_enigma_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_enigma_4 = modifier_special_bonus_imba_enigma_4 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_8:IsHidden() return true end
 
@@ -1218,7 +1218,7 @@ function modifier_special_bonus_imba_enigma_4:RemoveOnDeath() return false end
 -- Adding separate modifier initializations here for talents that need client-side interaction as well --
 ---------------------------------------------------------------------------------------------------------
 
-modifier_special_bonus_imba_enigma_1 = class({})
+modifier_special_bonus_imba_enigma_1 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_1:IsHidden() return true end
 
@@ -1226,7 +1226,7 @@ function modifier_special_bonus_imba_enigma_1:IsPurgable() return false end
 
 function modifier_special_bonus_imba_enigma_1:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_enigma_2 = class({})
+modifier_special_bonus_imba_enigma_2 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_2:IsHidden() return true end
 
@@ -1234,7 +1234,7 @@ function modifier_special_bonus_imba_enigma_2:IsPurgable() return false end
 
 function modifier_special_bonus_imba_enigma_2:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_enigma_5 = class({})
+modifier_special_bonus_imba_enigma_5 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_5:IsHidden() return true end
 
@@ -1246,7 +1246,7 @@ LinkLuaModifier("modifier_special_bonus_imba_enigma_demonic_conversion_attack_ra
 	"components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_enigma_demonic_conversion_attack_range =
-	modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class({})
+	modifier_special_bonus_imba_enigma_demonic_conversion_attack_range or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_enigma_demonic_conversion_attack_range:IsHidden() return true end
 

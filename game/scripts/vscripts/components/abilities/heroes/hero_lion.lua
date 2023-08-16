@@ -5,7 +5,7 @@
 --             EARTH SPIKE              --
 ------------------------------------------
 
-imba_lion_earth_spike = class({})
+imba_lion_earth_spike = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_earthspike_stun", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_earthspike_death_spike", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
@@ -294,7 +294,7 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
 end
 
 -- Earthspike stun modifier
-modifier_imba_earthspike_stun = class({})
+modifier_imba_earthspike_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earthspike_stun:IsHidden() return false end
 
@@ -316,7 +316,7 @@ function modifier_imba_earthspike_stun:GetEffectAttachType()
 end
 
 -- Earthspike talent modifier
-modifier_imba_earthspike_death_spike = class({})
+modifier_imba_earthspike_death_spike = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_earthspike_death_spike:IsHidden() return false end
 
@@ -335,7 +335,7 @@ end
 --                HEX                   --
 ------------------------------------------
 
-imba_lion_hex = class({})
+imba_lion_hex = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_lion_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lion_hex_chain_cooldown", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
@@ -429,7 +429,7 @@ function imba_lion_hex:OnSpellStart()
 end
 
 -- Hex modifier
-modifier_imba_lion_hex = class({})
+modifier_imba_lion_hex = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lion_hex:OnCreated()
 	-- Ability properties
@@ -589,7 +589,7 @@ function modifier_imba_lion_hex:OnDestroy()
 end
 
 -- Eh, might as well make it somewhat not chain infinitely
-modifier_imba_lion_hex_chain_cooldown = class({})
+modifier_imba_lion_hex_chain_cooldown = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_lion_hex_chain_cooldown:IgnoreTenacity() return true end
 
@@ -603,7 +603,7 @@ function modifier_imba_lion_hex_chain_cooldown:IsPurgable() return false end
 --             Mana Drain               --
 ------------------------------------------
 
-imba_lion_mana_drain = class({})
+imba_lion_mana_drain = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_manadrain_aura", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
@@ -775,7 +775,7 @@ function imba_lion_mana_drain:OnSpellStart()
 end
 
 -- Mana Drain Aura
-modifier_imba_manadrain_aura = class({})
+modifier_imba_manadrain_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_manadrain_aura:OnCreated()
 	-- Ability properties
@@ -838,7 +838,7 @@ function modifier_imba_manadrain_aura:IsAura()
 end
 
 -- Mana Drain aura debuff
-modifier_imba_manadrain_aura_debuff = class({})
+modifier_imba_manadrain_aura_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_manadrain_aura_debuff:OnCreated()
 	if IsServer() then
@@ -878,7 +878,7 @@ function modifier_imba_manadrain_aura_debuff:OnIntervalThink()
 end
 
 -- Active Mana Drain debuff modifier (enemies)
-modifier_imba_manadrain_debuff = class({})
+modifier_imba_manadrain_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_manadrain_debuff:OnCreated()
 	-- Ability properties
@@ -981,14 +981,14 @@ function modifier_imba_manadrain_debuff:OnTooltip()
 	return self:GetAbility():GetSpecialValueFor("mana_drain_sec")
 end
 
-modifier_imba_manadrain_manaovercharge = class({})
+modifier_imba_manadrain_manaovercharge = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_manadrain_manaovercharge:IsHidden() return false end
 
 function modifier_imba_manadrain_manaovercharge:IsPurgable() return false end
 
 -- Active Mana Drain buff modifier (allies)
-modifier_imba_manadrain_buff = class({})
+modifier_imba_manadrain_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_manadrain_buff:OnCreated()
 	if IsServer() then
@@ -1032,7 +1032,7 @@ end
 ------------------------------------------
 --          FINGER OF DEATH             --
 ------------------------------------------
-imba_lion_finger_of_death = class({})
+imba_lion_finger_of_death = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_trigger_finger_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_finger_of_death_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_finger_of_death_delay", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
@@ -1079,7 +1079,7 @@ function imba_lion_finger_of_death:GetCooldown(level)
 	local scepter = caster:HasScepter()
 
 	-- Ability specials
-	local cooldown = self.BaseClass.GetCooldown(self, level)
+	local cooldown = self:GetRightfulKV("AbilityCooldown")
 	local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
 
 	-- Assign correct cooldown based on whether or not caster has a scepter
@@ -1324,7 +1324,7 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 end
 
 -- Trigger Finger modifier
-modifier_imba_trigger_finger_debuff = class({})
+modifier_imba_trigger_finger_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_trigger_finger_debuff:IsHidden() return false end
 
@@ -1333,7 +1333,7 @@ function modifier_imba_trigger_finger_debuff:IsPurgable() return false end
 function modifier_imba_trigger_finger_debuff:IsDebuff() return true end
 
 -- Finger's Hex modifier
-modifier_imba_finger_of_death_hex = class({})
+modifier_imba_finger_of_death_hex = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_finger_of_death_hex:IsHidden() return false end
 
@@ -1366,7 +1366,7 @@ function modifier_imba_finger_of_death_hex:GetModifierMoveSpeed_Absolute()
 	return self:GetAbility():GetSpecialValueFor("hex_move_speed")
 end
 
-modifier_imba_finger_of_death_delay = class({})
+modifier_imba_finger_of_death_delay = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_finger_of_death_delay:IsPurgable() return false end
 
 function modifier_imba_finger_of_death_delay:OnRemoved()
@@ -1377,7 +1377,7 @@ function modifier_imba_finger_of_death_delay:OnRemoved()
 	end
 end
 
-modifier_imba_finger_of_death_counter = class({})
+modifier_imba_finger_of_death_counter = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_finger_of_death_counter:IsDebuff() return false end
 
 function modifier_imba_finger_of_death_counter:IsHidden() return false end
@@ -1416,11 +1416,11 @@ LinkLuaModifier("modifier_special_bonus_imba_lion_8", "components/abilities/hero
 LinkLuaModifier("modifier_special_bonus_imba_lion_7", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_lion_2", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lion_3 = modifier_special_bonus_imba_lion_3 or class({})
-modifier_special_bonus_imba_lion_5 = modifier_special_bonus_imba_lion_5 or class({})
-modifier_special_bonus_imba_lion_8 = modifier_special_bonus_imba_lion_8 or class({})
-modifier_special_bonus_imba_lion_7 = modifier_special_bonus_imba_lion_7 or class({})
-modifier_special_bonus_imba_lion_2 = modifier_special_bonus_imba_lion_2 or class({})
+modifier_special_bonus_imba_lion_3 = modifier_special_bonus_imba_lion_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lion_5 = modifier_special_bonus_imba_lion_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lion_8 = modifier_special_bonus_imba_lion_8 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lion_7 = modifier_special_bonus_imba_lion_7 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_lion_2 = modifier_special_bonus_imba_lion_2 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_lion_3:IsHidden() return true end
 
@@ -1459,14 +1459,14 @@ LinkLuaModifier("modifier_special_bonus_imba_lion_9", "components/abilities/hero
 -- #10 Talent: +325 AoE Hex
 LinkLuaModifier("modifier_special_bonus_imba_lion_10", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_lion_9 = class({})
+modifier_special_bonus_imba_lion_9 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_lion_9:IsHidden() return true end
 
 function modifier_special_bonus_imba_lion_9:IsPurgable() return false end
 
 function modifier_special_bonus_imba_lion_9:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_lion_10 = class({})
+modifier_special_bonus_imba_lion_10 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_lion_10:IsHidden() return true end
 
 function modifier_special_bonus_imba_lion_10:IsPurgable() return false end

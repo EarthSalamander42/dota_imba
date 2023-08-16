@@ -9,7 +9,7 @@
 LinkLuaModifier("modifier_imba_delightful_torment_thinker", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_delightful_torment_as_bonus", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
-imba_queenofpain_delightful_torment = class({})
+imba_queenofpain_delightful_torment = class(VANILLA_ABILITIES_BASECLASS)
 function imba_queenofpain_delightful_torment:IsHiddenWhenStolen() return false end
 
 function imba_queenofpain_delightful_torment:IsRefreshable() return false end
@@ -31,7 +31,7 @@ function imba_queenofpain_delightful_torment:GetIntrinsicModifierName()
 end
 
 -------------------------------------------
-modifier_imba_delightful_torment_thinker = class({})
+modifier_imba_delightful_torment_thinker = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_delightful_torment_thinker:IsDebuff() return false end
 
 function modifier_imba_delightful_torment_thinker:IsHidden() return true end
@@ -79,7 +79,7 @@ end
 
 -- Talent #4 handling
 -------------------------------------------
-modifier_imba_delightful_torment_as_bonus = class({})
+modifier_imba_delightful_torment_as_bonus = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_delightful_torment_as_bonus:IsDebuff() return false end
 
 function modifier_imba_delightful_torment_as_bonus:IsHidden() return true end
@@ -107,7 +107,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_shadow_strike_debuff", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
-imba_queenofpain_shadow_strike = class({})
+imba_queenofpain_shadow_strike = class(VANILLA_ABILITIES_BASECLASS)
 function imba_queenofpain_shadow_strike:IsHiddenWhenStolen() return false end
 
 function imba_queenofpain_shadow_strike:IsRefreshable() return true end
@@ -224,7 +224,7 @@ function imba_queenofpain_shadow_strike:OnProjectileHit_ExtraData(target, locati
 end
 
 -------------------------------------------
-modifier_imba_shadow_strike_debuff = class({})
+modifier_imba_shadow_strike_debuff = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_shadow_strike_debuff:IsDebuff() return true end
 
 function modifier_imba_shadow_strike_debuff:IsHidden() return false end
@@ -354,7 +354,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_queenofpain_blink_decision_time", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
-imba_queenofpain_blink = class({})
+imba_queenofpain_blink = class(VANILLA_ABILITIES_BASECLASS)
 function imba_queenofpain_blink:IsHiddenWhenStolen() return false end
 
 function imba_queenofpain_blink:IsRefreshable() return true end
@@ -449,7 +449,7 @@ end
 
 -- Talent #5 handling
 -------------------------------------------
-modifier_imba_queenofpain_blink_decision_time = class({})
+modifier_imba_queenofpain_blink_decision_time = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_queenofpain_blink_decision_time:IsDebuff() return false end
 
 function modifier_imba_queenofpain_blink_decision_time:IsHidden() return true end
@@ -474,7 +474,7 @@ end
 --			SCREAM OF PAIN
 -------------------------------------------
 LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
-imba_queenofpain_scream_of_pain = class({})
+imba_queenofpain_scream_of_pain = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_queenofpain_scream_of_pain:IsHiddenWhenStolen() return false end
 
@@ -594,7 +594,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 end
 
 -------------------------------------------
-modifier_imba_scream_of_pain_reflect = class({})
+modifier_imba_scream_of_pain_reflect = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_scream_of_pain_reflect:IsDebuff() return true end
 
 function modifier_imba_scream_of_pain_reflect:IsHidden() return false end
@@ -650,7 +650,7 @@ LinkLuaModifier("modifier_imba_sonic_wave_daze", "components/abilities/heroes/he
 
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
-imba_queenofpain_sonic_wave = class({})
+imba_queenofpain_sonic_wave = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_queenofpain_sonic_wave:IsHiddenWhenStolen() return false end
 
@@ -811,11 +811,11 @@ end
 
 function imba_queenofpain_sonic_wave:GetCooldown(nLevel)
 	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
-	return self.BaseClass.GetCooldown(self, nLevel)
+	return self:GetRightfulKV("AbilityCooldown")
 end
 
 -------------------------------------------
-modifier_imba_sonic_wave = class({})
+modifier_imba_sonic_wave = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_sonic_wave:IsDebuff() return false end
 
 function modifier_imba_sonic_wave:IsHidden() return true end
@@ -869,7 +869,7 @@ function modifier_imba_sonic_wave:OnTakeDamage(params)
 end
 
 -------------------------------------------
-modifier_imba_sonic_wave_daze = class({})
+modifier_imba_sonic_wave_daze = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_sonic_wave_daze:IsDebuff() return true end
 
 function modifier_imba_sonic_wave_daze:IsHidden() return false end
@@ -911,10 +911,10 @@ LinkLuaModifier("modifier_special_bonus_imba_queenofpain_2", "components/abiliti
 LinkLuaModifier("modifier_special_bonus_imba_queenofpain_3", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_queenofpain_1 = modifier_special_bonus_imba_queenofpain_1 or class({})
-modifier_special_bonus_imba_queenofpain_2 = modifier_special_bonus_imba_queenofpain_2 or class({})
-modifier_special_bonus_imba_queenofpain_3 = modifier_special_bonus_imba_queenofpain_3 or class({})
-modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear = modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear or class({})
+modifier_special_bonus_imba_queenofpain_1 = modifier_special_bonus_imba_queenofpain_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_queenofpain_2 = modifier_special_bonus_imba_queenofpain_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_queenofpain_3 = modifier_special_bonus_imba_queenofpain_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear = modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_queenofpain_1:IsHidden() return true end
 
@@ -943,8 +943,8 @@ function modifier_special_bonus_imba_queen_of_pain_scream_of_pain_fear:RemoveOnD
 LinkLuaModifier("modifier_special_bonus_imba_queenofpain_4", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_queenofpain_4 = class({})
-modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe = modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe or class({})
+modifier_special_bonus_imba_queenofpain_4 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe = modifier_special_bonus_imba_queen_of_pain_shadow_strike_aoe or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_queenofpain_4:IsHidden() return true end
 

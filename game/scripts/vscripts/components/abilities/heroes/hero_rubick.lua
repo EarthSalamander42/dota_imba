@@ -8,7 +8,7 @@ LinkLuaModifier("modifier_imba_telekinesis_stun", "components/abilities/heroes/h
 LinkLuaModifier("modifier_imba_telekinesis_root", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_telekinesis_caster", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-imba_rubick_telekinesis = class({})
+imba_rubick_telekinesis = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_rubick_telekinesis:IsHiddenWhenStolen() return false end
 
@@ -145,7 +145,7 @@ function imba_rubick_telekinesis:GetCastRange(location, target)
 end
 
 -------------------------------------------
-modifier_imba_telekinesis_caster = class({})
+modifier_imba_telekinesis_caster = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_telekinesis_caster:IsDebuff() return false end
 
 function modifier_imba_telekinesis_caster:IsHidden() return true end
@@ -167,7 +167,7 @@ function modifier_imba_telekinesis_caster:OnDestroy()
 end
 
 -------------------------------------------
-modifier_imba_telekinesis = class({})
+modifier_imba_telekinesis = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_telekinesis:IsDebuff()
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then return true end
 	return false
@@ -350,7 +350,7 @@ function modifier_imba_telekinesis:OnDestroy()
 end
 
 -------------------------------------------
-modifier_imba_telekinesis_stun = class({})
+modifier_imba_telekinesis_stun = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_telekinesis_stun:IsDebuff() return true end
 
 function modifier_imba_telekinesis_stun:IsHidden() return true end
@@ -383,7 +383,7 @@ function modifier_imba_telekinesis_stun:CheckState()
 	return state
 end
 
-modifier_imba_telekinesis_root = class({})
+modifier_imba_telekinesis_root = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_telekinesis_root:IsDebuff() return false end
 
 function modifier_imba_telekinesis_root:IsHidden() return true end
@@ -404,13 +404,13 @@ end
 
 ------------------------------------------------------------------------
 
-imba_rubick_fade_bolt = imba_rubick_fade_bolt or class({})
+imba_rubick_fade_bolt = imba_rubick_fade_bolt or class(VANILLA_ABILITIES_BASECLASS)
 
 LinkLuaModifier("modifier_imba_rubick_fade_bolt", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_fade_bolt_break", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
 function imba_rubick_fade_bolt:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_rubick_fade_bolt_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_rubick_fade_bolt_cooldown")
 end
 
 function imba_rubick_fade_bolt:OnSpellStart()
@@ -543,7 +543,7 @@ function imba_rubick_fade_bolt:OnSpellStart()
 	end
 end
 
-modifier_imba_rubick_fade_bolt = modifier_imba_rubick_fade_bolt or class({})
+modifier_imba_rubick_fade_bolt = modifier_imba_rubick_fade_bolt or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rubick_fade_bolt:IsDebuff()
 	return true
@@ -595,7 +595,7 @@ function modifier_imba_rubick_fade_bolt:GetModifierPercentageManacostStacking()
 	return self.frail_mana_cost_increase_pct
 end
 
-modifier_imba_rubick_fade_bolt_break = class({})
+modifier_imba_rubick_fade_bolt_break = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rubick_fade_bolt_break:CheckState()
 	return {
@@ -610,7 +610,7 @@ LinkLuaModifier("modifier_imba_rubick_null_field_aura_debuff", "components/abili
 LinkLuaModifier("modifier_imba_rubick_null_field", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_null_field_debuff", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-imba_rubick_null_field = imba_rubick_null_field or class({})
+imba_rubick_null_field = imba_rubick_null_field or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_rubick_null_field:GetIntrinsicModifierName()
 	return "modifier_imba_rubick_null_field_aura"
@@ -644,7 +644,7 @@ function imba_rubick_null_field:GetAbilityTextureName()
 	return "rubick_null_field"
 end
 
-modifier_imba_rubick_null_field_aura = modifier_imba_rubick_null_field_aura or class({})
+modifier_imba_rubick_null_field_aura = modifier_imba_rubick_null_field_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_rubick_null_field_aura:IsAura() return true end
@@ -680,7 +680,7 @@ function modifier_imba_rubick_null_field_aura:GetModifierAura()
 	return "modifier_imba_rubick_null_field"
 end
 
-modifier_imba_rubick_null_field_aura_debuff = modifier_imba_rubick_null_field_aura_debuff or class({})
+modifier_imba_rubick_null_field_aura_debuff = modifier_imba_rubick_null_field_aura_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_rubick_null_field_aura_debuff:IsAura() return true end
@@ -716,7 +716,7 @@ function modifier_imba_rubick_null_field_aura_debuff:GetModifierAura()
 	return "modifier_imba_rubick_null_field_debuff"
 end
 
-modifier_imba_rubick_null_field = modifier_imba_rubick_null_field or class({})
+modifier_imba_rubick_null_field = modifier_imba_rubick_null_field or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_rubick_null_field:IsHidden() return false end
@@ -750,7 +750,7 @@ function modifier_imba_rubick_null_field:GetModifierStatusResistanceStacking()
 	return self.bonus_status_resistance / 100 * self:GetParent():GetBaseMagicalResistanceValue()
 end
 --]]
-modifier_imba_rubick_null_field_debuff = modifier_imba_rubick_null_field_debuff or class({})
+modifier_imba_rubick_null_field_debuff = modifier_imba_rubick_null_field_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_rubick_null_field_debuff:IsHidden() return false end
@@ -793,11 +793,11 @@ LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_flip_aura", "components/a
 LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_flip", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_debuff", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-imba_rubick_arcane_supremacy                    = class({})
-modifier_imba_rubick_arcane_supremacy           = class({})
-modifier_imba_rubick_arcane_supremacy_flip_aura = class({})
-modifier_imba_rubick_arcane_supremacy_flip      = class({})
-modifier_imba_rubick_arcane_supremacy_debuff    = class({})
+imba_rubick_arcane_supremacy                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rubick_arcane_supremacy           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rubick_arcane_supremacy_flip_aura = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rubick_arcane_supremacy_flip      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_rubick_arcane_supremacy_debuff    = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_rubick_arcane_supremacy:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
@@ -948,7 +948,7 @@ end
 
 LinkLuaModifier("modifier_imba_rubick_clandestine_librarian", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-imba_rubick_clandestine_librarian = class({})
+imba_rubick_clandestine_librarian = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_rubick_clandestine_librarian:IsInnateAbility()
 	return true
@@ -958,7 +958,7 @@ function imba_rubick_clandestine_librarian:GetIntrinsicModifierName()
 	return "modifier_imba_rubick_clandestine_librarian"
 end
 
-modifier_imba_rubick_clandestine_librarian = class({})
+modifier_imba_rubick_clandestine_librarian = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rubick_clandestine_librarian:IsDebuff() return false end
 
@@ -1054,9 +1054,9 @@ imba_rubick_animations_reference.animations = {
 	{ "imba_queen_of_pain_scream_of_pain",     false, nil,                         "scream" },
 	{ "imba_queen_of_pain_sonic_wave",         false, nil,                         "sonic_wave" },
 
-	{ "imba_nevermore_shadowraze_close",       false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
-	{ "imba_nevermore_shadowraze_medium",      false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
-	{ "imba_nevermore_shadowraze_far",         false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
+	{ "imba_nevermore_shadowraze1",            false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
+	{ "imba_nevermore_shadowraze2",            false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
+	{ "imba_nevermore_shadowraze3",            false, ACT_DOTA_CAST_ABILITY_5,     "shadowraze",     2.0 },
 	{ "imba_nevermore_requiem_of_souls",       true,  ACT_DOTA_CAST_ABILITY_5,     "requiem" },
 
 	{ "imba_sven_warcry",                      nil,   ACT_DOTA_OVERRIDE_ABILITY_3, "strength" },
@@ -1113,7 +1113,7 @@ end
 -------------------------------------------
 --			SPELL STEAL
 -------------------------------------------
-imba_rubick_spellsteal = imba_rubick_spellsteal or class({})
+imba_rubick_spellsteal = imba_rubick_spellsteal or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("imba_rubick_spellsteal", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_spellsteal", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_spellsteal_animation", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
@@ -1623,7 +1623,7 @@ end
 
 LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-modifier_rubick_spellsteal_hidden = class({})
+modifier_rubick_spellsteal_hidden = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_rubick_spellsteal_hidden:IsHidden() return true end
 
@@ -1673,7 +1673,7 @@ end
 -------------------------------------------
 --	modifier_imba_rubick_spellsteal
 -------------------------------------------
-modifier_imba_rubick_spellsteal = class({})
+modifier_imba_rubick_spellsteal = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rubick_spellsteal:IsHidden() return true end
 
@@ -1760,7 +1760,7 @@ end
 -------------------------------------------
 --	modifier_imba_rubick_spellsteal_animation
 -------------------------------------------
-modifier_imba_rubick_spellsteal_animation = class({})
+modifier_imba_rubick_spellsteal_animation = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rubick_spellsteal_animation:IsHidden() return false end
 
@@ -1831,11 +1831,11 @@ LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_posit
 LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_rubick_remnants_of_null_field_negative", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_rubick_fade_bolt_cooldown                   = modifier_special_bonus_imba_rubick_fade_bolt_cooldown or class({})
-modifier_special_bonus_imba_rubick_remnants_of_null_field               = modifier_special_bonus_imba_rubick_remnants_of_null_field or class({})
-modifier_special_bonus_imba_rubick_remnants_of_null_field_positive      = modifier_special_bonus_imba_rubick_remnants_of_null_field_positive or class({})
-modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura = modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura or class({})
-modifier_special_bonus_imba_rubick_remnants_of_null_field_negative      = modifier_special_bonus_imba_rubick_remnants_of_null_field_negative or class({})
+modifier_special_bonus_imba_rubick_fade_bolt_cooldown                   = modifier_special_bonus_imba_rubick_fade_bolt_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_remnants_of_null_field               = modifier_special_bonus_imba_rubick_remnants_of_null_field or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_remnants_of_null_field_positive      = modifier_special_bonus_imba_rubick_remnants_of_null_field_positive or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura = modifier_special_bonus_imba_rubick_remnants_of_null_field_negative_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_remnants_of_null_field_negative      = modifier_special_bonus_imba_rubick_remnants_of_null_field_negative or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_rubick_fade_bolt_cooldown:IsHidden() return true end
 
@@ -1971,9 +1971,9 @@ LinkLuaModifier("modifier_special_bonus_imba_rubick_2", "components/abilities/he
 LinkLuaModifier("modifier_special_bonus_imba_rubick_3", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_rubick_spell_steal_spell_amp", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_rubick_2 = modifier_special_bonus_imba_rubick_2 or class({})
-modifier_special_bonus_imba_rubick_3 = modifier_special_bonus_imba_rubick_3 or class({})
-modifier_special_bonus_imba_rubick_spell_steal_spell_amp = modifier_special_bonus_imba_rubick_spell_steal_spell_amp or class({})
+modifier_special_bonus_imba_rubick_2 = modifier_special_bonus_imba_rubick_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_3 = modifier_special_bonus_imba_rubick_3 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_rubick_spell_steal_spell_amp = modifier_special_bonus_imba_rubick_spell_steal_spell_amp or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_rubick_2:IsHidden() return true end
 

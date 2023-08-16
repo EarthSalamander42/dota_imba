@@ -4,7 +4,7 @@
 --------------------------------------
 --	ELEVEN CURSES
 --------------------------------------
-imba_empress_eleven_curses = class({})
+imba_empress_eleven_curses = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_eleven_curses", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_empress_eleven_curses:GetAOERadius()
@@ -31,7 +31,7 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 	local effect_radius = self:GetSpecialValueFor("effect_radius")
 
 	-- Play hit sound
-	EmitSoundOnLocationWithCaster(target_point, "Imba.HellEmpressCurseHit", caster )
+	EmitSoundOnLocationWithCaster(target_point, "Imba.HellEmpressCurseHit", caster)
 
 	-- Play ground particle
 	local ground_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/hellion_curse_area.vpcf", PATTACH_CUSTOMORIGIN, nil)
@@ -42,29 +42,29 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 	-- Find enemies in the target area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_point, nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	for _, enemy in pairs(enemies) do
-
 		-- Play target particle
 		local hit_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_curse_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControl(hit_pfx, 4, enemy:GetAbsOrigin() + Vector(0, 0, 100))
 		ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 		-- Refresh the modifier's duration
-		local modifier_curse_instance = enemy:AddNewModifier(caster, self, "modifier_imba_eleven_curses", {duration = stack_duration * (1 - enemy:GetStatusResistance())})
-		
+		local modifier_curse_instance = enemy:AddNewModifier(caster, self, "modifier_imba_eleven_curses", { duration = stack_duration * (1 - enemy:GetStatusResistance()) })
+
 		if modifier_curse_instance then
 			modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
 		end
 	end
 end
 
-
 ------------------------------------
 --	Eleven curses'  curse modifier
 ------------------------------------
-modifier_imba_eleven_curses = class({})
+modifier_imba_eleven_curses = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_eleven_curses:IsHidden() return false end
+
 function modifier_imba_eleven_curses:IsPurgable() return true end
+
 function modifier_imba_eleven_curses:IsDebuff() return true end
 
 function modifier_imba_eleven_curses:OnCreated()
@@ -84,7 +84,7 @@ end
 --------------------------------------
 --	HELLBOLT
 --------------------------------------
-imba_empress_hellbolt = class({})
+imba_empress_hellbolt = class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_empress_hellbolt:OnSpellStart()
 	local caster = self:GetCaster()
@@ -122,12 +122,11 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 
 	-- If the target is not spell immune, impact
 	if not target:IsMagicImmune() then
-
 		-- Play hit sound
 		target:EmitSound("Hero_SkywrathMage.ConcussiveShot.Target")
 
 		local curse_modifier = target:FindModifierByName("modifier_imba_eleven_curses")
-		
+
 		-- Calculate and deal damage
 		if curse_modifier then
 			-- bonus_damage = target:FindModifierByName(modifier_curse):GetStackCount() * bonus_damage * 0.01 * target:GetHealth()
@@ -135,16 +134,16 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 		else
 			bonus_damage = 0
 		end
-		
+
 		-- local damage = base_damage + bonus_damage
 		local damage = base_damage * (1 + bonus_damage)
-		
-		local actual_damage = ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+		local actual_damage = ApplyDamage({ victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, actual_damage, nil)
-		
+
 		if curse_modifier then
 			curse_modifier:SetStackCount(math.floor(curse_modifier:GetStackCount() * (100 - self:GetSpecialValueFor("curse_stack_reduction_pct")) * 0.01))
-			
+
 			if curse_modifier:GetStackCount() < 1 then
 				curse_modifier:Destroy()
 			end
@@ -155,11 +154,11 @@ end
 --------------------------------------
 --	ROYAL WRATH
 --------------------------------------
-imba_empress_royal_wrath = class({})
+imba_empress_royal_wrath = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_royal_wrath", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_empress_royal_wrath:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_empress_royal_wrath_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_empress_royal_wrath_cooldown")
 end
 
 function imba_empress_royal_wrath:GetIntrinsicModifierName()
@@ -169,11 +168,14 @@ end
 ------------------------------------
 --	Royal Wrath's passive modifier
 ------------------------------------
-modifier_imba_royal_wrath = class({})
+modifier_imba_royal_wrath = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_royal_wrath:IsHidden() return true end
+
 function modifier_imba_royal_wrath:IsPurgable() return false end
+
 function modifier_imba_royal_wrath:IsDebuff() return false end
+
 function modifier_imba_royal_wrath:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT end
 
 function modifier_imba_royal_wrath:DeclareFunctions()
@@ -182,19 +184,16 @@ function modifier_imba_royal_wrath:DeclareFunctions()
 	}
 end
 
-function modifier_imba_royal_wrath:OnTakeDamage( keys )
+function modifier_imba_royal_wrath:OnTakeDamage(keys)
 	if IsServer() then
-
 		-- Check if the damaged unit is the modifier owner
 		if keys.unit == self:GetParent() then
-
 			-- Do all the other checks
 			local parent = self:GetParent()
 			local attacker = keys.attacker
 			local ability = self:GetAbility()
 			local ability_curse = parent:FindAbilityByName("imba_empress_eleven_curses")
 			if attacker:IsRealHero() and attacker:IsAlive() and ability:IsCooldownReady() and attacker:GetTeam() ~= parent:GetTeam() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
-
 				-- Trigger the curse ability
 				ability_curse:OnSpellStart(attacker:GetAbsOrigin(), 1)
 
@@ -205,7 +204,7 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 					local hellbolt_cdr = ability:GetSpecialValueFor("hellbolt_cdr")
 					ability_hellbolt:EndCooldown()
 					if hellbolt_cd_remaining > hellbolt_cdr then
-						ability_hellbolt:StartCooldown( hellbolt_cd_remaining - hellbolt_cdr )
+						ability_hellbolt:StartCooldown(hellbolt_cd_remaining - hellbolt_cdr)
 					end
 				end
 
@@ -219,7 +218,7 @@ end
 --------------------------------------
 --	HURL THROUGH HELL
 --------------------------------------
-imba_empress_hurl_through_hell = class({})
+imba_empress_hurl_through_hell = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_hurl_through_hell", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hurl_through_hell_slow", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hurl_through_hell_root", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
@@ -269,19 +268,21 @@ function imba_empress_hurl_through_hell:OnSpellStart()
 
 	for _, enemy in pairs(enemies) do
 		-- Apply banishment modifier
-		enemy:AddNewModifier(caster, self, "modifier_imba_hurl_through_hell", {duration = hurl_duration})
+		enemy:AddNewModifier(caster, self, "modifier_imba_hurl_through_hell", { duration = hurl_duration })
 	end
 end
-
 
 ------------------------------------
 --	Hurl through hell's banishment modifier
 ------------------------------------
-modifier_imba_hurl_through_hell = class({})
+modifier_imba_hurl_through_hell = class(VANILLA_ABILITIES_BASECLASS)
 
-function modifier_imba_hurl_through_hell:IgnoreTenacity()	return true end
+function modifier_imba_hurl_through_hell:IgnoreTenacity() return true end
+
 function modifier_imba_hurl_through_hell:IsHidden() return true end
+
 function modifier_imba_hurl_through_hell:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell:CheckState()
@@ -345,7 +346,7 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		end
 
 		-- Deal damage
-		ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = self.hurl_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({ victim = parent, attacker = caster, ability = ability, damage = self.hurl_damage, damage_type = DAMAGE_TYPE_MAGICAL })
 
 		-- Pick the appropriate number of random debuffs to apply
 		local debuff_table = {
@@ -358,7 +359,7 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		}
 
 		for i = 1, self.debuff_amount do
-			parent:AddNewModifier(caster, ability, table.remove(debuff_table, RandomInt(1, #debuff_table)), {duration = self.debuff_duration})
+			parent:AddNewModifier(caster, ability, table.remove(debuff_table, RandomInt(1, #debuff_table)), { duration = self.debuff_duration })
 		end
 
 		-- Resolve position to prevent being stuck
@@ -369,10 +370,12 @@ end
 ------------------------------------
 --	Hurl through hell's slow modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_slow = class({})
+modifier_imba_hurl_through_hell_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_slow:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_slow:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_slow:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_slow:DeclareFunctions()
@@ -395,10 +398,12 @@ end
 ------------------------------------
 --	Hurl through hell's root modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_root = class({})
+modifier_imba_hurl_through_hell_root = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_root:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_root:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_root:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_root:CheckState()
@@ -412,10 +417,12 @@ end
 ------------------------------------
 --	Hurl through hell's disarm modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_disarm = class({})
+modifier_imba_hurl_through_hell_disarm = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_disarm:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_disarm:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_disarm:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_disarm:CheckState()
@@ -429,10 +436,12 @@ end
 ------------------------------------
 --	Hurl through hell's silence modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_silence = class({})
+modifier_imba_hurl_through_hell_silence = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_silence:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_silence:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_silence:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_silence:CheckState()
@@ -446,10 +455,12 @@ end
 ------------------------------------
 --	Hurl through hell's mute modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_mute = class({})
+modifier_imba_hurl_through_hell_mute = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_mute:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_mute:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_mute:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_mute:CheckState()
@@ -463,10 +474,12 @@ end
 ------------------------------------
 --	Hurl through hell's break modifier
 ------------------------------------
-modifier_imba_hurl_through_hell_break = class({})
+modifier_imba_hurl_through_hell_break = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_hurl_through_hell_break:IsHidden() return false end
+
 function modifier_imba_hurl_through_hell_break:IsPurgable() return false end
+
 function modifier_imba_hurl_through_hell_break:IsDebuff() return true end
 
 function modifier_imba_hurl_through_hell_break:CheckState()
@@ -480,7 +493,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 -- Ambient Effects
 -----------------------------------------------------------------------------------------------------------
-imba_empress_ambient_effects = imba_empress_ambient_effects or class({})
+imba_empress_ambient_effects = imba_empress_ambient_effects or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_empress_ambient_effects:GetIntrinsicModifierName()
 	return "modifier_hell_empress_ambient_effects"
@@ -490,7 +503,7 @@ function imba_empress_ambient_effects:IsInnateAbility() return true end
 
 LinkLuaModifier("modifier_hell_empress_ambient_effects", "components/abilities/heroes/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
 
-modifier_hell_empress_ambient_effects = class({})
+modifier_hell_empress_ambient_effects = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_hell_empress_ambient_effects:GetEffectName()
 	return "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf"
@@ -522,11 +535,13 @@ end
 
 LinkLuaModifier("modifier_special_bonus_imba_empress_royal_wrath_cooldown", "components/abilities/heroes/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_empress_royal_wrath_cooldown	= modifier_special_bonus_imba_empress_royal_wrath_cooldown or class({})
+modifier_special_bonus_imba_empress_royal_wrath_cooldown = modifier_special_bonus_imba_empress_royal_wrath_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
-function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsHidden() 		return true end
-function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsPurgable() 		return false end
-function modifier_special_bonus_imba_empress_royal_wrath_cooldown:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsHidden() return true end
+
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:IsPurgable() return false end
+
+function modifier_special_bonus_imba_empress_royal_wrath_cooldown:RemoveOnDeath() return false end
 
 function imba_empress_royal_wrath:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_empress_royal_wrath_cooldown") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_empress_royal_wrath_cooldown") then

@@ -506,10 +506,10 @@ function GameMode:OrderFilter(keys)
 		return false
 	end
 
-	if IsInToolsMode() and keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-		print("Position: ", unit:GetAbsOrigin())
-		return true
-	end
+	-- if IsInToolsMode() and keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+	-- 	print("Position: ", unit:GetAbsOrigin())
+	-- 	return true
+	-- end
 
 	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 	--		local ability = EntIndexToHScript(keys["entindex_ability"])

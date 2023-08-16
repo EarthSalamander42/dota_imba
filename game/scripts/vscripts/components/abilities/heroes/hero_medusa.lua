@@ -20,26 +20,26 @@ LinkLuaModifier("modifier_imba_medusa_stone_gaze_red_eyes", "components/abilitie
 LinkLuaModifier("modifier_imba_medusa_stone_gaze_red_eyes_facing", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_medusa_stone_gaze_stiff_joints", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
-imba_medusa_split_shot                          = class({})
-modifier_imba_medusa_split_shot                 = class({})
-modifier_imba_medusa_serpent_shot               = class({})
-modifier_imba_medusa_enchanted_aim              = class({})
+imba_medusa_split_shot                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_split_shot                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_serpent_shot               = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_enchanted_aim              = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_medusa_mystic_snake                        = class({})
-modifier_imba_medusa_mystic_snake_slow          = class({})
-modifier_imba_medusa_mystic_snake_tracker       = class({})
+imba_medusa_mystic_snake                        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_mystic_snake_slow          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_mystic_snake_tracker       = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_medusa_mana_shield                         = class({})
-modifier_imba_medusa_mana_shield_meditate       = class({})
-modifier_imba_medusa_mana_shield                = class({})
+imba_medusa_mana_shield                         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_mana_shield_meditate       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_mana_shield                = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_medusa_stone_gaze                          = class({})
-modifier_imba_medusa_stone_gaze                 = class({})
-modifier_imba_medusa_stone_gaze_facing          = class({})
-modifier_imba_medusa_stone_gaze_stone           = class({})
-modifier_imba_medusa_stone_gaze_red_eyes        = class({})
-modifier_imba_medusa_stone_gaze_red_eyes_facing = class({})
-modifier_imba_medusa_stone_gaze_stiff_joints    = class({})
+imba_medusa_stone_gaze                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze_facing          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze_stone           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze_red_eyes        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze_red_eyes_facing = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_medusa_stone_gaze_stiff_joints    = class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------
 -- SPLIT SHOT --
@@ -374,7 +374,7 @@ function imba_medusa_mystic_snake:GetCooldown(level)
 	if self:GetCaster():GetLevel() >= 20 then
 		return self:GetSpecialValueFor("innate_cooldown")
 	else
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	end
 end
 
@@ -1294,11 +1294,11 @@ LinkLuaModifier("modifier_special_bonus_imba_medusa_stone_gaze_duration", "compo
 LinkLuaModifier("modifier_special_bonus_imba_medusa_split_shot_modifiers", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_medusa_bonus_mana", "components/abilities/heroes/hero_medusa", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_mystic_snake_mana_steal         = modifier_special_bonus_imba_mystic_snake_mana_steal or class({})
-modifier_special_bonus_imba_medusa_extra_split_shot_targets = modifier_special_bonus_imba_medusa_extra_split_shot_targets or class({})
-modifier_special_bonus_imba_medusa_stone_gaze_duration      = modifier_special_bonus_imba_medusa_stone_gaze_duration or class({})
-modifier_special_bonus_imba_medusa_split_shot_modifiers     = modifier_special_bonus_imba_medusa_split_shot_modifiers or class({})
-modifier_special_bonus_imba_medusa_bonus_mana               = class({})
+modifier_special_bonus_imba_mystic_snake_mana_steal         = modifier_special_bonus_imba_mystic_snake_mana_steal or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_medusa_extra_split_shot_targets = modifier_special_bonus_imba_medusa_extra_split_shot_targets or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_medusa_stone_gaze_duration      = modifier_special_bonus_imba_medusa_stone_gaze_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_medusa_split_shot_modifiers     = modifier_special_bonus_imba_medusa_split_shot_modifiers or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_medusa_bonus_mana               = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_mystic_snake_mana_steal:IsHidden() return true end
 

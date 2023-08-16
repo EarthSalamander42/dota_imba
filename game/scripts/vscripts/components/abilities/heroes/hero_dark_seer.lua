@@ -23,32 +23,32 @@ LinkLuaModifier("modifier_imba_dark_seer_close_portal", "components/abilities/he
 LinkLuaModifier("modifier_imba_dark_seer_wall_of_replica", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dark_seer_wall_of_replica_slow", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
-imba_dark_seer_vacuum                          = class({})
-modifier_imba_dark_seer_vacuum                 = class({})
-modifier_imba_dark_seer_vacuum_wormhole        = class({})
-modifier_imba_dark_seer_vacuum_refresh_tracker = class({})
+imba_dark_seer_vacuum                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_vacuum                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_vacuum_wormhole        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_vacuum_refresh_tracker = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_dark_seer_wormhole                        = class({})
-modifier_imba_dark_seer_wormhole               = class({})
+imba_dark_seer_wormhole                        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_wormhole               = class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_dark_seer_vacuum_entry_portal    = modifier_imba_dark_seer_vacuum_entry_portal or class({})
-modifier_imba_dark_seer_vacuum_exit_portal     = modifier_imba_dark_seer_vacuum_exit_portal or class({})
-modifier_imba_dark_seer_vacuum_camera_track    = modifier_imba_dark_seer_vacuum_camera_track or class({})
+modifier_imba_dark_seer_vacuum_entry_portal    = modifier_imba_dark_seer_vacuum_entry_portal or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_vacuum_exit_portal     = modifier_imba_dark_seer_vacuum_exit_portal or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_vacuum_camera_track    = modifier_imba_dark_seer_vacuum_camera_track or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_dark_seer_ion_shell                       = class({})
-modifier_imba_dark_seer_ion_shell              = class({})
-modifier_imba_dark_seer_ion_shell_negation     = modifier_imba_dark_seer_ion_shell_negation or class({})
+imba_dark_seer_ion_shell                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_ion_shell              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_ion_shell_negation     = modifier_imba_dark_seer_ion_shell_negation or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_dark_seer_surge                           = class({})
-modifier_imba_dark_seer_surge                  = class({})
-modifier_imba_dark_seer_surge_slow             = modifier_imba_dark_seer_surge_slow or class({})
+imba_dark_seer_surge                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_surge                  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_surge_slow             = modifier_imba_dark_seer_surge_slow or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_dark_seer_close_portal                    = imba_dark_seer_close_portal or class({})
-modifier_imba_dark_seer_close_portal           = modifier_imba_dark_seer_close_portal or class({})
+imba_dark_seer_close_portal                    = imba_dark_seer_close_portal or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_close_portal           = modifier_imba_dark_seer_close_portal or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_dark_seer_wall_of_replica                 = class({})
-modifier_imba_dark_seer_wall_of_replica        = class({})
-modifier_imba_dark_seer_wall_of_replica_slow   = class({})
+imba_dark_seer_wall_of_replica                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_wall_of_replica        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dark_seer_wall_of_replica_slow   = class(VANILLA_ABILITIES_BASECLASS)
 
 ------------
 -- VACUUM --
@@ -87,7 +87,7 @@ end
 
 function imba_dark_seer_vacuum:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return self:GetSpecialValueFor("scepter_cooldown")
 	end
@@ -1279,10 +1279,10 @@ LinkLuaModifier("modifier_special_bonus_imba_dark_seer_vacuum_increased_duration
 LinkLuaModifier("modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_dark_seer_ion_shell_damage", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_dark_seer_ion_shell_radius = modifier_special_bonus_imba_dark_seer_ion_shell_radius or class({})
-modifier_special_bonus_imba_dark_seer_vacuum_increased_duration = modifier_special_bonus_imba_dark_seer_vacuum_increased_duration or class({})
-modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration = modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration or class({})
-modifier_special_bonus_imba_dark_seer_ion_shell_damage = modifier_special_bonus_imba_dark_seer_ion_shell_damage or class({})
+modifier_special_bonus_imba_dark_seer_ion_shell_radius = modifier_special_bonus_imba_dark_seer_ion_shell_radius or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dark_seer_vacuum_increased_duration = modifier_special_bonus_imba_dark_seer_vacuum_increased_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration = modifier_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dark_seer_ion_shell_damage = modifier_special_bonus_imba_dark_seer_ion_shell_damage or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_dark_seer_ion_shell_radius:IsHidden() return true end
 
@@ -1310,7 +1310,7 @@ function modifier_special_bonus_imba_dark_seer_ion_shell_damage:RemoveOnDeath() 
 
 LinkLuaModifier("modifier_special_bonus_imba_dark_seer_surge_cast_range", "components/abilities/heroes/hero_dark_seer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_dark_seer_surge_cast_range = modifier_special_bonus_imba_dark_seer_surge_cast_range or class({})
+modifier_special_bonus_imba_dark_seer_surge_cast_range = modifier_special_bonus_imba_dark_seer_surge_cast_range or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_dark_seer_surge_cast_range:IsHidden() return true end
 

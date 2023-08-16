@@ -5,7 +5,7 @@
 --			Slardar's Guardian Sprint
 ---------------------------------------------------
 
-imba_slardar_guardian_sprint = class({})
+imba_slardar_guardian_sprint = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_guardian_sprint_buff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_guardian_sprint_river", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_guardian_sprint_aspd_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
@@ -92,7 +92,7 @@ function imba_slardar_guardian_sprint:OnSpellStart()
 end
 
 -- Sprint modifier
-modifier_imba_guardian_sprint_buff = class({})
+modifier_imba_guardian_sprint_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_guardian_sprint_buff:IsHidden() return false end
 
@@ -232,7 +232,7 @@ end
 -- GUARDIAN SPRINT RIVER MODIFIER --
 ------------------------------------
 
-modifier_imba_guardian_sprint_river = class({})
+modifier_imba_guardian_sprint_river = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_guardian_sprint_river:IsHidden() return not (self:GetParent():GetAbsOrigin().z < 160 and (self:GetParent():HasGroundMovementCapability() or self:GetParent():HasModifier("modifier_item_imba_shadow_blade_invis") or self:GetParent():HasModifier("modifier_item_imba_silver_edge_invis")) or self:GetParent():HasModifier("modifier_imba_slithereen_crush_puddle")) end
 
@@ -286,7 +286,7 @@ function modifier_imba_guardian_sprint_river:GetModifierMoveSpeedBonus_Percentag
 end
 
 -- Rip current movement modifier
-modifier_imba_rip_current_movement = class({})
+modifier_imba_rip_current_movement = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rip_current_movement:GetTexture()
 	return "slardar_forward_propel"
@@ -456,7 +456,7 @@ function modifier_imba_rip_current_movement:GetActivityTranslationModifiers()
 end
 
 -- Stun propel modifier
-modifier_imba_rip_current_stun = class({})
+modifier_imba_rip_current_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rip_current_stun:GetTexture()
 	return "slardar_forward_propel"
@@ -492,7 +492,7 @@ function modifier_imba_rip_current_stun:GetOverrideAnimation()
 end
 
 -- Slow propel modifier
-modifier_imba_rip_current_slow = class({})
+modifier_imba_rip_current_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rip_current_slow:GetTexture()
 	return "slardar_forward_propel"
@@ -513,7 +513,7 @@ function modifier_imba_rip_current_slow:GetModifierMoveSpeedBonus_Percentage()
 end
 
 -- Talent modifier: attack speed slow
-modifier_imba_guardian_sprint_aspd_slow = class({})
+modifier_imba_guardian_sprint_aspd_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_guardian_sprint_aspd_slow:IsHidden()
 	return false
@@ -550,7 +550,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_slardar_slithereen_crush = class({})
+imba_slardar_slithereen_crush = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_slithereen_crush_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slithereen_crush_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slithereen_crush_royal_break", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
@@ -558,7 +558,7 @@ LinkLuaModifier("modifier_imba_slithereen_crush_puddle", "components/abilities/h
 LinkLuaModifier("modifier_imba_slithereen_crush_puddle_aura", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 function imba_slardar_slithereen_crush:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) * (math.max((100 + self:GetCaster():FindTalentValue("special_bonus_imba_slardar_6", "cdr_mult")) / 100, 1))
+	return self:GetRightfulKV("AbilityCooldown") * (math.max((100 + self:GetCaster():FindTalentValue("special_bonus_imba_slardar_6", "cdr_mult")) / 100, 1))
 end
 
 function imba_slardar_slithereen_crush:GetAbilityTextureName()
@@ -679,7 +679,7 @@ function SlithereenCrush(self)
 end
 
 -- Stun modifier
-modifier_imba_slithereen_crush_stun = class({})
+modifier_imba_slithereen_crush_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_slithereen_crush_stun:IsDebuff()
 	return true
@@ -714,7 +714,7 @@ function modifier_imba_slithereen_crush_stun:GetOverrideAnimation()
 end
 
 -- Slow modifier
-modifier_imba_slithereen_crush_slow = class({})
+modifier_imba_slithereen_crush_slow = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_slithereen_crush_slow:DeclareFunctions()
 	local decFuncs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
@@ -748,7 +748,7 @@ function modifier_imba_slithereen_crush_stun:IsPurgable()
 end
 
 -- Royal break modifier
-modifier_imba_slithereen_crush_royal_break = class({})
+modifier_imba_slithereen_crush_royal_break = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_slithereen_crush_royal_break:OnCreated()
 	if IsServer() then
@@ -800,7 +800,7 @@ end
 -- SLITHEREEN CRUSH PUDDLE MODIFIER --
 --------------------------------------
 
-modifier_imba_slithereen_crush_puddle_aura = class({})
+modifier_imba_slithereen_crush_puddle_aura = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_slithereen_crush_puddle_aura:IsHidden() return true end
 
@@ -841,7 +841,7 @@ end
 -- SLITHEREEN CRUSH PUDDLE AURA MODIFIER --
 -------------------------------------------
 
-modifier_imba_slithereen_crush_puddle = class({})
+modifier_imba_slithereen_crush_puddle = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_slithereen_crush_puddle:IsHidden() return true end
 
@@ -853,7 +853,7 @@ function modifier_imba_slithereen_crush_puddle:IsHidden() return true end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_slardar_bash_of_the_deep = class({})
+imba_slardar_bash_of_the_deep = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_bash_of_the_deep_attack", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_bash_of_the_deep_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
@@ -868,7 +868,7 @@ function imba_slardar_bash_of_the_deep:GetIntrinsicModifierName()
 end
 
 -- Bash attacks modifier
-modifier_imba_bash_of_the_deep_attack = class({})
+modifier_imba_bash_of_the_deep_attack = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_bash_of_the_deep_attack:DeclareFunctions()
 	local decFuncs = { MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL }
@@ -1008,7 +1008,7 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 end
 
 -- Bash stun modifier
-modifier_imba_bash_of_the_deep_stun = class({})
+modifier_imba_bash_of_the_deep_stun = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_bash_of_the_deep_stun:IsDebuff()
 	return true
@@ -1046,8 +1046,8 @@ end
 LinkLuaModifier("imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slardar_bash_720", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-imba_slardar_bash_720          = class({})
-modifier_imba_slardar_bash_720 = class({})
+imba_slardar_bash_720          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_slardar_bash_720 = class(VANILLA_ABILITIES_BASECLASS)
 
 ---------------------------
 -- IMBA_SLARDAR_BASH_720 --
@@ -1102,7 +1102,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_slardar_corrosive_haze = class({})
+imba_slardar_corrosive_haze = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff_secondary", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_slip_debuff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
@@ -1250,7 +1250,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 end
 
 -- Armor reduction debuff
-modifier_imba_corrosive_haze_debuff = class({})
+modifier_imba_corrosive_haze_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_corrosive_haze_debuff:OnCreated()
 	if not IsServer() then return end
@@ -1448,7 +1448,7 @@ function modifier_imba_corrosive_haze_debuff:IsPurgable()
 end
 
 -- secondary debuff (#7 talent)
-modifier_imba_corrosive_haze_debuff_secondary = class({})
+modifier_imba_corrosive_haze_debuff_secondary = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_corrosive_haze_debuff_secondary:CheckState()
 	local state = {
@@ -1550,7 +1550,7 @@ function modifier_imba_corrosive_haze_debuff_secondary:IsPurgable()
 end
 
 -- Slip up debuff
-modifier_imba_corrosive_haze_slip_debuff = class({})
+modifier_imba_corrosive_haze_slip_debuff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_corrosive_haze_slip_debuff:GetEffectName()
 	return "particles/hero/slardar/slardar_slip_up.vpcf"
@@ -1586,7 +1586,7 @@ function modifier_imba_corrosive_haze_slip_debuff:IsPurgable()
 end
 
 -- Armor Transferal Talent Buff
-modifier_imba_corrosive_haze_talent_buff = class({})
+modifier_imba_corrosive_haze_talent_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_corrosive_haze_talent_buff:IsHidden() return false end
 
@@ -1620,7 +1620,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 
-imba_slardar_rain_cloud = class({})
+imba_slardar_rain_cloud = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_rain_cloud_slardar", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_cloud_buff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_cloud_dummy", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
@@ -1650,7 +1650,7 @@ function imba_slardar_rain_cloud:OnUnStolen()
 end
 
 -- Slardar modifier
-modifier_imba_rain_cloud_slardar = class({})
+modifier_imba_rain_cloud_slardar = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_cloud_slardar:DeclareFunctions()
 	local decFuncs = { MODIFIER_PROPERTY_ABILITY_LAYOUT,
@@ -1739,7 +1739,7 @@ function modifier_imba_rain_cloud_slardar:IsPurgable()
 end
 
 -- Dummy modifier
-modifier_imba_rain_cloud_dummy = class({})
+modifier_imba_rain_cloud_dummy = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_cloud_dummy:OnCreated()
 	if IsServer() then
@@ -1878,7 +1878,7 @@ function modifier_imba_rain_cloud_dummy:IsPurgable()
 end
 
 -- Rain cloud aura buff (slardar)
-modifier_imba_rain_cloud_buff = class({})
+modifier_imba_rain_cloud_buff = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rain_cloud_buff:IsDebuff()
 	return false
@@ -1905,10 +1905,10 @@ LinkLuaModifier("modifier_special_bonus_imba_slardar_13", "components/abilities/
 LinkLuaModifier("modifier_special_bonus_imba_slardar_11", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_slardar_12", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_slardar_1  = modifier_special_bonus_imba_slardar_1 or class({})
-modifier_special_bonus_imba_slardar_13 = modifier_special_bonus_imba_slardar_13 or class({})
-modifier_special_bonus_imba_slardar_11 = modifier_special_bonus_imba_slardar_11 or class({})
-modifier_special_bonus_imba_slardar_12 = modifier_special_bonus_imba_slardar_12 or class({})
+modifier_special_bonus_imba_slardar_1  = modifier_special_bonus_imba_slardar_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_slardar_13 = modifier_special_bonus_imba_slardar_13 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_slardar_11 = modifier_special_bonus_imba_slardar_11 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_slardar_12 = modifier_special_bonus_imba_slardar_12 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_slardar_1:IsHidden() return true end
 
@@ -1936,7 +1936,7 @@ function modifier_special_bonus_imba_slardar_12:RemoveOnDeath() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_slardar_6", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_slardar_6 = class({})
+modifier_special_bonus_imba_slardar_6 = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_slardar_6:IsHidden() return true end
 

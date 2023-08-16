@@ -5,7 +5,7 @@
 -------------------------------------------
 --			PARALYZING CASK
 -------------------------------------------
-imba_witch_doctor_paralyzing_cask = class({})
+imba_witch_doctor_paralyzing_cask = class(VANILLA_ABILITIES_BASECLASS)
 function imba_witch_doctor_paralyzing_cask:IsHiddenWhenStolen() return false end
 
 function imba_witch_doctor_paralyzing_cask:IsRefreshable() return true end
@@ -205,7 +205,7 @@ end
 --			VOODOO RESTORATION
 -------------------------------------------
 
-imba_witch_doctor_voodoo_restoration = class({})
+imba_witch_doctor_voodoo_restoration = class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_voodoo_restoration", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_voodoo_restoration_heal", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
@@ -217,7 +217,7 @@ function imba_witch_doctor_voodoo_restoration:ProcsMagicStick() return false end
 
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_6", "components/abilities/heroes/hero_witch_doctor.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_witch_doctor_6 = modifier_special_bonus_imba_witch_doctor_6 or class({})
+modifier_special_bonus_imba_witch_doctor_6 = modifier_special_bonus_imba_witch_doctor_6 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_witch_doctor_6:IsHidden() return true end
 
@@ -336,7 +336,7 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 	end
 end
 
-modifier_imba_voodoo_restoration = class({})
+modifier_imba_voodoo_restoration = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_voodoo_restoration:OnCreated()
 	if IsServer() and self:GetAbility():IsTrained() then
 		local ability = self:GetAbility()
@@ -454,7 +454,7 @@ function modifier_imba_voodoo_restoration:IsHidden()
 end
 
 -------------------------------------------
-modifier_imba_voodoo_restoration_heal = class({})
+modifier_imba_voodoo_restoration_heal = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_voodoo_restoration_heal:IsDebuff() return false end
 
 function modifier_imba_voodoo_restoration_heal:IsHidden() return false end
@@ -505,7 +505,7 @@ end
 LinkLuaModifier("modifier_imba_maledict", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_maledict_talent", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
-imba_witch_doctor_maledict = class({})
+imba_witch_doctor_maledict = class(VANILLA_ABILITIES_BASECLASS)
 function imba_witch_doctor_maledict:IsHiddenWhenStolen() return false end
 
 function imba_witch_doctor_maledict:IsRefreshable() return true end
@@ -543,7 +543,7 @@ function imba_witch_doctor_maledict:GetAOERadius()
 end
 
 -------------------------------------------
-modifier_imba_maledict = class({})
+modifier_imba_maledict = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_maledict:IsDebuff() return true end
 
 function modifier_imba_maledict:IsHidden() return false end
@@ -720,7 +720,7 @@ function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 end
 
 --- NO HEALING MODIFIER FROM #7 TALENT
-modifier_imba_maledict_talent = modifier_imba_maledict_talent or class({})
+modifier_imba_maledict_talent = modifier_imba_maledict_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Modifier properties
 function modifier_imba_maledict_talent:IsDebuff() return true end
@@ -746,7 +746,7 @@ end
 LinkLuaModifier("modifier_imba_death_ward", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_death_ward_caster", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
-imba_witch_doctor_death_ward = class({})
+imba_witch_doctor_death_ward = class(VANILLA_ABILITIES_BASECLASS)
 function imba_witch_doctor_death_ward:IsHiddenWhenStolen() return false end
 
 function imba_witch_doctor_death_ward:IsRefreshable() return true end
@@ -952,7 +952,7 @@ function imba_witch_doctor_death_ward:CreateBounceAttack(originalTarget, extraDa
 end
 
 -------------------------------------------
-modifier_imba_death_ward_caster = class({})
+modifier_imba_death_ward_caster = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_death_ward_caster:IsDebuff() return false end
 
 function modifier_imba_death_ward_caster:IsHidden() return true end
@@ -966,7 +966,7 @@ function modifier_imba_death_ward_caster:IsStunDebuff() return false end
 function modifier_imba_death_ward_caster:RemoveOnDeath() return true end
 
 -------------------------------------------
-modifier_imba_death_ward = class({})
+modifier_imba_death_ward = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_death_ward:IsDebuff() return false end
 
 function modifier_imba_death_ward:IsHidden() return true end
@@ -1085,9 +1085,9 @@ LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_5", "components/abilit
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_maledict_duration", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_8", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_witch_doctor_5 = modifier_special_bonus_imba_witch_doctor_5 or class({})
-modifier_special_bonus_imba_witch_doctor_maledict_duration = modifier_special_bonus_imba_witch_doctor_maledict_duration or class({})
-modifier_special_bonus_imba_witch_doctor_8 = modifier_special_bonus_imba_witch_doctor_8 or class({})
+modifier_special_bonus_imba_witch_doctor_5 = modifier_special_bonus_imba_witch_doctor_5 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_witch_doctor_maledict_duration = modifier_special_bonus_imba_witch_doctor_maledict_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_witch_doctor_8 = modifier_special_bonus_imba_witch_doctor_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_witch_doctor_5:IsHidden() return true end
 
@@ -1110,8 +1110,8 @@ function modifier_special_bonus_imba_witch_doctor_8:RemoveOnDeath() return false
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_9", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_maledict_radius", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_witch_doctor_9 = class({})
-modifier_special_bonus_imba_witch_doctor_maledict_radius = modifier_special_bonus_imba_witch_doctor_maledict_radius or class({})
+modifier_special_bonus_imba_witch_doctor_9 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_witch_doctor_maledict_radius = modifier_special_bonus_imba_witch_doctor_maledict_radius or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_witch_doctor_9:IsHidden() return true end
 

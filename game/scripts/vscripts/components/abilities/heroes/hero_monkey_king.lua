@@ -5,14 +5,14 @@
 
 LinkLuaModifier("modifier_imba_monkey_king_true_strike", "components/abilities/heroes/hero_monkey_king", LUA_MODIFIER_MOTION_NONE)
 
-imba_monkey_king_true_strike			= class({})
-modifier_imba_monkey_king_true_strike	= class({})
+imba_monkey_king_true_strike          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_monkey_king_true_strike = class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------------------------
 -- IMBA_MONKEY_KING_TRUE_STRIKE --
 ----------------------------------
 
-function imba_monkey_king_true_strike:IsInnateAbility()	return true end
+function imba_monkey_king_true_strike:IsInnateAbility() return true end
 
 function imba_monkey_king_true_strike:GetIntrinsicModifierName()
 	return "modifier_imba_monkey_king_true_strike"
@@ -27,5 +27,5 @@ function modifier_imba_monkey_king_true_strike:GetTexture()
 end
 
 function modifier_imba_monkey_king_true_strike:CheckState()
-	return {[MODIFIER_STATE_CANNOT_MISS] = true}
+	return { [MODIFIER_STATE_CANNOT_MISS] = true }
 end

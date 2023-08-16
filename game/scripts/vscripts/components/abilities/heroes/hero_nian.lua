@@ -17,29 +17,29 @@ LinkLuaModifier("modifier_imba_nian_volcanic_burster_tracker", "components/abili
 
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
-imba_nian_frenzy_swipes                          = class({})
-modifier_imba_nian_frenzy_swipes                 = class({})
-modifier_imba_nian_frenzy_swipes_suppression     = class({})
-modifier_imba_nian_frenzy_swipes_slow            = class({})
-modifier_imba_nian_frenzy_swipes_armor_reduction = class({})
+imba_nian_frenzy_swipes                          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_frenzy_swipes                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_frenzy_swipes_suppression     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_frenzy_swipes_slow            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_frenzy_swipes_armor_reduction = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_nian_crushing_leap                          = class({})
+imba_nian_crushing_leap                          = class(VANILLA_ABILITIES_BASECLASS)
 -- modifier_imba_nian_crushing_leap_movement		= modifier_generic_motion_controller -- Why doesn't this work
-modifier_imba_nian_crushing_leap_movement        = class({})
-modifier_imba_nian_crushing_leap_strength        = class({})
-modifier_imba_nian_crushing_leap_agility         = class({})
-modifier_imba_nian_crushing_leap_intellect       = class({})
+modifier_imba_nian_crushing_leap_movement        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_crushing_leap_strength        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_crushing_leap_agility         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_crushing_leap_intellect       = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_nian_tail_spin                              = class({})
-modifier_imba_nian_tail_spin                     = class({})
+imba_nian_tail_spin                              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_tail_spin                     = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_nian_tail_stomp                             = class({})
-modifier_imba_nian_tail_stomp                    = class({})
+imba_nian_tail_stomp                             = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_tail_stomp                    = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_nian_volcanic_burster                       = class({})
-modifier_imba_nian_volcanic_burster              = class({})
-modifier_imba_nian_volcanic_burster_cooldown     = class({})
-modifier_imba_nian_volcanic_burster_tracker      = class({})
+imba_nian_volcanic_burster                       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_volcanic_burster              = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_volcanic_burster_cooldown     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_nian_volcanic_burster_tracker      = class(VANILLA_ABILITIES_BASECLASS)
 
 -------------------
 -- FRENZY SWIPES --
@@ -263,7 +263,7 @@ function imba_nian_crushing_leap:GetCastRange(location, target)
 end
 
 function imba_nian_crushing_leap:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_nian_crushing_leap_cooldown")
 end
 
 function imba_nian_crushing_leap:GetCastAnimation()
@@ -611,7 +611,7 @@ end
 ----------------------
 
 --function imba_nian_volcanic_burster:GetCastAnimation()
-	--return ACT_DOTA_NIAN_GAME_END
+--return ACT_DOTA_NIAN_GAME_END
 --end
 
 function imba_nian_volcanic_burster:GetPlaybackRateOverride()
@@ -847,8 +847,8 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_nian_frenzy_swipes_upgrade", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nian_frenzy_swipes_upgrade            = modifier_special_bonus_imba_nian_frenzy_swipes_upgrade or class({})
-modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity = modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity or class({})
+modifier_special_bonus_imba_nian_frenzy_swipes_upgrade            = modifier_special_bonus_imba_nian_frenzy_swipes_upgrade or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity = modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nian_frenzy_swipes_upgrade:IsHidden() return true end
 
@@ -865,8 +865,8 @@ function modifier_special_bonus_imba_nian_tail_spin_pierces_spell_immunity:Remov
 LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cast_range", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_nian_crushing_leap_cooldown", "components/abilities/heroes/hero_nian", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_nian_crushing_leap_cast_range = class({})
-modifier_special_bonus_imba_nian_crushing_leap_cooldown   = class({})
+modifier_special_bonus_imba_nian_crushing_leap_cast_range = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_nian_crushing_leap_cooldown   = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_nian_crushing_leap_cast_range:IsHidden() return true end
 

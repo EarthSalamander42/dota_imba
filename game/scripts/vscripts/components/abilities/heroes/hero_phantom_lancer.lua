@@ -19,27 +19,27 @@ LinkLuaModifier("modifier_imba_phantom_lancer_sun_catcher_aura", "components/abi
 LinkLuaModifier("modifier_imba_phantom_lancer_juxtapose", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_lancer_juxtapose_assault", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 
-imba_phantom_lancer_spirit_lance                       = imba_phantom_lancer_spirit_lance or class({})
-modifier_imba_phantom_lancer_spirit_lance_handler      = modifier_imba_phantom_lancer_spirit_lance_handler or class({})
-modifier_imba_phantom_lancer_spirit_lance              = modifier_imba_phantom_lancer_spirit_lance or class({})
-modifier_imba_phantom_lancer_spirit_lance_phantom_pain = modifier_imba_phantom_lancer_spirit_lance_phantom_pain or class({})
-modifier_imba_phantom_lancer_illusion                  = modifier_imba_phantom_lancer_illusion or class({})
+imba_phantom_lancer_spirit_lance                       = imba_phantom_lancer_spirit_lance or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_spirit_lance_handler      = modifier_imba_phantom_lancer_spirit_lance_handler or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_spirit_lance              = modifier_imba_phantom_lancer_spirit_lance or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_spirit_lance_phantom_pain = modifier_imba_phantom_lancer_spirit_lance_phantom_pain or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_illusion                  = modifier_imba_phantom_lancer_illusion or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_phantom_lancer_doppelwalk                         = imba_phantom_lancer_doppelwalk or class({})
-modifier_imba_phantom_lancer_doppelwalk_phase          = modifier_imba_phantom_lancer_doppelwalk_phase or class({})
+imba_phantom_lancer_doppelwalk                         = imba_phantom_lancer_doppelwalk or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_doppelwalk_phase          = modifier_imba_phantom_lancer_doppelwalk_phase or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_phantom_lancer_phantom_edge                       = imba_phantom_lancer_phantom_edge or class({})
-modifier_imba_phantom_lancer_phantom_edge              = modifier_imba_phantom_lancer_phantom_edge or class({})
-modifier_imba_phantom_lancer_phantom_edge_boost        = modifier_imba_phantom_lancer_phantom_edge_boost or class({})
-modifier_imba_phantom_lancer_phantom_edge_agility      = modifier_imba_phantom_lancer_phantom_edge_agility or class({})
+imba_phantom_lancer_phantom_edge                       = imba_phantom_lancer_phantom_edge or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_phantom_edge              = modifier_imba_phantom_lancer_phantom_edge or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_phantom_edge_boost        = modifier_imba_phantom_lancer_phantom_edge_boost or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_phantom_edge_agility      = modifier_imba_phantom_lancer_phantom_edge_agility or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_phantom_lancer_sun_catcher                        = imba_phantom_lancer_sun_catcher or class({})
-modifier_imba_phantom_lancer_sun_catcher_thinker       = modifier_imba_phantom_lancer_sun_catcher_thinker or class({})
-modifier_imba_phantom_lancer_sun_catcher_aura          = modifier_imba_phantom_lancer_sun_catcher_aura or class({})
+imba_phantom_lancer_sun_catcher                        = imba_phantom_lancer_sun_catcher or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_sun_catcher_thinker       = modifier_imba_phantom_lancer_sun_catcher_thinker or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_sun_catcher_aura          = modifier_imba_phantom_lancer_sun_catcher_aura or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_phantom_lancer_juxtapose                          = imba_phantom_lancer_juxtapose or class({})
-modifier_imba_phantom_lancer_juxtapose                 = modifier_imba_phantom_lancer_juxtapose or class({})
-modifier_imba_phantom_lancer_juxtapose_assault         = modifier_imba_phantom_lancer_juxtapose_assault or class({})
+imba_phantom_lancer_juxtapose                          = imba_phantom_lancer_juxtapose or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_juxtapose                 = modifier_imba_phantom_lancer_juxtapose or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_phantom_lancer_juxtapose_assault         = modifier_imba_phantom_lancer_juxtapose_assault or class(VANILLA_ABILITIES_BASECLASS)
 
 --------------------------------------
 --			SPIRIT LANCE            --
@@ -341,7 +341,7 @@ end
 ------------------------------------
 
 function imba_phantom_lancer_doppelwalk:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_phantom_lancer_doppelwalk_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_phantom_lancer_doppelwalk_cooldown")
 end
 
 function imba_phantom_lancer_doppelwalk:GetAOERadius()
@@ -565,7 +565,7 @@ end
 
 -- function imba_phantom_lancer_phantom_edge:GetCooldown(level)
 -- if not self:GetCaster():HasScepter() then
--- return self.BaseClass.GetCooldown(self, level)
+-- return self:GetRightfulKV("AbilityCooldown")
 -- else
 -- return 0
 -- end
@@ -1137,10 +1137,10 @@ LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_de
 LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage         = modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage or class({})
-modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter = modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter or class({})
-modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance       = modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance or class({})
-modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown         = modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown or class({})
+modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage         = modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter = modifier_special_bonus_imba_phantom_lancer_juxtapose_assault_delimiter or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance       = modifier_special_bonus_imba_phantom_lancer_phantom_edge_distance or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown         = modifier_special_bonus_imba_phantom_lancer_doppelwalk_cooldown or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_phantom_lancer_spirit_lance_damage:IsHidden() return true end
 

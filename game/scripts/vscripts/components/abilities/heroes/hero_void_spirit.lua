@@ -28,38 +28,38 @@ LinkLuaModifier("modifier_imba_void_spirit_astral_step_invis", "components/abili
 
 LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifier_generic_charges", LUA_MODIFIER_MOTION_NONE)
 
-imba_void_spirit_aether_remnant                         = imba_void_spirit_aether_remnant or class({})
-modifier_imba_void_spirit_aether_remnant_pull           = modifier_imba_void_spirit_aether_remnant_pull or class({})
-modifier_imba_void_spirit_aether_remnant_target_vision  = modifier_imba_void_spirit_aether_remnant_target_vision or class({})
+imba_void_spirit_aether_remnant                         = imba_void_spirit_aether_remnant or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_aether_remnant_pull           = modifier_imba_void_spirit_aether_remnant_pull or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_aether_remnant_target_vision  = modifier_imba_void_spirit_aether_remnant_target_vision or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_dissimilate                            = imba_void_spirit_dissimilate or class({})
-modifier_imba_void_spirit_dissimilate                   = modifier_imba_void_spirit_dissimilate or class({})
-modifier_imba_void_spirit_dissimilate_ally              = modifier_imba_void_spirit_dissimilate_ally or class({})
+imba_void_spirit_dissimilate                            = imba_void_spirit_dissimilate or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_dissimilate                   = modifier_imba_void_spirit_dissimilate or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_dissimilate_ally              = modifier_imba_void_spirit_dissimilate_ally or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_resonant_pulse                         = imba_void_spirit_resonant_pulse or class({})
-modifier_imba_void_spirit_resonant_pulse_ring           = modifier_imba_void_spirit_resonant_pulse_ring or class({})
-modifier_imba_void_spirit_resonant_pulse_physical_buff  = modifier_imba_void_spirit_resonant_pulse_physical_buff or class({})
-modifier_imba_void_spirit_resonant_pulse_thinker_aura   = modifier_imba_void_spirit_resonant_pulse_thinker_aura or class({})
-modifier_imba_void_spirit_resonant_pulse_thinker_buff   = modifier_imba_void_spirit_resonant_pulse_thinker_buff or class({})
-modifier_imba_void_spirit_resonant_pulse_equal_exchange = modifier_imba_void_spirit_resonant_pulse_equal_exchange or class({})
+imba_void_spirit_resonant_pulse                         = imba_void_spirit_resonant_pulse or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_resonant_pulse_ring           = modifier_imba_void_spirit_resonant_pulse_ring or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_resonant_pulse_physical_buff  = modifier_imba_void_spirit_resonant_pulse_physical_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_resonant_pulse_thinker_aura   = modifier_imba_void_spirit_resonant_pulse_thinker_aura or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_resonant_pulse_thinker_buff   = modifier_imba_void_spirit_resonant_pulse_thinker_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_resonant_pulse_equal_exchange = modifier_imba_void_spirit_resonant_pulse_equal_exchange or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_astral_step_helper                     = imba_void_spirit_astral_step_helper or class({})
-modifier_imba_void_spirit_astral_step_grace_time        = modifier_imba_void_spirit_astral_step_grace_time or class({})
+imba_void_spirit_astral_step_helper                     = imba_void_spirit_astral_step_helper or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_astral_step_grace_time        = modifier_imba_void_spirit_astral_step_grace_time or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_astral_step_helper_2                   = imba_void_spirit_astral_step_helper_2 or class({})
-modifier_imba_void_spirit_astral_step_armor_pierce      = modifier_imba_void_spirit_astral_step_armor_pierce or class({})
+imba_void_spirit_astral_step_helper_2                   = imba_void_spirit_astral_step_helper_2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_astral_step_armor_pierce      = modifier_imba_void_spirit_astral_step_armor_pierce or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_aether_remnant_helper                  = imba_void_spirit_aether_remnant_helper or class({})
-modifier_imba_void_spirit_aether_remnant_helper         = modifier_imba_void_spirit_aether_remnant_helper or class({})
-modifier_imba_void_spirit_aether_remnant_helper_buff    = modifier_imba_void_spirit_aether_remnant_helper_buff or class({})
+imba_void_spirit_aether_remnant_helper                  = imba_void_spirit_aether_remnant_helper or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_aether_remnant_helper         = modifier_imba_void_spirit_aether_remnant_helper or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_aether_remnant_helper_buff    = modifier_imba_void_spirit_aether_remnant_helper_buff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_void_stasis                            = imba_void_spirit_void_stasis or class({})
-modifier_imba_void_spirit_void_stasis                   = modifier_imba_void_spirit_void_stasis or class({})
+imba_void_spirit_void_stasis                            = imba_void_spirit_void_stasis or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_void_stasis                   = modifier_imba_void_spirit_void_stasis or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_void_spirit_astral_step                            = imba_void_spirit_astral_step or class({})
-modifier_imba_void_spirit_astral_step_debuff            = modifier_imba_void_spirit_astral_step_debuff or class({})
-modifier_imba_void_spirit_astral_step_crit              = modifier_imba_void_spirit_astral_step_crit or class({})
-modifier_imba_void_spirit_astral_step_invis             = modifier_imba_void_spirit_astral_step_invis or class({})
+imba_void_spirit_astral_step                            = imba_void_spirit_astral_step or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_astral_step_debuff            = modifier_imba_void_spirit_astral_step_debuff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_astral_step_crit              = modifier_imba_void_spirit_astral_step_crit or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_void_spirit_astral_step_invis             = modifier_imba_void_spirit_astral_step_invis or class(VANILLA_ABILITIES_BASECLASS)
 
 -------------------------------------
 -- IMBA_VOID_SPIRIT_AETHER_REMNANT --
@@ -344,7 +344,7 @@ function imba_void_spirit_resonant_pulse:RequiresScepterForCharges() return true
 
 function imba_void_spirit_resonant_pulse:GetCooldown(level)
 	if not self:GetCaster():HasScepter() then
-		return self.BaseClass.GetCooldown(self, level)
+		return self:GetRightfulKV("AbilityCooldown")
 	else
 		return 0
 	end
@@ -1265,10 +1265,10 @@ LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_charge_cool
 LinkLuaModifier("modifier_special_bonus_imba_void_spirit_astral_step_crit", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_void_spirit_dissimilate_stun", "components/abilities/heroes/hero_void_spirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_void_spirit_resonant_pulse_damage = modifier_special_bonus_imba_void_spirit_resonant_pulse_damage or class({})
-modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown = modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown or class({})
-modifier_special_bonus_imba_void_spirit_astral_step_crit = modifier_special_bonus_imba_void_spirit_astral_step_crit or class({})
-modifier_special_bonus_imba_void_spirit_dissimilate_stun = modifier_special_bonus_imba_void_spirit_dissimilate_stun or class({})
+modifier_special_bonus_imba_void_spirit_resonant_pulse_damage = modifier_special_bonus_imba_void_spirit_resonant_pulse_damage or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown = modifier_special_bonus_imba_void_spirit_astral_step_charge_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_void_spirit_astral_step_crit = modifier_special_bonus_imba_void_spirit_astral_step_crit or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_void_spirit_dissimilate_stun = modifier_special_bonus_imba_void_spirit_dissimilate_stun or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_void_spirit_resonant_pulse_damage:IsHidden() return true end
 

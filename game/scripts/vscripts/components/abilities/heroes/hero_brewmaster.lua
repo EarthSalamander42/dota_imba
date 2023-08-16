@@ -15,27 +15,27 @@ LinkLuaModifier("modifier_imba_brewmaster_primal_split", "components/abilities/h
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_split_delay", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_brewmaster_primal_split_duration", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
-imba_brewmaster_thunder_clap                             = imba_brewmaster_thunder_clap or class({})
-modifier_imba_brewmaster_thunder_clap                    = modifier_imba_brewmaster_thunder_clap or class({})
-modifier_imba_brewmaster_thunder_clap_conductive_thinker = modifier_imba_brewmaster_thunder_clap_conductive_thinker or class({})
+imba_brewmaster_thunder_clap                             = imba_brewmaster_thunder_clap or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_thunder_clap                    = modifier_imba_brewmaster_thunder_clap or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_thunder_clap_conductive_thinker = modifier_imba_brewmaster_thunder_clap_conductive_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_brewmaster_cinder_brew                              = imba_brewmaster_cinder_brew or class({})
-modifier_imba_brewmaster_cinder_brew                     = modifier_imba_brewmaster_cinder_brew or class({})
-modifier_imba_brewmaster_cinder_brew_thinker             = modifier_imba_brewmaster_cinder_brew_thinker or class({})
-modifier_imba_brewmaster_cinder_brew_thinker_aura        = modifier_imba_brewmaster_cinder_brew_thinker_aura or class({})
+imba_brewmaster_cinder_brew                              = imba_brewmaster_cinder_brew or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_cinder_brew                     = modifier_imba_brewmaster_cinder_brew or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_cinder_brew_thinker             = modifier_imba_brewmaster_cinder_brew_thinker or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_cinder_brew_thinker_aura        = modifier_imba_brewmaster_cinder_brew_thinker_aura or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_brewmaster_drunken_brawler                          = imba_brewmaster_drunken_brawler or class({})
-modifier_imba_brewmaster_drunken_brawler_passive         = modifier_imba_brewmaster_drunken_brawler_passive or class({})
-modifier_imba_brewmaster_drunken_brawler_crit_cooldown   = modifier_imba_brewmaster_drunken_brawler_crit_cooldown or class({})
-modifier_imba_brewmaster_drunken_brawler_miss_cooldown   = modifier_imba_brewmaster_drunken_brawler_miss_cooldown or class({})
-modifier_imba_brewmaster_drunken_brawler                 = modifier_imba_brewmaster_drunken_brawler or class({})
+imba_brewmaster_drunken_brawler                          = imba_brewmaster_drunken_brawler or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_drunken_brawler_passive         = modifier_imba_brewmaster_drunken_brawler_passive or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_drunken_brawler_crit_cooldown   = modifier_imba_brewmaster_drunken_brawler_crit_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_drunken_brawler_miss_cooldown   = modifier_imba_brewmaster_drunken_brawler_miss_cooldown or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_drunken_brawler                 = modifier_imba_brewmaster_drunken_brawler or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_brewmaster_primal_split                             = imba_brewmaster_primal_split or class({})
-modifier_imba_brewmaster_primal_split                    = modifier_imba_brewmaster_primal_split or class({})
-modifier_imba_brewmaster_primal_split_split_delay        = modifier_imba_brewmaster_primal_split_split_delay or class({})
-modifier_imba_brewmaster_primal_split_duration           = modifier_imba_brewmaster_primal_split_duration or class({})
+imba_brewmaster_primal_split                             = imba_brewmaster_primal_split or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_primal_split                    = modifier_imba_brewmaster_primal_split or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_primal_split_split_delay        = modifier_imba_brewmaster_primal_split_split_delay or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_brewmaster_primal_split_duration           = modifier_imba_brewmaster_primal_split_duration or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_brewmaster_primal_unison                            = imba_brewmaster_primal_unison or class({})
+imba_brewmaster_primal_unison                            = imba_brewmaster_primal_unison or class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------------------------
 -- IMBA_BREWMASTER_THUNDER_CLAP --
@@ -685,7 +685,7 @@ function imba_brewmaster_primal_split:GetIntrinsicModifierName()
 end
 
 function imba_brewmaster_primal_split:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_cooldown")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_brewmaster_primal_split_cooldown")
 end
 
 function imba_brewmaster_primal_split:GetBehavior()
@@ -1167,10 +1167,10 @@ LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_health", "c
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_druken_brawler_damage", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_brewmaster_primal_split_cooldown", "components/abilities/heroes/hero_brewmaster", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration = modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration or class({})
-modifier_special_bonus_imba_brewmaster_primal_split_health        = modifier_special_bonus_imba_brewmaster_primal_split_health or class({})
-modifier_special_bonus_imba_brewmaster_druken_brawler_damage      = class({})
-modifier_special_bonus_imba_brewmaster_primal_split_cooldown      = class({})
+modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration = modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_brewmaster_primal_split_health        = modifier_special_bonus_imba_brewmaster_primal_split_health or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_brewmaster_druken_brawler_damage      = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_brewmaster_primal_split_cooldown      = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_brewmaster_thunder_clap_slow_duration:IsHidden() return true end
 

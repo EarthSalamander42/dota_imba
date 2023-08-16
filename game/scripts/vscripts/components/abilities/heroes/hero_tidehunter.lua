@@ -21,25 +21,25 @@ LinkLuaModifier("modifier_imba_tidehunter_ravage_suggestive_compromise", "compon
 
 LinkLuaModifier("modifier_generic_motion_controller", "components/modifiers/generic/modifier_generic_motion_controller", LUA_MODIFIER_MOTION_BOTH)
 
-imba_tidehunter_gush                                    = class({})
-modifier_imba_tidehunter_gush                           = class({})
-modifier_imba_tidehunter_gush_handler                   = class({})
-modifier_imba_tidehunter_gush_surf                      = class({})
+imba_tidehunter_gush                                    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_gush                           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_gush_handler                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_gush_surf                      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_tidehunter_kraken_shell                            = class({})
-modifier_imba_tidehunter_kraken_shell                   = class({})
-modifier_imba_tidehunter_kraken_shell_backstroke        = class({})
-modifier_imba_tidehunter_kraken_shell_greater_hardening = class({})
+imba_tidehunter_kraken_shell                            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_kraken_shell                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_kraken_shell_backstroke        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_kraken_shell_greater_hardening = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_tidehunter_anchor_smash                            = class({})
-modifier_imba_tidehunter_anchor_smash                   = class({})
-modifier_imba_tidehunter_anchor_smash_suppression       = class({})
-modifier_imba_tidehunter_anchor_smash_handler           = class({})
-modifier_imba_tidehunter_anchor_smash_throw             = class({})
+imba_tidehunter_anchor_smash                            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_anchor_smash                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_anchor_smash_suppression       = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_anchor_smash_handler           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_anchor_smash_throw             = class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_tidehunter_ravage_handler                 = class({})
-modifier_imba_tidehunter_ravage_creeping_wave           = class({})
-modifier_imba_tidehunter_ravage_suggestive_compromise   = class({})
+modifier_imba_tidehunter_ravage_handler                 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_ravage_creeping_wave           = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_tidehunter_ravage_suggestive_compromise   = class(VANILLA_ABILITIES_BASECLASS)
 
 ----------
 -- GUSH --
@@ -795,7 +795,7 @@ end
 -----------------------------
 ------ 	   RAVAGE	  -------
 -----------------------------
-imba_tidehunter_ravage = imba_tidehunter_ravage or class({})
+imba_tidehunter_ravage = imba_tidehunter_ravage or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_tidehunter_ravage:GetIntrinsicModifierName()
 	return "modifier_imba_tidehunter_ravage_handler"
@@ -1104,9 +1104,9 @@ LinkLuaModifier("modifier_special_bonus_imba_tidehunter_anchor_smash_damage_redu
 LinkLuaModifier("modifier_special_bonus_imba_tidehunter_greater_hardening", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_tidehunter_gush_armor", "components/abilities/heroes/hero_tidehunter", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction = modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction or class({})
-modifier_special_bonus_imba_tidehunter_greater_hardening             = modifier_special_bonus_imba_tidehunter_greater_hardening or class({})
-modifier_special_bonus_imba_tidehunter_gush_armor                    = modifier_special_bonus_imba_tidehunter_gush_armor or class({})
+modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction = modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tidehunter_greater_hardening             = modifier_special_bonus_imba_tidehunter_greater_hardening or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_tidehunter_gush_armor                    = modifier_special_bonus_imba_tidehunter_gush_armor or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_tidehunter_anchor_smash_damage_reduction:IsHidden() return true end
 

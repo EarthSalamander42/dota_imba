@@ -7,7 +7,7 @@
 ----------------------------------------------------
 -- Arcane Curse
 ----------------------------------------------------
-imba_silencer_arcane_curse = imba_silencer_arcane_curse or class({})
+imba_silencer_arcane_curse = imba_silencer_arcane_curse or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_arcane_curse:GetAbilityTextureName()
 	return "silencer_curse_of_the_silent"
@@ -39,7 +39,7 @@ end
 -- Arcane Curse debuff modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_arcane_curse_debuff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_arcane_curse_debuff = modifier_imba_arcane_curse_debuff or class({})
+modifier_imba_arcane_curse_debuff = modifier_imba_arcane_curse_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_arcane_curse_debuff:OnCreated(kv)
 	self.parent = self:GetParent()
@@ -218,10 +218,10 @@ end
 LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_buff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom_debuff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_silencer_glaives_of_wisdom_buff = modifier_imba_silencer_glaives_of_wisdom_buff or class({})
-modifier_imba_silencer_glaives_of_wisdom_debuff = modifier_imba_silencer_glaives_of_wisdom_debuff or class({})
+modifier_imba_silencer_glaives_of_wisdom_buff = modifier_imba_silencer_glaives_of_wisdom_buff or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_silencer_glaives_of_wisdom_debuff = modifier_imba_silencer_glaives_of_wisdom_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
-imba_silencer_glaives_of_wisdom = imba_silencer_glaives_of_wisdom or class({})
+imba_silencer_glaives_of_wisdom = imba_silencer_glaives_of_wisdom or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_glaives_of_wisdom:GetAbilityTextureName()
 	return "silencer_glaives_of_wisdom"
@@ -253,7 +253,7 @@ end
 -- All credit to Shush, whose code I pilfered and adapted
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_of_wisdom", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_of_wisdom = modifier_imba_silencer_glaives_of_wisdom or class({})
+modifier_imba_silencer_glaives_of_wisdom = modifier_imba_silencer_glaives_of_wisdom or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_silencer_glaives_of_wisdom:IsHidden() return true end
 
@@ -586,7 +586,7 @@ end
 -- Glaives of Wisdom hit counter dummy modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_hit_counter = modifier_imba_silencer_glaives_hit_counter or class({})
+modifier_imba_silencer_glaives_hit_counter = modifier_imba_silencer_glaives_hit_counter or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_silencer_glaives_hit_counter:IgnoreTenacity() return true end
 
@@ -631,7 +631,7 @@ end
 -- Glaives of Wisdom int reduction modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_int_damage", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_int_damage = class({})
+modifier_imba_silencer_glaives_int_damage = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_silencer_glaives_int_damage:IsDebuff() return true end
 
@@ -685,7 +685,7 @@ end
 -- Glaives of Wisdom int reduction override talent modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_talent_effect", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_talent_effect = modifier_imba_silencer_glaives_talent_effect or class({})
+modifier_imba_silencer_glaives_talent_effect = modifier_imba_silencer_glaives_talent_effect or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_silencer_glaives_talent_effect:IsDebuff() return true end
 
 function modifier_imba_silencer_glaives_talent_effect:IsHidden() return true end
@@ -720,7 +720,7 @@ end
 -- Glaives of Wisdom int reduction override procced talent modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_talent_effect_procced", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_talent_effect_procced = modifier_imba_silencer_glaives_talent_effect_procced or class({})
+modifier_imba_silencer_glaives_talent_effect_procced = modifier_imba_silencer_glaives_talent_effect_procced or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_silencer_glaives_talent_effect_procced:IsDebuff() return true end
 
 function modifier_imba_silencer_glaives_talent_effect_procced:GetTexture()
@@ -897,7 +897,7 @@ end
 --------------------------------------------------
 -- Last Word
 --------------------------------------------------
-imba_silencer_last_word = imba_silencer_last_word or class({})
+imba_silencer_last_word = imba_silencer_last_word or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_last_word:GetAbilityTextureName()
 	return "silencer_last_word"
@@ -948,7 +948,7 @@ end
 -- Last Word silence talent aura
 ----------------------------------------------------
 LinkLuaModifier("imba_silencer_last_word_aura", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-imba_silencer_last_word_aura = imba_silencer_last_word_aura or class({})
+imba_silencer_last_word_aura = imba_silencer_last_word_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_last_word_aura:IsHidden() return true end
 
@@ -990,7 +990,7 @@ function imba_silencer_last_word_aura:GetAuraEntityReject(hEntity) return self:G
 -- Last Word silence talent aura prevention
 ----------------------------------------------------
 LinkLuaModifier("imba_silencer_last_word_aura_prevent", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-imba_silencer_last_word_aura_prevent = imba_silencer_last_word_aura_prevent or class({})
+imba_silencer_last_word_aura_prevent = imba_silencer_last_word_aura_prevent or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_last_word_aura_prevent:IsPurgable() return false end
 
@@ -1002,7 +1002,7 @@ function imba_silencer_last_word_aura_prevent:IsDebuff() return true end
 -- Last Word aura enemy silence modifier
 ----------------------------------------------------
 LinkLuaModifier("imba_silencer_last_word_silence_aura", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-imba_silencer_last_word_silence_aura = imba_silencer_last_word_silence_aura or class({})
+imba_silencer_last_word_silence_aura = imba_silencer_last_word_silence_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_last_word_silence_aura:IsDebuff() return true end
 
@@ -1052,7 +1052,7 @@ end
 -- Last Word initial debuff : disarms and provides vision of target
 ----------------------------------------------------
 LinkLuaModifier("modifier_imba_silencer_last_word_debuff", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_last_word_debuff = modifier_imba_silencer_last_word_debuff or class({})
+modifier_imba_silencer_last_word_debuff = modifier_imba_silencer_last_word_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_silencer_last_word_debuff:IsPurgable() return true end
 
@@ -1167,7 +1167,7 @@ end
 -- Last Word repeat thinker : casts Last Word on parent when the modifier expires
 ----------------------------------------------------
 LinkLuaModifier("modifier_imba_silencer_last_word_repeat_thinker", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_last_word_repeat_thinker = modifier_imba_silencer_last_word_repeat_thinker or class({})
+modifier_imba_silencer_last_word_repeat_thinker = modifier_imba_silencer_last_word_repeat_thinker or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_silencer_last_word_repeat_thinker:IsDebuff() return true end
 
@@ -1197,14 +1197,14 @@ end
 --------------------------------------------------------
 -- Arcane Supremacy
 --------------------------------------------------------
-imba_silencer_arcane_supremacy = imba_silencer_arcane_supremacy or class({})
+imba_silencer_arcane_supremacy = imba_silencer_arcane_supremacy or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_arcane_supremacy:GetAbilityTextureName()
 	return "arcane_supremacy"
 end
 
 LinkLuaModifier("modifier_imba_silencer_arcane_supremacy", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_arcane_supremacy = modifier_imba_silencer_arcane_supremacy or class({})
+modifier_imba_silencer_arcane_supremacy = modifier_imba_silencer_arcane_supremacy or class(VANILLA_ABILITIES_BASECLASS)
 
 -- Properties
 function imba_silencer_arcane_supremacy:IsInnateAbility() return true end
@@ -1334,7 +1334,7 @@ end
 ---------------------------------------------------------
 -- Global Silence
 ---------------------------------------------------------
-imba_silencer_global_silence = imba_silencer_global_silence or class({})
+imba_silencer_global_silence = imba_silencer_global_silence or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_global_silence:IsHiddenWhenStolen() return false end
 
@@ -1394,7 +1394,7 @@ end
 -- Global Silence modifier
 ------------------------------------------------
 LinkLuaModifier("modifier_imba_silencer_global_silence", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_global_silence = modifier_imba_silencer_global_silence or class({})
+modifier_imba_silencer_global_silence = modifier_imba_silencer_global_silence or class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_silencer_global_silence:IsDebuff() return true end
 
 function modifier_imba_silencer_global_silence:IsPurgable()
@@ -1543,9 +1543,9 @@ end
 LinkLuaModifier("modifier_imba_silencer_global_silence_v2", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_silencer_global_silence_v2_mana_reduction", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
-imba_silencer_global_silence_v2                         = imba_silencer_global_silence_v2 or class({})
-modifier_imba_silencer_global_silence_v2                = modifier_imba_silencer_global_silence_v2 or class({})
-modifier_imba_silencer_global_silence_v2_mana_reduction = modifier_imba_silencer_global_silence_v2_mana_reduction or class({})
+imba_silencer_global_silence_v2                         = imba_silencer_global_silence_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_silencer_global_silence_v2                = modifier_imba_silencer_global_silence_v2 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_silencer_global_silence_v2_mana_reduction = modifier_imba_silencer_global_silence_v2_mana_reduction or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_silencer_global_silence_v2:OnSpellStart()
 	local silence_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
@@ -1706,9 +1706,9 @@ LinkLuaModifier("modifier_special_bonus_imba_silencer_1", "components/abilities/
 LinkLuaModifier("modifier_special_bonus_imba_silencer_9", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_silencer_8", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_silencer_1 = modifier_special_bonus_imba_silencer_1 or class({})
-modifier_special_bonus_imba_silencer_9 = modifier_special_bonus_imba_silencer_9 or class({})
-modifier_special_bonus_imba_silencer_8 = modifier_special_bonus_imba_silencer_8 or class({})
+modifier_special_bonus_imba_silencer_1 = modifier_special_bonus_imba_silencer_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_silencer_9 = modifier_special_bonus_imba_silencer_9 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_silencer_8 = modifier_special_bonus_imba_silencer_8 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_silencer_1:IsHidden() return true end
 
@@ -1732,9 +1732,9 @@ LinkLuaModifier("modifier_special_bonus_imba_silencer_4", "components/abilities/
 LinkLuaModifier("modifier_special_bonus_imba_silencer_arcane_curse_slow", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_silencer_10", "components/abilities/heroes/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_silencer_4 = class({})
-modifier_special_bonus_imba_silencer_arcane_curse_slow = modifier_special_bonus_imba_silencer_arcane_curse_slow or class({})
-modifier_special_bonus_imba_silencer_10 = modifier_special_bonus_imba_silencer_10 or class({})
+modifier_special_bonus_imba_silencer_4 = class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_silencer_arcane_curse_slow = modifier_special_bonus_imba_silencer_arcane_curse_slow or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_silencer_10 = modifier_special_bonus_imba_silencer_10 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_silencer_4:IsHidden() return true end
 

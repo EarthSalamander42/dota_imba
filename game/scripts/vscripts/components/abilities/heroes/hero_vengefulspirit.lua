@@ -4,7 +4,7 @@
 
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_4", "components/abilities/heroes/hero_vengefulspirit.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_vengefulspirit_4 = modifier_special_bonus_imba_vengefulspirit_4 or class({})
+modifier_special_bonus_imba_vengefulspirit_4 = modifier_special_bonus_imba_vengefulspirit_4 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() return true end
 
@@ -54,7 +54,7 @@ LinkLuaModifier("modifier_imba_rancor", "components/abilities/heroes/hero_vengef
 LinkLuaModifier("modifier_imba_rancor_stack", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rancor_allies", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_rancor = class({})
+imba_vengefulspirit_rancor = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_rancor:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_rancor:IsRefreshable() return false end
@@ -76,7 +76,7 @@ function imba_vengefulspirit_rancor:GetIntrinsicModifierName()
 end
 
 -------------------------------------------
-modifier_imba_rancor = class({})
+modifier_imba_rancor = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rancor:IsDebuff() return false end
 
 function modifier_imba_rancor:IsHidden() return true end
@@ -129,7 +129,7 @@ function modifier_imba_rancor:OnTakeDamage(params)
 end
 
 -------------------------------------------
-modifier_imba_rancor_allies = class({})
+modifier_imba_rancor_allies = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rancor_allies:IsDebuff() return false end
 
 function modifier_imba_rancor_allies:IsHidden() return true end
@@ -143,7 +143,7 @@ function modifier_imba_rancor_allies:IsStunDebuff() return false end
 function modifier_imba_rancor_allies:RemoveOnDeath() return false end
 
 -------------------------------------------
-modifier_imba_rancor_stack = class({})
+modifier_imba_rancor_stack = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_rancor_stack:IsDebuff() return false end
 
 function modifier_imba_rancor_stack:IsHidden() return false end
@@ -223,7 +223,7 @@ function modifier_imba_rancor_stack:GetAuraSearchType() return DOTA_UNIT_TARGET_
 
 LinkLuaModifier("modifier_imba_rancor_ally_aura", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_rancor_ally_aura = modifier_imba_rancor_ally_aura or class({})
+modifier_imba_rancor_ally_aura = modifier_imba_rancor_ally_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_rancor_ally_aura:OnCreated()
 	self.spell_power = self:GetAbility():GetSpecialValueFor("spell_power") * self:GetAbility():GetSpecialValueFor("aura_efficiency") / 100
@@ -266,7 +266,7 @@ end
 --            MAGIC MISSILE
 -------------------------------------------
 
-imba_vengefulspirit_magic_missile = class({})
+imba_vengefulspirit_magic_missile = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_magic_missile:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_magic_missile:IsRefreshable() return true end
@@ -282,7 +282,7 @@ function imba_vengefulspirit_magic_missile:GetAOERadius()
 end
 
 function imba_vengefulspirit_magic_missile:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_11")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_11")
 end
 
 function imba_vengefulspirit_magic_missile:CastFilterResultTarget(target)
@@ -437,7 +437,7 @@ end
 --          WAVE OF TERROR
 -------------------------------------------
 
-imba_vengefulspirit_wave_of_terror = class({})
+imba_vengefulspirit_wave_of_terror = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_wave_of_terror:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_wave_of_terror:IsRefreshable() return true end
@@ -454,7 +454,7 @@ end
 LinkLuaModifier("modifier_imba_wave_of_terror", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 function imba_vengefulspirit_wave_of_terror:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_10")
+	return self:GetRightfulKV("AbilityCooldown") - self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_10")
 end
 
 function imba_vengefulspirit_wave_of_terror:OnSpellStart()
@@ -554,7 +554,7 @@ function imba_vengefulspirit_wave_of_terror:OnProjectileHit_ExtraData(target, lo
 end
 
 -------------------------------------------
-modifier_imba_wave_of_terror = class({})
+modifier_imba_wave_of_terror = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_wave_of_terror:IsDebuff() return true end
 
 function modifier_imba_wave_of_terror:IsHidden() return false end
@@ -610,7 +610,7 @@ LinkLuaModifier("modifier_imba_command_aura_positive_aura", "components/abilitie
 LinkLuaModifier("modifier_imba_command_aura_negative", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_command_aura_negative_aura", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_command_aura = class({})
+imba_vengefulspirit_command_aura = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_command_aura:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_command_aura:IsRefreshable() return false end
@@ -667,7 +667,7 @@ end
 
 -- Positive Aura Effects
 -------------------------------------------
-modifier_imba_command_aura_positive = class({})
+modifier_imba_command_aura_positive = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_command_aura_positive:IsDebuff() return false end
 
 function modifier_imba_command_aura_positive:IsHidden() return false end
@@ -722,7 +722,7 @@ function modifier_imba_command_aura_positive:GetModifierDamageOutgoing_Percentag
 end
 
 -------------------------------------------
-modifier_imba_command_aura_positive_aura = class({})
+modifier_imba_command_aura_positive_aura = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_command_aura_positive_aura:IsAura() return true end
 
 function modifier_imba_command_aura_positive_aura:IsDebuff() return false end
@@ -788,7 +788,7 @@ function modifier_imba_command_aura_positive_aura:GetAuraSearchType()
 end
 
 -------------------------------------------
-modifier_imba_command_aura_negative = class({})
+modifier_imba_command_aura_negative = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_command_aura_negative:IsDebuff() return true end
 
 function modifier_imba_command_aura_negative:IsHidden() return false end
@@ -839,7 +839,7 @@ function modifier_imba_command_aura_negative:GetModifierDamageOutgoing_Percentag
 end
 
 -------------------------------------------
-modifier_imba_command_aura_negative_aura = class({})
+modifier_imba_command_aura_negative_aura = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_command_aura_negative_aura:IsAura() return true end
 
 function modifier_imba_command_aura_negative_aura:IsDebuff() return true end
@@ -903,11 +903,11 @@ LinkLuaModifier("modifier_imba_vengefulspirit_command_aura_effect_723", "compone
 LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vengefulspirit_command_negative_aura_effect_723", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_command_aura_723                          = imba_vengefulspirit_command_aura_723 or class({})
-modifier_imba_vengefulspirit_command_aura_723                 = modifier_imba_vengefulspirit_command_aura_723 or class({})
-modifier_imba_vengefulspirit_command_aura_effect_723          = modifier_imba_vengefulspirit_command_aura_effect_723 or class({})
-modifier_imba_vengefulspirit_command_negative_aura_723        = modifier_imba_vengefulspirit_command_negative_aura_723 or class({})
-modifier_imba_vengefulspirit_command_negative_aura_effect_723 = modifier_imba_vengefulspirit_command_negative_aura_effect_723 or class({})
+imba_vengefulspirit_command_aura_723                          = imba_vengefulspirit_command_aura_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_vengefulspirit_command_aura_723                 = modifier_imba_vengefulspirit_command_aura_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_vengefulspirit_command_aura_effect_723          = modifier_imba_vengefulspirit_command_aura_effect_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_vengefulspirit_command_negative_aura_723        = modifier_imba_vengefulspirit_command_negative_aura_723 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_vengefulspirit_command_negative_aura_effect_723 = modifier_imba_vengefulspirit_command_negative_aura_effect_723 or class(VANILLA_ABILITIES_BASECLASS)
 
 ------------------------------------------
 -- IMBA_VENGEFULSPIRIT_COMMAND_AURA_723 --
@@ -1215,7 +1215,7 @@ LinkLuaModifier("modifier_generic_charges", "components/modifiers/generic/modifi
 
 LinkLuaModifier("modifier_imba_nether_swap", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_nether_swap = class({})
+imba_vengefulspirit_nether_swap = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_nether_swap:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_nether_swap:IsRefreshable() return true end
@@ -1463,7 +1463,7 @@ end
 -- end
 -- end
 -------------------------------------------
-modifier_imba_nether_swap = class({})
+modifier_imba_nether_swap = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_nether_swap:IsDebuff() return false end
 
 function modifier_imba_nether_swap:IsHidden() return true end
@@ -1501,7 +1501,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_swap_back", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-imba_vengefulspirit_swap_back = class({})
+imba_vengefulspirit_swap_back = class(VANILLA_ABILITIES_BASECLASS)
 function imba_vengefulspirit_swap_back:IsHiddenWhenStolen() return false end
 
 function imba_vengefulspirit_swap_back:IsRefreshable() return true end
@@ -1561,7 +1561,7 @@ function imba_vengefulspirit_swap_back:GetIntrinsicModifierName()
 end
 
 -------------------------------------------
-modifier_imba_swap_back = class({})
+modifier_imba_swap_back = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_swap_back:IsDebuff() return false end
 
 function modifier_imba_swap_back:IsHidden() return true end
@@ -1589,8 +1589,8 @@ end
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_1", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_2", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_vengefulspirit_1 = modifier_special_bonus_imba_vengefulspirit_1 or class({})
-modifier_special_bonus_imba_vengefulspirit_2 = modifier_special_bonus_imba_vengefulspirit_2 or class({})
+modifier_special_bonus_imba_vengefulspirit_1 = modifier_special_bonus_imba_vengefulspirit_1 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_vengefulspirit_2 = modifier_special_bonus_imba_vengefulspirit_2 or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_vengefulspirit_1:IsHidden() return true end
 
@@ -1613,49 +1613,49 @@ LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_10", "components/abi
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_11", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_command_aura_attributes", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_vengefulspirit_3 = class({})
+modifier_special_bonus_imba_vengefulspirit_3 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_3:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_3:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_5 = class({})
+modifier_special_bonus_imba_vengefulspirit_5 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_5:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_5:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_5:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_8 = class({})
+modifier_special_bonus_imba_vengefulspirit_8 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_8:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_8:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_9 = class({})
+modifier_special_bonus_imba_vengefulspirit_9 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_9:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_9:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_9:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_10 = class({})
+modifier_special_bonus_imba_vengefulspirit_10 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_10:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_10:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_10:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_11 = class({})
+modifier_special_bonus_imba_vengefulspirit_11 = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_11:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_11:IsPurgable() return false end
 
 function modifier_special_bonus_imba_vengefulspirit_11:RemoveOnDeath() return false end
 
-modifier_special_bonus_imba_vengefulspirit_command_aura_attributes = class({})
+modifier_special_bonus_imba_vengefulspirit_command_aura_attributes = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsHidden() return true end
 
 function modifier_special_bonus_imba_vengefulspirit_command_aura_attributes:IsPurgable() return false end

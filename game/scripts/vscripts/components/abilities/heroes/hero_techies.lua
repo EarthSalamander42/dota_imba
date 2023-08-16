@@ -246,7 +246,7 @@ LinkLuaModifier("modifier_imba_proximity_mine_building_res", "components/abiliti
 LinkLuaModifier("modifier_imba_proximity_mine_talent", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Proximity mine states modifier
-modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
+modifier_imba_proximity_mine = modifier_imba_proximity_mine or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_proximity_mine:OnCreated()
 	if not IsServer() then return end
@@ -541,7 +541,7 @@ function modifier_imba_proximity_mine:GetPriority()
 end
 
 -- Building fortification modifier
-modifier_imba_proximity_mine_building_res = modifier_imba_proximity_mine_building_res or class({})
+modifier_imba_proximity_mine_building_res = modifier_imba_proximity_mine_building_res or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_proximity_mine_building_res:OnCreated()
 	-- Ability properties
@@ -568,7 +568,7 @@ function modifier_imba_proximity_mine_building_res:IsPurgable() return false end
 function modifier_imba_proximity_mine_building_res:IsDebuff() return false end
 
 -- BIG BOOM SHRAPNEL MODIFIER!
-modifier_imba_proximity_mine_talent = modifier_imba_proximity_mine_talent or class({})
+modifier_imba_proximity_mine_talent = modifier_imba_proximity_mine_talent or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_proximity_mine_talent:OnCreated()
 	if IsServer() then
@@ -778,7 +778,7 @@ LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "components/abilities
 LinkLuaModifier("modifier_imba_statis_trap_disarmed", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Statis Trap thinker modifier
-modifier_imba_statis_trap = modifier_imba_statis_trap or class({})
+modifier_imba_statis_trap = modifier_imba_statis_trap or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_statis_trap:IsHidden() return true end
 
@@ -949,7 +949,7 @@ function modifier_imba_statis_trap:_Explode()
 end
 
 -- Root modifier
-modifier_imba_statis_trap_root = modifier_imba_statis_trap_root or class({})
+modifier_imba_statis_trap_root = modifier_imba_statis_trap_root or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_statis_trap_root:CheckState()
 	local state = { [MODIFIER_STATE_ROOTED] = true }
@@ -967,7 +967,7 @@ function modifier_imba_statis_trap_root:GetStatusEffectName()
 end
 
 -- Electrocharge modifier
-modifier_imba_statis_trap_electrocharge = modifier_imba_statis_trap_electrocharge or class({})
+modifier_imba_statis_trap_electrocharge = modifier_imba_statis_trap_electrocharge or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_statis_trap_electrocharge:OnCreated()
 	if IsServer() then
@@ -1060,7 +1060,7 @@ function modifier_imba_statis_trap_electrocharge:GetTexture()
 end
 
 -- Disarmed Statis Traps modifier
-modifier_imba_statis_trap_disarmed = modifier_imba_statis_trap_disarmed or class({})
+modifier_imba_statis_trap_disarmed = modifier_imba_statis_trap_disarmed or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_statis_trap_disarmed:IsHidden() return false end
 
@@ -1132,7 +1132,7 @@ function imba_techies_suicide:OnSpellStart()
 end
 
 -- Blast off modifier
-modifier_imba_blast_off = modifier_imba_blast_off or class({})
+modifier_imba_blast_off = modifier_imba_blast_off or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_blast_off:OnCreated(keys)
 	if IsServer() then
@@ -1255,7 +1255,7 @@ function modifier_imba_blast_off:OnDestroy()
 end
 
 -- Blast off motion controller modifier
-modifier_imba_blast_off_movement = modifier_imba_blast_off_movement or class({})
+modifier_imba_blast_off_movement = modifier_imba_blast_off_movement or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_blast_off_movement:OnCreated(keys)
 	if IsServer() then
@@ -1481,7 +1481,7 @@ function modifier_imba_blast_off_movement:CheckState()
 end
 
 -- Blast Off Silence modifier
-modifier_imba_blast_off_silence = modifier_imba_blast_off_silence or class({})
+modifier_imba_blast_off_silence = modifier_imba_blast_off_silence or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_blast_off_silence:IsHidden() return false end
 
@@ -1617,7 +1617,7 @@ end
 ------------------------------
 --    PINPOINT DETONATION   --
 ------------------------------
-imba_techies_remote_mines_pinpoint_detonation = imba_techies_remote_mines_pinpoint_detonation or class({})
+imba_techies_remote_mines_pinpoint_detonation = imba_techies_remote_mines_pinpoint_detonation or class(VANILLA_ABILITIES_BASECLASS)
 LinkLuaModifier("modifier_imba_remote_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_remote_mine_inflammable", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1752,7 +1752,7 @@ function imba_techies_remote_mines_pinpoint_detonation:OnSpellStart()
 	end)
 end
 
-modifier_imba_remote_mine = modifier_imba_remote_mine or class({})
+modifier_imba_remote_mine = modifier_imba_remote_mine or class(VANILLA_ABILITIES_BASECLASS)
 
 
 function modifier_imba_remote_mine:OnCreated()
@@ -1782,7 +1782,7 @@ function modifier_imba_remote_mine:CheckState()
 end
 
 -- Remote Mines' Inflammable modifier
-modifier_imba_remote_mine_inflammable = modifier_imba_remote_mine_inflammable or class({})
+modifier_imba_remote_mine_inflammable = modifier_imba_remote_mine_inflammable or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_remote_mine_inflammable:OnCreated()
 	-- Ability specials
@@ -1872,7 +1872,7 @@ end
 
 -- Modifier for casting Focused Detonate without facing cast direction
 -- Modifier is added in the OrderFilter in imba.lua
-modifier_imba_focused_detonate = modifier_imba_focused_detonate or class({})
+modifier_imba_focused_detonate = modifier_imba_focused_detonate or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_focused_detonate:DeclareFunctions()
 	local decFuncs =
@@ -1979,7 +1979,7 @@ function imba_techies_minefield_sign:OnSpellStart()
 end
 
 -- Sign aura modifier
-modifier_imba_minefield_sign_aura = modifier_imba_minefield_sign_aura or class({})
+modifier_imba_minefield_sign_aura = modifier_imba_minefield_sign_aura or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_minefield_sign_aura:OnCreated()
 	-- Ability properties
@@ -2048,7 +2048,7 @@ function modifier_imba_minefield_sign_aura:IsAura()
 end
 
 -- Sign modifier given to nearby mines
-modifier_imba_minefield_sign_detection = modifier_imba_minefield_sign_detection or class({})
+modifier_imba_minefield_sign_detection = modifier_imba_minefield_sign_detection or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_minefield_sign_detection:CheckState()
 	local state = { [MODIFIER_STATE_TRUESIGHT_IMMUNE] = true }

@@ -20,34 +20,34 @@ LinkLuaModifier("modifier_imba_timbersaw_chakram_disarm", "components/abilities/
 
 LinkLuaModifier("modifier_imba_timbersaw_chakram_3", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-imba_timbersaw_whirling_death                   = class({})
-modifier_imba_timbersaw_whirling_death_thinker  = class({})
-modifier_imba_timbersaw_whirling_death_debuff   = class({})
-modifier_imba_timbersaw_whirling_death_oil      = class({})
+imba_timbersaw_whirling_death                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_whirling_death_thinker  = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_whirling_death_debuff   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_whirling_death_oil      = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_timbersaw_timber_chain                     = class({})
-modifier_imba_timbersaw_timber_chain            = class({})
-modifier_imba_timbersaw_timber_chain_side_hooks = class({})
-modifier_imba_timbersaw_timber_chain_claw       = class({})
+imba_timbersaw_timber_chain                     = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_timber_chain            = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_timber_chain_side_hooks = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_timber_chain_claw       = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_timbersaw_reactive_armor                   = class({})
-modifier_imba_timbersaw_reactive_armor          = class({})
-modifier_imba_timbersaw_reactive_armor_stack    = class({})
-modifier_imba_timbersaw_reactive_armor_debuff   = class({})
+imba_timbersaw_reactive_armor                   = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_reactive_armor          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_reactive_armor_stack    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_reactive_armor_debuff   = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_timbersaw_chakram                          = class({})
-imba_timbersaw_chakram_2                        = class({})
+imba_timbersaw_chakram                          = class(VANILLA_ABILITIES_BASECLASS)
+imba_timbersaw_chakram_2                        = class(VANILLA_ABILITIES_BASECLASS)
 
-modifier_imba_timbersaw_chakram_thinker         = class({})
-modifier_imba_timbersaw_chakram_thinker_aura    = class({})
-modifier_imba_timbersaw_chakram_debuff          = class({})
-modifier_imba_timbersaw_chakram_disarm          = class({})
+modifier_imba_timbersaw_chakram_thinker         = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_chakram_thinker_aura    = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_chakram_debuff          = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_chakram_disarm          = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_timbersaw_return_chakram                   = class({})
-imba_timbersaw_return_chakram_2                 = class({})
+imba_timbersaw_return_chakram                   = class(VANILLA_ABILITIES_BASECLASS)
+imba_timbersaw_return_chakram_2                 = class(VANILLA_ABILITIES_BASECLASS)
 
-imba_timbersaw_chakram_3                        = class({})
-modifier_imba_timbersaw_chakram_3               = class({})
+imba_timbersaw_chakram_3                        = class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_timbersaw_chakram_3               = class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------------------------
 -- IMBA_TIMBERSAW_WHIRLING_DEATH --
@@ -2140,9 +2140,9 @@ LinkLuaModifier("modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks
 LinkLuaModifier("modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_timbersaw_timber_chain_range", "components/abilities/heroes/hero_timbersaw", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks    = modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks or class({})
-modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct = modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct or class({})
-modifier_special_bonus_imba_timbersaw_timber_chain_range           = class({})
+modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks    = modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct = modifier_special_bonus_imba_timbersaw_whirling_death_stat_loss_pct or class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_timbersaw_timber_chain_range           = class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_timbersaw_reactive_armor_max_stacks:IsHidden() return true end
 

@@ -19,13 +19,13 @@
 -------------------------	Poison Touch	-------------------------
 ---------------------------------------------------------------------
 
-if imba_dazzle_poison_touch == nil then imba_dazzle_poison_touch = class({}) end
+if imba_dazzle_poison_touch == nil then imba_dazzle_poison_touch = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_dazzle_poison_touch_setin", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Set in modifier (slow + attack counter)
+	LUA_MODIFIER_MOTION_NONE) -- Set in modifier (slow + attack counter)
 LinkLuaModifier("modifier_imba_dazzle_poison_touch_debuff", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Stun + damage over time
+	LUA_MODIFIER_MOTION_NONE) -- Stun + damage over time
 LinkLuaModifier("modifier_imba_dazzle_poison_touch_talent_slow", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                             -- Because FUCK Valve, and FUCK net tables
+	LUA_MODIFIER_MOTION_NONE) -- Because FUCK Valve, and FUCK net tables
 
 function imba_dazzle_poison_touch:GetAbilityTextureName()
 	return "dazzle_poison_touch"
@@ -66,7 +66,7 @@ end
 -----	Poison Touch set in modifier	  -----
 -----------------------------------------------
 
-if modifier_imba_dazzle_poison_touch_setin == nil then modifier_imba_dazzle_poison_touch_setin = class({}) end
+if modifier_imba_dazzle_poison_touch_setin == nil then modifier_imba_dazzle_poison_touch_setin = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_poison_touch_setin:IsPurgable() return true end
 
 function modifier_imba_dazzle_poison_touch_setin:IsHidden() return false end
@@ -165,7 +165,7 @@ end
 -----	Poison Touch debuff modifier	  -----
 -----------------------------------------------
 
-if modifier_imba_dazzle_poison_touch_debuff == nil then modifier_imba_dazzle_poison_touch_debuff = class({}) end
+if modifier_imba_dazzle_poison_touch_debuff == nil then modifier_imba_dazzle_poison_touch_debuff = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_poison_touch_debuff:IsPurgable() return true end
 
 function modifier_imba_dazzle_poison_touch_debuff:IsHidden() return false end
@@ -214,8 +214,12 @@ function modifier_imba_dazzle_poison_touch_debuff:OnIntervalThink()
 		totalDamage = baseDamage + stackDamage * stacks
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, self:GetParent(), totalDamage, nil)
-		ApplyDamage({ victim = self:GetParent(), attacker = ability:GetCaster(), damage = totalDamage,
-			damage_type = DAMAGE_TYPE_PHYSICAL })
+		ApplyDamage({
+			victim = self:GetParent(),
+			attacker = ability:GetCaster(),
+			damage = totalDamage,
+			damage_type = DAMAGE_TYPE_PHYSICAL
+		})
 	end
 end
 
@@ -246,7 +250,7 @@ end
 -----	Poison Touch talent slow modifier	  -----	This is the most cancerous pile of junk, chemotherapy highly advised after gazing upon this garbage
 ---------------------------------------------------	Yeah apperantly 'OnTakeDamage' also doesn't work for client
 
-if modifier_imba_dazzle_poison_touch_talent_slow == nil then modifier_imba_dazzle_poison_touch_talent_slow = class({}) end
+if modifier_imba_dazzle_poison_touch_talent_slow == nil then modifier_imba_dazzle_poison_touch_talent_slow = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_poison_touch_talent_slow:IsPurgable() return true end
 
 function modifier_imba_dazzle_poison_touch_talent_slow:IsHidden() return true end
@@ -302,8 +306,8 @@ end
 LinkLuaModifier("modifier_imba_dazzle_poison_touch_707", "components/abilities/heroes/hero_dazzle",
 	LUA_MODIFIER_MOTION_NONE)
 
-imba_dazzle_poison_touch_707          = imba_dazzle_poison_touch_707 or class({})
-modifier_imba_dazzle_poison_touch_707 = modifier_imba_dazzle_poison_touch_707 or class({})
+imba_dazzle_poison_touch_707          = imba_dazzle_poison_touch_707 or class(VANILLA_ABILITIES_BASECLASS)
+modifier_imba_dazzle_poison_touch_707 = modifier_imba_dazzle_poison_touch_707 or class(VANILLA_ABILITIES_BASECLASS)
 
 ----------------------------------
 -- IMBA_DAZZLE_POISON_TOUCH_707 --
@@ -447,17 +451,17 @@ end
 -------------------------	Shallow Grave	-------------------------
 ---------------------------------------------------------------------
 
-if imba_dazzle_shallow_grave == nil then imba_dazzle_shallow_grave = class({}) end
+if imba_dazzle_shallow_grave == nil then imba_dazzle_shallow_grave = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_dazzle_shallow_grave", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Shallow Grave effect
+	LUA_MODIFIER_MOTION_NONE) -- Shallow Grave effect
 LinkLuaModifier("modifier_imba_dazzle_nothl_protection", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Passive self-cast
+	LUA_MODIFIER_MOTION_NONE) -- Passive self-cast
 LinkLuaModifier("modifier_imba_dazzle_post_shallow_grave_buff", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Post-grave buff
+	LUA_MODIFIER_MOTION_NONE) -- Post-grave buff
 LinkLuaModifier("modifier_imba_dazzle_nothl_protection_aura_talent", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Talent aura Nothl Protection
+	LUA_MODIFIER_MOTION_NONE) -- Talent aura Nothl Protection
 LinkLuaModifier("modifier_imba_dazzle_nothl_protection_particle", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                 -- Talent aura Nothl Protection
+	LUA_MODIFIER_MOTION_NONE) -- Talent aura Nothl Protection
 
 function imba_dazzle_shallow_grave:GetAOERadius()
 	if self:GetCaster():HasScepter() then
@@ -470,11 +474,11 @@ end
 function imba_dazzle_shallow_grave:GetBehavior()
 	if self:GetCaster():HasScepter() then
 		return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK +
-		DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+			DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	end
 
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK +
-	DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+		DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 end
 
 function imba_dazzle_shallow_grave:GetCastRange()
@@ -524,7 +528,7 @@ end
 -----	Shallow Grave modifier	  -----
 ---------------------------------------
 
-if modifier_imba_dazzle_shallow_grave == nil then modifier_imba_dazzle_shallow_grave = class({}) end
+if modifier_imba_dazzle_shallow_grave == nil then modifier_imba_dazzle_shallow_grave = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_shallow_grave:IsPurgable() return false end
 
 function modifier_imba_dazzle_shallow_grave:IsHidden() return false end
@@ -551,7 +555,7 @@ function modifier_imba_dazzle_shallow_grave:OnCreated(params)
 		self.shallowDamage = 0
 		self.shallowDamageInstances = 0
 		self.shallow_grave_particle = ParticleManager:CreateParticle(
-		"particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW,
+			"particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW,
 			self:GetParent())
 
 		self.gravely = true
@@ -717,7 +721,7 @@ end
 -----	Nothl Protection modifier	  -----
 -------------------------------------------
 
-if modifier_imba_dazzle_nothl_protection == nil then modifier_imba_dazzle_nothl_protection = class({}) end
+if modifier_imba_dazzle_nothl_protection == nil then modifier_imba_dazzle_nothl_protection = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_nothl_protection:IsPurgable() return false end
 
 function modifier_imba_dazzle_nothl_protection:IsHidden() return false end
@@ -839,9 +843,9 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage(keys)
 						if #parent.shallow_grave_meme_table > 3 then
 							-- Nil handling
 							parent.time_of_triggered_rare_shallow_grave_meme = parent
-							.time_of_triggered_rare_shallow_grave_meme or 0
+								.time_of_triggered_rare_shallow_grave_meme or 0
 							parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or
-							0
+								0
 							-- Normal trigger									-- Make sure the sounds don't overlap
 							if not parent.has_triggered_shallow_grave_meme and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time - 6 > parent.time_of_triggered_shallow_grave_meme then
 								parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
@@ -1014,7 +1018,7 @@ function modifier_imba_dazzle_nothl_protection:TalentAuraTimeUpdater(id)
 	if self.auraTalentCooldowns[id] == 0 then self.auraTalentCooldowns[id] = 30 end -- fail safe just in case
 end
 
-modifier_imba_dazzle_nothl_protection_particle = class({})
+modifier_imba_dazzle_nothl_protection_particle = class(VANILLA_ABILITIES_BASECLASS)
 function modifier_imba_dazzle_nothl_protection_particle:OnCreated()
 	if IsServer() then
 		self.particles = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf",
@@ -1032,7 +1036,7 @@ end
 -----	Post-Shallow Grave buff	  -----
 ---------------------------------------
 
-if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle_post_shallow_grave_buff = class({}) end
+if modifier_imba_dazzle_post_shallow_grave_buff == nil then modifier_imba_dazzle_post_shallow_grave_buff = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_post_shallow_grave_buff:IsPurgable() return true end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:IsHidden() return false end
@@ -1086,8 +1090,10 @@ end
 -----------------------------------------------
 -----	Nothl Protection Aura modifier	  -----
 -----------------------------------------------
-if modifier_imba_dazzle_nothl_protection_aura_talent == nil then modifier_imba_dazzle_nothl_protection_aura_talent =
-	class({}) end
+if modifier_imba_dazzle_nothl_protection_aura_talent == nil then
+	modifier_imba_dazzle_nothl_protection_aura_talent =
+		class(VANILLA_ABILITIES_BASECLASS)
+end
 function modifier_imba_dazzle_nothl_protection_aura_talent:IsPurgable() return false end
 
 function modifier_imba_dazzle_nothl_protection_aura_talent:IsHidden() return false end
@@ -1174,7 +1180,7 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage(keys)
 				if #parent.shallow_grave_meme_table > 3 then
 					-- Nil handling
 					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or
-					0
+						0
 					parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
 					-- Normal trigger									-- Make sure the sounds don't overlap
 					if not parent.has_triggered_shallow_grave_meme and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time - 6 > parent.time_of_triggered_shallow_grave_meme then
@@ -1205,13 +1211,13 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage(keys)
 				local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_talent.vpcf",
 					PATTACH_ABSORIGIN_FOLLOW, parent)
 				Timers:CreateTimer(
-				self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_6", "talent_aura_nothl_duration"), function()
-					if not self:IsNull() then
-						ParticleManager:DestroyParticle(particle, false)
-						ParticleManager:ReleaseParticleIndex(particle)
-						self:Destroy()
-					end
-				end)
+					self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_6", "talent_aura_nothl_duration"), function()
+						if not self:IsNull() then
+							ParticleManager:DestroyParticle(particle, false)
+							ParticleManager:ReleaseParticleIndex(particle)
+							self:Destroy()
+						end
+					end)
 			end
 		end
 	end
@@ -1285,11 +1291,11 @@ end
 ---------------------------------------------------------------------
 -------------------------	Shadow Wave		-------------------------
 ---------------------------------------------------------------------
-if imba_dazzle_shadow_wave == nil then imba_dazzle_shadow_wave = class({}) end
+if imba_dazzle_shadow_wave == nil then imba_dazzle_shadow_wave = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                        -- Talent delayed wave bounce
+	LUA_MODIFIER_MOTION_NONE) -- Talent delayed wave bounce
 LinkLuaModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", "components/abilities/heroes/hero_dazzle.lua",
-	LUA_MODIFIER_MOTION_NONE)                                                                                                                        -- Talent delayed wave bounce cooldown
+	LUA_MODIFIER_MOTION_NONE) -- Talent delayed wave bounce cooldown
 
 function imba_dazzle_shadow_wave:GetAbilityTextureName()
 	return "dazzle_shadow_wave"
@@ -1343,7 +1349,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 					DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 				for _, unit in ipairs(units) do
 					local cooldownMods = unit:FindAllModifiersByName(
-					"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 					for _, mod in ipairs(cooldownMods) do
 						if mod:GetStackCount() == oldest then
 							mod:Destroy()
@@ -1370,7 +1376,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 
 			EmitSoundOn("Hero_Dazzle.Shadow_Wave", self:GetCaster())
 			local waveParticle = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
+				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
 			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc",
 				caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
@@ -1390,7 +1396,7 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 
 			EmitSoundOn("Hero_Dazzle.Shadow_Wave", self:GetCaster())
 			local waveParticle = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
+				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, caster)
 			ParticleManager:SetParticleControlEnt(waveParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc",
 				caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(waveParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
@@ -1469,7 +1475,7 @@ function imba_dazzle_shadow_wave:WaveBounce(target, isAlly, poisonTouched)
 
 		if newTarget then
 			local waveParticle = ParticleManager:CreateParticle(
-			"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, target)
+				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, target)
 			ParticleManager:SetParticleControlEnt(waveParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
 				target:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
@@ -1513,8 +1519,10 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 				if not oldMod or oldMod:GetStackCount() < poisonTouched then
 					local modifier = unit:AddNewModifier(caster, poisonTouchAbility,
 						"modifier_imba_dazzle_poison_touch_debuff",
-						{ duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") *
-						(1 - unit:GetStatusResistance()) })
+						{
+							duration = poisonTouchAbility:GetSpecialValueFor("poison_duration") *
+								(1 - unit:GetStatusResistance())
+						})
 					EmitSoundOn("Hero_Dazzle.Poison_Tick", unit)
 					modifier:SetStackCount(poisonTouched)
 				end
@@ -1532,7 +1540,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 		for _, target in pairs(aoeTargets) do
 			if target ~= unit then
 				local damage_particle = ParticleManager:CreateParticle(
-				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf", PATTACH_CUSTOMORIGIN, caster)
+					"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf", PATTACH_CUSTOMORIGIN, caster)
 				ParticleManager:SetParticleControlEnt(damage_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc",
 					target:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(damage_particle)
@@ -1560,7 +1568,7 @@ end
 ---------------------------------------------------------------
 -----	Shadow Wave delayed wave jump talent modifier	  -----
 ---------------------------------------------------------------
-if modifier_imba_dazzle_shadow_wave_delayed_bounce == nil then modifier_imba_dazzle_shadow_wave_delayed_bounce = class({}) end
+if modifier_imba_dazzle_shadow_wave_delayed_bounce == nil then modifier_imba_dazzle_shadow_wave_delayed_bounce = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:IsPurgable() return false end
 
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:IsHidden() return true end
@@ -1578,7 +1586,8 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnCreated()
 			"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown",
 			{
 				duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") +
-				caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay") })
+					caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay")
+			})
 
 		Timers:CreateTimer(0.01, function()
 			if not (self:IsNull() or ability:IsNull()) then
@@ -1624,7 +1633,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			for _, hero in pairs(heroTable) do
 				if hero ~= parent and hero:GetHealth() < hero:GetMaxHealth() then
 					local cooldownMods = hero:FindAllModifiersByName(
-					"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 					local hasCD = false
 					for _, mod in ipairs(cooldownMods) do
 						if mod:GetStackCount() == stacks then
@@ -1644,7 +1653,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 				for _, hero in pairs(heroTable) do
 					if hero ~= parent then
 						local cooldownMods = hero:FindAllModifiersByName(
-						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+							"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1665,7 +1674,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 				for _, creep in pairs(creepTable) do
 					if creep ~= parent and creep:GetHealth() < creep:GetMaxHealth() then
 						local cooldownMods = creep:FindAllModifiersByName(
-						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+							"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1686,7 +1695,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 				for _, creep in pairs(creepTable) do
 					if creep ~= parent then
 						local cooldownMods = creep:FindAllModifiersByName(
-						"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+							"modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
 						local hasCD = false
 						for _, mod in ipairs(cooldownMods) do
 							if mod:GetStackCount() == stacks then
@@ -1713,7 +1722,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 				ability:SetDelayedWaveData(self:GetStackCount(), self.data)
 
 				local waveParticle = ParticleManager:CreateParticle(
-				"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, parent)
+					"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf", PATTACH_CUSTOMORIGIN, parent)
 				ParticleManager:SetParticleControlEnt(waveParticle, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc",
 					parent:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(waveParticle, 1, newTarget, PATTACH_POINT_FOLLOW, "attach_hitloc",
@@ -1735,8 +1744,10 @@ end
 -----------------------------------------------------------------------
 -----	Shadow Wave delayed wave jump talent modifier cooldown	  -----
 -----------------------------------------------------------------------
-if modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown == nil then modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown =
-	class({}) end
+if modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown == nil then
+	modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown =
+		class(VANILLA_ABILITIES_BASECLASS)
+end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsPurgable() return false end
 
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsHidden() return true end
@@ -1749,7 +1760,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:GetAttributes(
 -------------------------------------------------------------
 -------------------------	Weave	-------------------------
 -------------------------------------------------------------
-if imba_dazzle_weave == nil then imba_dazzle_weave = class({}) end
+if imba_dazzle_weave == nil then imba_dazzle_weave = class(VANILLA_ABILITIES_BASECLASS) end
 LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Allied bonus armor
 LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Allied bonus armor
 LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Ressurection ability layout modifier
@@ -1855,7 +1866,7 @@ end
 -----	Weave ally buff	-----
 -----------------------------
 
-if modifier_imba_dazzle_weave_buff == nil then modifier_imba_dazzle_weave_buff = class({}) end
+if modifier_imba_dazzle_weave_buff == nil then modifier_imba_dazzle_weave_buff = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_weave_buff:IsPurgable() return false end
 function modifier_imba_dazzle_weave_buff:IsHidden() return false end
 function modifier_imba_dazzle_weave_buff:IsDebuff() return false end
@@ -1915,7 +1926,7 @@ end
 -----	Weave enemy debuff	-----
 ---------------------------------
 
-if modifier_imba_dazzle_weave_debuff == nil then modifier_imba_dazzle_weave_debuff = class({}) end
+if modifier_imba_dazzle_weave_debuff == nil then modifier_imba_dazzle_weave_debuff = class(VANILLA_ABILITIES_BASECLASS) end
 function modifier_imba_dazzle_weave_debuff:IsPurgable() return false end
 function modifier_imba_dazzle_weave_debuff:IsHidden() return false end
 function modifier_imba_dazzle_weave_debuff:IsDebuff() return true end
@@ -1980,8 +1991,8 @@ end
 LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_dazzle_ressurection", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE )
 
-if imba_dazzle_ressurection == nil then imba_dazzle_ressurection = class({}) end
-modifier_imba_dazzle_ressurection	= modifier_imba_dazzle_ressurection or class({})
+if imba_dazzle_ressurection == nil then imba_dazzle_ressurection = class(VANILLA_ABILITIES_BASECLASS) end
+modifier_imba_dazzle_ressurection	= modifier_imba_dazzle_ressurection or class(VANILLA_ABILITIES_BASECLASS)
 
 function imba_dazzle_ressurection:GetBehavior()
 	return self.BaseClass.GetBehavior(self) + DOTA_ABILITY_BEHAVIOR_AOE
@@ -2073,7 +2084,7 @@ end
 ---------------------------------
 -----	Skill Layout fix	-----
 ---------------------------------
-modifier_imba_dazzle_ressurection_layout = modifier_imba_dazzle_ressurection_layout or class({})
+modifier_imba_dazzle_ressurection_layout = modifier_imba_dazzle_ressurection_layout or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dazzle_ressurection_layout:IsHidden() return true end
 function modifier_imba_dazzle_ressurection_layout:IsDebuff() return false end
@@ -2093,7 +2104,7 @@ end
 -------------------------------------------------------------------------
 
 --]]
-if imba_dazzle_bad_juju == nil then imba_dazzle_bad_juju = class({}) end
+if imba_dazzle_bad_juju == nil then imba_dazzle_bad_juju = class(VANILLA_ABILITIES_BASECLASS) end
 
 function imba_dazzle_bad_juju:GetIntrinsicModifierName()
 	return "modifier_imba_dazzle_bad_juju"
@@ -2125,7 +2136,7 @@ end
 --]]
 LinkLuaModifier("modifier_imba_dazzle_bad_juju", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_dazzle_bad_juju = modifier_imba_dazzle_bad_juju or class({})
+modifier_imba_dazzle_bad_juju = modifier_imba_dazzle_bad_juju or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dazzle_bad_juju:IsHidden() return true end
 
@@ -2207,7 +2218,7 @@ end
 
 LinkLuaModifier("modifier_imba_dazzle_bad_juju_buff", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_dazzle_bad_juju_buff = modifier_imba_dazzle_bad_juju_buff or class({})
+modifier_imba_dazzle_bad_juju_buff = modifier_imba_dazzle_bad_juju_buff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dazzle_bad_juju_buff:IsHidden() return false end
 
@@ -2235,7 +2246,7 @@ end
 LinkLuaModifier("modifier_imba_dazzle_bad_juju_debuff", "components/abilities/heroes/hero_dazzle",
 	LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_dazzle_bad_juju_debuff = modifier_imba_dazzle_bad_juju_debuff or class({})
+modifier_imba_dazzle_bad_juju_debuff = modifier_imba_dazzle_bad_juju_debuff or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_imba_dazzle_bad_juju_debuff:IsHidden() return false end
 
@@ -2270,8 +2281,8 @@ LinkLuaModifier("modifier_special_bonus_imba_dazzle_poison_touch_slow", "compone
 	LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_dazzle_poison_touch_damage = modifier_special_bonus_imba_dazzle_poison_touch_damage or
-class({})
-modifier_special_bonus_imba_dazzle_poison_touch_slow = modifier_special_bonus_imba_dazzle_poison_touch_slow or class({})
+	class(VANILLA_ABILITIES_BASECLASS)
+modifier_special_bonus_imba_dazzle_poison_touch_slow = modifier_special_bonus_imba_dazzle_poison_touch_slow or class(VANILLA_ABILITIES_BASECLASS)
 
 function modifier_special_bonus_imba_dazzle_poison_touch_damage:IsHidden() return true end
 
