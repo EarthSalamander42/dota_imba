@@ -15,20 +15,15 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilitySound"					"Hero_Treant.NaturesGuise.On"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 19.0 18.0 17.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 80 85 90"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -51,20 +46,15 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilitySound"					"Hero_Treant.LeechSeed.Cast"
 
-		"AbilityCastPoint"				"0.4"
 		"FightRecapLevel"				"1"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -103,21 +93,16 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"					
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilitySound"					"Hero_Treant.LivingArmor.Cast"
 
 		//"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.4"
 		"FightRecapLevel"				"1"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"26.0 22.0 18.0 14.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
 		{
@@ -156,7 +141,6 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
 		"FightRecapLevel"				"2"
-		"MaxLevel"						"1"
 		"AbilitySound"					"Hero_Treant.NaturesGuise.On"
 
 		// Special
@@ -202,17 +186,13 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"		
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilitySound"					"Hero_Treant.Overgrowth.Cast"
 
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
 
 		"FightRecapLevel"				"2"
 
 		"HasScepterUpgrade"				"1"
-		"AbilityDraftUltScepterAbility"		"treant_eyes_in_the_forest"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -220,7 +200,6 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 250 300"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

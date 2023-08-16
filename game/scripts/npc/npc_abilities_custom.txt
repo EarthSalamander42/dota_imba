@@ -16304,7 +16304,6 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"AbilityTextureName"			"tiny_craggy_exterior"
 		"MaxLevel"						"4"
-		"LinkedAbility"					"imba_tiny_tree_throw"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------

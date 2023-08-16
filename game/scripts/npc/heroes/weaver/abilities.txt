@@ -13,16 +13,10 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Weaver.Swarm.Cast"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-		"AbilityCastRange"				"3000"
-		"AbilityCooldown"				"44 36 28 20"
-		"AbilityManaCost"				"110"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -61,13 +55,10 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Weaver.Shukuchi"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0 0 0 0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -76,7 +67,6 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -98,9 +88,7 @@
 		"AbilityTextureName"			"weaver_geminate_attack"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
-		"AbilityCooldown"				"9.0 7.0 5.0 3.0"
 			
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -127,18 +115,14 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"AbilityCastRange"				"600"
 		"AbilitySound"					"Hero_Weaver.TimeLapse"
 
 		"FightRecapLevel"				"2"
 
 		"HasScepterUpgrade"			"1"
 
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
-		"AbilityCooldown"				"70 55 40"
-		"AbilityManaCost"				"150 75 0"	
 		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"

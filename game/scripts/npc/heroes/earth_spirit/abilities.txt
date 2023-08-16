@@ -10,7 +10,6 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
-		"MaxLevel"						"1"
 		"AbilityTextureName"			"earth_spirit_stone_caller"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
@@ -127,7 +126,6 @@
 		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -210,7 +208,6 @@
 	//	"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 //		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -264,11 +261,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 
-		"IsGrantedByScepter"			"1"
 
-		"MaxLevel"						"1"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------

@@ -12,16 +12,11 @@
 		"AbilityTextureName"			"grimstroke_dark_artistry"
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 
 		"AbilityCastRange"				"1400"
-		"AbilityCastPoint"				"0.8"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
-		"AbilityCooldown"				"11 9 7 5"
-		"AbilityManaCost"				"100 110 120 130"
 
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
@@ -91,24 +86,18 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_GS_INK_CREATURE"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"32 28 24 20"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
 
 		"AbilityModifierSupportValue"	"0.5"
 
@@ -180,22 +169,17 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilitySound"					"Hero_ObsidianDestroyer.AstralImprisonment"
 		"FightRecapLevel"				"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400 525 650 775"
-		"AbilityCastPoint"				"0.15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 130 140 150"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -288,18 +272,12 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastAnimation"			"ACT_DOTA_GS_SOUL_CHAIN"
 		"AbilityCastGestureSlot"		"DEFAULT"
-		"AbilityCooldown"				"100 75 50"
-		"AbilityCastRange"				"700 800 900"
-		"AbilityCastPoint"				"0.15"
-		"AbilityManaCost"				"150 200 250"
 		
 		"AbilityModifierSupportValue"	"0.75"
 

@@ -14,7 +14,6 @@
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"            "zuus_arc_lightning"
 
 		"precache"
@@ -65,27 +64,21 @@
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
 		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"            "zuus_lightning_bolt"
 		"FightRecapLevel"               "1"
 		"AbilitySound"                  "Hero_Zuus.LightningBolt"        
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "700 750 800 850"
-		"AbilityCastPoint"              "0.4 0.4 0.4 0.4"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "125 200 275 350"
 
 		// Time     
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "6.0 6.0 6.0 6.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "125 130 135 140"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -132,7 +125,6 @@
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO" 
 		"AbilityTextureName"            "zuus_static_field"
 		"AbilitySound"                  "Hero_Zuus.StaticField"
 
@@ -185,27 +177,20 @@
 		"ScriptFile"                    "components/abilities/heroes/hero_zuus.lua"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
-		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"                      "1"
 		"FightRecapLevel"               "1"
-		"IsGrantedByScepter"            "1"
 		"HasScepterUpgrade"             "1"
 		"AbilityTextureName"            "zuus_cloud"
 		"AbilitySound"                  "Hero_Zuus.Cloud.Cast"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "0"
-		"AbilityCastPoint"              "0.2"
 		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 
 		// Time     
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "275"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -325,23 +310,19 @@
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
-		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"            "zuus_thundergods_wrath"
 		"FightRecapLevel"               "2"
 		"AbilitySound"                  "Hero_Zuus.GodsWrath"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0.4 0.4 0.4 0.4"
 		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
 
 		// Time     
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"                "120 120 120"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "250 350 450"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------

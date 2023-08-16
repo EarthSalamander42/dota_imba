@@ -100,7 +100,6 @@
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"				"silencer_glaives_of_wisdom"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"HasScepterUpgrade"					"1"
 
@@ -108,8 +107,6 @@
 
 		// Cost and cast stuff
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastRange" 					"600"		
-		"AbilityManaCost" 					"15"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -176,7 +173,6 @@
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags" 				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"					"silencer_last_word"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"HasScepterUpgrade"					"1"
 
 		// Precache
@@ -293,19 +289,15 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName" 		"silencer_global_silence"
-		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
 		"MaxLevel"					"3"
 
 		// Casting
 		//---------------------------------------------
-		"AbilityCastPoint"			"0.3"
-		"AbilityCooldown"			"130 115 100"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//---------------------------------------------
-		"AbilityDuration"			"4.5 5.25 6.0"
 
 		// Precache
 		//---------------------------------------------

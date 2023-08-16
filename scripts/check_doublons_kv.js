@@ -166,8 +166,56 @@ async function GetParsedData(sFileName) {
     });
 }
 
-
 async function FindValueByName(sFileName, ability_name, value_name) {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const data = await fs.promises.readFile(sFileName, 'utf8');
+			const cleanedData = data.replace(/\/\/.*/g, '').replace(/"Version".*?\n/g, '');
+
+			const lines = cleanedData.split('\n');
+			let line_counter = 0;
+			let currentAbility = false;
+
+			for (let line of lines) {
+				line = line.trim();
+
+				if (line.startsWith("}") || line.indexOf('}') > -1) {
+					if (currentAbility) {
+						// console.log(ability_name + ' ability object finished, no value found named: ' + value_name + ' for ability: ' + ability_name);
+						resolve();
+					}
+				}
+
+				if (line.startsWith('"')) {
+					const key = line.substring(1, line.indexOf('"', 1));
+					// const value = line.substring(line.indexOf('"', 1) + 1).trim();
+
+					if (currentAbility && key == value_name) {
+						// console.log("Found ability value: " + key + " - " + ability_name + " at line: " + line_counter);
+						return resolve(line_counter);
+					}
+
+					if (key == "imba_" + ability_name) {
+						// console.log("Found ability: " + key);
+						currentAbility = true;
+					}
+				}
+
+				line_counter++;
+
+				if (line_counter == lines.length) {
+					// console.log('Reached end of file, no value found');
+					resolve();
+				}
+			}
+		} catch (err) {
+			console.error('Error reading the file:', err);
+			reject(err);
+		}
+	});
+}
+
+async function FindAbilityValueByName(sFileName, ability_name, value_name) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const data = await fs.promises.readFile(sFileName, 'utf8');
@@ -332,7 +380,7 @@ async function FindDuplicates() {
 				if (separate_abilities[ability]) {
 					for (let value in dota_abilities[ability]) {
 						if (value != "AbilitySpecial" && value != "AbilityValues" && value != "ability_name" && separate_abilities[ability][value]) {
-							console.log('Found separate duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability][value] + ' / ' + separate_abilities[ability][value]);
+							// console.log('Found separate duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m - ' + dota_abilities[ability][value] + ' / ' + separate_abilities[ability][value]);
 							if (!duplicates[ability]) { duplicates[ability] = {}; }
 							duplicates[ability][value] = true;
 							counter++;
@@ -375,7 +423,7 @@ async function RemoveDuplicates(sFileName) {
 
 				if (ability_value) {
 					console.log("Ability value: " + JSON.stringify(ability_value));
-					// await RemoveDuplicateByName(sFileName, ability_value);
+					await RemoveDuplicateByName(sFileName, ability_value);
 					counter++;
 				}
 			}
@@ -386,11 +434,11 @@ async function RemoveDuplicates(sFileName) {
 		for (let ability in ability_values_duplicates) {
 			for (let value in ability_values_duplicates[ability]) {
 				// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
-				let ability_value = await FindValueByName(sFileName, ability.replace(/"/g, ''), value);
+				let ability_value = await FindAbilityValueByName(sFileName, ability.replace(/"/g, ''), value);
 
 				if (ability_value) {
 					console.log("Ability value: " + JSON.stringify(ability_value));
-					// await RemoveDuplicateByName(sFileName, ability_value);
+					await RemoveDuplicateByValueName(sFileName, ability_value);
 					counter++;
 				}
 			}
@@ -400,14 +448,28 @@ async function RemoveDuplicates(sFileName) {
 		// Remove duplicates from separate files AbilityValues
 		for (let file of separateFiles) {
 			// console.log('Checking file: ' + file);
-			for (let ability in ability_values_duplicates) {
-				for (let value in ability_values_duplicates[ability]) {
+
+			for (let ability in duplicates) {
+				for (let value in duplicates[ability]) {
 					// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
 					let ability_value = await FindValueByName(sFileName + "/" + file, ability.replace(/"/g, ''), value);
 
 					if (ability_value) {
 						console.log("Separate ability value: " + JSON.stringify(ability_value));
-						// await RemoveDuplicateByName(sFileName + "/" + file, ability_value);
+						await RemoveDuplicateByName(sFileName + "/" + file, ability_value);
+						counter++;
+					}
+				}
+			}
+
+			for (let ability in ability_values_duplicates) {
+				for (let value in ability_values_duplicates[ability]) {
+					// console.log('Found duplicate value in \x1b[32m' + ability + '\x1b[0m: \x1b[34m' + value + '\x1b[0m');
+					let ability_value = await FindAbilityValueByName(sFileName + "/" + file, ability.replace(/"/g, ''), value);
+
+					if (ability_value) {
+						console.log("Separate ability value: " + JSON.stringify(ability_value));
+						await RemoveDuplicateByValueName(sFileName + "/" + file, ability_value);
 						counter++;
 					}
 				}
@@ -420,7 +482,34 @@ async function RemoveDuplicates(sFileName) {
 	}
 }
 
-function RemoveDuplicateByName(sFileName, value) {
+function RemoveDuplicateByName(sFileName, sLine) {
+	try {
+		// console.log('Removing duplicate value in \x1b[32m' + value.ability_name + '\x1b[0m: \x1b[34m' + value.value_name + '\x1b[0m');
+		// read data from the file synchronously
+		const data = fs.readFileSync(sFileName, 'utf8');
+		const lines = data.split('\n');
+		let cleanedData = '';
+
+		// delete the sLine from the file
+		for (let i = 0; i < lines.length; i++) {
+			if (i != sLine) {
+				cleanedData += lines[i] + '\n';
+			}
+		}
+
+		// Many newlines are added during the loop, remove them
+		cleanedData = cleanedData.trim() + '\n';
+
+		// write cleaned data back to the file synchronously
+		fs.writeFileSync(sFileName, cleanedData);
+
+		return true;
+	} catch (err) {
+		console.error('Error:', err);
+	}
+}
+
+function RemoveDuplicateByValueName(sFileName, value) {
 	try {
 		console.log('Removing duplicate value in \x1b[32m' + value.ability_name + '\x1b[0m: \x1b[34m' + value.value_name + '\x1b[0m');
 		// read data from the file synchronously

@@ -24,10 +24,6 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650 850 1050 1250"
-		"AbilityCastPoint"				"0.35"
-		"AbilityCooldown"				"11 10 9 8"
-		"AbilityManaCost"				"70 90 110 130"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -49,15 +45,10 @@
 		"AbilityTextureName"			"furion_teleportation"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Furion.Teleport_Grow"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"3.0 2.75 2.5 2.25"
-		"AbilityCooldown"				"50 40 30 20"
-		"AbilityManaCost"				"50 50 50 50"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 		// Special
 		//-------------------------------------------------------------------------------------------------------------		
@@ -82,10 +73,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2500"
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
 		"AbilityCooldown"				"37 33 29 25"
-		"AbilityManaCost"				"130 140 150 160"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -150,7 +138,6 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"AbilitySound"					"Hero_Furion.WrathOfNature_Cast"
@@ -164,12 +151,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.5 0.5 0.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		"AbilityCooldown"				"85"
-		"AbilityManaCost"				"175 225 275"
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"rubick_telekinesis"
 		"ScriptFile"					"components/abilities/heroes/hero_rubick"
@@ -21,16 +20,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"34.0 30.0 26.0 22.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -125,10 +121,6 @@
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"					"rubick_fade_bolt"
-		"AbilityCastPoint"						"0.1"
-		"AbilityCooldown"						"16.0 14.0 12.0 10.0"
-		"AbilityCastRange"						"800"
-		"AbilityManaCost"						"120 130 140 150"
 		"ScriptFile"							"components/abilities/heroes/hero_rubick"
 
 		// Precache
@@ -188,7 +180,6 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

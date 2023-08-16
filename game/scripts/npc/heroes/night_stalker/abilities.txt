@@ -46,7 +46,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"night_stalker_void"
 		"MaxLevel"						"4"
@@ -55,10 +54,6 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"525"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"11 10 9 8"
-		"AbilityManaCost"				"80 90 100 110"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -150,14 +145,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"12"
-		"AbilityManaCost"				"50"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -369,10 +360,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"140 130 120"
 		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
-		"AbilityManaCost"				"125 175 225"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
