@@ -35,26 +35,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5 6 7 8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"-18 -24 -30 -36"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"30 60 90 120"
-			}
 
 			"05"
 			{
@@ -107,26 +87,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"75 150 225 300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"125 250 375 500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_min"			"50 100 150 200"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_max"			"75 175 275 375"
-			}
 			
 			"05"
 			{
@@ -182,11 +142,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"heal_amp"				"30"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_rate"				"7 13 19 25"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -223,11 +178,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"army_damage_multiplier"	"2"
 			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
-			}			
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -267,29 +217,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_units"				"1 2 3 4"
-				//"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
-				"LinkedSpecialBonus"	"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"level_req"				"3 4 5 6"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_min"			"700 800 900 1000"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"teleport_delay"	"6.0 5.0 4.0 3.0"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -309,11 +236,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"immortalize_max_units"	"1 2 3 4"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_bonus"	"10 15 20 25"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -353,17 +275,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"250 425 600"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ancient_creeps_scepter"		"1 2 3"
-			}
 			
 			"03"
 			{

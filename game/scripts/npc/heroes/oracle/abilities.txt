@@ -40,33 +40,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 150 080 210"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bolt_speed"				"1000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"minimum_purge_duration"	"0.5"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"maximum_purge_duration"	"2.5"
-				//"LinkedSpecialBonus"	"special_bonus_unique_oracle_2"
-				"LinkedSpecialBonus"	"special_bonus_imba_oracle_fortunes_end_max_duration"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300 300 300 300"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -137,16 +110,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 3.5 4.0 4.5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"magic_damage_resistance_pct_tooltip"				"100"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -200,31 +163,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 180 270 360"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_per_second"		"11.0 22.0 33.0 44.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_heal_tooltip"	"99 198 297 396"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"9.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"1.0"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -317,18 +255,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8 9 10"
-				//"LinkedSpecialBonus"	"special_bonus_unique_oracle"
-				"LinkedSpecialBonus"	"special_bonus_imba_oracle_false_promise_duration"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"radius"				"400"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"

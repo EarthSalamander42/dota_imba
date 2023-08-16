@@ -40,33 +40,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"decay_damage"					"20 50 80 110"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"str_steal"						"4 4 4 4"
-			}	
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"decay_duration"				"45"
-				//"LinkedSpecialBonus"			"special_bonus_unique_undying_4"
-				"LinkedSpecialBonus"			"special_bonus_imba_undying_decay_duration"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"325 325 325 325"
-			}			
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"str_scale_up"					"2"
-			}		
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -124,26 +97,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_per_unit"			"22 29 36 43"
-			}			
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_units"					"8 9 10 11"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1300 1300 1300 1300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tombstone_heal"			"4 8 12 16"
-			}
 			
 			"05"
 			{
@@ -193,38 +146,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tombstone_health"		"16 20 24 28"
-				"LinkedSpecialBonus"	"special_bonus_imba_undying_tombstone_health"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"4 5 6 7"				
-				"LinkedSpecialBonus"		"special_bonus_imba_undying_tombstone_health"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"30.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_threshold_pct_tooltip"		"40"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"4.0 3.5 3.0 2.5"
-			}
 
 			"07"
 			{
@@ -487,31 +408,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"40 45 50"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"25 30 35"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"					"6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"str_percentage"			"40 50 60"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"40"
-			}	
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -521,11 +422,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"zombie_radius"			"400"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_bonus"			"30"
 			}
 			
 			"09"

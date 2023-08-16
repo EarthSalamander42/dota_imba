@@ -40,11 +40,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"base_mana_burn"			"28 40 52 64"				
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_hit_pct"		"1 2 3 4"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -65,11 +60,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusions_efficiency_pct"	"40"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_percentage"		"50"
 			}
 		}
 	}
@@ -248,21 +238,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"mana_void_damage_per_mana"			"0.8 0.95 1.1"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"mana_void_ministun"				"0.3"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"mana_void_aoe_radius"				"500"
-			}
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"

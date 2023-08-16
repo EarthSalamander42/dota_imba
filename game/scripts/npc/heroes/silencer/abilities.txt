@@ -132,11 +132,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"intellect_damage_pct"		"25 45 65 85"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -146,11 +141,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hit_count_duration"		"10"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"silence_duration"			"0.25 0.3 0.35 0.4"
 			}
 			"05"
 			{
@@ -166,16 +156,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_damage_multiplier"	"100"				 // 100 = +100%
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"int_steal"		"1 1 2 3"
-			}
-			"09"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"int_steal_duration"		"10 20 30 40"
 			}
 		}
 	}
@@ -246,28 +226,12 @@
 				"var_type"			"FIELD_FLOAT"
 				"aura_silence"		"3"
 			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"4"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"m_regen_reduct_pct"	"5.0"
 			}
 			
-			"06"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"int_multiplier"	"1.5 2 2.5 3"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"scepter_radius"		"600"
-				"RequiresScepter"			"1"
-			}
 		}
 	}
 

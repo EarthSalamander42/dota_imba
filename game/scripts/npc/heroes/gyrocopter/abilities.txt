@@ -35,23 +35,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"rockets_per_second"		"10"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"rocket_damage"				"7 12 17 22"
-				//"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_3"
-				"LinkedSpecialBonus"		"special_bonus_imba_gyrocopter_rocket_barrage_damage"
-			}
 			
 			"04"
 			{
@@ -117,69 +100,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hits_to_kill_tooltip"		"3 4 5 6"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tower_hits_to_kill_tooltip"		"6 8 10 12"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.25 2.5 2.75 3.0"
-				//"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_6"
-				"LinkedSpecialBonus"		"special_bonus_imba_gyrocopter_homing_missile_stun"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"400 400 400 400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"				"50"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_distance"				"1800"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pre_flight_time"			"3"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"34 26 21 17"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"speed"						"500"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"acceleration"				"20 30 40 50"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_time"			"4"
-			}	
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"AbilityCharges"		""
-				"LinkedSpecialBonus"	"special_bonus_unique_gyrocopter_1"
-			}
 			
 			"13"
 			{
@@ -261,35 +181,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1250"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_attacks"					"2 3 4 5"
-				//"LinkedSpecialBonus"			"special_bonus_unique_gyrocopter_2"
-				"LinkedSpecialBonus"			"special_bonus_imba_gyrocopter_flak_cannon_attacks"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"800"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"fire_rate"						"0.9"
-				"RequiresScepter"				"1"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"scepter_radius"				"700"
-				"RequiresScepter"				"1"
-			}
 			
 			"06"
 			{
@@ -410,56 +301,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_first"		"2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_second"		"4"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_first"				"150 250 350"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_second"				"200 275 350"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_first"				"30 30 30"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_second"				"60 60 60"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}			
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_scepter"					"0"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_second_scepter"		"225 300 375"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"missile_delay_tooltip"		"2"
-			}
 			
 			"11"
 			{

@@ -73,11 +73,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 160 240 320"
-			}
 
 			"02"
 			{
@@ -128,18 +123,6 @@
 				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_1"
 			}
 			
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"		"900"
-				"RequiresScepter"		"1"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_ministun"		"0.6"
-				"RequiresScepter"		"1"
-			}
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -403,16 +386,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"30"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"50 100 150"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"

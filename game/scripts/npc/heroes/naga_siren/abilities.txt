@@ -24,46 +24,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"illusion_duration"						"30 32 34 36"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-75 -70 -65 -60"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"25 30 35 40"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"250 250 250 250"
-				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
-				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"350 350 350 350"
-				"LinkedSpecialBonus"					"special_bonus_imba_naga_siren_mirror_image_damage_taken"
-				"LinkedSpecialBonusOperation"			"SPECIAL_BONUS_SUBTRACT"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"images_count"							"3 3 3 3"
-				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"invuln_duration"						"0.3"
-			}
 			"08"
 			{
 				"var_type"									"FIELD_FLOAT"
@@ -121,21 +81,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"2.0 3.0 4.0 5.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"net_speed"					"1500 1500 1500 1500"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"fake_ensnare_distance"		"1100"
-			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -165,28 +110,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"chance"					"17"
 				"LinkedSpecialBonus"		"special_bonus_imba_naga_siren_rip_tide_proc_chance"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-2 -4 -6 -8"
-				//"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
-				"LinkedSpecialBonus"		"special_bonus_imba_naga_siren_rip_tide_armor"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"30 40 50 60"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
 			}
 			"06"
 			{
@@ -237,21 +160,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1000 1200 1400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"7.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"animation_rate"			"0.55"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"

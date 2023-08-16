@@ -39,21 +39,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"chill_duration"			"6"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus"				"17 23 29 35"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attackspeed_bonus"			"34 46 58 70"
-			}
 			
 			"04"
 			{
@@ -103,53 +88,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bolt_speed"				"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"soul_base_damage"			"20"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"soul_charge_damage"		"75 75 75 75"
-				//"LinkedSpecialBonus"		"special_bonus_unique_visage_4"
-				"LinkedSpecialBonus"		"special_bonus_imba_visage_soul_assumption_charge_damage"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stack_limit"				"3 4 5 6"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"6.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_limit"				"100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1500"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_min"				"2.0"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_max"				"3000.0"
-			}
 			
 			// Not in vanilla abilities.txt but makes sense to have it
 			"10"
@@ -186,33 +124,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"max_layers"						"4"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"damage_reduction"					"8 12 16 20"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"recovery_time"						"6 5 4 3"
-				//"LinkedSpecialBonus"	"special_bonus_unique_visage_5"
-				"LinkedSpecialBonus"	"special_bonus_imba_visage_gravekeepers_cloak_cd_reduction"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"minimum_damage"					"40"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"radius"							"1200"
-			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
@@ -255,28 +166,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"familiar_hp"				"500 600 700"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"familiar_armor"			"0 1 2"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"familiar_speed"			"430"
-				//"LinkedSpecialBonus"		"special_bonus_unique_visage_2"
-				"LinkedSpecialBonus"		"special_bonus_imba_visage_summon_familiars_bonus_move_speed"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"familiar_attack_damage"	"25 50 75"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -347,36 +236,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stun_radius"						"350"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stun_delay"						"0.55"
-			}			
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stun_damage"						"60 100 140"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stun_duration"						"1 1.25 1.5"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stone_duration"					"6.0"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"hp_regen"							"150 175 200"
-			}
 		}
 	}
 
@@ -408,36 +267,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stun_radius"						"350"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stun_delay"						"0.55"
-			}			
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stun_damage"						"60 100 140"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stun_duration"						"1.0 1.25 1.5"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"stone_duration"					"6.0"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"hp_regen"							"150 175 200"
-			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}

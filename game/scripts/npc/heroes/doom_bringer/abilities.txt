@@ -39,18 +39,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"16.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_7"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 40 55"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
-			}
 //			"03"
 //			{
 //				"var_type"				"FIELD_FLOAT"
@@ -61,11 +49,6 @@
 //				"var_type"				"FIELD_INTEGER"
 //				"damage_scepter"		"45 75 105"
 //			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"25"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"

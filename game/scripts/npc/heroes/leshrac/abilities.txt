@@ -44,23 +44,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"delay"				"0.35"
-			}
 			
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"150 175 200 225"
-			}
 			
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"2"
-			}
 
 			"04"
 			{
@@ -185,24 +170,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"num_explosions"		"40"
-				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_diabolic_edict_explosions"
-			}
 
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
 
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tower_bonus"			"40"
-			}
 
 			"04"
 			{
@@ -332,36 +301,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"jump_count"		"4 6 8 10"
-			}			
 
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"475"
-			}
 
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"jump_delay"			"0.25 0.25 0.25 0.25"
-			}
 
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"75"
-			}
 
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.4 0.6 0.8 1.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_lightning_storm_duration"
-			}	
 
 			"06"
 			{
@@ -475,23 +418,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost_per_second"	"20 40 60"
-			}
 			
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"450"
-				"LinkedSpecialBonus"	"special_bonus_unique_imba_leshrac_pulse_nova_radius"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"100 150 200"				
-			}
 
 			"04"
 			{
@@ -855,4 +782,3 @@
 		}
 	}
 }
-

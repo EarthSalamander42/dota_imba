@@ -34,18 +34,6 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
         {
-            "01"
-            {
-                "var_type"                "FIELD_INTEGER"
-                "slow_attack_speed"        "-100 -140 -180"
-                //"LinkedSpecialBonus"    "special_bonus_unique_enchantress_3"
-				"LinkedSpecialBonus"		"special_bonus_imba_enchantress_5"
-            }
-            "02"
-            {
-                "var_type"                "FIELD_INTEGER"
-                "slow_duration"            "4"
-            }
 			"03"
 			{
                 "var_type"					"FIELD_FLOAT"
@@ -178,33 +166,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"dominate_duration"				"30 60 90 120"
-				"LinkedSpecialBonus"			"special_bonus_imba_enchantress_6"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enchant_health"		"200 300 400 500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enchant_damage"		"10 30 50 70"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enchant_armor"			"2 4 6 8"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-55"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -253,32 +214,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_interval"			"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal"					"7.0 9.0 11.0 13.0"
-				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_5"
-				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 275 275 275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wisp_count"			"4 6 8 10"
-				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_2"
-				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -423,18 +358,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"distance_damage_pct"	"16 22 28"
-				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"
-				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_9"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"distance_cap"			"1750"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"

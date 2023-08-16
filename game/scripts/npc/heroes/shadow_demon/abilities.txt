@@ -38,12 +38,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"disruption_duration"		"2.75"
-				"LinkedSpecialBonus"		"special_bonus_unique_shadow_demon_5"
-			}
 
 			"02"
 			{
@@ -51,34 +45,9 @@
 				"illusion_count"			"2"
 			}
 
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"8 10 12 14"
-			}
 
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_damage"	"-70.0 -55.0 -40.0 -25.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_tooltip"	"30.0 45.0 60.0 75.0"
-			}
 
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"illusion_incoming_damage"	"200"
-			}
 
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_total_illusion_incoming_damage"	"300"
-			}						
 
 			"08"
 			{
@@ -180,22 +149,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_lost"			"20 25 30 35"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"175 200 225 250"
-			}
 
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10"
-			}
 
 			"04"
 			{
@@ -265,41 +219,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_damage"			"20 35 50 65"
-				"LinkedSpecialBonus"		"special_bonus_imba_shadow_demon_shadow_poison_damage"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_multiply_stacks"	"5"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"efficient_multiplier"	"1.25"				
 			}
 
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
-			}
-			"06" //Damage that is applied every time shadow poison is applied.
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hit_damage"			"26 34 42 50"
-				"LinkedSpecialBonus"		"special_bonus_imba_shadow_demon_shadow_poison_damage"
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_PERCENTAGE_ADD"
-			}
 
 			"07"
 			{
@@ -400,12 +325,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"purge_damage"		"300 400 500"
-				"LinkedSpecialBonus"	"special_bonus_imba_shadow_demon_demonic_purge_damage"
-			}
 
 			"02"
 			{
@@ -413,24 +332,8 @@
 				"max_charges_scepter"		"3"
 				"RequiresScepter"			"1"
 			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"charge_restore_time"		"60"
-				"RequiresScepter"			"1"
-			}
 			
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"max_slow"			"100"
-			}
 
-			"05"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"min_slow"			"20.0"
-			}
 
 			"06"
 			{

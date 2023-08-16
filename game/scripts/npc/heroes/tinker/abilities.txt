@@ -304,11 +304,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 275 375 425"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -325,11 +320,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"3.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_tinker_4"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900"
 			}
 			"06"
 			{
@@ -413,16 +403,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"16 32 42 46"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"50"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -493,11 +473,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"railgun_radius"		"125"
-			}
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"400"
 			}
 			"18"
 			{

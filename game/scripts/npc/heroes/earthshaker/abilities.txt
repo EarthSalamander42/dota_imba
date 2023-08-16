@@ -265,32 +265,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"echo_slam_damage_range"		"600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"echo_slam_echo_search_range"	"600"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"echo_slam_echo_range"			"600"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"echo_slam_echo_damage"			"70 90 110"
-				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_2"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"echo_slam_initial_damage"		"100 140 180"
-			}
 		}
 	}
 	

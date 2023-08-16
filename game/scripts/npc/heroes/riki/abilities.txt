@@ -528,16 +528,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"channel_duration"		"4.0 4.5 5.0"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"	"1000"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_duration"		"8 9 10"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"

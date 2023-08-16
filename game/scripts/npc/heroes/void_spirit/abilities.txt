@@ -37,71 +37,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"start_radius"				"90"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"end_radius"				"90"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"900"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnant_watch_distance"	"450"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"remnant_watch_radius"		"130"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"watch_path_vision_radius"	"200"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"activation_delay"		"0.4"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"impact_damage"			"80 130 180 230"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pull_duration"			"1.2 1.4 1.6 1.8"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_destination"		"44 50 56 62"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"20.0"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"think_interval"		"0.1"
-			}
 		}
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AbilityCastGestureSlot"		"DEFAULT"
@@ -149,36 +84,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"phase_duration"		"1.3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"destination_fx_radius"	"183" // proportional to distance_offset
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"portals_per_ring"		"6"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"angle_per_ring_portal"	"60"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"first_ring_distance_offset"	"520"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_radius"			"275" // proportional to distance_offset
-			}
 			//"07"
 			//{
 				//"var_type"						"FIELD_INTEGER"
@@ -238,58 +143,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 120 170 220"
-				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"10.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_absorb_amount"	"40 80 120 160"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"absorb_per_hero_hit"	"30 45 60 70"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"return_projectile_speed"	"900"
-			}
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"max_charges_scepter"		"2" // Vanilla is max_charges, but this is to better deal with the generic modifier
-				"RequiresScepter"			"1"
-			}
-			"09"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"charge_restore_time"		"16"
-				"RequiresScepter"			"1"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"silence_duration_scepter"			"2.0"
 				"RequiresScepter"			"1"
 			}
 			
@@ -525,47 +382,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"170"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"AbilityCharges"		""
 				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_9"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"AbilityChargeRestoreTime"	""
-				"LinkedSpecialBonus"	"special_bonus_unique_void_spirit_1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_travel_distance"	"200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_travel_distance"	"700 900 1100"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pop_damage_delay"		"1.25"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pop_damage"			"150 200 250"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow_pct"		"40 60 80"
 			}
 			
 			// Need max charges and charge restore time due to not being able to utilize the vanilla charge system

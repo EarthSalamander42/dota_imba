@@ -40,36 +40,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal"					"12"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attrib_bonus"			"0.06 0.08 0.1 0.12"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_attrib_bonus"		"0.22 0.3 0.38 0.46"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_percent"			"0.35"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"6 8 10 12"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"22 30 38 46"
-			}
 			
 			"07"
 			{
@@ -123,31 +93,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 170 240 310"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.75 2.5 3.25 4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"550"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.6"
-			}
 			
 			"06"
 			{
@@ -205,17 +150,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_cost"					"4"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"burn_damage"					"5 10 15 20"
-				"LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
-			}
 			
 			"03"
 			{
@@ -247,21 +181,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"130 190 250 310"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_health_regen"			"25 45 65 85"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_threshold_max"				"10 10 10 10"
-			}
 			
 			"04"
 			{
@@ -331,42 +250,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_cost_percent"		"0.32 0.38 0.44"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_damage"				"0.32 0.38 0.44"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"health_damage_scepter"		"0.65"
 				"RequiresScepter"			"1"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_speed"				"1200"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"32 38 44"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"32 38 44"
-				"CalculateSpellDamageTooltip"		"1"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"-60"
 			}
 			"08"
 			{
@@ -412,12 +300,6 @@
 				"sac_dagger_dmg_pct"		"30"
 			}
 			
-			"16"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"taunt_duration"		"2.5"
-				"RequiresScepter"		"1"
-			}
 		}
 	}
 	

@@ -224,11 +224,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"attackspeed_slow"			"15 35 60 90"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0"
-			}
 		}
 	}
 

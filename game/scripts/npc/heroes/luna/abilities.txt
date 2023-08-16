@@ -42,17 +42,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.8 0.8 0.8 0.8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"beam_damage"			"75 150 225 300"
-				"LinkedSpecialBonus"	"special_bonus_unique_luna_1"
-			}
 
 			"03"
 			{
@@ -106,21 +95,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"500 500 500 500"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bounces"					"3 4 5 6"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_percent"	"52 46 40 34"
-			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -146,20 +120,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"25000"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"primary_attribute"			"10 15 20 25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_night_vision"		"250 500 750 1000"
 			}
 			"04"
 			{
@@ -273,37 +237,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"beams"						"6 9 12"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hit_count"					"5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"beam_interval"				"0.6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				//"beam_interval_scepter"		"0.3"
-				"beam_interval_scepter"			"0.3"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration_tooltip"			"2.4 4.2 6.0"
 			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"675 675 675"
-			}	
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -328,11 +266,6 @@
 				"cast_range_tooltip_scepter"	"2500"
 				"RequiresScepter"		"1"
 			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"night_duration"			"10"
-			}		
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"

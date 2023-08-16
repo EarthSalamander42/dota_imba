@@ -33,66 +33,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"350 425 500 575"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"percent_damage"		"6 7 8 9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"1.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_duration"		"5.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"move_slow"				"-22 -28 -34 -40"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"night_vision_bonus"	"400"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed_bonus"	"500"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tree_destruction_radius"	"250"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attack_point"			"0.1"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_attacks"			"15"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost_scepter"		"30"
-			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -156,41 +96,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"650"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"projectile_max_time"	"1.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"split_radius"			"500 500 500 500"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_movespeed"		"-30"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"movespeed_slow_tooltip"		"30"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"4.0"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"secondary_projectile_speed"	"800"
-			}
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -272,22 +177,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_additive"			"20 26 32 38"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"2 3 4 5"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -346,32 +235,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"100 100 100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_amplification"	"0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"55 55 55"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.75 5.5"
-				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
-			}
 		}
 	}
 

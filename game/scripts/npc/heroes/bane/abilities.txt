@@ -185,11 +185,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"manapool_reduction"		"99"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"brain_sap_damage"			"125 225 325 425"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"

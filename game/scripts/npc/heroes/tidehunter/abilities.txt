@@ -39,49 +39,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"gush_damage"		"110 160 210 260"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_2"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"projectile_speed"	"2500"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"-40 -40 -40 -40"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"negative_armor"		"4 5 6 7"
-				//"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
-				"LinkedSpecialBonus"	"special_bonus_imba_tidehunter_gush_armor"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed_scepter"		"1600"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"aoe_scepter"		"260"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"cooldown_scepter"		"7"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"cast_range_scepter"		"2200"
-			}
 			
 			"09"
 			{
@@ -129,22 +86,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"14 26 38 50"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"600 550 500 450"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_reset_interval"	"6.0 6.0 6.0 6.0"
-			}
 
 			"04"
 			{
@@ -210,28 +151,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_damage"			"45 90 135 180"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"-30 -40 -50 -60"
-				//"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
-				"LinkedSpecialBonus"	"special_bonus_imba_tidehunter_anchor_smash_damage_reduction"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"reduction_duration"	"6.0 6.0 6.0 6.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"375 375 375 375"
-			}
 			
 			"05"
 			{
@@ -298,21 +217,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1250 1250 1250"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"725"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.4 2.6 2.8"
-			}
 			
 			"04"
 			{

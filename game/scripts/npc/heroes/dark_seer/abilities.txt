@@ -37,28 +37,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400 450 500 550"
-				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer_2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.3 0.4 0.5 0.6"
-				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_vacuum_increased_duration"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_tree"				"275"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -199,24 +177,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
-				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_radius"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"24 46 68 90"
-				//"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
-				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_ion_shell_damage"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"25"
-			}
 			
 			"04"
 			{
@@ -272,16 +232,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"3 4 5 6"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_boost"			"250"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -383,42 +333,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"45.0"
-			}			
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"replica_damage_outgoing"	"-30 -15 0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_outgoing"		"70 85 100"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"replica_damage_incoming"	"100"
-			}	
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"tooltip_replica_total_damage_incoming"	"200"
-				"CalculateSpellDamageTooltip"			"0"
-			}				
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"width"					"1000"
-			}			
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replica_scale"			"0"
-			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -433,17 +347,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"tooltip_outgoing_scepter"	"100 120 140"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"50 60 70"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"1.0 1.25 1.5"
-				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
 			}
 			"13"
 			{

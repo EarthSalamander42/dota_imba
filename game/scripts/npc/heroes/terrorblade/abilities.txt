@@ -34,32 +34,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"2.5 3.5 4.5 5.5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_damage"	"-60.0 -40.0 -20.0 0.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_tooltip"	"40 60 80 100"
-				"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"25 25 25 25"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"700"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -104,31 +78,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_duration"					"34.0 34.0 34.0 34.0"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_outgoing_damage"			"-70.0 -60.0 -50.0 -40.0"		 
-			}
-			"03"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_outgoing_tooltip"			"40.0 50.0 60.0 70.0"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_incoming_damage"			"220.0 220.0 220.0 220.0"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_incoming_damage_total_tooltip"			"320.0 320.0 320.0 320.0"
-			}	
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -165,50 +114,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"40 44 48 52"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"0.35"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"400"
-				//"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_3"
-				"LinkedSpecialBonus"	"special_bonus_imba_terrorblade_metamorphosis_attack_range"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_attack_range"			"550"
-				//"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_3"
-				"LinkedSpecialBonus"	"special_bonus_imba_terrorblade_metamorphosis_attack_range"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20 40 60 80"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_loss"				"0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"metamorph_aura_tooltip"				"1200"
-			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
@@ -248,11 +153,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"fear_duration"		"3.75"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -360,11 +260,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hit_point_minimum_pct"		"35 30 25"
-			}
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"

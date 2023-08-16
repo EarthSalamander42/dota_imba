@@ -35,37 +35,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0 6.0 7.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_outgoing"	"-80 -70 -60"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"20 30 40"
-				"LinkedSpecialBonus"		"special_bonus_unique_spectre_4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_incoming"	"100 100 100"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_total_damage_incoming"	"200 200 200"
-			}			
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"attack_delay"				"1.0 1.0 1.0"
-			}
 			
 			"07"
 			{
@@ -120,37 +89,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0 6.0 7.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_outgoing"	"-80 -70 -60"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"	"20 30 40"
-				"LinkedSpecialBonus"		"special_bonus_unique_spectre_4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_incoming"	"100 100 100"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_total_damage_incoming"	"200 200 200"
-			}			
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"attack_delay"				"1.0 1.0 1.0"
-			}
 			
 			"07"
 			{

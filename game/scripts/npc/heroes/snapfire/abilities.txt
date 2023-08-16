@@ -57,47 +57,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"80 150 220 290"
-				"LinkedSpecialBonus"		"special_bonus_unique_snapfire_7"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blast_speed"				"3000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blast_width_initial"		"275"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blast_width_end"			"500"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"debuff_duration"			"3.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_slow_pct"			"100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"point_blank_range"			"450"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"point_blank_dmg_bonus_pct"	"50.0"
-			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -155,61 +114,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pre_hop_duration"		"0.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"jump_duration"			"0.484" //"0.431 0.484 0.538 0.592" // proportional to horizontal distance
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_height"			"257" //"228 257 285 314" // proportional to horizontal distance
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"jump_horizontal_distance"	"450" //"400 450 500 550"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pre_land_anim_time"	"0.14"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"landing_gesture_duration"	"0.6"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"impact_radius"			"300"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"impact_damage"			"70 140 210 280"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"impact_stun_duration"	"1.6 1.8 2.0 2.2"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_cast_delay"		"0.4"
-			}
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -268,36 +172,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 40 60 80"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"buffed_attacks"			"6"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus"		"300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_range_bonus"		"75 150 225 300"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"buff_duration_tooltip"		"8"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"base_attack_time"			"0.9"
-			}
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -364,98 +238,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_count"		"8"
-				"LinkedSpecialBonus"	"special_bonus_unique_snapfire_1"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"1300"
-				"LinkedSpecialBonus"			"special_bonus_imba_snapfire_1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_width"		"130"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"impact_radius"			"275"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_impact"		"160 240 320"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_tooltip"		"6.0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_vision"		"500"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"turn_rate"				"75"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_interval"			"0.5"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"50 75 100"
-			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"min_slow_pct"			"15 20 25"
 				"LinkedSpecialBonus"	"special_bonus_unique_snapfire_4"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_ground_duration"	"3.0"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"dist_change_speed"		"75"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_range"				"600"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"min_lob_travel_time"	"1.0"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_lob_travel_time"	"2.5"
-			}
-			"17"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"delay_after_last_projectile"	"0.5"
-			}
-			"18"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_linger_duration"	"1.0"
 			}
 			"19"
 			{

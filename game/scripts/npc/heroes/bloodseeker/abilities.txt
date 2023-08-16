@@ -50,11 +50,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"9 10 11 12"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -151,31 +146,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"silence_duration"			"3.0 4.0 5.0 6.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 180 240 300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"						"2.6"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"delay_plus_castpoint_tooltip"	"2.5"
-			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -234,20 +204,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"visibility_threshold_pct"	"25"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_threshold_pct"			"75"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"14 24 34 44"
 			}
 			"04"
 			{
@@ -391,22 +351,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"10 11 12"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"30 45 60"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_cap_amount"			"1300"
-				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_6"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"

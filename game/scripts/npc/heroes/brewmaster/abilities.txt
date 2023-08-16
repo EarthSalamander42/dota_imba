@@ -33,33 +33,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 400 400 400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 35 45 55"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"25 35 45 55"
-			}			
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
-				// "LinkedSpecialBonus"		"special_bonus_unique_brewmaster_3"
-				"LinkedSpecialBonus"		"special_bonus_imba_brewmaster_thunder_clap_slow_duration"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -165,31 +138,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"total_damage"				"75 150 225 300"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"24 28 32 36"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"extra_duration"					"3"
-			}
 			
 			"06"
 			{
@@ -231,23 +179,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"50 60 70 80"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"140 180 220 260"
-				//"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
-				"LinkedSpecialBonus"		"special_bonus_imba_brewmaster_druken_brawler_damage"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -309,16 +240,6 @@
 		"AbilitySpecial"
 		{
 			
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"16 18 20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"split_duration"			"0.6"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"

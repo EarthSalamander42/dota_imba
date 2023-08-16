@@ -129,11 +129,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"charge_gain"			"1 2 2 3"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"5"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -350,11 +345,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"duration"							"4 4.5 5"
-			}
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"

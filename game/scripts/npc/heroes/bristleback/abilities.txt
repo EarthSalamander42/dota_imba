@@ -38,47 +38,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"goo_speed"				"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"goo_duration"			"6.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_armor"		"2"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"armor_per_stack"		"1.4 1.9 2.4 2.9"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_move_slow"		"20"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_slow_per_stack"	"3 6 9 12"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"4"
-				"LinkedSpecialBonus"	"special_bonus_unique_bristleback"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"goo_duration_creep"	"10.0"
-			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -150,37 +109,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_base_damage"		"20.0 40.0 60.0 80.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_stack_damage"	"30.0 32.0 34.0 36.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_bristleback_2"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"quill_stack_duration"	"14.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_damage"			"550.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2400"
-			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -210,31 +138,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"side_damage_reduction"			"8 12 16 20"
-			}	// "8 12 16 20"
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"back_damage_reduction"			"16 24 32 40"
-			}	// "16 24 32 40"
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"side_angle"					"110"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"back_angle"					"70"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"quill_release_threshold"				"210"
-			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -273,28 +176,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_stack"				"22 28 34"
-				//"LinkedSpecialBonus"	"special_bonus_unique_bristleback_3"
-				"LinkedSpecialBonus"	"special_bonus_imba_bristleback_3"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_speed_per_stack"			"3 4 5"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stack_duration"				"14.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"5 7 9"
-			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -331,5 +212,3 @@
 		}
 	}
 }
-
-

@@ -38,23 +38,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"275 275 275 275"
-			}
-			"02"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.5 10.5 10.5 10.5"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"interval"			"0.7 0.7 0.7 0.7"
-				//"LinkedSpecialBonus"		"special_bonus_unique_clockwerk"
-				"LinkedSpecialBonus"		"special_bonus_imba_rattletrap_battery_assault_interval"
-			}
 			
 			"04"
 			{
@@ -139,52 +122,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"5.0 6.0 7.0 8.0"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"damage"		"50 125 200 275"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"mana_burn"		"50 80 110 140"
-			}
-			"04"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"attacks_to_destroy"	"2"
-			}
-			"05"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"push_length"		"300"
-				"LinkedSpecialBonus"	"special_bonus_imba_rattletrap_power_cogs_push_length"
-			}
-			"06"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"push_duration"		"1"
-			}
-			"07"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"cogs_radius"			"215"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"trigger_distance"			"185"
-			}
-			"09"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"extra_pull_buffer"			"-10"
-			}
 			
 			"10"
 			{
@@ -238,22 +175,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"600 600 600 600"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"8.0 8.0 8.0 8.0"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"2250"
-				"LinkedSpecialBonus"	"special_bonus_imba_rattletrap_rocket_flare_speed"
-			}
 			"04"
 			{	
 				"var_type"			"FIELD_INTEGER"
@@ -350,36 +271,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"latch_radius"		"125 125 125"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"stun_radius"		"175 175 175"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.5 1.75 2.0"
-			}
 			
-			"04"
-			{	
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"4000 5000 6000"
-			}
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
 				"tooltip_range"		"2000 2500 3000"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"75 175 275"
 			}
 			"07"
 			{	

@@ -39,12 +39,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"attack_speed_bonus"	"50 80 110 140"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 5.0 6.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer"
-			}
 			
 			"03"
 			{
@@ -178,12 +172,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"1.5 2.25 3 3.75"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
-			}
 
 			"02"
 			{
@@ -335,27 +323,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_steps"			"-70 -70 -60 -50 -40 -30 -20 -10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"50 60 70 80"
-				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_tooltip"			"70"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"8"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -492,16 +459,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700 700 700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"180 360 540"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -798,21 +755,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700 700 700"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"order_lock_duration"		"2.0"
-			}
 			
 			"04"
 			{
@@ -847,16 +789,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_tooltip"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_tooltip"				"700 700 700"
-			}
 		}
 	}
 	

@@ -23,28 +23,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_modifier"		"-50 -40 -30 -20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_modifier_tooltip"		"50 60 70 80"
-			}
-			"03"
-			{	
-				"var_type"					"FIELD_INTEGER"
-				"arrow_count"				"4"
-				//"LinkedSpecialBonus"			"special_bonus_unique_medusa_2"
-				"LinkedSpecialBonus"		"special_bonus_imba_medusa_extra_split_shot_targets"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"split_shot_bonus_range"		"100"
-			}
 			
 			"05"
 			{
@@ -124,73 +102,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"475 475 475 475"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"snake_jumps"			"3 4 5 6"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"jump_delay"			"0.25 0.25 0.25 0.25"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"snake_damage"			"80 120 160 200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"snake_mana_steal"		"11 14 17 20"
-				//"LinkedSpecialBonus"			"special_bonus_unique_medusa_3"
-				"LinkedSpecialBonus"			"special_bonus_imba_mystic_snake_mana_steal"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"snake_scale"			"35"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_speed"			"800 800 800 800"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"return_speed"			"800 800 800 800"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stone_form_scepter_base"		"1.0"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stone_form_scepter_increment"		"0.3"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"30"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"turn_slow"			"50"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"		"3"
-			}
 			
 			"14"
 			{
@@ -279,11 +190,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_mana"		"1.6 1.9 2.2 2.5"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -351,48 +257,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5 5.5 6"
-				//"LinkedSpecialBonus"		"special_bonus_unique_medusa"
-				"LinkedSpecialBonus"		"special_bonus_imba_medusa_stone_gaze_duration"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"35 35 35"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stone_duration"			"3.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"face_duration"				"2.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"vision_cone"				"0.08715"		// 85 degree cone
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_physical_damage"		"50"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_boost"		"50"
-			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"

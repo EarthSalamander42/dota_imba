@@ -640,16 +640,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"12"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_bonus"				"12"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -671,11 +661,6 @@
 				"scepter_damage_reduction"	"-30"
 				"CalculateSpellDamageTooltip"	"0"
 				"RequiresScepter"			"1"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"12"
 			}
 			"08"
 			{
@@ -727,11 +712,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"275 275 275 275"
-			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -826,30 +806,10 @@
 				"var_type"						"FIELD_INTEGER"
 				"kill_threshold_max_hp_pct"		"15"
 			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"150 250 300"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"speed_bonus"					"30"
-			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"as_bonus"						"30"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"speed_duration"				"6"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"speed_aoe"						"900"
 			}
 			"08"
 			{
@@ -1778,12 +1738,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"snowfield_radius"				"425"				
 			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"nova_damage"					"130 170 210 260"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_crystal_nova_damage"				
-			}
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -1846,12 +1800,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"creep_total_damage"					"1000"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"1.5 2.0 2.5 3.0"
-				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_frostbite_duration"
 			}
 			"04"
 			{
@@ -1995,45 +1943,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"810"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_radius"						"300"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"explosion_interval"					"0.1"
-			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"slow"									"30"				
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_duration"							"1"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_min_dist"					"200"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_max_dist"					"800"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage"								"105 170 250"
 			}
 			"09"
 			{
@@ -2054,16 +1967,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"duration"								"10"
-			}
-			"13"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"20"	
-			}
-			"14"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"60"
 			}
 		}
 	}
@@ -2487,11 +2390,6 @@
 				"var_type"								"FIELD_FLOAT"
 				"stack_armor_reduction"					"1.0"
 			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1300"
-			}
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -2643,11 +2541,6 @@
 				"var_type"								"FIELD_INTEGER"
 				"mana_cost"								"150"
 			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"5.0"
-			}
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
@@ -2737,17 +2630,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bounce_distance"						"475 525 575 625"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage"								"80 100 120 140"
-				// and heal
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_radius"							"185"
 			}
 			"04"
 			{
@@ -2871,21 +2753,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{	
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_reduction"		"26 38 50"
-			}
-			"02"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"armor_reduction"			"2.0 2.25 2.5"
-			}
-			"03"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"8.0"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -4520,63 +4387,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"225"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"275"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"range"					"750 750 750 750"
 				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_5"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1050"
-				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fire_delay"			"0.3 0.3 0.3 0.3"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"40 60 80 100"
-				//"LinkedSpecialBonus"	"special_bonus_unique_jakiro_2"
-				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
-				"LinkedSpecialBonusField"		"fire_damage_increase"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_movement_speed_pct"	"-28 -36 -42 -48"
-				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
-				"LinkedSpecialBonusField"	"slow_increase"
-				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_attack_speed_pct"		"-28 -36 -42 -48"
-				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
-				"LinkedSpecialBonusField"	"slow_increase"
-				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_fire"			"1050"
-				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
 			
 			"10"
@@ -4630,33 +4446,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"path_delay"			"0.5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"path_duration"			"1.0 1.5 2.0 2.5"
-				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_3"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0 1.5 2.0 2.5"
-				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"150"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4721,16 +4510,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_slow" 				"30 40 50 60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"12 16 20 24"
 			}
 			"04"
 			{
@@ -5229,25 +5008,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"225"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"main_slow"					"35"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0 2.0 3.0 4.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.6"
 			}
 			"05"
 			{
@@ -5421,12 +5185,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"tsunami_stun"				"1"
 			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_damage"				"165"
-				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_9"
-			}
 		}
 	}
 
@@ -5466,16 +5224,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"allied_duration"			"8"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -5556,25 +5304,10 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"400 500 600"
 			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ghostship_width"				"425"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"650"
-			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"start_distance"				"1000"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.4"
 			}
 			"06"
 			{
@@ -5590,12 +5323,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"crash_distance"				"1000"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"buff_duration"					"10"
-				"LinkedSpecialBonus"			"special_bonus_imba_kunkka_2"
 			}
 			"10"
 			{
@@ -6022,11 +5749,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"radius"                    "200"
-			}
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
@@ -6036,11 +5758,6 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"as_slow"                   "30"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"aoe_damage"                "75 100 125 150"
 			}
 			"05"
 			{
@@ -6102,11 +5819,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"              "FIELD_INTEGER"
-				"armor_bonus"           "3 6 9 12"
-			}
 			"02"
 			{
 				"var_type"              "FIELD_INTEGER"
@@ -6180,42 +5892,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"30 40 50 60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"20 25 30 35"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"20 30 40 50"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"interval"				"1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0"
-				//"LinkedSpecialBonus"		"special_bonus_unique_lich_4"
-			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -6267,12 +5943,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"1.4 1.7 2.0 2.3"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"destination"			"32 38 44 50"
-				"LinkedSpecialBonus"	"special_bonus_imba_lich_10"
-			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -6307,17 +5977,6 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"creep_channel_reduction"	"50"
-			}
-			"10"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"mana_drain"		"10 15 20 25"
-			}
-			"11"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"aoe_scepter"		"400"
-				"RequiresScepter"		"1"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
@@ -6466,20 +6125,10 @@
 				"var_type"                  "FIELD_INTEGER"
 				"as_slow"                   "65"
 			}
-			"03"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"slow_duration"             "2.5"
-			}
 			"04"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"bounce_range"              "600"               
-			}
-			"05"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "250 400 550"
 			}
 			"06"
 			{
@@ -6510,11 +6159,6 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"cold_front_stacks"         "2"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_jump_damage"		"15 20 25"
 			}
 		}
 	}
@@ -7334,11 +6978,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"500 700 900"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -7889,11 +7528,6 @@
 		"AbilitySpecial"
 		{
 
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"break_distance"	"1500"
-			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
@@ -7918,11 +7552,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_pct_as_damage"	"100"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"20 25 30 35"
 			}
 		}
 	}
@@ -7967,12 +7596,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"600 725 850"
-				"LinkedSpecialBonus"		"special_bonus_imba_lion_7"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7982,12 +7605,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_radius"			"1000"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_delay"				"0.25"
-				"LinkedSpecialBonus"		"special_bonus_imba_lion_3"
 			}
 			"05"
 			{
@@ -8018,12 +7635,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"hex_move_speed"				"140"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_kill"				"40"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 			"12"
 			{
@@ -10146,11 +9757,6 @@
 				"damage"						"0.7 0.8 0.9"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.5"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -11036,12 +10642,6 @@
 				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_8"
 			}
 
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"260"
-				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_9"
-			}
 
 			"03"
 			{
@@ -11107,11 +10707,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4 5 6 7"
-			}
 
 			"02"
 			{
@@ -11327,16 +10922,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0 6.5 8.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -12472,17 +12057,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1600"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_multiplier"		"1.0 1.25 1.5 1.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_pugna_nether_ward_damage"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -12641,11 +12215,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_drain"				"150 225 300"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -12661,11 +12230,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_per_second"			"0 2 4"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_rate"					"0.25"
 			}
 			"06"
 			{
@@ -12988,17 +12552,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"sec_damage_total"		"150 250 350 450"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"3 2.5 2 1.5"
-				"CalculateSpellDamageTooltip"		"0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -13008,11 +12561,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_decay_pct"		"10"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"900"
 			}
 			"08"
 			{
@@ -13112,11 +12660,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -13131,11 +12674,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_reflect_pct"		"10 15 20 25"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"900"
 			}
 		}
 	}
@@ -13182,11 +12720,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"340 450 560"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -13229,16 +12762,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"900"
-			}
-			"10"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"knockback_distance"	"350"
-			}
-			"11"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"knockback_duration" "1.4"
 			}
 		}
 	}
@@ -13684,11 +13207,6 @@
 				"scepter_radius"								"600"
 				"LinkedSpecialBonus"							"special_bonus_imba_storm_spirit_2"
 			}
-			"06"
-			{
-				"var_type"										"FIELD_INTEGER"
-				"electric_vortex_pull_distance"					"180 220 260 300"		
-			}
 		}
 	}
 
@@ -14020,11 +13538,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burrow_speed"			"3000"
-			}
 
 			"02"
 			{
@@ -15445,11 +14958,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius_inc_rain_pct"	"50"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -16641,21 +16149,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 350 375 400"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"0.3"
-			}						
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.2"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -16665,12 +16158,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"projectile_duration"		"0.5"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"avalanche_damage"			"75 150 225 300"
-				"LinkedSpecialBonus"		"special_bonus_imba_tiny_6"
 			}
 			"07"
 			{
@@ -16687,11 +16174,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks_tooltip"		"25"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tick_count"				"5"
 			}
 		}
 	}
@@ -16719,26 +16201,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.4"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"350"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"30"
-			}
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
@@ -16748,11 +16210,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"1000 1100 1200 1300"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"90 160 230 300"
 			}
 			"08"
 			{
@@ -16804,7 +16261,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"tiny_craggy_exterior"
-		"MaxLevel"						"4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -16814,25 +16270,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_chance"				"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.5 1 1.5 2"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_armor"				"3 5 7 9"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"60 100 130 150"
 			}
 			"05"
 			{
@@ -16882,28 +16323,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_count"				"5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"10 20 30 40"
-				"CalculateSpellDamageTooltip"   "0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_buildings"	"250"
-				"CalculateSpellDamageTooltip"   "0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_range"				"350 360 370 380"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -17038,11 +16457,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"status_resistance"			"15 20 25"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"10 16 22"
 			}
 		}
 	}
@@ -17405,11 +16819,6 @@
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_3"
 			}
 
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"25"
-			}
 
 			"04"
 			{
@@ -17491,17 +16900,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"golem_bonus_as"		"30 45 60 75"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"12"
-				"LinkedSpecialBonus"	"special_bonus_imba_warlock_5"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_interval"			"1"
 			}
 			"07"
 			{
@@ -17631,11 +17029,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"60"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_duration"			"1"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -17736,11 +17129,6 @@
 			}
 			
 			
-			"21"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"number_of_golems_scepter"	"2"
-			}
 			"22"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -18145,16 +17533,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_duration"			"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"creep_duration"		"5.0"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -18164,26 +17542,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"creep_damage"			"75 100 125 150"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"575"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounces"				"2 4 6 8"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.3"
 			}
 			"09"
 			{
@@ -18227,21 +17585,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"8 12 16 20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"heal"						"16 24 32 40"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -18256,11 +17599,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cleanse_interval"			"5"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"heal_interval"				"0.25"		//0.33 is vanilla, but this is for better synching for cleanse
 			}
 		}
 	}
@@ -18304,12 +17642,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"180"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_maledict_radius"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -18385,12 +17717,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"85 135 185"
-				"CalculateSpellDamageTooltip"   "0"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -19800,18 +19126,6 @@
 				"RequiresScepter"		"1"
 			}
 			
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"			"800"
-				"RequiresScepter"	"1"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_cooldown"			"6"
-				"RequiresScepter"	"1"
-			}
 		}
 	}
 
@@ -19876,11 +19190,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cast_range"			"600 700 800 900"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"70 100 130 160"
 			}
 			"07"
 			{
@@ -20010,16 +19319,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"ms_bonus_allies_pct"	"16 20 24"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"				
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold_self"		"130 225 320"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -20035,11 +19334,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"haste_linger"			"0.5"
 			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"target_crit_multiplier"	"140 170 200"
-			}			
 		}
 	}
 
@@ -20401,12 +19695,6 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"as_bonus"                  "90 120 150 180"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "3.0 4.0 5.0 6..0"
-				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_9"
 			}
 			"03"
 			{
@@ -20785,11 +20073,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"                          "FIELD_INTEGER"
-				"duration"                          "35"
-			}
 			"02"
 			{
 				"var_type"                          "FIELD_INTEGER"
@@ -21173,41 +20456,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"150"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"250"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"750"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1050"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"reduction"				"-25 -25 -25 -25"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"11"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 170 240 300"
-			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -21246,21 +20494,6 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.5 2.75 3.0 3.25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"dragon_cast_range"		"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1600"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -21300,16 +20533,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"4 8 12 16"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"3 6 9 12"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
@@ -21402,76 +20625,6 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"350 350 350 350"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_damage"		"0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"corrosive_breath_damage"	"20 20 20 30"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"corrosive_breath_duration"	"5.0 5.0 5.0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"splash_radius"				"300"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"splash_damage_percent"		"0 75 75 115"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_movement_speed"	"-0 -0 -40 -60"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_attack_speed"		"-0 -0 -40 -60"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_duration"				"3.0 3.0 3.0"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"frost_aoe"					"300"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resistance"			"0 0 0 40"
-			}
-			"14"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"model_scale"				"0 0 0 30"
-			}
 		}
 	}
 
@@ -22078,37 +21231,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"arrow_count"				"12" // Divide by 3 to get number of arrows per salvo
 			}			
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"arrow_damage_pct"			"85 110 135 160"
-				"LinkedSpecialBonus"		"special_bonus_unique_drow_ranger_1"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"arrow_slow_duration"		"1.25 2.25 3.25 4.25"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"arrow_width"					"90"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"arrow_speed"					"1200"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"arrow_range_multiplier"	"2"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"arrow_angle"					"50"
-			}
 			// These should really be vanilla KVs...
 			"08"
 			{
@@ -22187,11 +21309,6 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"instakill_threshold"				"13"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_damage"						"120 130 140"
 			}
 		}
 	}
@@ -22669,11 +21786,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"hit_delay"					"0.57"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"75 150 225 300"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -22794,12 +21906,6 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"arrow_radius"						"96"
-			}
-			"11"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"arrow_speed"						"950"
-				"LinkedSpecialBonus"				"special_bonus_imba_mirana_10"
 			}
 			"12"
 			{
@@ -23792,16 +22898,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"scepter_line_damage_pct"	"40"
 				"RequiresScepter"			"1"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"requiem_slow_duration"	"0.8"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"requiem_slow_duration_max"	"2.4"
 			}
 		}
 	}
@@ -25255,16 +24351,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-50"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"dagger_speed"			"1200"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -25309,16 +24395,6 @@
 				"cast_range"				"525 750 975 1200"
 			}
 			
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"75" // Currently unused since the "bonus_damage" KV is taking care of it
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_factor_tooltip"		"25 40 55 70"
-			}
 		}
 	}
 
@@ -25357,12 +24433,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"100 125 150 175"
-				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_2"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -25435,11 +24505,6 @@
 				"evasion"					"20 30 40 50"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_10"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1600"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -25450,27 +24515,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"speed_bonus_duration"		"7"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"25.0"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"vanish_radius"				"600"
 			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_duration"				"0.75"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"12"
-				"RequiresScepter"			"1"
-			}			
 		}
 	}
 	
@@ -25502,18 +24551,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"200 325 450"
-				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"15"
-				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_9"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -25843,16 +24880,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"ms_slow_pct"				"12 18 24 30"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"450"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"10"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -25949,17 +24976,7 @@
 				"perfectshot_stun_duration"		"0.25"
 			}
 			
-			"08"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"proc_chance"					"40"
-			}
 			
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"knockback_distance"			"10"
-			}
 				
 			"10"
 			{
@@ -26019,10 +25036,6 @@
 		"AbilityTextureName"			"sniper_assassinate"
 		"ScriptFile"					"components/abilities/heroes/hero_sniper.lua"
 		"HasScepterUpgrade"				"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastRangeBuffer"		"1000"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -26085,12 +25098,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_cast_time"			"0.5"
-				"RequiresScepter"			"1"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_stun_duration"		"1.0 1.25 1.5"
 				"RequiresScepter"			"1"
 			}
 		}
@@ -27609,36 +26616,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"60 80 100 120"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_speed"			"2000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wave_width"			"300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"3 4 5 6"
-				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_9"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"8.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"			"300"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"4.0"
 			}
 			"08"
 			{
@@ -28407,42 +27388,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"strike_damage"			"25 50 75 100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"15 45 75 105"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"3.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"50"
-				"LinkedSpecialBonus"	"special_bonus_imba_venomancer_1"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"125"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
-			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -28484,16 +27429,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6 9 12 15"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"6 14 22 30"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -28505,11 +27440,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"1 2 3 4"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_regen_reduction"		"15 20 25 30"
-			}	
 		}
 	}
 
@@ -28552,11 +27482,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"40"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -28750,18 +27675,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"575"
-				"LinkedSpecialBonus"			"special_bonus_imba_venomancer_poison_nova_radius"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"18"
-				"LinkedSpecialBonus"			"special_bonus_imba_venomancer_4"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -28803,16 +27716,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"cooldown_scepter"				"120 90 60"
 				"RequiresScepter"				"1"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"start_radius"				"255 255 255"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"500"
 			}
 		}
 	}
