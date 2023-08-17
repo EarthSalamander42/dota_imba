@@ -1,0 +1,29 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/layout/custom_game/ingame_advertize/ingame_advertize.css"/>
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/ingame_advertize/ingame_advertize.js"/>
+	</scripts>
+
+	<Panel class="Ads_Root" hittest="false">
+		<Image id="Ads_Image" src="file://{resources}/layout/custom_game/ingame_advertize/ingame_advertize_bg.png"/>
+
+		<Panel id="Ads_MainText">
+			<Label id="Ads_Header" hittest="false" text="#ingame_advertize_header"/>
+			<Label id="Ads_Description" hittest="false" text="#ingame_advertize_description"/>
+		</Panel>
+
+		<Panel id="Ads_Footer">
+			<Button class="Ads_Button" id="Ads_More" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1604947239')">
+				<Label class="FixCH_ButtonText" text="#ingame_advertize_more"/>
+			</Button>
+
+			<Button class="Ads_Button" id="Ads_Dismiss" onactivate="CloseFixGame()">
+				<Label class="FixCH_ButtonText" text="#ingame_advertize_dismiss"/>
+			</Button>
+		</Panel>
+	</Panel>
+</root>

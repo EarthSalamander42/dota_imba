@@ -1,0 +1,4 @@
+"ingame_advertize_header"				"THE DOTA 2 ARCADE TRANSITION"
+"ingame_advertize_description"			"Valve's unforeseen choice to de-monetize Dota 2 custom games reverberates through the community. Developers confront a dilemma: share incomplete projects devoid of financial motivation or await an uncertain reversal. Players lament potential loss of captivating experiences. The situation underscores the intricate interplay between creative fervor and economic reality, leaving enthusiasts to contemplate the future of their cherished custom games.\n\nAmidst this uncertainty, I've chosen to reveal my ongoing creation, 'Frostrose Battlefield', an arena-style custom game featuring skillshots and round-based gameplay. It stands as a testament to unwavering dedication and creative persistence in the face of challenges."
+"ingame_advertize_more"					"Read More..."
+"ingame_advertize_dismiss"				"Dismiss"
