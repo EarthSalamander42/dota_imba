@@ -1,4 +1,4 @@
-if not IsInToolsMode() or not GameRules:IsCheatMode() or GetMapName() ~= "imba_demo" then
+if not IsInToolsMode() and not GameRules:IsCheatMode() and GetMapName() ~= "imba_demo" then
 	return
 end
 

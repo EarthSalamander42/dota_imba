@@ -229,7 +229,7 @@ function modifier_imba_mana_break_passive:OnAttackLanded(keys)
 				end
 
 				-- Play blast sound
-				EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), self.sound_blast, self.parnet)
+				EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), self.sound_blast, self.parent)
 			end
 
 			-- #7 Talent: Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
