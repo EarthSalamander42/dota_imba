@@ -28,4 +28,4 @@ Feel free to just implement your suggestion/fix without talking to us, but pleas
 Also see the CONTRIBUTING files for conventions
 
 ## Reporting bugs
-Report bugs by opening issues in our dota imba site https://frostrose-studio.com/. Registration is easy and short and it would be very helpful for us to track bugs. 
+Report bugs by opening issues in our dota imba site https://mods.frostrose-studio.com/. Registration is easy and short and it would be very helpful for us to track bugs. 
