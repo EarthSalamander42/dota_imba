@@ -1,150 +1,579 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc33:version{bed0390a-a564-41a6-9dc3-c9a293c8eea3} -->
 {
-	m_meshList = 
+	rootNode = 
 	{
-		m_meshList = 
+		_class = "RootNode"
+		children = 
 		[
 			{
-				m_meshName = "kobold_underboss"
-				m_meshFile = "models/props_structures/midas_throne/dmx/mesh/kobold_underboss.dmx"
-				m_materialSearchPath = ""
-				m_bSkinParentedObjects = true
-				m_bLegacySkinParentedTransforms = false
-				m_bExpensiveTangents = false
-				m_bHighPrecisionTexCoords = false
-				m_bPerVertexCurvature = false
-				m_bBentNormals = false
-				m_bIgnoreCloth = false
-				m_bGetSkinningFromLod0 = false
-				m_bPreferHighDensityTrianglesInUvDensityCalculation = false
-				m_pMorphInfo = null
-			},
-		]
-	}
-	m_clothProxyMeshList = 
-	{
-		_class = "CVClothProxyMeshList"
-		m_flClothEnableThreshold = 0.05
-		m_bCreateStaticBone = false
-		m_nMaxBonesPerVertex = 4
-		m_bRemoveUnusedBonesEnabled = false
-		m_bDriveMeshesWithBacksolvedJointsOnly = true
-		m_flMatchProxiesToMeshes = 1.0
-		m_flFallbackEnvelope = 1.0
-		m_nReservedInt = 0
-		m_bSoftSkinAnimation = false
-		m_bReservedBool2 = false
-		m_bReservedBool3 = false
-		m_bReservedBool4 = false
-		m_clothProxyMeshList = [  ]
-	}
-	m_physicsMeshList = 
-	{
-		m_meshList = [  ]
-	}
-	m_pModelInfo = null
-	m_pBoneFlagList = 
-	{
-		m_pObject = null
-	}
-	m_pHitBoxSetLists = [  ]
-	m_pAttachmentLists = 
-	[
-		{
-			m_pObject = 
-			{
-				m_name = ""
-				m_attachments = 
+				_class = "AttachmentList"
+				children = 
 				[
 					{
-						m_name = "bubbles"
-						m_influences = 
+						_class = "Attachment"
+						name = "bubbles"
+						parent_bone = "LiquidRoot_JNT"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "kobold_underboss"
+						filename = "models/props_structures/midas_throne/dmx/mesh/kobold_underboss.dmx"
+						import_scale = 1.0
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "AnimationList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "kobold_underboss"
+						children = 
 						[
 							{
-								m_influenceName = "LiquidRoot_JNT"
-								m_vTranslationOffset = [ 0.0, 0.0, 0.0 ]
-								m_vRotationOffset = [ 0.0, 0.0, 0.0 ]
-								m_flWeight = 1.0
-								m_bRoot = false
+								_class = "AnimFile"
+								name = "overboss_throne_idle"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 52
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_IDLE"
+								activity_weight = 0
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 53
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_idle_cheers"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 65
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 14
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_splash.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "splash"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_IDLE_RARE"
+								activity_weight = 0
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_cheers.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 66
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_idle_hiccup"
+								children = 
+								[
+									{
+										_class = "ActivityModifier"
+										activity_name = ""
+										activity_weight = 1
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 65
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_IDLE_RARE"
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_hiccup.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 66
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_idle_long"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 182
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_IDLE_RARE"
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.1
+								fade_out_time = 0.1
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_long.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 183
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_throw_coin"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 71
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_CAST_ABILITY_1"
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_throw_coin.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 72
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_idle_and_cheers"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 111
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_and_cheers.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 120
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_idle_and_hiccup"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 111
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_idle_and_hiccup.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 123
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_throw_coin_long"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 109
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_CAST_ABILITY_2"
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_throw_coin_long.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 110
+								framerate = 24.0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "overboss_throne_victory"
+								children = 
+								[
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_CREATE_PARTICLE_EFFECT"
+										event_frame = 0
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											detach_from_owner = false
+											always_run = false
+											stop_on_seq_change = false
+											stop_immediately = false
+											use_layer_sequence = false
+											tags = null
+											attachment_point = "bubbles"
+											attachment_type = "point_follow"
+											attachment_point_cp1 = null
+											attachment_type_cp1 = "point_follow"
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_CL_STOP_PARTICLE_EFFECT"
+										event_frame = 475
+										event_keys = 
+										{
+											name = resource:"particles/overboss_chalice_fizz.vpcf"
+											stop_instantly = false
+											play_endcap = false
+										}
+									},
+								]
+								activity_name = "ACT_DOTA_CAST_ABILITY_3"
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								animgraph_additive = false
+								source_filename = "models/props_structures/midas_throne/dmx/animation/overboss_throne_victory.dmx"
+								import_bone_scales = false
+								start_frame = 0
+								end_frame = 476
+								framerate = 24.0
+								reverse = false
 							},
 						]
 					},
 				]
-			}
-		},
-	]
-	m_pAnimGroup = 
-	{
-		m_pObject = 
-		{
-			m_Name = ""
-			m_pBoneFlagList = 
-			{
-				m_pObject = null
-			}
-			m_pSeqGroup = 
-			{
-				m_pObject = null
-			}
-			m_pAnimGroups = 
-			[
-				{
-					m_sFileName = "models\\props_structures\\midas_throne\\kobold_overboss.vagrp"
-				},
-			]
-			m_Vanim = [  ]
-			m_sScripts = [  ]
-			m_folderNames = [  ]
-			m_sCompileScripts = [  ]
-			m_pActivityWhiteList = 
-			{
-				m_pObject = null
-			}
-		}
+				default_root_bone_name = ""
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		importer_notes = "Imported from VMDL"
 	}
-	m_pMaterialGroupList = 
-	{
-		m_pObject = null
-	}
-	m_pMeshGroupList = 
-	{
-		m_pObject = null
-	}
-	m_pLodGroupList = 
-	{
-		m_pObject = null
-	}
-	m_pPropBreakableList = 
-	{
-		m_pObject = null
-	}
-	m_pPropDataList = 
-	{
-		m_pObject = null
-	}
-	m_pConstraintLists = [  ]
-	m_collision = ""
-	m_softbody = ""
-	m_sMDLFilename = ""
-	m_sOffsetHitboxSets = [  ]
-	m_vHitboxSetOffset = [ 0.0, 0.0, 0.0 ]
-	m_scriptFiles = [  ]
-	m_pMaterialRemapList = null
-	m_flFbxScale = 1.0
-	m_flQCScale = 1.0
-	m_vOrigin = [ 0.0, 0.0, 0.0 ]
-	m_bEmbedAnimsInAnimGroup = false
-	m_pPsfList = null
-	m_keyValueText = ""
-	m_bStaticProp = false
-	m_bEnableClothProcessing = true
-	m_flClothEnableThreshold = 0.05
-	m_nMaxClothVertsPerMesh = 2048
-	m_bBuildClothBoneHierarchy = false
-	m_nNavType = "AUTH_NAV_MESH"
-	m_bMakeUniqueVMeshes = false
-	m_bMakeImplicitBindPoseSequence = false
-	m_bAdjustSkeletonFromBoneFlags = false
-	m_bHiddenAssetFlag = false
-	m_pAnimGroups = [  ]
 }
