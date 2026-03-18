@@ -8,114 +8,83 @@
 		<include src="file://{resources}/scripts/custom_game/custom_loading_screen.js"/>
 	</scripts>
 
+	<snippets>
+		<snippet name="VoteChoice">
+			<Panel class="vote-select-panel">
+				<Label class="vote-select-title"/>
+
+				<Label class="vote-select-description"/>
+
+				<Button class="vote-button vote-gamemode-button">
+					<Label class="vote-button-label" text="#loading_screen_vote_button" />
+				</Button>
+			</Panel>
+		</snippet>
+	</snippets>
+
 	<Panel class="addon-root">
+		<Panel class="background-dim-overlay" hittest="false" />
+
 		<Panel class="vote-container-main">
-			<Panel id="vote-content" class="vote-content">
-				<Label class="vote-content-title" text="Choose a Mode"/>
+			<Panel class="vote-content">
+				<Label class="vote-content-title" text="#vote_settings"/>
 
-				<Panel class="vote-select-panel-container">
-					<Panel class="vote-select-panel">
-						<Label class="vote-select-title"/>
-
-						<Label class="vote-select-description"/>
-
-						<Button id="VoteGameModeMainText1" class="vote-button">
-							<Label class="vote-button-label" text="Vote" />
-						</Button>
-					</Panel>
-
-					<Panel class="vote-select-panel">
-						<Label class="vote-select-title"/>
-
-						<Label class="vote-select-description"/>
-
-						<Button id="VoteGameModeMainText2" class="vote-button">
-							<Label class="vote-button-label" text="Vote" />
-						</Button>
-					</Panel>
-
-					<Panel class="vote-select-panel">
-						<Label class="vote-select-title"/>
-
-						<Label class="vote-select-description"/>
-
-						<Button id="VoteGameModeMainText3" class="vote-button">
-							<Label class="vote-button-label" text="Vote" />
-						</Button>
-					</Panel>
-
-					<Panel class="vote-select-panel">
-						<Label class="vote-select-title"/>
-
-						<Label class="vote-select-description"/>
-
-						<Button id="VoteGameModeMainText5" class="vote-button">
-							<Label class="vote-button-label" text="Vote" />
-						</Button>
-					</Panel>
-				</Panel>
-
-				<Panel class="vote-select-panel-party">
-					<Label class="vote-select-party" text="No team ordering"/>
-
-					<Panel class="vote-select-panel-party-bottom-container">
-						<Button id="party_vote_button" class="vote-button" onactivate="PartyVote();">
-							<Label class="vote-button-label" hittest="false" text="No Party Vote"/>
-						</Button>
-
-						<Panel class="vote-select-panel-party-progressbar-container">
-							<ProgressBar id="party_vote_progress_bar" class="HealthProgressBar" hittest="false" value="0.0">
-								<Panel class="vote-select-panel-party-progressbar-labels">
-									<Label id="party_required_votes" class="party-vote-count vote-button-label" hittest="false" text="#party_required_votes"/>
-								</Panel>
-							</ProgressBar>
-						</Panel>
-					</Panel>
-				</Panel>
+				<!-- Filled dynamically in JS -->
+				<Panel id="VoteContent" class="vote-select-panel-container"/>
 			</Panel>
 		</Panel>
 
 		<Panel class="container-main">
-			<Panel class="header">
-				<Panel class="top-left-container">
-					<Panel id="HomeProfileContainer" onactivate="DOTAShowProfilePage( 0 )">
-						<Panel id="HomeProfileHeader" class="TodayPageHeader">
-							<Panel id="PopoutArrow" class="DemoArrow" />
-							<Panel class="LeftRightFlow">
-								<Label id="ProfileHeaderTitle" text="#DOTA_Profile_WindowTitle" />
+			<Panel class="content-left-column">
+				<Panel class="header">
+					<Panel class="top-left-container">
+					<Button id="HomeProfileContainer" onactivate="ToggleProfileModal(true);">
+						<Panel id="ProfileSummaryCard" hittest="false">
+							<DOTAAvatarImage id="ProfileSummaryAvatar" />
+
+							<Panel id="ProfileSummaryTextWrap">
+								<Panel id="ProfileSummaryNameRow">
+									<Label id="ProfileSummaryName" text="#loading_screen_loading" />
+									<Panel id="ProfileSummaryNameArrow" class="DemoArrow" />
+								</Panel>
+								<Label id="ProfileSummaryTitle" text="#loading_screen_unavailable" />
+								<Panel class="profile-summary-row">
+									<Label class="profile-summary-key" text="#loading_screen_player_level" />
+									<Label id="ProfileSummaryLevel" class="profile-summary-value" text="-" />
+								</Panel>
+								<Panel class="profile-summary-row">
+									<Label class="profile-summary-key" text="#loading_screen_donator" />
+									<Label id="ProfileSummaryWinrate" class="profile-summary-value" text="-" />
+								</Panel>
 							</Panel>
 						</Panel>
-
-						<DOTAProfileCard id="ProfileCard" class="FixedSize"/>
-					</Panel>
+					</Button>
 
 					<Panel id="vote-container" class="vote-container">
 						<Panel class="vote-header-container">
-							<Label class="vote-title" text="GAMEMODE"/>
+							<Label class="vote-title" text="#votes"/>
 							<Panel class="vote-info"/>
 						</Panel>
 
-						<Label id="VoteGameModeText1" class="vote-label" text="#vote_gamemode_1" />
+						<Panel id="vote-label-container" class="vote-label-container"/>
 
-						<Label id="VoteGameModeText2" class="vote-label" text="#vote_gamemode_2" />
-
-						<Label id="VoteGameModeText3" class="vote-label" text="#vote_gamemode_3" />
-<!--
-						<Label id="VoteGameModeText4" class="vote-label" text="#vote_gamemode_4" />
--->
-						<Label id="VoteGameModeText5" class="vote-label" text="#vote_gamemode_5" />
-
-						<Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." />
+						<!-- <Label id="VoteGameModeCheck" class="vote-label vote-check" text="You have not voted yet." /> -->
 
 						<Button id="MainVoteButton" class="vote-button" onactivate="ToggleVoteContainer(true);">
-							<Label class="vote-button-label" text="Change Vote" />
+							<Label class="vote-button-label" text="#loading_screen_change_vote" />
 						</Button>
 					</Panel>
-				</Panel>
+					</Panel>
 
-				<Panel class="description-container">
+					<Panel class="description-container">
 					<Panel class="description-background">
-				</Panel>
+						<Panel class="description-credit-wrap">
+							<Label class="description-credit-text" text="#loading_screen_artwork_credit" />
+							<Button class="description-credit-instagram-button" onactivate="OnArtworkCreditPressed();">
+								<Label class="description-credit-instagram-label" text="#loading_screen_instagram_short" />
+							</Button>
+						</Panel>
+					</Panel>
 
 					<Panel class="description-text-container">
 						<Label id="loading-title-text"/>
@@ -124,25 +93,33 @@
 
 						<Label id="loading-description-text" />
 
-						<Button id="WebsiteButton" class="vote-button" onactivate="ExternalBrowserGoToURL('https://frostrose-studio.com')">
+						<Button class="vote-button" onactivate="OnWebsiteButtonPressed();">
 							<Label class="vote-button-label" text="#loading_screen_button" />
 						</Button>
 					</Panel>
-				</Panel>
-			</Panel>
-
-			<Panel class="footer">
-				<Panel class="bottom-button-container" hittest="false">
-					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(1)" text="Custom Games" />
-					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(2)" text="Transifex" />
-					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_patreon" />
+					</Panel>
 				</Panel>
 
-				<Label id="BottomLabel" class="bottom-label" text="#loading_screen_custom_games_1"/>
+				<Panel id="BottomFooterRoot" class="footer">
+					<Panel class="bottom-button-container" hittest="false">
+					<RadioButton id="BottomRadioDiscord" class="bottom-radio-button" onactivate="SwitchTab(4)" text="#loading_screen_tab_discord" />
+					<Label class="bottom-radio-separator" text="/" />
+					<RadioButton id="BottomRadioPatreon" class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_tab_patreon" />
+					<Label class="bottom-radio-separator" text="/" />
+					<RadioButton id="BottomRadioCustomGames" class="bottom-radio-button" onactivate="SwitchTab(1)" text="#loading_screen_tab_custom_games" />
+					<Label class="bottom-radio-separator" text="/" />
+					<RadioButton id="BottomRadioTransifex" class="bottom-radio-button" onactivate="SwitchTab(2)" text="#loading_screen_tab_transifex" />
+					<Panel id="BottomTabCountdownWrap" class="bottom-tab-countdown-wrap">
+						<Panel class="bottom-tab-countdown-dot" />
+						<Label id="BottomTabCountdown" class="bottom-tab-countdown" text="#loading_screen_tab_timer_default" />
+					</Panel>
+					<Panel id="BottomTabTaglineWrap" class="bottom-tab-tagline-wrap">
+						<Label id="BottomTabTagline" class="bottom-tab-tagline" text="#loading_screen_tab_tagline_patreon" />
+					</Panel>
+					<Panel class="bottom-button-spacer" />
+					</Panel>
 
-				<Panel class="bottom-footer-container">
+					<Panel class="bottom-footer-container">
 					<Panel class="bottom-mods-container">
 						<!-- Frostrose Battlefield -->
 						<Button class="mod-cell">
@@ -157,7 +134,7 @@
 						</Button>
 
 						<!-- Dota IMBA -->
-						<Button class="mod-cell" onactivate="ExternalBrowserGoToURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
 							<Panel class="mod-image-container">
 								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist2.jpg"/>
 								<Panel class="mod-background"/>
@@ -169,7 +146,7 @@
 						</Button>
 
 						<!-- X Hero Siege -->
-						<Button class="mod-cell" onactivate="ExternalBrowserGoToURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
 							<Panel class="mod-image-container">
 								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist3.jpg"/>
 								<Panel class="mod-background"/>
@@ -181,7 +158,7 @@
 						</Button>
 
 						<!-- Pudge Wars -->
-						<Button class="mod-cell" onactivate="ExternalBrowserGoToURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
 							<Panel class="mod-image-container">
 								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist4.jpg"/>
 								<Panel class="mod-background"/>
@@ -193,8 +170,8 @@
 						</Button>
 
 						<!-- Hero Line Wars -->
-<!--
-						<Button class="mod-cell" onactivate="ExternalBrowserGoToURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
+						<!--
+						<Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
 							<Panel class="mod-image-container">
 								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist1.jpg"/>
 								<Panel class="mod-background"/>
@@ -207,7 +184,7 @@
 -->
 
 						<!-- Diretide -->
-						<Button class="mod-cell" onactivate="ExternalBrowserGoToURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
+						<!-- <Button class="mod-cell" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
 							<Panel class="mod-image-container">
 								<Image class="mod-image" src="file://panorama/images/custom_game/mods/modlist6.jpg"/>
 								<Panel class="mod-background"/>
@@ -216,23 +193,245 @@
 							<Panel class="mod-footer">
 								<Label class="mod-name" text="#loading_screen_patreon_modlist6"/>
 							</Panel>
-						</Button>
+						</Button> -->
 					</Panel>
 
 					<Panel class="bottom-transifex-container">
-						<Button class="vote-button" onactivate="ExternalBrowserGoToURL('https://www.transifex.com/frostrose-studio/dota-imba/')">
-							<Label class="vote-button-label" text="#loading_screen_promote_button" />
-						</Button>
+						<Panel class="transifex-highlight-card">
+							<Panel class="transifex-highlight-copy">
+								<Label class="transifex-highlight-title" text="#loading_screen_transifex_section_title" />
+								<Label class="transifex-highlight-subtitle" text="#loading_screen_transifex_section_subtitle" />
+
+								<Panel class="transifex-benefits-list">
+									<Panel class="transifex-benefit-row">
+										<Panel class="transifex-benefit-dot" />
+										<Label class="transifex-benefit-text" text="#loading_screen_transifex_advantage_1" />
+									</Panel>
+									<Panel class="transifex-benefit-row">
+										<Panel class="transifex-benefit-dot" />
+										<Label class="transifex-benefit-text" text="#loading_screen_transifex_advantage_2" />
+									</Panel>
+								</Panel>
+
+								<Panel class="transifex-highlight-footer">
+									<Label class="transifex-highlight-support-note" text="#loading_screen_transifex_support_note" />
+								</Panel>
+							</Panel>
+							<Panel class="transifex-cta-side">
+								<Button class="transifex-cta-image-button" onactivate="OnTransifexButtonPressed();" />
+							</Panel>
+						</Panel>
 					</Panel>
 
 					<Panel class="bottom-patreon-container">
-						<!-- Filled Dynamically -->
-						<Panel class="bottom-patreon-sub"/>
+						<Panel class="patreon-highlight-card">
+							<Panel class="patreon-highlight-copy">
+								<Label class="patreon-highlight-title" text="#loading_screen_patreon_section_title" />
+								<Label class="patreon-highlight-subtitle" text="#loading_screen_patreon_section_subtitle" />
 
-						<Button class="loading-link-patreon" onactivate="ExternalBrowserGoToURL('https://www.patreon.com/bePatron?u=2533325')">
-							<Label class="vote-button-label" />
+								<Panel class="patreon-benefits-list">
+									<Panel class="patreon-benefit-row">
+										<Panel class="patreon-benefit-dot" />
+										<Label class="patreon-benefit-text" text="#loading_screen_patreon_advantage_1" />
+									</Panel>
+									<Panel class="patreon-benefit-row">
+										<Panel class="patreon-benefit-dot" />
+										<Label class="patreon-benefit-text" text="#loading_screen_patreon_advantage_2" />
+									</Panel>
+									<Panel class="patreon-benefit-row">
+										<Panel class="patreon-benefit-dot" />
+										<Label class="patreon-benefit-text" text="#loading_screen_patreon_advantage_3" />
+									</Panel>
+								</Panel>
+
+								<Panel class="patreon-highlight-footer">
+									<Label class="patreon-highlight-support-note" text="#loading_screen_patreon_support_note" />
+								</Panel>
+							</Panel>
+							<Panel class="patreon-cta-side">
+								<Button class="patreon-cta-image-button" onactivate="OnPatreonButtonPressed();" />
+							</Panel>
+						</Panel>
+					</Panel>
+
+					<Panel class="bottom-discord-container">
+						<Panel class="discord-highlight-card">
+							<Panel class="discord-highlight-copy">
+								<Label class="discord-highlight-title" text="#loading_screen_discord_section_title" />
+								<Label class="discord-highlight-subtitle" text="#loading_screen_discord_section_subtitle" />
+
+								<Panel class="discord-benefits-list">
+									<Panel class="discord-benefit-row">
+										<Panel class="discord-benefit-dot" />
+										<Label class="discord-benefit-text" text="#loading_screen_discord_advantage_1" />
+									</Panel>
+									<Panel class="discord-benefit-row">
+										<Panel class="discord-benefit-dot" />
+										<Label class="discord-benefit-text" text="#loading_screen_discord_advantage_2" />
+									</Panel>
+								</Panel>
+
+								<Panel class="discord-highlight-footer">
+									<Label class="discord-highlight-support-note" text="#loading_screen_discord_support_note" />
+								</Panel>
+							</Panel>
+							<Panel class="discord-cta-side">
+								<Button class="discord-cta-image-button" onactivate="OnDiscordButtonPressed();" />
+							</Panel>
+						</Panel>
+					</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+
+			<Panel id="PlayerLoadingSidebar" class="player-loading-sidebar">
+				<Panel class="player-loading-header">
+					<Label id="PlayerLoadingTitle" class="player-loading-title" text="#loading_screen_players" />
+					<Label id="PlayerLoadingCounter" class="player-loading-counter" text="#loading_screen_loaded_counter_default" />
+					<ProgressBar id="PlayerLoadingProgress" class="player-loading-progress" value="0.0" />
+					<Panel class="player-loading-status-wrap">
+						<Label id="PlayerLoadingWaiting" class="player-loading-status" text="#loading_screen_waiting_counter_default" />
+					</Panel>
+					<Label id="PlayerLoadingGlobalStatus" class="player-loading-global-status" text="#loading_screen_status_loading" />
+					<Label id="PlayerForceLaunchLabel" class="player-force-launch-label" text="#loading_screen_match_starts_in_default" />
+					<Button id="PlayerReadyButton" class="player-ready-button" onactivate="OnCustomSetupReadyPressed();">
+						<Label id="PlayerReadyButtonLabel" text="#loading_screen_mark_ready" />
+					</Button>
+					<Button id="LoadingQaToggleButton" class="loading-qa-toggle-button" onactivate="ToggleLoadingQaPanel();">
+						<Label text="QA" />
+					</Button>
+				</Panel>
+
+				<Panel id="PlayerLoadingList" class="player-loading-list" />
+				<Panel id="LoadingQaPanel" class="loading-qa-panel">
+					<Label class="loading-qa-title" text="#loading_screen_qa_title" />
+					<Panel class="loading-qa-buttons-row">
+						<Button class="loading-qa-button" onactivate="SetToolsQaMode('normal');">
+							<Label text="#loading_screen_qa_mode_normal" />
+						</Button>
+						<Button class="loading-qa-button" onactivate="SetToolsQaMode('all_loading');">
+							<Label text="#loading_screen_qa_mode_all_loading" />
 						</Button>
 					</Panel>
+					<Panel class="loading-qa-buttons-row">
+						<Button class="loading-qa-button" onactivate="SetToolsQaMode('all_loaded');">
+							<Label text="#loading_screen_qa_mode_all_loaded" />
+						</Button>
+						<Button class="loading-qa-button" onactivate="SetToolsQaMode('all_ready');">
+							<Label text="#loading_screen_qa_mode_all_ready" />
+						</Button>
+					</Panel>
+					<Panel class="loading-qa-buttons-row">
+						<Button class="loading-qa-button" onactivate="SetToolsQaMode('one_failed');">
+							<Label text="#loading_screen_qa_mode_one_failed" />
+						</Button>
+					</Panel>
+				</Panel>
+			</Panel>
+		</Panel>
+
+		<Panel id="ReadyToast" class="ready-toast">
+			<Label id="ReadyToastLabel" text="#loading_screen_ready_toast" />
+		</Panel>
+
+		<Panel id="ProfileModalOverlay">
+			<Panel id="ProfileModalBackdrop" />
+
+			<Panel id="ProfileModal">
+				<Panel id="ProfileModalHeader">
+					<Panel id="ProfileModalIdentity">
+						<DOTAAvatarImage id="ProfileModalAvatar" />
+						<Panel id="ProfileModalIdentityText">
+							<Label id="ProfileModalName" text="#loading_screen_loading" />
+							<Label id="ProfileModalSubtitle" text="#loading_screen_player_profile" />
+						</Panel>
+					</Panel>
+
+					<Button id="ProfileModalClose" onactivate="ToggleProfileModal(false);">
+						<Label text="X" />
+					</Button>
+				</Panel>
+
+				<Panel id="ProfileModalBody">
+					<Panel class="profile-modal-column">
+						<Panel class="profile-modal-block">
+							<Label class="profile-modal-block-title" text="#loading_screen_battle_pass" />
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_level" />
+								<Label id="ProfileModalLevelValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_xp" />
+								<Label id="ProfileModalXPValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<ProgressBar id="ProfileModalXPProgress" class="profile-modal-progress" value="0.0" />
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_title" />
+								<Label id="ProfileModalTitleValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_season_winrate" />
+								<Label id="ProfileModalWinrateValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_donator" />
+								<Label id="ProfileModalDonatorValue" class="profile-modal-value" text="-" />
+							</Panel>
+						</Panel>
+					</Panel>
+
+					<Panel class="profile-modal-column">
+						<Panel class="profile-modal-block">
+							<Label class="profile-modal-block-title" text="#loading_screen_rank" />
+
+							<Panel id="ProfileModalRankBadge">
+								<Panel id="ProfileModalRankTier" />
+								<Panel id="ProfileModalRankPips" />
+							</Panel>
+
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_mmr_tier" />
+								<Label id="ProfileModalMMRTitleValue" class="profile-modal-value" text="#loading_screen_na" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_leaderboard" />
+								<Label id="ProfileModalLeaderboardValue" class="profile-modal-value" text="#loading_screen_na" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_connection" />
+								<Label id="ProfileModalConnectionValue" class="profile-modal-value" text="#loading_screen_connection_loaded" />
+							</Panel>
+						</Panel>
+
+						<Panel class="profile-modal-block">
+							<Label class="profile-modal-block-title" text="#loading_screen_visibility" />
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_tag" />
+								<Label id="ProfileModalTagVisibleValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_xp" />
+								<Label id="ProfileModalXPVisibleValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_winrate" />
+								<Label id="ProfileModalWinrateVisibleValue" class="profile-modal-value" text="-" />
+							</Panel>
+							<Panel class="profile-modal-row">
+								<Label class="profile-modal-key" text="#loading_screen_bp_rewards" />
+								<Label id="ProfileModalRewardsVisibleValue" class="profile-modal-value" text="-" />
+							</Panel>
+						</Panel>
+					</Panel>
+				</Panel>
+
+				<Panel id="ProfileModalFooter">
+					<Button id="ProfileModalSteamButton" class="vote-button" onactivate="OpenProfileSteamPage();">
+						<Label class="vote-button-label" text="#loading_screen_open_steam_profile" />
+					</Button>
+					<Button id="ProfileModalWebsiteButton" class="vote-button" onactivate="OnWebsiteButtonPressed();">
+						<Label class="vote-button-label" text="#loading_screen_open_website" />
+					</Button>
 				</Panel>
 			</Panel>
 		</Panel>
